@@ -1,4 +1,0 @@
-C:\Users\zarke\source\repos\AnimeTime\AnimeTime.Core\bin\Debug\AnimeTimeCore.dll
-C:\Users\zarke\source\repos\AnimeTime\AnimeTime.Core\bin\Debug\AnimeTimeCore.pdb
-C:\Users\zarke\source\repos\AnimeTime\AnimeTime.Core\obj\Debug\AnimeTimeCore.dll
-C:\Users\zarke\source\repos\AnimeTime\AnimeTime.Core\obj\Debug\AnimeTimeCore.pdb
