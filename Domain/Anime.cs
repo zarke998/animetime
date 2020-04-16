@@ -16,5 +16,6 @@ namespace AnimeTime.Core.Domain
         public string CoverThumbUrl { get; set; }
         public float Rating { get; set; }
         public int ReleaseYear { get; set; }
+        public YearSeason YearSeason { get; set; }
     }
 }
