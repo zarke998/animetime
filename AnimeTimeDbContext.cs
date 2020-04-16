@@ -11,6 +11,8 @@ namespace AnimeTime.Persistence
     public class AnimeTimeDbContext : DbContext
     {
         public DbSet<Website> Websites { get; set; }
+        public DbSet<Anime> Animes { get; set; }
+        public DbSet<YearSeason> YearSeasons { get; set; }
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {

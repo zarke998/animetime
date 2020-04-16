@@ -56,6 +56,14 @@
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.designer.cs">
       <DependentUpon>202004141328495_AddWebsitesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004161958534_AddAnimeTable.cs" />
+    <Compile Include="Migrations\202004161958534_AddAnimeTable.designer.cs">
+      <DependentUpon>202004161958534_AddAnimeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004162014496_AddYearSeasonsTable.cs" />
+    <Compile Include="Migrations\202004162014496_AddYearSeasonsTable.designer.cs">
+      <DependentUpon>202004162014496_AddYearSeasonsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringConstants.cs" />
@@ -76,6 +84,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202004141328495_AddWebsitesTable.resx">
       <DependentUpon>202004141328495_AddWebsitesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004161958534_AddAnimeTable.resx">
+      <DependentUpon>202004161958534_AddAnimeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004162014496_AddYearSeasonsTable.resx">
+      <DependentUpon>202004162014496_AddYearSeasonsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
