@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Domain\Anime.cs" />
     <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\Genre.cs" />
     <Compile Include="Domain\Website.cs" />
     <Compile Include="Domain\YearSeason.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
