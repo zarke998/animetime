@@ -68,6 +68,10 @@
     <Compile Include="Migrations\202004170927406_AddCategoriesTable.designer.cs">
       <DependentUpon>202004170927406_AddCategoriesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004170934579_AddGenresTable.cs" />
+    <Compile Include="Migrations\202004170934579_AddGenresTable.designer.cs">
+      <DependentUpon>202004170934579_AddGenresTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringConstants.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004170927406_AddCategoriesTable.resx">
       <DependentUpon>202004170927406_AddCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004170934579_AddGenresTable.resx">
+      <DependentUpon>202004170934579_AddGenresTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
