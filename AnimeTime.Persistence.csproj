@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimeTimeDbContext.cs" />
+    <Compile Include="EntityConfigurations\WebsiteAnimeUrlConfiguration.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.designer.cs">
       <DependentUpon>202004141328495_AddWebsitesTable.cs</DependentUpon>
@@ -71,6 +72,10 @@
     <Compile Include="Migrations\202004170934579_AddGenresTable.cs" />
     <Compile Include="Migrations\202004170934579_AddGenresTable.designer.cs">
       <DependentUpon>202004170934579_AddGenresTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004171056572_AddWebsiteAnimeUrlsTable.cs" />
+    <Compile Include="Migrations\202004171056572_AddWebsiteAnimeUrlsTable.designer.cs">
+      <DependentUpon>202004171056572_AddWebsiteAnimeUrlsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004170934579_AddGenresTable.resx">
       <DependentUpon>202004170934579_AddGenresTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004171056572_AddWebsiteAnimeUrlsTable.resx">
+      <DependentUpon>202004171056572_AddWebsiteAnimeUrlsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

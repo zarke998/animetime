@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using AnimeTime.Core.Domain;
+using AnimeTime.Persistence.EntityConfigurations;
 
 namespace AnimeTime.Persistence
 {
@@ -15,10 +16,18 @@ namespace AnimeTime.Persistence
         public DbSet<YearSeason> YearSeasons { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
 
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new WebsiteAnimeUrlConfiguration());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
