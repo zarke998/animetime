@@ -11,6 +11,7 @@ namespace AnimeTime.Core.Domain
         public Anime()
         {
             Genres = new HashSet<Genre>();
+            WebsiteAnimeUrls = new HashSet<WebsiteAnimeUrl>();
         }
 
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace AnimeTime.Core.Domain
         public YearSeason YearSeason { get; set; }
         public Category Category { get; set; }
         public ICollection<Genre> Genres { get; set; }
+        public ICollection<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
     }
 }
