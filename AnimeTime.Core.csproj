@@ -47,6 +47,7 @@
     <Compile Include="Domain\Episode.cs" />
     <Compile Include="Domain\Genre.cs" />
     <Compile Include="Domain\Source.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\Website.cs" />
     <Compile Include="Domain\WebsiteAnimeUrl.cs" />
     <Compile Include="Domain\YearSeason.cs" />
