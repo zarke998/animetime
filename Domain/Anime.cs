@@ -26,5 +26,6 @@ namespace AnimeTime.Core.Domain
         public Category Category { get; set; }
         public ICollection<Genre> Genres { get; set; }
         public ICollection<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
+        public ICollection<Episode> Episodes { get; set; }
     }
 }
