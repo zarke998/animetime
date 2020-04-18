@@ -13,6 +13,7 @@ namespace AnimeTime.Core.Domain
             Genres = new HashSet<Genre>();
             WebsiteAnimeUrls = new HashSet<WebsiteAnimeUrl>();
             Episodes = new HashSet<Episode>();
+            UserAnimeBookmarks = new HashSet<UserAnimeBookmark>();
         }
 
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace AnimeTime.Core.Domain
         public ICollection<Genre> Genres { get; set; }
         public ICollection<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
         public ICollection<Episode> Episodes { get; set; }
+        public ICollection<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
     }
 }
