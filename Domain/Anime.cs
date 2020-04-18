@@ -12,6 +12,7 @@ namespace AnimeTime.Core.Domain
         {
             Genres = new HashSet<Genre>();
             WebsiteAnimeUrls = new HashSet<WebsiteAnimeUrl>();
+            Episodes = new HashSet<Episode>();
         }
 
         public int Id { get; set; }
