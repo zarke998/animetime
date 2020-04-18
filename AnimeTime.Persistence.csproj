@@ -87,6 +87,10 @@
     <Compile Include="Migrations\202004180959060_AddSourcesTable.designer.cs">
       <DependentUpon>202004180959060_AddSourcesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004181010055_AddUsersTable.cs" />
+    <Compile Include="Migrations\202004181010055_AddUsersTable.designer.cs">
+      <DependentUpon>202004181010055_AddUsersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringConstants.cs" />
@@ -128,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004180959060_AddSourcesTable.resx">
       <DependentUpon>202004180959060_AddSourcesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181010055_AddUsersTable.resx">
+      <DependentUpon>202004181010055_AddUsersTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

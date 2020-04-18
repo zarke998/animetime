@@ -19,6 +19,7 @@ namespace AnimeTime.Persistence
         public DbSet<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Source> Sources { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
