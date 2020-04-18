@@ -18,6 +18,8 @@ namespace AnimeTime.Persistence
         public DbSet<Genre> Genres { get; set; }
         public DbSet<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
         public DbSet<Episode> Episodes { get; set; }
+        public DbSet<Source> Sources { get; set; }
+
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
@@ -28,6 +30,7 @@ namespace AnimeTime.Persistence
         {
             modelBuilder.Configurations.Add(new WebsiteAnimeUrlConfiguration());
             modelBuilder.Configurations.Add(new EpisodeConfiguration());
+            modelBuilder.Configurations.Add(new SourceConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

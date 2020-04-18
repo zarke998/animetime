@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
+    <Compile Include="EntityConfigurations\SourceConfiguration.cs" />
     <Compile Include="EntityConfigurations\WebsiteAnimeUrlConfiguration.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.designer.cs">
@@ -81,6 +82,10 @@
     <Compile Include="Migrations\202004180933230_AddEpisodesTable.cs" />
     <Compile Include="Migrations\202004180933230_AddEpisodesTable.designer.cs">
       <DependentUpon>202004180933230_AddEpisodesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004180959060_AddSourcesTable.cs" />
+    <Compile Include="Migrations\202004180959060_AddSourcesTable.designer.cs">
+      <DependentUpon>202004180959060_AddSourcesTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004180933230_AddEpisodesTable.resx">
       <DependentUpon>202004180933230_AddEpisodesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180959060_AddSourcesTable.resx">
+      <DependentUpon>202004180959060_AddSourcesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
