@@ -17,6 +17,7 @@ namespace AnimeTime.Persistence
         public DbSet<Category> Categories { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
@@ -26,6 +27,7 @@ namespace AnimeTime.Persistence
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new WebsiteAnimeUrlConfiguration());
+            modelBuilder.Configurations.Add(new EpisodeConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
