@@ -54,6 +54,7 @@
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
     <Compile Include="EntityConfigurations\SourceConfiguration.cs" />
+    <Compile Include="EntityConfigurations\UserAnimeBookmarkConfiguration.cs" />
     <Compile Include="EntityConfigurations\WebsiteAnimeUrlConfiguration.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.designer.cs">
@@ -90,6 +91,10 @@
     <Compile Include="Migrations\202004181010055_AddUsersTable.cs" />
     <Compile Include="Migrations\202004181010055_AddUsersTable.designer.cs">
       <DependentUpon>202004181010055_AddUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004181021405_AddUserAnimeBookmarksTable.cs" />
+    <Compile Include="Migrations\202004181021405_AddUserAnimeBookmarksTable.designer.cs">
+      <DependentUpon>202004181021405_AddUserAnimeBookmarksTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004181010055_AddUsersTable.resx">
       <DependentUpon>202004181010055_AddUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181021405_AddUserAnimeBookmarksTable.resx">
+      <DependentUpon>202004181021405_AddUserAnimeBookmarksTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
