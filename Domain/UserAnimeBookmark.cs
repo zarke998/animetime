@@ -13,6 +13,5 @@ namespace AnimeTime.Core.Domain
         public bool Notify { get; set; }
         public Anime Anime { get; set; }
         public User User { get; set; }
-
     }
 }
