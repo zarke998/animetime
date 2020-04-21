@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
+    <Compile Include="EntityConfigurations\NotificationConfiguration.cs" />
     <Compile Include="EntityConfigurations\SourceConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserAnimeBookmarkConfiguration.cs" />
     <Compile Include="EntityConfigurations\WebsiteAnimeUrlConfiguration.cs" />
@@ -95,6 +96,14 @@
     <Compile Include="Migrations\202004181021405_AddUserAnimeBookmarksTable.cs" />
     <Compile Include="Migrations\202004181021405_AddUserAnimeBookmarksTable.designer.cs">
       <DependentUpon>202004181021405_AddUserAnimeBookmarksTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211346347_AddNotificationsTable.cs" />
+    <Compile Include="Migrations\202004211346347_AddNotificationsTable.designer.cs">
+      <DependentUpon>202004211346347_AddNotificationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211358012_RenameTableGenreAnimes.cs" />
+    <Compile Include="Migrations\202004211358012_RenameTableGenreAnimes.designer.cs">
+      <DependentUpon>202004211358012_RenameTableGenreAnimes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,6 +152,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004181021405_AddUserAnimeBookmarksTable.resx">
       <DependentUpon>202004181021405_AddUserAnimeBookmarksTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211346347_AddNotificationsTable.resx">
+      <DependentUpon>202004211346347_AddNotificationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211358012_RenameTableGenreAnimes.resx">
+      <DependentUpon>202004211358012_RenameTableGenreAnimes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

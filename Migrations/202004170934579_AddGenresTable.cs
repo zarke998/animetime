@@ -38,7 +38,7 @@
             DropIndex("dbo.GenreAnimes", new[] { "Anime_Id" });
             DropIndex("dbo.GenreAnimes", new[] { "Genre_Id" });
             DropTable("dbo.GenreAnimes");
-            DropTable("dbo.Genres");
+            DropTable("dbo.Genres");            
         }
     }
 }

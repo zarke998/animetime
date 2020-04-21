@@ -21,6 +21,7 @@ namespace AnimeTime.Persistence
         public DbSet<Source> Sources { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
@@ -34,6 +35,7 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new EpisodeConfiguration());
             modelBuilder.Configurations.Add(new SourceConfiguration());
             modelBuilder.Configurations.Add(new UserAnimeBookmarkConfiguration());
+            modelBuilder.Configurations.Add(new NotificationConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
