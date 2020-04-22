@@ -105,6 +105,10 @@
     <Compile Include="Migrations\202004211358012_RenameTableGenreAnimes.designer.cs">
       <DependentUpon>202004211358012_RenameTableGenreAnimes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004220957155_CreateAddEpisodeToNotificationsTrigger.cs" />
+    <Compile Include="Migrations\202004220957155_CreateAddEpisodeToNotificationsTrigger.designer.cs">
+      <DependentUpon>202004220957155_CreateAddEpisodeToNotificationsTrigger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringConstants.cs" />
@@ -158,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004211358012_RenameTableGenreAnimes.resx">
       <DependentUpon>202004211358012_RenameTableGenreAnimes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004220957155_CreateAddEpisodeToNotificationsTrigger.resx">
+      <DependentUpon>202004220957155_CreateAddEpisodeToNotificationsTrigger.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
