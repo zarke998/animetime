@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnimeTime.Persistence;
+using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
 using HtmlAgilityPack;
@@ -36,7 +36,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
             //while (!_animeInfoExtractor.IsFinished)
             //{
-                animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
+            animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
             //    _animeInfoExtractor.NextPage();
             //}
             //for (int i = 0; i < 5; i++)

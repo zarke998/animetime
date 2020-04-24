@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HtmlAgilityPack;
-using AnimeTime.Persistence;
+using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Persistence;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using AnimeTime.Persistence;
+using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
 using HtmlAgilityPack;
@@ -22,20 +22,19 @@ namespace AnimeTimeDbUpdater.Persistence
 
         public Anime Resolve(AnimeInfoResolve animeInfoResolve)
         {
-            Anime resolvedAnime = animeInfoResolve.Anime;
+            var anime = animeInfoResolve.Anime;
 
-            resolvedAnime.CoverThumb = GetImageFromUrl(animeInfoResolve.AnimeCoverThumbUrl);
+            //resolvedAnime.CoverThumb = GetImageFromUrl(animeInfoResolve.AnimeCoverThumbUrl);
+            anime.CoverThumbUrl = animeInfoResolve.AnimeCoverThumbUrl;
             ResolveDetails(animeInfoResolve);
 
-            return resolvedAnime;
+            return anime;
         }
-
         private byte[] GetImageFromUrl(string thumbUrl)
         {
             using (WebClient client = new WebClient())
                 return client.DownloadData(thumbUrl);
         }
-
         private void ResolveDetails(AnimeInfoResolve animeInfoResolve)
         {
             var anime = animeInfoResolve.Anime;
@@ -61,14 +60,14 @@ namespace AnimeTimeDbUpdater.Persistence
             var yearInnerText = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").InnerText;
             var year = yearInnerText.Split('-')[0];
             year = year.Trim();
-            anime.Year = new Year() { Name = year };
+            anime.ReleaseYear = Convert.ToInt32(year);
 
             //Extract year season
             var yearSeasonNode = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").ParentNode.SelectSingleNode(".//a");
             if (yearSeasonNode != null)
             {
                 var yearSeason = yearSeasonNode.InnerText;
-                anime.YearSeason = new YearSeason() { YearSeasonName = yearSeason };
+                anime.YearSeason = new YearSeason() { Name = yearSeason };
             }
 
             //Extract rating

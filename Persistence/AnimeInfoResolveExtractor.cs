@@ -46,7 +46,6 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return animeResolve;
         }
-
         public IEnumerable<AnimeInfoResolve> GetAnimeInfoResolvesFromPage()
         {
             var animeResolves = new List<AnimeInfoResolve>();
@@ -69,7 +68,6 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return animeResolves;
         }
-
         public void NextPage()
         {
             var navNode = _doc.DocumentNode.SelectSingleNode("//div[contains(@class,'pagination')]");
