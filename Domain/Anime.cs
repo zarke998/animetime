@@ -14,6 +14,7 @@ namespace AnimeTime.Core.Domain
             WebsiteAnimeUrls = new HashSet<WebsiteAnimeUrl>();
             Episodes = new HashSet<Episode>();
             UserAnimeBookmarks = new HashSet<UserAnimeBookmark>();
+            Characters = new HashSet<Character>();
         }
 
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace AnimeTime.Core.Domain
         public ICollection<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
         public ICollection<Episode> Episodes { get; set; }
         public ICollection<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
+        public ICollection<Character> Characters { get; set; }
+
     }
 }
