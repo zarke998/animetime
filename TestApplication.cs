@@ -9,6 +9,7 @@ using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Persistence;
+using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
 using System.IO;
 using System.Drawing;
@@ -28,18 +29,16 @@ namespace AnimeTimeDbUpdater
         public void Run()
         {
             var resolves = _repo.GetAnimeInfoResolves();
+            var resolvedCount = 0;
 
+            LogGroup.Log("Resolving animes: \n");
             foreach (var animeResolve in resolves)
             {
-                Console.WriteLine(animeResolve.Anime.Title);
-                Console.WriteLine("\t" + animeResolve.AnimeDetailsUrl);
-                Console.WriteLine("\t" + animeResolve.AnimeCoverThumbUrl);
-
                 var anime = _repo.Resolve(animeResolve);
-                Console.WriteLine(HttpUtility.HtmlDecode(anime.Description));
-
-                Console.WriteLine("\n\n\n---------------------------------------------------");
+                resolvedCount++;
             }
+
+            LogGroup.Log($"\nResolving finished. Total: {resolvedCount}");
 
             Console.ReadLine();
         }

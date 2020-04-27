@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AnimeTimeDbUpdater.Core;
+﻿using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
+using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
+using System.Collections.Generic;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -13,18 +10,16 @@ namespace AnimeTimeDbUpdater.Persistence
     {
         private HtmlWeb _web;
         private HtmlDocument _doc;
-        private ILoggerGroup _logGroup;
 
         public bool IsFinished { get; set; } = false;
         public string CurrentPage { get; set; }
         public string RootUrl { get ; set ; }
         public string AnimeListRootUrl { get ; set ; }
 
-        public AnimeInfoResolveExtractor(HtmlWeb web, HtmlDocument doc, ILoggerGroup logGroup)
+        public AnimeInfoResolveExtractor(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
             _doc = doc;
-            _logGroup = logGroup;
         }
 
         private AnimeInfoResolve GetAnimeInfoResolve(string xmlNode)
@@ -51,7 +46,7 @@ namespace AnimeTimeDbUpdater.Persistence
             var animeResolves = new List<AnimeInfoResolve>();
 
             _doc = _web.Load(CurrentPage);
-            _logGroup.LogAll("\t\t\t\t" + CurrentPage + "\n\n");
+            LogGroup.Log("\t\t\t\t Getting resolves from page: " + CurrentPage + "\n\n");
 
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
 
@@ -60,11 +55,9 @@ namespace AnimeTimeDbUpdater.Persistence
                 var animeInfoResolve = GetAnimeInfoResolve(node.OuterHtml);
                 animeResolves.Add(animeInfoResolve);
 
-                _logGroup.LogAll("\t" + animeInfoResolve.Anime.Title);
-                _logGroup.LogAll("\t" + animeInfoResolve.AnimeCoverThumbUrl);
-                _logGroup.LogAll("\t" + animeInfoResolve.AnimeDetailsUrl);
+                LogGroup.Log("Fetched: " + animeInfoResolve.Anime.Title);
             }
-            _logGroup.LogAll("\n\n\n");
+            LogGroup.Log("\n\n\n");
 
             return animeResolves;
         }

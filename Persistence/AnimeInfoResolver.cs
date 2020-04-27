@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
+using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
 
 namespace AnimeTimeDbUpdater.Persistence
@@ -28,6 +29,7 @@ namespace AnimeTimeDbUpdater.Persistence
             anime.CoverThumbUrl = animeInfoResolve.AnimeCoverThumbUrl;
             ResolveDetails(animeInfoResolve);
 
+            LogGroup.Log($"Resolved: {animeInfoResolve.AnimeDetailsUrl} ({anime.Title})");
             return anime;
         }
         private byte[] GetImageFromUrl(string thumbUrl)

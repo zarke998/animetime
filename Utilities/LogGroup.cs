@@ -7,16 +7,16 @@ using AnimeTimeDbUpdater.Core;
 
 namespace AnimeTimeDbUpdater.Utilities
 {
-    public class LoggerGroup : ILoggerGroup
+    public static class LogGroup
     {
-        private ICollection<ILogger> _logGroup = new List<ILogger>();
+        private static ICollection<ILogger> _logGroup = new List<ILogger>();
 
-        public LoggerGroup(FileLogger fileLogger, ConsoleLogger consoleLogger)
+        static LogGroup()
         {
-            _logGroup.Add(fileLogger);
-            _logGroup.Add(consoleLogger);
+            _logGroup.Add(new FileLogger());
+            _logGroup.Add(new ConsoleLogger());
         }
-        public void LogAll(string message)
+        public static void Log(string message)
         {
             foreach (var logger in _logGroup)
                 logger.Log(message);

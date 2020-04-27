@@ -94,7 +94,7 @@
     <Compile Include="TestApplication.cs" />
     <Compile Include="Utilities\ConsoleLogger.cs" />
     <Compile Include="Utilities\FileLogger.cs" />
-    <Compile Include="Utilities\LoggerGroup.cs" />
+    <Compile Include="Utilities\LogGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

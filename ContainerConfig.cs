@@ -25,7 +25,6 @@ namespace AnimeTimeDbUpdater
 
             builder.RegisterType<FileLogger>();
             builder.RegisterType<ConsoleLogger>();
-            builder.RegisterType<LoggerGroup>().As<ILoggerGroup>();
 
             builder.RegisterType<AnimeInfoResolver>().As<IAnimeInfoResolver>();
 
