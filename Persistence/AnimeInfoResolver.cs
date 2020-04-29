@@ -15,10 +15,12 @@ namespace AnimeTimeDbUpdater.Persistence
     public class AnimeInfoResolver : IAnimeInfoResolver
     {
         private HtmlWeb _web;
+        private HtmlDocument _doc;
 
-        public AnimeInfoResolver(HtmlWeb web)
+        public AnimeInfoResolver(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
+            _doc = doc;
         }
 
         public Anime Resolve(AnimeInfoResolve animeInfoResolve)
@@ -27,7 +29,15 @@ namespace AnimeTimeDbUpdater.Persistence
 
             //resolvedAnime.CoverThumb = GetImageFromUrl(animeInfoResolve.AnimeCoverThumbUrl);
             anime.CoverThumbUrl = animeInfoResolve.AnimeCoverThumbUrl;
-            ResolveDetails(animeInfoResolve);
+
+            _doc = _web.Load(animeInfoResolve.AnimeDetailsUrl);
+            ResolveAltTitle(anime);
+            ResolveDescription(anime);
+            ResolveYear(anime);
+            ResolveYearSeason(anime);
+            ResolveRating(anime);
+            ResolveCategory(anime);
+            ResolveGenres(anime);
 
             LogGroup.Log($"Resolved: {animeInfoResolve.AnimeDetailsUrl} ({anime.Title})");
             return anime;
@@ -37,14 +47,10 @@ namespace AnimeTimeDbUpdater.Persistence
             using (WebClient client = new WebClient())
                 return client.DownloadData(thumbUrl);
         }
-        private void ResolveDetails(AnimeInfoResolve animeInfoResolve)
+
+        private void ResolveAltTitle(Anime anime)
         {
-            var anime = animeInfoResolve.Anime;
-
-            HtmlDocument doc = _web.Load(animeInfoResolve.AnimeDetailsUrl);
-
-            // Extract alt title
-            var titleNode = doc.DocumentNode.SelectSingleNode("//h2[contains(@class,'aka')]");
+            var titleNode = _doc.DocumentNode.SelectSingleNode("//h2[contains(@class,'aka')]");
             if (titleNode != null)
             {
                 var title = titleNode.InnerText;
@@ -53,27 +59,31 @@ namespace AnimeTimeDbUpdater.Persistence
                 title = titleSplited[1];
                 anime.TitleAlt = title.Replace("\n", String.Empty);
             }
-
-            //Extract description
-            var description = doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p").InnerText;
+        }
+        private void ResolveDescription(Anime anime) 
+        {
+            var description = _doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p").InnerText;
             anime.Description = description;
-
-            //Extract year
-            var yearInnerText = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").InnerText;
+        }
+        private void ResolveYear(Anime anime)
+        {
+            var yearInnerText = _doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").InnerText;
             var year = yearInnerText.Split('-')[0];
             year = year.Trim();
             anime.ReleaseYear = Convert.ToInt32(year);
-
-            //Extract year season
-            var yearSeasonNode = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").ParentNode.SelectSingleNode(".//a");
+        }
+        private void ResolveYearSeason(Anime anime)
+        {
+            var yearSeasonNode = _doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").ParentNode.SelectSingleNode(".//a");
             if (yearSeasonNode != null)
             {
                 var yearSeason = yearSeasonNode.InnerText;
                 anime.YearSeason = new YearSeason() { Name = yearSeason };
             }
-
-            //Extract rating
-            var ratingNode = doc.DocumentNode.SelectSingleNode("//meta[contains(@itemprop,'ratingValue')]");
+        }
+        private void ResolveRating(Anime anime)
+        {
+            var ratingNode = _doc.DocumentNode.SelectSingleNode("//meta[contains(@itemprop,'ratingValue')]");
             if (ratingNode != null)
             {
                 float ratingValue = Convert.ToSingle(ratingNode.GetAttributeValue("content", "0"));
@@ -81,20 +91,20 @@ namespace AnimeTimeDbUpdater.Persistence
             }
             else
                 anime.Rating = 0F;
-
-            //Extract category
-            var category = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'type')]").InnerText;
+        }
+        private void ResolveCategory(Anime anime)
+        {
+            var category = _doc.DocumentNode.SelectSingleNode("//span[contains(@class,'type')]").InnerText;
             category = category.Split('(')[0].Trim();
             anime.Category = new Category() { Name = category };
-
-            //Extract genres
-            var tagListContainer = doc.DocumentNode.SelectNodes("//div[contains(@class,'tags')]")[0];
+        }
+        private void ResolveGenres(Anime anime)
+        {
+            var tagListContainer = _doc.DocumentNode.SelectNodes("//div[contains(@class,'tags')]")[0];
             var tags = tagListContainer.SelectNodes(".//li[contains(@itemprop,'genre')]/a");
 
-            foreach(var tag in tags)
-                anime.Genres.Add(new Genre() { Name = tag.InnerText.Replace("\n", String.Empty) });
-            
-
+            foreach (var tag in tags)
+                anime.Genres.Add(new Genre() { Name = tag.InnerText.Replace("\n", String.Empty) });            
         }
     }
 }

@@ -23,30 +23,12 @@ namespace AnimeTimeDbUpdater.Persistence
             _web = web;
             _doc = doc;
         }
+
         public void Initialize(string websiteUrl, string animeListUrl)
         {
             CurrentPage = animeListUrl;
             WebsiteUrl = websiteUrl;
             AnimeListUrl = animeListUrl;
-        }
-        private AnimeInfoResolve GetAnimeInfoResolve(string xmlNode)
-        {
-            var animeResolve = new AnimeInfoResolve();
-
-            var doc = new HtmlDocument();
-
-            doc.LoadHtml(xmlNode);
-
-            var title = doc.DocumentNode.SelectSingleNode(".//h3[contains(@class, 'cardName')]").InnerText;
-            animeResolve.Anime.Title = title;
-
-            var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
-            animeResolve.AnimeDetailsUrl = WebsiteUrl + detailsUrl;
-
-            var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
-            animeResolve.AnimeCoverThumbUrl = WebsiteUrl + thumbUrl;
-
-            return animeResolve;
         }
         public IEnumerable<AnimeInfoResolve> GetAnimeInfoResolvesFromPage()
         {
@@ -83,6 +65,26 @@ namespace AnimeTimeDbUpdater.Persistence
             }
 
             CurrentPage = AnimeListUrl + nextPageLinkNode.GetAttributeValue("href","");
+        }
+
+        private AnimeInfoResolve GetAnimeInfoResolve(string xmlNode)
+        {
+            var animeResolve = new AnimeInfoResolve();
+
+            var doc = new HtmlDocument();
+
+            doc.LoadHtml(xmlNode);
+
+            var title = doc.DocumentNode.SelectSingleNode(".//h3[contains(@class, 'cardName')]").InnerText;
+            animeResolve.Anime.Title = title;
+
+            var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
+            animeResolve.AnimeDetailsUrl = WebsiteUrl + detailsUrl;
+
+            var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
+            animeResolve.AnimeCoverThumbUrl = WebsiteUrl + thumbUrl;
+
+            return animeResolve;
         }
     }
 }

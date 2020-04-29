@@ -10,7 +10,6 @@ using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Persistence;
 using AnimeTimeDbUpdater.Utilities;
-using HtmlAgilityPack;
 using System.IO;
 using System.Drawing;
 using System.Web;
@@ -28,6 +27,7 @@ namespace AnimeTimeDbUpdater
 
         public void Run()
         {
+
             var resolves = _repo.GetAnimeInfoResolves();
             var resolvedCount = 0;
 
@@ -35,6 +35,18 @@ namespace AnimeTimeDbUpdater
             foreach (var animeResolve in resolves)
             {
                 var anime = _repo.Resolve(animeResolve);
+                //Console.WriteLine(anime.Title);
+                //Console.WriteLine(anime.TitleAlt);
+                //Console.WriteLine(anime.Description);
+                //Console.WriteLine(anime.ReleaseYear);
+                //Console.WriteLine(anime.YearSeason != null ? anime.YearSeason.Name : "N/A");
+                //Console.WriteLine(anime.Rating);
+                //Console.WriteLine(anime.Category.Name);
+                //foreach(var genre in anime.Genres)
+                //    Console.WriteLine(genre.Name);
+
+                //Console.WriteLine("------------------------------------------------------------------------------------------------\n\n\n");
+
                 resolvedCount++;
             }
 

@@ -32,11 +32,11 @@ namespace AnimeTimeDbUpdater.Persistence
         {
             List<AnimeInfoResolve> animeResolves = new List<AnimeInfoResolve>();
 
-            while (!_animeInfoExtractor.IsFinished)
-            {
+            //while (!_animeInfoExtractor.IsFinished)
+            //{
                 animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
-                _animeInfoExtractor.NextPage();
-            }
+            //    _animeInfoExtractor.NextPage();
+            //}
 
             return animeResolves;
         }
