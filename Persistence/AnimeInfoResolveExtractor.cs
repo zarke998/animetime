@@ -4,6 +4,7 @@ using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -16,7 +17,6 @@ namespace AnimeTimeDbUpdater.Persistence
         public string CurrentPage { get; private set; }
         public string WebsiteUrl { get ; set ; }
         public string AnimeListUrl { get ; set ; }
-
 
         public AnimeInfoResolveExtractor(HtmlWeb web, HtmlDocument doc)
         {
@@ -37,11 +37,39 @@ namespace AnimeTimeDbUpdater.Persistence
 
             var animeResolves = new List<AnimeInfoResolve>();
 
+
+            if (CrawlStopwatch.IsRunning)
+            {
+                var elapsed = CrawlStopwatch.ElapsedTimeFromLastCrawl;
+                var lastCrawledFor = CrawlStopwatch.LastCrawledFor;
+                var timeToWait = Constants.CrawlTime + Constants.CrawlTimeOffset - (elapsed - lastCrawledFor);
+
+#if DEBUG
+                Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
+                Console.WriteLine($"Last crawl elapsed: {elapsed}");
+                Console.WriteLine($"Time to wait: {timeToWait}");
+#endif
+
+                if (timeToWait > 0)
+                {
+                    System.Threading.Thread.Sleep(Convert.ToInt32(timeToWait * 1000));
+                    CrawlStopwatch.Restart();
+                }
+            }
+            else
+                CrawlStopwatch.Start();
+
+            Stopwatch s = new Stopwatch();
+            s.Start();
+
             _doc = _web.Load(CurrentPage);
-            LogGroup.Log("\t\t\t\t Getting resolves from page: " + CurrentPage + "\n\n");
 
+            s.Stop();
+            CrawlStopwatch.LastCrawledFor = s.ElapsedMilliseconds / 1000.0;
+            
+
+            LogGroup.Log("\n\n\t\t\t\t Getting resolves from page: " + CurrentPage + "\n\n");
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
-
             foreach (var node in animeNodes)
             {
                 var animeInfoResolve = GetAnimeInfoResolve(node.OuterHtml);
@@ -49,7 +77,6 @@ namespace AnimeTimeDbUpdater.Persistence
 
                 LogGroup.Log("Fetched: " + animeInfoResolve.Anime.Title);
             }
-            LogGroup.Log("\n\n\n");
 
             return animeResolves;
         }
@@ -68,9 +95,8 @@ namespace AnimeTimeDbUpdater.Persistence
         }
 
         private AnimeInfoResolve GetAnimeInfoResolve(string xmlNode)
-        {
+        {           
             var animeResolve = new AnimeInfoResolve();
-
             var doc = new HtmlDocument();
 
             doc.LoadHtml(xmlNode);

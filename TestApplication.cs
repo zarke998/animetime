@@ -36,7 +36,7 @@ namespace AnimeTimeDbUpdater
             {
                 var anime = _repo.Resolve(animeResolve);
 
-                #if DEBUG
+#if DEBUG
                 Console.WriteLine("\n" + anime);
 
                 Console.WriteLine("Genres: \n");
@@ -44,7 +44,7 @@ namespace AnimeTimeDbUpdater
                     Console.WriteLine("\t" + genre.Name);
 
                 Console.WriteLine("------------------------------------------------------------------------------------------------\n");
-                #endif
+ #endif
 
                 resolvedCount++;
             }

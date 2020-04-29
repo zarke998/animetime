@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="Core\Domain\AnimeInfoResolve.cs" />
     <Compile Include="Core\IAnimeInfoResolveExtractor.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestApplication.cs" />
     <Compile Include="Utilities\ConsoleLogger.cs" />
+    <Compile Include="Utilities\CrawlStopwatch.cs" />
     <Compile Include="Utilities\FileLogger.cs" />
     <Compile Include="Utilities\LogGroup.cs" />
   </ItemGroup>
