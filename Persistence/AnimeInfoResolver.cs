@@ -9,6 +9,7 @@ using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
+using System.Web;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -63,7 +64,8 @@ namespace AnimeTimeDbUpdater.Persistence
         private void ResolveDescription(Anime anime) 
         {
             var description = _doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p").InnerText;
-            anime.Description = description;
+            anime.Description = HttpUtility.HtmlDecode(description);
+            
         }
         private void ResolveYear(Anime anime)
         {
@@ -104,7 +106,10 @@ namespace AnimeTimeDbUpdater.Persistence
             var tags = tagListContainer.SelectNodes(".//li[contains(@itemprop,'genre')]/a");
 
             foreach (var tag in tags)
-                anime.Genres.Add(new Genre() { Name = tag.InnerText.Replace("\n", String.Empty) });            
+            {
+                var genreName = tag.InnerText.Replace("\n", String.Empty).Trim();
+                anime.Genres.Add(new Genre() { Name = genreName});
+            }
         }
     }
 }

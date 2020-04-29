@@ -35,17 +35,16 @@ namespace AnimeTimeDbUpdater
             foreach (var animeResolve in resolves)
             {
                 var anime = _repo.Resolve(animeResolve);
-                //Console.WriteLine(anime.Title);
-                //Console.WriteLine(anime.TitleAlt);
-                //Console.WriteLine(anime.Description);
-                //Console.WriteLine(anime.ReleaseYear);
-                //Console.WriteLine(anime.YearSeason != null ? anime.YearSeason.Name : "N/A");
-                //Console.WriteLine(anime.Rating);
-                //Console.WriteLine(anime.Category.Name);
-                //foreach(var genre in anime.Genres)
-                //    Console.WriteLine(genre.Name);
 
-                //Console.WriteLine("------------------------------------------------------------------------------------------------\n\n\n");
+                #if DEBUG
+                Console.WriteLine("\n" + anime);
+
+                Console.WriteLine("Genres: \n");
+                foreach (var genre in anime.Genres)
+                    Console.WriteLine("\t" + genre.Name);
+
+                Console.WriteLine("------------------------------------------------------------------------------------------------\n");
+                #endif
 
                 resolvedCount++;
             }
