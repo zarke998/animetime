@@ -9,12 +9,9 @@ namespace AnimeTimeDbUpdater.Core
 {
     interface IAnimeInfoResolveExtractor
     {
-        bool IsFinished { get; set; }
-        string CurrentPage { get; set; }
+        bool IsFinished { get; }
 
-        string RootUrl { get; set; }
-        string AnimeListRootUrl { get; set; }
-
+        void Initialize(string websiteUrl, string animeListUrl);
         IEnumerable<AnimeInfoResolve> GetAnimeInfoResolvesFromPage();
         void NextPage();
 

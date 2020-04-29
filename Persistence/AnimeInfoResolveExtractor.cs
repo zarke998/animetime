@@ -2,6 +2,7 @@
 using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 
 namespace AnimeTimeDbUpdater.Persistence
@@ -11,17 +12,23 @@ namespace AnimeTimeDbUpdater.Persistence
         private HtmlWeb _web;
         private HtmlDocument _doc;
 
-        public bool IsFinished { get; set; } = false;
-        public string CurrentPage { get; set; }
-        public string RootUrl { get ; set ; }
-        public string AnimeListRootUrl { get ; set ; }
+        public bool IsFinished { get; private set; }
+        public string CurrentPage { get; private set; }
+        public string WebsiteUrl { get ; set ; }
+        public string AnimeListUrl { get ; set ; }
+
 
         public AnimeInfoResolveExtractor(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
             _doc = doc;
         }
-
+        public void Initialize(string websiteUrl, string animeListUrl)
+        {
+            CurrentPage = animeListUrl;
+            WebsiteUrl = websiteUrl;
+            AnimeListUrl = animeListUrl;
+        }
         private AnimeInfoResolve GetAnimeInfoResolve(string xmlNode)
         {
             var animeResolve = new AnimeInfoResolve();
@@ -34,15 +41,18 @@ namespace AnimeTimeDbUpdater.Persistence
             animeResolve.Anime.Title = title;
 
             var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
-            animeResolve.AnimeDetailsUrl = RootUrl + detailsUrl;
+            animeResolve.AnimeDetailsUrl = WebsiteUrl + detailsUrl;
 
             var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
-            animeResolve.AnimeCoverThumbUrl = RootUrl + thumbUrl;
+            animeResolve.AnimeCoverThumbUrl = WebsiteUrl + thumbUrl;
 
             return animeResolve;
         }
         public IEnumerable<AnimeInfoResolve> GetAnimeInfoResolvesFromPage()
         {
+            if (WebsiteUrl == null || AnimeListUrl == null)
+                throw new NullReferenceException("Extractor not initialized. Use method Initialize() before any work with the extractor.");
+
             var animeResolves = new List<AnimeInfoResolve>();
 
             _doc = _web.Load(CurrentPage);
@@ -72,7 +82,7 @@ namespace AnimeTimeDbUpdater.Persistence
                 return;
             }
 
-            CurrentPage = AnimeListRootUrl + nextPageLinkNode.GetAttributeValue("href","");
+            CurrentPage = AnimeListUrl + nextPageLinkNode.GetAttributeValue("href","");
         }
     }
 }

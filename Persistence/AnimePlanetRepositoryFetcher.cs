@@ -18,14 +18,12 @@ namespace AnimeTimeDbUpdater.Persistence
         private IAnimeInfoResolver _animeInfoResolver;
 
         static string AnimeListUrl = "https://www.anime-planet.com/anime/all";
-        static string SiteUrl = "https://www.anime-planet.com";
+        static string WebsiteUrl = "https://www.anime-planet.com";
 
         public AnimePlanetRepositoryFetcher(IAnimeInfoResolveExtractor animeInfoExtractor, IAnimeInfoResolver animeInfoResolver)
         {
             _animeInfoExtractor = animeInfoExtractor;
-            _animeInfoExtractor.CurrentPage = AnimeListUrl;
-            _animeInfoExtractor.RootUrl = SiteUrl;
-            _animeInfoExtractor.AnimeListRootUrl = AnimeListUrl;
+            _animeInfoExtractor.Initialize(WebsiteUrl, AnimeListUrl);
 
             _animeInfoResolver = animeInfoResolver;
         }
@@ -34,16 +32,11 @@ namespace AnimeTimeDbUpdater.Persistence
         {
             List<AnimeInfoResolve> animeResolves = new List<AnimeInfoResolve>();
 
-            //while (!_animeInfoExtractor.IsFinished)
-            //{
-            animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
-            //    _animeInfoExtractor.NextPage();
-            //}
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
-            //    _animeInfoExtractor.NextPage();
-            //}
+            while (!_animeInfoExtractor.IsFinished)
+            {
+                animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
+                _animeInfoExtractor.NextPage();
+            }
 
             return animeResolves;
         }
