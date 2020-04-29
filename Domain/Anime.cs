@@ -33,5 +33,21 @@ namespace AnimeTime.Core.Domain
         public ICollection<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
         public ICollection<Character> Characters { get; set; }
 
+        public override string ToString()
+        {
+            StringBuilder s = new StringBuilder();
+
+            s.AppendLine($"Title: {Title}");
+            s.AppendLine($"AltTitle: { (TitleAlt != null ? TitleAlt : "(none)") }");
+            s.AppendLine($"\nDescription: {Description }\n");
+            s.AppendLine($"CoverUrl: {CoverUrl}");
+            s.AppendLine($"CoverThumbUrl: {CoverThumbUrl}");
+            s.AppendLine($"ReleaseYear: {ReleaseYear}");
+            s.AppendLine($"YearSeason: { (YearSeason != null ? YearSeason.Name : "(none)") }");
+            s.AppendLine($"Rating: {Rating}");
+            s.AppendLine($"Category: {Category.Name}");
+
+            return s.ToString();
+        }
     }
 }
