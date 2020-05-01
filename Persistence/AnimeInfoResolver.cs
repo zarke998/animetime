@@ -70,8 +70,9 @@ namespace AnimeTimeDbUpdater.Persistence
         }
         private void ResolveDescription(Anime anime) 
         {
-            var description = _doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p").InnerText;
-            anime.Description = HttpUtility.HtmlDecode(description);
+            var descriptionNode = _doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p");
+            if(descriptionNode != null)
+                anime.Description = HttpUtility.HtmlDecode(descriptionNode.InnerText);
             
         }
         private void ResolveYear(Anime anime)
