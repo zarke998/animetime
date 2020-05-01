@@ -33,10 +33,12 @@ namespace AnimeTimeDbUpdater
             var resolves = _repo.GetAnimeInfoResolves();
             var resolvedCount = 0;
 
+            ICollection<Anime> resolved = new List<Anime>();
             LogGroup.Log("\nResolving animes: \n");
             foreach (var animeResolve in resolves)
             {
                 var anime = _repo.Resolve(animeResolve);
+                resolved.Add(anime);
 #if DEBUG
                 Console.WriteLine("\n" + anime);
 
@@ -51,7 +53,16 @@ namespace AnimeTimeDbUpdater
             }
             LogGroup.Log($"\nResolving finished. Total: {resolvedCount}");
 
-            
+            using (IUnitOfWork unitOfWork = new UnitOfWork(new AnimeTimeDbContext()))
+            {
+                foreach (var anime in resolved)
+                {
+                    unitOfWork.Animes.Add(anime);
+                }
+
+                unitOfWork.Complete();
+            }
+
             Console.ReadLine();
         }
     }
