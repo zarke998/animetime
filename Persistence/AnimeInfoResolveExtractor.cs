@@ -38,35 +38,11 @@ namespace AnimeTimeDbUpdater.Persistence
             var animeResolves = new List<AnimeInfoResolve>();
 
 
-            if (CrawlStopwatch.IsRunning)
-            {
-                var elapsed = CrawlStopwatch.ElapsedTimeFromLastCrawl;
-                var lastCrawledFor = CrawlStopwatch.LastCrawledFor;
-                var timeToWait = Constants.CrawlTime + Constants.CrawlTimeOffset - (elapsed - lastCrawledFor);
+            CrawlStopwatch.ApplyDelay();
 
-#if DEBUG
-                Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
-                Console.WriteLine($"Last crawl elapsed: {elapsed}");
-                Console.WriteLine($"Time to wait: {timeToWait}");
-#endif
-
-                if (timeToWait > 0)
-                {
-                    System.Threading.Thread.Sleep(Convert.ToInt32(timeToWait * 1000));
-                    CrawlStopwatch.Restart();
-                }
-            }
-            else
-                CrawlStopwatch.Start();
-
-            Stopwatch s = new Stopwatch();
-            s.Start();
-
+            CrawlStopwatch.BeginCrawlTracking();
             _doc = _web.Load(CurrentPage);
-
-            s.Stop();
-            CrawlStopwatch.LastCrawledFor = s.ElapsedMilliseconds / 1000.0;
-            
+            CrawlStopwatch.EndCrawlTracking();
 
             LogGroup.Log("\n\n\t\t\t\t Getting resolves from page: " + CurrentPage + "\n\n");
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
