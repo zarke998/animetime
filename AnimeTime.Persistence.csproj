@@ -54,6 +54,7 @@
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="EntityConfigurations\CharacterConfiguration.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
+    <Compile Include="EntityConfigurations\GenreConfiguration.cs" />
     <Compile Include="EntityConfigurations\NotificationConfiguration.cs" />
     <Compile Include="EntityConfigurations\SourceConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserAnimeBookmarkConfiguration.cs" />
@@ -113,6 +114,10 @@
     <Compile Include="Migrations\202004241102448_AddCharactersTable.cs" />
     <Compile Include="Migrations\202004241102448_AddCharactersTable.designer.cs">
       <DependentUpon>202004241102448_AddCharactersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005011811356_AddedMappingToAnimeGenres.cs" />
+    <Compile Include="Migrations\202005011811356_AddedMappingToAnimeGenres.designer.cs">
+      <DependentUpon>202005011811356_AddedMappingToAnimeGenres.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -179,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004241102448_AddCharactersTable.resx">
       <DependentUpon>202004241102448_AddCharactersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005011811356_AddedMappingToAnimeGenres.resx">
+      <DependentUpon>202005011811356_AddedMappingToAnimeGenres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
