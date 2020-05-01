@@ -10,6 +10,7 @@ using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
 using System.Web;
+using System.Diagnostics;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -31,7 +32,13 @@ namespace AnimeTimeDbUpdater.Persistence
             //resolvedAnime.CoverThumb = GetImageFromUrl(animeInfoResolve.AnimeCoverThumbUrl);
             anime.CoverThumbUrl = animeInfoResolve.AnimeCoverThumbUrl;
 
+            CrawlStopwatch.ApplyDelay();
+
+            CrawlStopwatch.BeginCrawlTracking();
             _doc = _web.Load(animeInfoResolve.AnimeDetailsUrl);
+            CrawlStopwatch.EndCrawlTracking();
+
+
             ResolveAltTitle(anime);
             ResolveDescription(anime);
             ResolveYear(anime);
