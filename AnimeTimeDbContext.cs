@@ -37,7 +37,7 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new SourceConfiguration());
             modelBuilder.Configurations.Add(new UserAnimeBookmarkConfiguration());
             modelBuilder.Configurations.Add(new NotificationConfiguration());
-            modelBuilder.Configurations.Add(new CharacterConfiguration());
+            modelBuilder.Configurations.Add(new CharacterConfiguration());           
 
             base.OnModelCreating(modelBuilder);
         }
