@@ -17,7 +17,7 @@ namespace AnimeTimeDbUpdater.Utilities
             _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
             Directory.CreateDirectory(_path);
 
-            var timestamp = DateTime.UtcNow.ToString("dd_MM_yyyy H-mm-ss");
+            var timestamp = DateTime.UtcNow.ToString("yyyy_MM_dd H-mm-ss");
             _path = Path.Combine(_path, $"{timestamp}.txt");
 
             if (File.Exists(_path))

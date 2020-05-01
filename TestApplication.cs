@@ -31,7 +31,7 @@ namespace AnimeTimeDbUpdater
             var resolves = _repo.GetAnimeInfoResolves();
             var resolvedCount = 0;
 
-            LogGroup.Log("Resolving animes: \n");
+            LogGroup.Log("\nResolving animes: \n");
             foreach (var animeResolve in resolves)
             {
                 var anime = _repo.Resolve(animeResolve);
