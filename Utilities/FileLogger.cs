@@ -21,7 +21,7 @@ namespace AnimeTimeDbUpdater.Utilities
             _path = Path.Combine(_path, $"{timestamp}.txt");
 
             if (File.Exists(_path))
-                File.Delete(_path);            
+                File.Delete(_path);
         }
 
         public void Log(string message)

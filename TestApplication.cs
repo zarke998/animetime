@@ -13,6 +13,8 @@ using AnimeTimeDbUpdater.Utilities;
 using System.IO;
 using System.Drawing;
 using System.Web;
+using AnimeTime.Persistence;
+using AnimeTime.Core;
 
 namespace AnimeTimeDbUpdater
 {
@@ -35,7 +37,6 @@ namespace AnimeTimeDbUpdater
             foreach (var animeResolve in resolves)
             {
                 var anime = _repo.Resolve(animeResolve);
-
 #if DEBUG
                 Console.WriteLine("\n" + anime);
 
@@ -48,9 +49,9 @@ namespace AnimeTimeDbUpdater
 
                 resolvedCount++;
             }
-
             LogGroup.Log($"\nResolving finished. Total: {resolvedCount}");
 
+            
             Console.ReadLine();
         }
     }
