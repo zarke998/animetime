@@ -12,6 +12,8 @@ namespace AnimeTimeDbUpdater.Core
     {
         IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolvable> animeInfoResolves);
         Anime Resolve(AnimeInfoResolvable animeInfoResolve);
-        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolves();
+        IEnumerable<AnimeInfoResolvable> GetAllAnimeInfoResolvables();
+        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded();
+        void NextPage();
     }
 }

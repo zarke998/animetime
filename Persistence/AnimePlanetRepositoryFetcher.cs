@@ -29,7 +29,7 @@ namespace AnimeTimeDbUpdater.Persistence
             _animeInfoResolver = animeInfoResolver;
         }
 
-        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolves()
+        public IEnumerable<AnimeInfoResolvable> GetAllAnimeInfoResolvables()
         {
             List<AnimeInfoResolvable> animeResolves = new List<AnimeInfoResolvable>();
 
@@ -64,6 +64,16 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return null;
 
+        }
+
+        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NextPage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

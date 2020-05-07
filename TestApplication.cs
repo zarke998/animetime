@@ -29,7 +29,7 @@ namespace AnimeTimeDbUpdater
 
         public void Run()
         {
-            var resolves = _repo.GetAnimeInfoResolves();
+            var resolves = _repo.GetAllAnimeInfoResolvables();
             var resolvedCount = 0;
 
 
