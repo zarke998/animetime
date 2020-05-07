@@ -29,9 +29,9 @@ namespace AnimeTimeDbUpdater
 
         public void Run()
         {
-
             var resolves = _repo.GetAnimeInfoResolves();
             var resolvedCount = 0;
+
 
             ICollection<Anime> resolved = new List<Anime>();
             LogGroup.Log("\nResolving animes: \n");
@@ -39,15 +39,6 @@ namespace AnimeTimeDbUpdater
             {
                 var anime = _repo.Resolve(animeResolve);
                 resolved.Add(anime);
-#if DEBUG
-                Console.WriteLine("\n" + anime);
-
-                Console.WriteLine("Genres: \n");
-                foreach (var genre in anime.Genres)
-                    Console.WriteLine("\t" + genre.Name);
-
-                Console.WriteLine("------------------------------------------------------------------------------------------------\n");
- #endif
 
                 resolvedCount++;
             }

@@ -42,7 +42,18 @@ namespace AnimeTimeDbUpdater.Persistence
         }
         public Anime Resolve(AnimeInfoResolve animeInfoResolve)
         {
-            return _animeInfoResolver.Resolve(animeInfoResolve);
+            var anime =_animeInfoResolver.Resolve(animeInfoResolve);
+
+#if DEBUG
+            Console.WriteLine("\n" + anime);
+
+            Console.WriteLine("Genres: \n");
+            foreach (var genre in anime.Genres)
+                Console.WriteLine("\t" + genre.Name);
+
+            Console.WriteLine("------------------------------------------------------------------------------------------------\n");
+#endif
+            return anime;
         }
         public IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolve> animeInfoResolves)
         {
