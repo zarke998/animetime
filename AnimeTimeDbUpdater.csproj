@@ -90,7 +90,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerConfig.cs" />
-    <Compile Include="Core\Domain\AnimeInfoResolve.cs" />
+    <Compile Include="Core\Domain\AnimeInfoResolvable.cs" />
     <Compile Include="Core\IAnimeInfoResolveExtractor.cs" />
     <Compile Include="Core\IAnimeInfoResolver.cs" />
     <Compile Include="Core\IAnimeRepositoryFetcher.cs" />

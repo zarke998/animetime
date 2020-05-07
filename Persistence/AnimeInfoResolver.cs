@@ -25,7 +25,7 @@ namespace AnimeTimeDbUpdater.Persistence
             _doc = doc;
         }
 
-        public Anime Resolve(AnimeInfoResolve animeInfoResolve)
+        public Anime Resolve(AnimeInfoResolvable animeInfoResolve)
         {
             var anime = animeInfoResolve.Anime;
 

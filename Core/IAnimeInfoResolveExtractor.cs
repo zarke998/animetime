@@ -12,7 +12,7 @@ namespace AnimeTimeDbUpdater.Core
         bool IsFinished { get; }
 
         void Initialize(string websiteUrl, string animeListUrl);
-        IEnumerable<AnimeInfoResolve> GetAnimeInfoResolvesFromPage();
+        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvesFromPage();
         void NextPage();
 
     }

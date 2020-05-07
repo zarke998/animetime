@@ -18,6 +18,7 @@ namespace AnimeTimeDbUpdater.Persistence
         private IAnimeInfoResolver _animeInfoResolver;
 
         static string AnimeListUrl = "https://www.anime-planet.com/anime/all";
+        static string AnimeListByDateAddedUrl = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
         static string WebsiteUrl = "https://www.anime-planet.com";
 
         public AnimePlanetRepositoryFetcher(IAnimeInfoResolveExtractor animeInfoExtractor, IAnimeInfoResolver animeInfoResolver)
@@ -28,9 +29,9 @@ namespace AnimeTimeDbUpdater.Persistence
             _animeInfoResolver = animeInfoResolver;
         }
 
-        public IEnumerable<AnimeInfoResolve> GetAnimeInfoResolves()
+        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolves()
         {
-            List<AnimeInfoResolve> animeResolves = new List<AnimeInfoResolve>();
+            List<AnimeInfoResolvable> animeResolves = new List<AnimeInfoResolvable>();
 
             //while (!_animeInfoExtractor.IsFinished)
             //{
@@ -40,7 +41,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return animeResolves;
         }
-        public Anime Resolve(AnimeInfoResolve animeInfoResolve)
+        public Anime Resolve(AnimeInfoResolvable animeInfoResolve)
         {
             var anime =_animeInfoResolver.Resolve(animeInfoResolve);
 
@@ -55,7 +56,7 @@ namespace AnimeTimeDbUpdater.Persistence
 #endif
             return anime;
         }
-        public IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolve> animeInfoResolves)
+        public IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolvable> animeInfoResolves)
         {
             List<Anime> animeList = new List<Anime>();
 

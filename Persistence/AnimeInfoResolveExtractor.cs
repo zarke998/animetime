@@ -29,13 +29,14 @@ namespace AnimeTimeDbUpdater.Persistence
             CurrentPage = animeListUrl;
             WebsiteUrl = websiteUrl;
             AnimeListUrl = animeListUrl;
+            IsFinished = false;
         }
-        public IEnumerable<AnimeInfoResolve> GetAnimeInfoResolvesFromPage()
+        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvesFromPage()
         {
             if (WebsiteUrl == null || AnimeListUrl == null)
                 throw new NullReferenceException("Extractor not initialized. Use method Initialize() before any work with the extractor.");
 
-            var animeResolves = new List<AnimeInfoResolve>();
+            var animeResolves = new List<AnimeInfoResolvable>();
 
 
             CrawlStopwatch.ApplyDelay();
@@ -70,9 +71,9 @@ namespace AnimeTimeDbUpdater.Persistence
             CurrentPage = AnimeListUrl + nextPageLinkNode.GetAttributeValue("href","");
         }
 
-        private AnimeInfoResolve GetAnimeInfoResolve(string xmlNode)
+        private AnimeInfoResolvable GetAnimeInfoResolve(string xmlNode)
         {           
-            var animeResolve = new AnimeInfoResolve();
+            var animeResolve = new AnimeInfoResolvable();
             var doc = new HtmlDocument();
 
             doc.LoadHtml(xmlNode);

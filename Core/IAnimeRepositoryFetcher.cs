@@ -10,8 +10,8 @@ namespace AnimeTimeDbUpdater.Core
 {
     public interface IAnimeRepositoryFetcher
     {
-        IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolve> animeInfoResolves);
-        Anime Resolve(AnimeInfoResolve animeInfoResolve);
-        IEnumerable<AnimeInfoResolve> GetAnimeInfoResolves();
+        IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolvable> animeInfoResolves);
+        Anime Resolve(AnimeInfoResolvable animeInfoResolve);
+        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolves();
     }
 }
