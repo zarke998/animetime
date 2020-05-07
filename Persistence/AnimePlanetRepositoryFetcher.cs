@@ -14,14 +14,14 @@ namespace AnimeTimeDbUpdater.Persistence
 {
     class AnimePlanetRepositoryFetcher : IAnimeRepositoryFetcher
     {
-        private IAnimeInfoResolveExtractor _animeInfoExtractor;
+        private IAnimeInfoResolvableExtractor _animeInfoExtractor;
         private IAnimeInfoResolver _animeInfoResolver;
 
         static string AnimeListUrl = "https://www.anime-planet.com/anime/all";
         static string AnimeListByDateAddedUrl = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
         static string WebsiteUrl = "https://www.anime-planet.com";
 
-        public AnimePlanetRepositoryFetcher(IAnimeInfoResolveExtractor animeInfoExtractor, IAnimeInfoResolver animeInfoResolver)
+        public AnimePlanetRepositoryFetcher(IAnimeInfoResolvableExtractor animeInfoExtractor, IAnimeInfoResolver animeInfoResolver)
         {
             _animeInfoExtractor = animeInfoExtractor;
             _animeInfoExtractor.Initialize(WebsiteUrl, AnimeListUrl);

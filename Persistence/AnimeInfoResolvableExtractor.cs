@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
-    class AnimeInfoResolveExtractor : IAnimeInfoResolveExtractor
+    class AnimeInfoResolvableExtractor : IAnimeInfoResolvableExtractor
     {
         private HtmlWeb _web;
         private HtmlDocument _doc;
@@ -18,7 +18,7 @@ namespace AnimeTimeDbUpdater.Persistence
         public string WebsiteUrl { get ; set ; }
         public string AnimeListUrl { get ; set ; }
 
-        public AnimeInfoResolveExtractor(HtmlWeb web, HtmlDocument doc)
+        public AnimeInfoResolvableExtractor(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
             _doc = doc;

@@ -19,7 +19,7 @@ namespace AnimeTimeDbUpdater
 
             builder.RegisterType<TestApplication>().As<IApplication>();
             builder.RegisterType<AnimePlanetRepositoryFetcher>().As<IAnimeRepositoryFetcher>();
-            builder.RegisterType<AnimeInfoResolveExtractor>().As<IAnimeInfoResolveExtractor>();
+            builder.RegisterType<AnimeInfoResolvableExtractor>().As<IAnimeInfoResolvableExtractor>();
             builder.RegisterType<HtmlWeb>();
             builder.RegisterType<HtmlDocument>();
 

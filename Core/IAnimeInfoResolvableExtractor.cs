@@ -7,7 +7,7 @@ using AnimeTimeDbUpdater.Core.Domain;
 
 namespace AnimeTimeDbUpdater.Core
 {
-    interface IAnimeInfoResolveExtractor
+    interface IAnimeInfoResolvableExtractor
     {
         bool IsFinished { get; }
 
