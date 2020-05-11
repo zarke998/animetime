@@ -29,6 +29,15 @@ namespace AnimeTimeDbUpdater
 
         public void Run()
         {
+            if (_repo.CanFetchByDateAdded)
+                UpdateDatabaseViaDate();
+            else
+                UpdateDatabase();
+
+            Console.ReadLine();
+        }
+        private void UpdateDatabase()
+        {
             var resolves = _repo.GetAllAnimeInfoResolvables();
             var resolvedCount = 0;
 
@@ -53,8 +62,10 @@ namespace AnimeTimeDbUpdater
 
                 unitOfWork.Complete();
             }
-
-            Console.ReadLine();
+        }
+        private void UpdateDatabaseViaDate()
+        {
+            Console.WriteLine("TEST");
         }
     }
 }

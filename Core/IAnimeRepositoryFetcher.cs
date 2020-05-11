@@ -10,10 +10,18 @@ namespace AnimeTimeDbUpdater.Core
 {
     public interface IAnimeRepositoryFetcher
     {
-        IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolvable> animeInfoResolves);
+        bool CanFetchByDateAdded { get; }
+        string CurrentPage { get; }
+
+        string AnimeListUrl { get; }
+        string AnimeListByDateAddedUrl { get; }
+        string WebsiteUrl { get; }
+
         Anime Resolve(AnimeInfoResolvable animeInfoResolve);
+        IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfoResolvable> animeInfoResolves);
         IEnumerable<AnimeInfoResolvable> GetAllAnimeInfoResolvables();
-        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded();
-        void NextPage();
+        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded(string page);
+        string NextPage();
+        void ResetFetcher();
     }
 }

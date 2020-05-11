@@ -9,6 +9,7 @@ using AnimeTimeDbUpdater.Core.Domain;
 using HtmlAgilityPack;
 using System.Windows.Forms;
 using System.Threading;
+using System.Net;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -16,30 +17,19 @@ namespace AnimeTimeDbUpdater.Persistence
     {
         private IAnimeInfoResolvableExtractor _animeInfoExtractor;
         private IAnimeInfoResolver _animeInfoResolver;
+        
+        public string AnimeListUrl { get; private set; } = "https://www.anime-planet.com/anime/all";///
+        public string AnimeListByDateAddedUrl { get; private set; } = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
+        public string WebsiteUrl { get; private set; } = "https://www.anime-planet.com";
 
-        static string AnimeListUrl = "https://www.anime-planet.com/anime/all";
-        static string AnimeListByDateAddedUrl = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
-        static string WebsiteUrl = "https://www.anime-planet.com";
+        public bool CanFetchByDateAdded { get; private set; }
+        public string CurrentPage { get; private set; }
 
         public AnimePlanetRepositoryFetcher(IAnimeInfoResolvableExtractor animeInfoExtractor, IAnimeInfoResolver animeInfoResolver)
         {
             _animeInfoExtractor = animeInfoExtractor;
-            _animeInfoExtractor.Initialize(WebsiteUrl, AnimeListUrl);
-
             _animeInfoResolver = animeInfoResolver;
-        }
-
-        public IEnumerable<AnimeInfoResolvable> GetAllAnimeInfoResolvables()
-        {
-            List<AnimeInfoResolvable> animeResolves = new List<AnimeInfoResolvable>();
-
-            //while (!_animeInfoExtractor.IsFinished)
-            //{
-                animeResolves.AddRange(_animeInfoExtractor.GetAnimeInfoResolvesFromPage());
-                _animeInfoExtractor.NextPage();
-            //}
-
-            return animeResolves;
+            CanFetchByDateAdded = UrlIsAvailable(AnimeListByDateAddedUrl);
         }
         public Anime Resolve(AnimeInfoResolvable animeInfoResolve)
         {
@@ -66,14 +56,52 @@ namespace AnimeTimeDbUpdater.Persistence
 
         }
 
-        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded()
+        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded(string page)
         {
-            throw new NotImplementedException();
+            if(!_animeInfoExtractor.IsSessionStarted)
+                _animeInfoExtractor.StartExtractSession(AnimeListUrl, WebsiteUrl);
+
+            CurrentPage = page;
+
+            return _animeInfoExtractor.GetResolvablesFromPage(page);
+        }
+        public IEnumerable<AnimeInfoResolvable> GetAllAnimeInfoResolvables()
+        {
+            List<AnimeInfoResolvable> animeResolves = new List<AnimeInfoResolvable>();
+
+            var page = AnimeListUrl;
+
+            _animeInfoExtractor.StartExtractSession(page, WebsiteUrl);
+            while (!_animeInfoExtractor.IsFinished)
+            {
+                animeResolves.AddRange(_animeInfoExtractor.GetResolvablesFromPage(page));
+                page = _animeInfoExtractor.NextPage();    
+            }
+            _animeInfoExtractor.EndExtractSession();
+
+            return animeResolves;
         }
 
-        public void NextPage()
+        public string NextPage()
         {
-            throw new NotImplementedException();
+            return _animeInfoExtractor.NextPage();
+        }
+        public void ResetFetcher()
+        {
+            _animeInfoExtractor.EndExtractSession();
+        }
+
+        private bool UrlIsAvailable(string url)
+        {
+            HttpWebRequest request = WebRequest.CreateHttp(url);
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    return response.StatusCode == HttpStatusCode.OK;
+                }
+            }
+            catch(Exception e) { return false; }
         }
     }
 }

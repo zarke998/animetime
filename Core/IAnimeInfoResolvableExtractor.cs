@@ -10,10 +10,15 @@ namespace AnimeTimeDbUpdater.Core
     interface IAnimeInfoResolvableExtractor
     {
         bool IsFinished { get; }
+        string AnimeListUrl { get; }
+        string WebsiteUrl { get; }
+        string CurrentPage { get; }
+        bool IsSessionStarted { get; }
 
-        void Initialize(string websiteUrl, string animeListUrl);
-        IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvesFromPage();
-        void NextPage();
+        void StartExtractSession(string animeListUrl, string websiteUrl);
+        void EndExtractSession();
+        IEnumerable<AnimeInfoResolvable> GetResolvablesFromPage(string page);
+        string NextPage();
 
     }
 }

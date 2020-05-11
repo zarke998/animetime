@@ -14,30 +14,36 @@ namespace AnimeTimeDbUpdater.Persistence
         private HtmlDocument _doc;
 
         public bool IsFinished { get; private set; }
+        public string AnimeListUrl { get ; private set ; }
+        public string WebsiteUrl { get; private set; }
+
+        public bool IsSessionStarted { get; private set; }
         public string CurrentPage { get; private set; }
-        public string WebsiteUrl { get ; set ; }
-        public string AnimeListUrl { get ; set ; }
 
         public AnimeInfoResolvableExtractor(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
             _doc = doc;
-        }
 
-        public void Initialize(string websiteUrl, string animeListUrl)
-        {
-            CurrentPage = animeListUrl;
-            WebsiteUrl = websiteUrl;
-            AnimeListUrl = animeListUrl;
             IsFinished = false;
         }
-        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvesFromPage()
+        public void StartExtractSession(string animeListUrl, string websiteUrl)
         {
-            if (WebsiteUrl == null || AnimeListUrl == null)
-                throw new NullReferenceException("Extractor not initialized. Use method Initialize() before any work with the extractor.");
+            AnimeListUrl = animeListUrl;
+            WebsiteUrl = websiteUrl;
+            IsSessionStarted = true;
+        }
+        public void EndExtractSession()
+        {
+            AnimeListUrl = null;
+            WebsiteUrl = null;
+            IsSessionStarted = false;
+        }
+        public IEnumerable<AnimeInfoResolvable> GetResolvablesFromPage(string page)
+        {
+            CurrentPage = page;
 
             var animeResolves = new List<AnimeInfoResolvable>();
-
 
             CrawlStopwatch.ApplyDelay();
 
@@ -49,7 +55,7 @@ namespace AnimeTimeDbUpdater.Persistence
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
             foreach (var node in animeNodes)
             {
-                var animeInfoResolve = GetAnimeInfoResolve(node.OuterHtml);
+                var animeInfoResolve = GetAnimeInfoResolvable(node.OuterHtml);
                 animeResolves.Add(animeInfoResolve);
 
                 LogGroup.Log("Fetched: " + animeInfoResolve.Anime.Title);
@@ -57,7 +63,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return animeResolves;
         }
-        public void NextPage()
+        public string NextPage()
         {
             var navNode = _doc.DocumentNode.SelectSingleNode("//div[contains(@class,'pagination')]");
             var nextPageLinkNode = navNode.SelectSingleNode(".//li[contains(@class,'next')]/a");
@@ -65,13 +71,14 @@ namespace AnimeTimeDbUpdater.Persistence
             if (nextPageLinkNode == null)
             {
                 IsFinished = true;
-                return;
+                return null;
             }
 
-            CurrentPage = AnimeListUrl + nextPageLinkNode.GetAttributeValue("href","");
+            var nextPage = AnimeListUrl + nextPageLinkNode.GetAttributeValue("href","");
+            return nextPage;
         }
 
-        private AnimeInfoResolvable GetAnimeInfoResolve(string xmlNode)
+        private AnimeInfoResolvable GetAnimeInfoResolvable(string xmlNode)
         {           
             var animeResolve = new AnimeInfoResolvable();
             var doc = new HtmlDocument();
