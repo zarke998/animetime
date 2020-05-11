@@ -25,6 +25,7 @@ namespace AnimeTime.Core.Domain
         public string CoverThumbUrl { get; set; }
         public float Rating { get; set; }
         public int ReleaseYear { get; set; }
+        public int CreatedId { get; set; }
         public YearSeason YearSeason { get; set; }
         public Category Category { get; set; }
         public ICollection<Genre> Genres { get; set; }
@@ -37,6 +38,7 @@ namespace AnimeTime.Core.Domain
         {
             StringBuilder s = new StringBuilder();
 
+            s.AppendLine($"CreatedId: {CreatedId}");
             s.AppendLine($"Title: {Title}");
             s.AppendLine($"AltTitle: { (TitleAlt != null ? TitleAlt : "(none)") }");
             s.AppendLine($"\nDescription: {Description }\n");
