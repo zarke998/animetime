@@ -48,6 +48,7 @@ namespace AnimeTimeDbUpdater.Utilities
             Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
             Console.WriteLine($"Last crawl elapsed: {elapsed}");
             Console.WriteLine($"Time to wait: {timeToWait}");
+            Console.WriteLine();
 #endif
 
             if (timeToWait > 0)

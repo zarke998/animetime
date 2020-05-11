@@ -94,6 +94,12 @@ namespace AnimeTimeDbUpdater.Persistence
             var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
             animeResolve.AnimeCoverThumbUrl = WebsiteUrl + thumbUrl;
 
+            var createdId = doc.DocumentNode.SelectSingleNode(".//li").GetAttributeValue("data-id", null);
+            if (createdId == null)
+                animeResolve.Anime.CreatedId = null;
+            else
+                animeResolve.Anime.CreatedId = Convert.ToInt32(createdId);
+
             return animeResolve;
         }
     }
