@@ -110,7 +110,13 @@ namespace AnimeTimeDbUpdater.Persistence
         }
         private void ResolveGenres(Anime anime)
         {
-            var tagListContainer = _doc.DocumentNode.SelectNodes("//div[contains(@class,'tags')]")[0];
+            var tagListContainers = _doc.DocumentNode.SelectNodes("//div[contains(@class,'tags')]");
+            HtmlNode tagListContainer;
+            if (tagListContainers == null)
+                return;
+            else
+                tagListContainer = tagListContainers[0];
+
             var tags = tagListContainer.SelectNodes(".//li[contains(@itemprop,'genre')]/a");
 
             foreach (var tag in tags)
