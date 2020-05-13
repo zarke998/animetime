@@ -80,7 +80,17 @@ namespace AnimeTimeDbUpdater.Persistence
             var yearInnerText = _doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").InnerText;
             var year = yearInnerText.Split('-')[0];
             year = year.Trim();
-            anime.ReleaseYear = Convert.ToInt32(year);
+            if (Int32.TryParse(year, out int parsedYear))
+            {
+                anime.ReleaseYear = parsedYear;
+            }
+            else
+            {
+#if DEBUG
+                Console.WriteLine($"[Exception caught]: Could not parse release year. Value: {year}");
+#endif
+                anime.ReleaseYear = null;
+            }
         }
         private void ResolveYearSeason(Anime anime)
         {
