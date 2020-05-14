@@ -5,6 +5,7 @@ using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Web;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -74,7 +75,7 @@ namespace AnimeTimeDbUpdater.Persistence
                 return null;
             }
 
-            var nextPage = AnimeListUrl + nextPageLinkNode.GetAttributeValue("href","");
+            var nextPage = AnimeListUrl + HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
             return nextPage;
         }
 
