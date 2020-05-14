@@ -8,6 +8,8 @@ using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Persistence;
 using HtmlAgilityPack;
 using AnimeTimeDbUpdater.Utilities;
+using AnimeTime.Persistence;
+using AnimeTime.Core;
 
 namespace AnimeTimeDbUpdater
 {
@@ -19,6 +21,7 @@ namespace AnimeTimeDbUpdater
 
             builder.RegisterType<TestApplication>().As<IApplication>();
             builder.RegisterType<AnimePlanetRepositoryFetcher>().As<IAnimeRepositoryFetcher>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<AnimeInfoResolvableExtractor>().As<IAnimeInfoResolvableExtractor>();
             builder.RegisterType<HtmlWeb>();
             builder.RegisterType<HtmlDocument>();

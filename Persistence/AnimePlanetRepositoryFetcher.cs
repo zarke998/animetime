@@ -56,14 +56,17 @@ namespace AnimeTimeDbUpdater.Persistence
 
         }
 
-        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded(string page)
+        public IEnumerable<AnimeInfoResolvable> GetAnimeInfoResolvablesByDateAdded(string page = null)
         {
             if(!_animeInfoExtractor.IsSessionStarted)
                 _animeInfoExtractor.StartExtractSession(AnimeListUrl, WebsiteUrl);
 
-            CurrentPage = page;
+            if (page == null)
+                CurrentPage = AnimeListByDateAddedUrl;
+            else
+                CurrentPage = page;
 
-            return _animeInfoExtractor.GetResolvablesFromPage(page);
+            return _animeInfoExtractor.GetResolvablesFromPage(CurrentPage);
         }
         public IEnumerable<AnimeInfoResolvable> GetAllAnimeInfoResolvables()
         {
