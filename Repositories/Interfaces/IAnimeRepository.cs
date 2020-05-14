@@ -9,6 +9,6 @@ namespace AnimeTime.Core.Repositories.Interfaces
 {
     public interface IAnimeRepository : IRepository<Anime>
     {
-
+        IEnumerable<string> GetAllTitles();
     }
 }
