@@ -21,5 +21,10 @@ namespace AnimeTime.Persistence.Repositories
         public AnimeRepository(AnimeTimeDbContext context) : base(context)
         {
         }
+
+        public IEnumerable<string> GetAllTitles()
+        {
+            return AnimeTimeDbContext.Animes.Select(a => a.Title).ToList();
+        }
     }
 }
