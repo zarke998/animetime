@@ -14,8 +14,6 @@ namespace AnimeTime.Core
         IYearSeasonRepository YearSeasons { get; }
         IGenreRepository Genres { get; }
 
-        bool InsertOptimizationEnabled { get; set; }
-
         void Complete();
     }
 }
