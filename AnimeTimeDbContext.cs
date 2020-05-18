@@ -25,10 +25,9 @@ namespace AnimeTime.Persistence
         public DbSet<Character> Characters { get; set; }
 
 
-        public AnimeTimeDbContext(bool disableChangeDetection = false) : base(StringConstants.AnimeTimeConnectionString)
+        public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
-            if (disableChangeDetection)
-                this.Configuration.AutoDetectChangesEnabled = false;
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
