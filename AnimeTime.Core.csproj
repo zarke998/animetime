@@ -45,6 +45,7 @@
     <Compile Include="Domain\Anime.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Character.cs" />
+    <Compile Include="Domain\Comparers\GenreComparer.cs" />
     <Compile Include="Domain\Episode.cs" />
     <Compile Include="Domain\Genre.cs" />
     <Compile Include="Domain\Notification.cs" />
