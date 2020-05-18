@@ -12,25 +12,11 @@ namespace AnimeTime.Persistence
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AnimeTimeDbContext _animeTimeDbContext;
-        private bool _insertOptimizationEnabled;
-        public bool InsertOptimizationEnabled
-        {
-            get
-            {
-                return _insertOptimizationEnabled;
-            }
-            set
-            {
-                _insertOptimizationEnabled = value;
-                _animeTimeDbContext.Configuration.AutoDetectChangesEnabled = !_insertOptimizationEnabled;
-            }
-        }
-
         public IAnimeRepository Animes { get; private set; }
         public ICategoryRepository Categories { get; private set; }
         public IYearSeasonRepository YearSeasons { get; private set; }
         public IGenreRepository Genres { get; private set; }
-        
+
         public UnitOfWork(AnimeTimeDbContext context)
         {
             _animeTimeDbContext = context;
@@ -43,6 +29,7 @@ namespace AnimeTime.Persistence
         {
             _animeTimeDbContext.SaveChanges();
         }
+
         public void Dispose()
         {
             _animeTimeDbContext.Dispose();
