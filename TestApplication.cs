@@ -35,7 +35,7 @@ namespace AnimeTimeDbUpdater
 
         public void Run()
         {
-            using (IUnitOfWork unitOfWork = new UnitOfWork(new AnimeTimeDbContext()))
+            using (IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork())
             {
                 _titles = new HashSet<string>(unitOfWork.Animes.GetAllTitles());
             }
@@ -64,7 +64,7 @@ namespace AnimeTimeDbUpdater
             }
             LogGroup.Log($"\nResolving finished. Total: {resolvedCount}");
 
-            using (IUnitOfWork unitOfWork = new UnitOfWork(new AnimeTimeDbContext()))
+            using (IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork())
             {
                 foreach (var anime in resolved)
                 {
@@ -121,7 +121,7 @@ namespace AnimeTimeDbUpdater
         {
             foreach (var a in animes)
             {
-                IUnitOfWork unitOfWork = new UnitOfWork(new AnimeTimeDbContext());
+                IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
                 unitOfWork.InsertOptimizationEnabled = true;
 
                 Anime anime = _repo.Resolve(a);
