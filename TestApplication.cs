@@ -110,10 +110,10 @@ namespace AnimeTimeDbUpdater
                     newAnimes.Add(r);
                 }
 
-                if (nextPage == null)
-                    endOfFetching = true;
+            if (nextPage == null)
+                endOfFetching = true;
 
-            } while (!endOfFetching);
+        } while (!endOfFetching);
 
             return newAnimes;
         }
