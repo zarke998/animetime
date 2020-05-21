@@ -20,7 +20,7 @@ using AnimeTimeDbUpdater.Utilities;
 
 namespace AnimeTimeDbUpdater
 {
-    class TestApplication : IApplication
+    class MainApplication : IApplication
     {
         IAnimeRepositoryFetcher _repo;
         HashSet<string> _titles;
@@ -28,7 +28,7 @@ namespace AnimeTimeDbUpdater
         HashSet<YearSeason> _yearSeasons;
         HashSet<Category> _categories;
 
-        public TestApplication(IAnimeRepositoryFetcher repo)
+        public MainApplication(IAnimeRepositoryFetcher repo)
         {
             _repo = repo;
         }

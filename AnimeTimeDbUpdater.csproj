@@ -87,7 +87,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
     <Compile Include="ClassFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerConfig.cs" />
@@ -103,7 +102,7 @@
     <Compile Include="Persistence\AnimePlanetRepositoryFetcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestApplication.cs" />
+    <Compile Include="MainApplication.cs" />
     <Compile Include="Utilities\ConsoleLogger.cs" />
     <Compile Include="Utilities\CrawlStopwatch.cs" />
     <Compile Include="Utilities\FileLogger.cs" />
