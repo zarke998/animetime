@@ -148,17 +148,17 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
+    <Content Include="dependencies.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
       <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
       <Name>AnimeTime.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AnimeTime.Persistence\AnimeTime.Persistence.csproj">
-      <Project>{44ce75f6-4d9a-472a-ae81-343ad142b25a}</Project>
+    <ProjectReference Include="..\animetime-persistence\AnimeTime.Persistence.csproj">
+      <Project>{15172c36-0a91-44aa-b9f5-e390d05479b8}</Project>
       <Name>AnimeTime.Persistence</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="dependencies.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
