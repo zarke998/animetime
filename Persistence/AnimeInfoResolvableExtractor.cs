@@ -75,7 +75,7 @@ namespace AnimeTimeDbUpdater.Persistence
                 return null;
             }
 
-            var nextPage = AnimeListUrl + HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
+            var nextPage = WebsiteUrl + HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
             return nextPage;
         }
 
