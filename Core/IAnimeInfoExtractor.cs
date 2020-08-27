@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core.Domain;
 
 namespace AnimeTimeDbUpdater.Core
 {
-    public interface IAnimeInfoResolver
+    interface IAnimeInfoExtractor
     {
-        Anime Resolve(AnimeInfo animeInfoResolve);
+        string LoadedPage { get; }
+
+        IEnumerable<AnimeInfo> GetFromPage(string page, string websiteUrl = "");
+        string NextPage();
     }
 }

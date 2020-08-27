@@ -7,11 +7,10 @@ using AnimeTime.Core.Domain;
 
 namespace AnimeTimeDbUpdater.Core.Domain
 {
-    public class AnimeInfoResolvable
+    public class AnimeInfo
     {
         public Anime Anime { get; set; } = new Anime();
         public string AnimeDetailsUrl { get; set; }
-
         public string AnimeCoverThumbUrl { get; set; }
     }
 }

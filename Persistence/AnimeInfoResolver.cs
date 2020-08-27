@@ -25,18 +25,17 @@ namespace AnimeTimeDbUpdater.Persistence
             _doc = doc;
         }
 
-        public Anime Resolve(AnimeInfoResolvable animeInfoResolve)
+        public Anime Resolve(AnimeInfo animeInfoResolve)
         {
             var anime = animeInfoResolve.Anime;
 
-            //resolvedAnime.CoverThumb = GetImageFromUrl(animeInfoResolve.AnimeCoverThumbUrl);
             anime.CoverThumbUrl = animeInfoResolve.AnimeCoverThumbUrl;
 
-            CrawlStopwatch.ApplyDelay();
+            CrawlDelayer.ApplyDelay();
 
-            CrawlStopwatch.BeginCrawlTracking();
+            CrawlDelayer.BeginCrawlTracking();
             _doc = _web.Load(animeInfoResolve.AnimeDetailsUrl);
-            CrawlStopwatch.EndCrawlTracking();
+            CrawlDelayer.EndCrawlTracking();
 
 
             ResolveAltTitle(anime);
@@ -49,11 +48,6 @@ namespace AnimeTimeDbUpdater.Persistence
 
             LogGroup.Log($"Resolved: {animeInfoResolve.AnimeDetailsUrl} ({anime.Title})");
             return anime;
-        }
-        private byte[] GetImageFromUrl(string thumbUrl)
-        {
-            using (WebClient client = new WebClient())
-                return client.DownloadData(thumbUrl);
         }
 
         private void ResolveAltTitle(Anime anime)

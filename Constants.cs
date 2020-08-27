@@ -8,7 +8,7 @@ namespace AnimeTimeDbUpdater
 {
     public static class Constants
     {
-        public const double CrawlTime = 1.0;
-        public const double CrawlTimeOffset = 0.2;
+        public const double CrawlWait = 1.0;
+        public const double CrawlWaitOffset = 0.2;
     }
 }

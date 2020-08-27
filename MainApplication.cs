@@ -22,13 +22,14 @@ namespace AnimeTimeDbUpdater
 {
     class MainApplication : IApplication
     {
-        IAnimeRepositoryFetcher _repo;
+        IAnimeInfoRepository _repo;
+
         HashSet<string> _titles;
         HashSet<Genre> _genres;
         HashSet<YearSeason> _yearSeasons;
         HashSet<Category> _categories;
 
-        public MainApplication(IAnimeRepositoryFetcher repo)
+        public MainApplication(IAnimeInfoRepository repo)
         {
             _repo = repo;
         }
@@ -47,9 +48,10 @@ namespace AnimeTimeDbUpdater
 
             Console.ReadLine();
         }
+
         private void UpdateDatabase()
         {
-            var resolves = _repo.GetAllAnimeInfoResolvables();
+            var resolves = _repo.GetAll();
             var resolvedCount = 0;
 
 
@@ -89,16 +91,16 @@ namespace AnimeTimeDbUpdater
 #endif
             InsertAnimesIntoDatabase(newAnimes);
         }
-        private IEnumerable<AnimeInfoResolvable> GetNewAnimes()
-        {
-            ICollection<AnimeInfoResolvable> newAnimes = new List<AnimeInfoResolvable>();
 
-            string nextPage = null;
+        private IEnumerable<AnimeInfo> GetNewAnimes()
+        {
+            ICollection<AnimeInfo> newAnimes = new List<AnimeInfo>();
+
             var endOfFetching = false;
+
             do
             {
-                IEnumerable<AnimeInfoResolvable> resolvables = _repo.GetAnimeInfoResolvablesByDateAdded(nextPage);
-                nextPage = _repo.NextPage();
+                IEnumerable<AnimeInfo> resolvables = _repo.GetByDate();
 
                 foreach (var r in resolvables)
                 {
@@ -110,14 +112,15 @@ namespace AnimeTimeDbUpdater
                     newAnimes.Add(r);
                 }
 
-            if (nextPage == null)
-                endOfFetching = true;
+                _repo.NextPage();
+                if (_repo.LastPageReached)
+                    endOfFetching = true;
 
-        } while (!endOfFetching);
+            } while (!endOfFetching);
 
             return newAnimes;
         }
-        private void InsertAnimesIntoDatabase(IEnumerable<AnimeInfoResolvable> animes)
+        private void InsertAnimesIntoDatabase(IEnumerable<AnimeInfo> animes)
         {
             foreach (var a in animes)
             {
@@ -129,6 +132,7 @@ namespace AnimeTimeDbUpdater
                 _genres = new HashSet<Genre>(unitOfWork.Genres.GetAll(), new GenreComparer());
                 _yearSeasons = new HashSet<YearSeason>(unitOfWork.YearSeasons.GetAll(), new YearSeasonComparer());
                 _categories = new HashSet<Category>(unitOfWork.Categories.GetAll(), new CategoryComparer());
+
                 AddAnimeRelationships(anime);
 
                 unitOfWork.Animes.Add(anime);
@@ -142,7 +146,7 @@ namespace AnimeTimeDbUpdater
                 s1.Stop();
                 Console.WriteLine($"Inserting done. Elapsed {s1.ElapsedMilliseconds} ms.");
 #endif
-            }            
+            }
         }
         private void AddAnimeRelationships(Anime anime)
         {

@@ -20,16 +20,16 @@ namespace AnimeTimeDbUpdater
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainApplication>().As<IApplication>();
-            builder.RegisterType<AnimePlanetRepositoryFetcher>().As<IAnimeRepositoryFetcher>();
+            builder.RegisterType<AnimePlanetRepository>().As<IAnimeInfoRepository>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<AnimeInfoResolvableExtractor>().As<IAnimeInfoResolvableExtractor>();
+            builder.RegisterType<AnimeInfoExtractor>().As<IAnimeInfoExtractor>();
+            builder.RegisterType<AnimeInfoResolver>().As<IAnimeInfoResolver>();
             builder.RegisterType<HtmlWeb>();
             builder.RegisterType<HtmlDocument>();
 
             builder.RegisterType<FileLogger>();
             builder.RegisterType<ConsoleLogger>();
 
-            builder.RegisterType<AnimeInfoResolver>().As<IAnimeInfoResolver>();
 
             return builder.Build();
         }

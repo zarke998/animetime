@@ -9,54 +9,36 @@ using System.Web;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
-    class AnimeInfoResolvableExtractor : IAnimeInfoResolvableExtractor
+    class AnimeInfoExtractor : IAnimeInfoExtractor
     {
         private HtmlWeb _web;
         private HtmlDocument _doc;
 
-        public bool IsFinished { get; private set; }
-        public string AnimeListUrl { get ; private set ; }
-        public string WebsiteUrl { get; private set; }
+        public string LoadedPage { get; private set; }
 
-        public bool IsSessionStarted { get; private set; }
-        public string CurrentPage { get; private set; }
-
-        public AnimeInfoResolvableExtractor(HtmlWeb web, HtmlDocument doc)
+        public AnimeInfoExtractor(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
             _doc = doc;
-
-            IsFinished = false;
         }
-        public void StartExtractSession(string animeListUrl, string websiteUrl)
+
+        public IEnumerable<AnimeInfo> GetFromPage(string page, string websiteUrl = "")
         {
-            AnimeListUrl = animeListUrl;
-            WebsiteUrl = websiteUrl;
-            IsSessionStarted = true;
-        }
-        public void EndExtractSession()
-        {
-            AnimeListUrl = null;
-            WebsiteUrl = null;
-            IsSessionStarted = false;
-        }
-        public IEnumerable<AnimeInfoResolvable> GetResolvablesFromPage(string page)
-        {
-            CurrentPage = page;
+            var animeResolves = new List<AnimeInfo>();
+            
+            CrawlDelayer.ApplyDelay();
 
-            var animeResolves = new List<AnimeInfoResolvable>();
+            CrawlDelayer.BeginCrawlTracking();
+            _doc = _web.Load(page);
+            LoadedPage = page;
+            CrawlDelayer.EndCrawlTracking();
 
-            CrawlStopwatch.ApplyDelay();
+            LogGroup.Log("\n\n\t\t\t\t Getting resolves from page: " + LoadedPage + "\n\n");
 
-            CrawlStopwatch.BeginCrawlTracking();
-            _doc = _web.Load(CurrentPage);
-            CrawlStopwatch.EndCrawlTracking();
-
-            LogGroup.Log("\n\n\t\t\t\t Getting resolves from page: " + CurrentPage + "\n\n");
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
             foreach (var node in animeNodes)
             {
-                var animeInfoResolve = GetAnimeInfoResolvable(node.OuterHtml);
+                var animeInfoResolve = GetAnimeInfoResolvable(node.OuterHtml, websiteUrl);
                 animeResolves.Add(animeInfoResolve);
 
                 LogGroup.Log("Fetched: " + animeInfoResolve.Anime.Title);
@@ -70,18 +52,14 @@ namespace AnimeTimeDbUpdater.Persistence
             var nextPageLinkNode = navNode.SelectSingleNode(".//li[contains(@class,'next')]/a");
 
             if (nextPageLinkNode == null)
-            {
-                IsFinished = true;
                 return null;
-            }
 
-            var nextPage = WebsiteUrl + HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
+            var nextPage = HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
             return nextPage;
         }
-
-        private AnimeInfoResolvable GetAnimeInfoResolvable(string xmlNode)
+        private AnimeInfo GetAnimeInfoResolvable(string xmlNode, string websiteUrl = "")
         {           
-            var animeResolve = new AnimeInfoResolvable();
+            var animeResolve = new AnimeInfo();
             var doc = new HtmlDocument();
 
             doc.LoadHtml(xmlNode);
@@ -90,10 +68,10 @@ namespace AnimeTimeDbUpdater.Persistence
             animeResolve.Anime.Title = title;
 
             var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
-            animeResolve.AnimeDetailsUrl = WebsiteUrl + detailsUrl;
+            animeResolve.AnimeDetailsUrl = websiteUrl + detailsUrl;
 
             var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
-            animeResolve.AnimeCoverThumbUrl = WebsiteUrl + thumbUrl;
+            animeResolve.AnimeCoverThumbUrl = websiteUrl + thumbUrl;
 
             var createdId = doc.DocumentNode.SelectSingleNode(".//li").GetAttributeValue("data-id", null);
             if (createdId == null)

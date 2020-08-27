@@ -7,16 +7,11 @@ using System.Diagnostics;
 
 namespace AnimeTimeDbUpdater.Utilities
 {
-    public static class CrawlStopwatch
+    public static class CrawlDelayer
     {
         private static Stopwatch _stopwatch = new Stopwatch();
         private static Stopwatch _crawlStopwatch = new Stopwatch();
-        public static bool IsRunning { 
-            get
-            {
-                return _stopwatch.IsRunning;
-            } 
-        }
+
         private static double LastCrawledFor { get; set; }
         private static double ElapsedTimeFromLastCrawl
         {
@@ -26,23 +21,15 @@ namespace AnimeTimeDbUpdater.Utilities
                 return elapsed;
             }            
         }
-        public static void Start()
-        {
-            _stopwatch.Start();
-        }
-        public static void Restart()
-        {
-            _stopwatch.Restart();
-        }
 
         public static void ApplyDelay()
         {
             if (!_stopwatch.IsRunning)
                 return;
 
-            var elapsed = CrawlStopwatch.ElapsedTimeFromLastCrawl;
-            var lastCrawledFor = CrawlStopwatch.LastCrawledFor;
-            var timeToWait = Constants.CrawlTime + Constants.CrawlTimeOffset - (elapsed - lastCrawledFor);
+            var elapsed = CrawlDelayer.ElapsedTimeFromLastCrawl;
+            var lastCrawledFor = CrawlDelayer.LastCrawledFor;
+            var timeToWait = Constants.CrawlWait + Constants.CrawlWaitOffset - (elapsed - lastCrawledFor);
 
 #if DEBUG
             Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
