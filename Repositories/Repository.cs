@@ -18,6 +18,18 @@ namespace AnimeTime.Persistence.Repositories
             _dbContext = dbContext;
         }
 
+        public void Attach(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Attach(entity);
+        }
+        public void AttachRange(IEnumerable<TEntity> entities)
+        {
+            foreach(var entity in entities)
+            {
+                _dbContext.Set<TEntity>().Attach(entity);
+            }
+        }
+
         public void Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
