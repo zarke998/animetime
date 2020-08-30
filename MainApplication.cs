@@ -39,6 +39,9 @@ namespace AnimeTimeDbUpdater
             using (IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork())
             {
                 _titles = new HashSet<string>(unitOfWork.Animes.GetAllTitles());
+                _genres = new HashSet<Genre>(unitOfWork.Genres.GetAll(), new GenreComparer());
+                _yearSeasons = new HashSet<YearSeason>(unitOfWork.YearSeasons.GetAll(), new YearSeasonComparer());
+                _categories = new HashSet<Category>(unitOfWork.Categories.GetAll(), new CategoryComparer());
             }
 
             if (_repo.CanFetchByDateAdded)
@@ -78,17 +81,11 @@ namespace AnimeTimeDbUpdater
         }
         private void UpdateDatabaseViaDate()
         {
+
             var newAnimes = GetNewAnimes();
-#if DEBUG
-            Console.WriteLine("Reversing anime list.");
-            Stopwatch s = new Stopwatch();
-            s.Start();
-#endif
+
             newAnimes.Reverse();
-#if DEBUG
-            s.Stop();
-            Console.WriteLine($"Reversing done. Elapsed:{s.ElapsedMilliseconds} ms.");
-#endif
+
             InsertAnimesIntoDatabase(newAnimes);
         }
 
@@ -114,40 +111,49 @@ namespace AnimeTimeDbUpdater
 
                 _repo.NextPage();
                 if (_repo.LastPageReached)
+                {
                     endOfFetching = true;
+                }
 
             } while (!endOfFetching);
 
             return newAnimes;
         }
         private void InsertAnimesIntoDatabase(IEnumerable<AnimeInfo> animes)
-        {
+        { 
             foreach (var a in animes)
             {
                 IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
-                unitOfWork.InsertOptimizationEnabled = true;
+                InitializeUnitOfWork(unitOfWork);
 
                 Anime anime = _repo.Resolve(a);
 
-                _genres = new HashSet<Genre>(unitOfWork.Genres.GetAll(), new GenreComparer());
-                _yearSeasons = new HashSet<YearSeason>(unitOfWork.YearSeasons.GetAll(), new YearSeasonComparer());
-                _categories = new HashSet<Category>(unitOfWork.Categories.GetAll(), new CategoryComparer());
-
                 AddAnimeRelationships(anime);
-
                 unitOfWork.Animes.Add(anime);
-#if DEBUG
+
                 Console.WriteLine("Inserting into database.");
-                Stopwatch s1 = new Stopwatch();
-                s1.Start();
-#endif
                 unitOfWork.Complete();
-#if DEBUG
-                s1.Stop();
-                Console.WriteLine($"Inserting done. Elapsed {s1.ElapsedMilliseconds} ms.");
-#endif
+
+                UnitOfWorkToCache(unitOfWork);
+
+                Console.WriteLine($"Inserting done.");
             }
+        }        
+
+        private void UnitOfWorkToCache(IUnitOfWork unitOfWork)
+        {
+            _genres.UnionWith(unitOfWork.Genres.GetAllCached());
+            _yearSeasons.UnionWith(unitOfWork.YearSeasons.GetAllCached());
+            _categories.UnionWith(unitOfWork.Categories.GetAllCached());
         }
+        private void InitializeUnitOfWork(IUnitOfWork unitOfWork)
+        {
+            unitOfWork.InsertOptimizationEnabled = true;
+            unitOfWork.Genres.AttachRange(_genres);
+            unitOfWork.YearSeasons.AttachRange(_yearSeasons);
+            unitOfWork.Categories.AttachRange(_categories);
+        }
+
         private void AddAnimeRelationships(Anime anime)
         {
             AddAnimeGenresRelationship(anime);
