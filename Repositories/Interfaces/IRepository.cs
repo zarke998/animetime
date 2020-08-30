@@ -11,6 +11,7 @@ namespace AnimeTime.Core.Repositories.Interfaces
     {
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAllCached();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
 
         void Add(TEntity entity);
