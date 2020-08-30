@@ -39,6 +39,13 @@ namespace AnimeTime.Persistence.Repositories
         {
             return _dbContext.Set<TEntity>().ToList();
         }
+        public IEnumerable<TEntity> GetAllCached()
+        {
+            var entries = _dbContext.ChangeTracker.Entries<TEntity>();
+            var entities = entries.Select(e => e.Entity);
+
+            return entities;
+        }
 
         public void Remove(TEntity entity)
         {
