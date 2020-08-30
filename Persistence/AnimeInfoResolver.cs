@@ -121,7 +121,7 @@ namespace AnimeTimeDbUpdater.Persistence
             else
                 tagListContainer = tagListContainers[0];
 
-            var tags = tagListContainer.SelectNodes(".//li[contains(@itemprop,'genre')]/a");
+            var tags = tagListContainer.SelectNodes(".//li/a[contains(@data-tooltip,'tags')]");
 
             foreach (var tag in tags)
             {
