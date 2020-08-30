@@ -151,7 +151,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
+    <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
       <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
       <Name>AnimeTime.Core</Name>
     </ProjectReference>
