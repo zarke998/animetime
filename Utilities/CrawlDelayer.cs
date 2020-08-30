@@ -24,7 +24,7 @@ namespace AnimeTimeDbUpdater.Utilities
 
         public static void ApplyDelay()
         {
-            if (!_stopwatch.IsRunning)
+            if (!_stopwatch.IsRunning || _crawlStopwatch.IsRunning)
                 return;
 
             var elapsed = CrawlDelayer.ElapsedTimeFromLastCrawl;
