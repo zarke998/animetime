@@ -14,6 +14,9 @@ namespace AnimeTime.Core.Repositories.Interfaces
         IEnumerable<TEntity> GetAllCached();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
 
+        void Attach(TEntity entity);
+        void AttachRange(IEnumerable<TEntity> entity);
+
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 
