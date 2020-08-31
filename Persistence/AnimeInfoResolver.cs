@@ -91,7 +91,7 @@ namespace AnimeTimeDbUpdater.Persistence
             var yearSeasonNode = _doc.DocumentNode.SelectSingleNode("//span[contains(@class,'iconYear')]").ParentNode.SelectSingleNode(".//a");
             if (yearSeasonNode != null)
             {
-                var yearSeason = yearSeasonNode.InnerText;
+                var yearSeason = yearSeasonNode.InnerText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
                 anime.YearSeason = new YearSeason() { Name = yearSeason };
             }
         }
