@@ -44,52 +44,36 @@ namespace AnimeTimeDbUpdater
                 _categories = new HashSet<Category>(unitOfWork.Categories.GetAll(), new CategoryComparer());
             }
 
-            if (_repo.CanFetchByDateAdded)
-                UpdateDatabaseViaDate();
-            else
-                UpdateDatabase();
+            UpdateDatabase();
 
             Console.ReadLine();
         }
 
         private void UpdateDatabase()
         {
-            var resolves = _repo.GetAll();
-            var resolvedCount = 0;
-
-
-            ICollection<Anime> resolved = new List<Anime>();
-            LogGroup.Log("\nResolving animes: \n");
-            foreach (var animeResolve in resolves)
+            IEnumerable<AnimeInfo> newAnimes;
+            if (_repo.CanFetchByDateAdded)
             {
-                var anime = _repo.Resolve(animeResolve);
-                resolved.Add(anime);
-
-                resolvedCount++;
+                newAnimes = GetNewAnimesFast();
+                newAnimes.Reverse();
             }
-            LogGroup.Log($"\nResolving finished. Total: {resolvedCount}");
-
-            using (IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork())
+            else
             {
-                foreach (var anime in resolved)
-                {
-                    unitOfWork.Animes.Add(anime);
-                }
-
-                unitOfWork.Complete();
+                newAnimes = GetNewAnimes();
             }
-        }
-        private void UpdateDatabaseViaDate()
-        {
-
-            var newAnimes = GetNewAnimes();
-
-            newAnimes.Reverse();
 
             InsertAnimesIntoDatabase(newAnimes);
         }
-
+        
         private IEnumerable<AnimeInfo> GetNewAnimes()
+        {
+            var newAnimes = _repo.GetAll();
+            newAnimes = newAnimes.Where(a => !_titles.Contains(a.Anime.Title));
+
+            return newAnimes;
+            
+        }
+        private IEnumerable<AnimeInfo> GetNewAnimesFast()
         {
             ICollection<AnimeInfo> newAnimes = new List<AnimeInfo>();
 
