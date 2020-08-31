@@ -12,7 +12,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public AnimeConfiguration()
         {
-            Property(e => e.CreatedId).IsOptional();
+
         }
     }
 }
