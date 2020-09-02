@@ -1,5 +1,6 @@
 ﻿namespace AnimeTime.Persistence.Migrations
 {
+    using AnimeTime.Core.Domain;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,10 +15,15 @@
 
         protected override void Seed(AnimeTime.Persistence.AnimeTimeDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            // Seed image types from enum
+            var imageTypes = Enum.GetValues(typeof(ImageTypeId));
+            foreach (var type in imageTypes)
+            {
+                var typeId = (int)type;
+                var typeName = Enum.GetName(typeof(ImageTypeId), type);
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data.
+                context.ImageTypes.AddOrUpdate(new ImageType() { Id = typeId, TypeName = typeName });
+            }
         }
     }
 }

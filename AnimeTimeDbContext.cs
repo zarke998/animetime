@@ -23,6 +23,9 @@ namespace AnimeTime.Persistence
         public DbSet<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<AnimeImage> AnimeImages { get; set; }
+        public DbSet<ImageType> ImageTypes { get; set; }
+        public DbSet<ImageLodLevel> ImageLodLevels { get; set; }
 
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
@@ -40,6 +43,10 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new CharacterConfiguration());
             modelBuilder.Configurations.Add(new GenreConfiguration());
             modelBuilder.Configurations.Add(new AnimeConfiguration());
+            modelBuilder.Configurations.Add(new AnimeImageConfiguration());
+            modelBuilder.Configurations.Add(new ImageTypeConfiguration());
+            modelBuilder.Configurations.Add(new ImageLodLevelConfiguration());
+            
 
             base.OnModelCreating(modelBuilder);
         }

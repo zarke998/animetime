@@ -58,9 +58,12 @@
   <ItemGroup>
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="EntityConfigurations\AnimeConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AnimeImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterConfiguration.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
     <Compile Include="EntityConfigurations\GenreConfiguration.cs" />
+    <Compile Include="EntityConfigurations\ImageTypeConfiguration.cs" />
+    <Compile Include="EntityConfigurations\ImageLodLevelConfiguration.cs" />
     <Compile Include="EntityConfigurations\NotificationConfiguration.cs" />
     <Compile Include="EntityConfigurations\SourceConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserAnimeBookmarkConfiguration.cs" />
@@ -136,6 +139,10 @@
     <Compile Include="Migrations\202008311623415_DeleteCreatedIdPropertyFromAnime.cs" />
     <Compile Include="Migrations\202008311623415_DeleteCreatedIdPropertyFromAnime.designer.cs">
       <DependentUpon>202008311623415_DeleteCreatedIdPropertyFromAnime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009021500541_AddAnimeImagesAndRelatedTables.cs" />
+    <Compile Include="Migrations\202009021500541_AddAnimeImagesAndRelatedTables.designer.cs">
+      <DependentUpon>202009021500541_AddAnimeImagesAndRelatedTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008311623415_DeleteCreatedIdPropertyFromAnime.resx">
       <DependentUpon>202008311623415_DeleteCreatedIdPropertyFromAnime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009021500541_AddAnimeImagesAndRelatedTables.resx">
+      <DependentUpon>202009021500541_AddAnimeImagesAndRelatedTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
