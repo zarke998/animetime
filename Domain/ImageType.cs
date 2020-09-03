@@ -9,7 +9,7 @@ namespace AnimeTime.Core.Domain
 {
     public class ImageType
     {
-        public int Id { get; set; }
+        public ImageTypeId Id { get; set; }
         public string TypeName { get; set; }
     }
 }
