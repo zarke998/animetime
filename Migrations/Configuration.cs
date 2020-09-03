@@ -29,7 +29,7 @@
                 var typeId = (int)type;
                 var typeName = Enum.GetName(typeof(ImageTypeId), type);
 
-                context.ImageTypes.AddOrUpdate(new ImageType() { Id = typeId, TypeName = typeName });
+                context.ImageTypes.AddOrUpdate(new ImageType() { Id = (ImageTypeId)typeId, TypeName = typeName });
             }
         }
         private void SeedImageOrientations(AnimeTimeDbContext context)
