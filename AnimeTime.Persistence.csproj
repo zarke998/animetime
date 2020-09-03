@@ -149,6 +149,10 @@
     <Compile Include="Migrations\202009031147562_AddImageOrientationsTable.designer.cs">
       <DependentUpon>202009031147562_AddImageOrientationsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009031310477_AddColumnsToImageLodLevelsAndDeleteSome.cs" />
+    <Compile Include="Migrations\202009031310477_AddColumnsToImageLodLevelsAndDeleteSome.designer.cs">
+      <DependentUpon>202009031310477_AddColumnsToImageLodLevelsAndDeleteSome.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeRepository.cs" />
@@ -232,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009031147562_AddImageOrientationsTable.resx">
       <DependentUpon>202009031147562_AddImageOrientationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009031310477_AddColumnsToImageLodLevelsAndDeleteSome.resx">
+      <DependentUpon>202009031310477_AddColumnsToImageLodLevelsAndDeleteSome.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
