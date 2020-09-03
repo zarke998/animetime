@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Core.Domain
 {
-    public class ImageLodLevel
+    public class ImageOrientation
     {
-        public int Id { get; set; }
-        public LodLevel Level { get; set; }
+        public ImageOrientationId Id { get; set; }
         public string Name { get; set; }
-        public int MaxSizeInKb { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace AnimeTime.Core.Domain
         public string Url { get; set; }
         public ImageType ImageType { get; set; }
         public ImageLodLevel ImageLodLevel { get; set; }
+        public ImageOrientation Orientation { get; set; }
         public Anime Anime { get; set; }
     }
 }
