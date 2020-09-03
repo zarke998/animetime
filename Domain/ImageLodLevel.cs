@@ -12,6 +12,8 @@ namespace AnimeTime.Core.Domain
         public int Id { get; set; }
         public LodLevel Level { get; set; }
         public string Name { get; set; }
-        public int MaxSizeInKb { get; set; }
+        public int MaxHeightPortrait { get; set; }
+        public int MaxWidthLandscape { get; set; }
+        public float Quality { get; set; }
     }
 }
