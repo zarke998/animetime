@@ -26,6 +26,7 @@ namespace AnimeTime.Persistence
         public DbSet<AnimeImage> AnimeImages { get; set; }
         public DbSet<ImageType> ImageTypes { get; set; }
         public DbSet<ImageLodLevel> ImageLodLevels { get; set; }
+        public DbSet<ImageOrientation> ImageOrientations { get; set; }
 
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
@@ -46,7 +47,8 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new AnimeImageConfiguration());
             modelBuilder.Configurations.Add(new ImageTypeConfiguration());
             modelBuilder.Configurations.Add(new ImageLodLevelConfiguration());
-            
+            modelBuilder.Configurations.Add(new ImageOrienatationConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }

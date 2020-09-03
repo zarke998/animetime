@@ -1,6 +1,7 @@
 ﻿namespace AnimeTime.Persistence.Migrations
 {
     using AnimeTime.Core.Domain;
+    using AnimeTime.Core.Domain.Enums;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,6 +16,12 @@
 
         protected override void Seed(AnimeTime.Persistence.AnimeTimeDbContext context)
         {
+            SeedImageTypes(context);
+            SeedImageOrientations(context);
+        }
+
+        private void SeedImageTypes(AnimeTimeDbContext context)
+        {
             // Seed image types from enum
             var imageTypes = Enum.GetValues(typeof(ImageTypeId));
             foreach (var type in imageTypes)
@@ -23,6 +30,16 @@
                 var typeName = Enum.GetName(typeof(ImageTypeId), type);
 
                 context.ImageTypes.AddOrUpdate(new ImageType() { Id = typeId, TypeName = typeName });
+            }
+        }
+        private void SeedImageOrientations(AnimeTimeDbContext context)
+        {
+            var orientationIds = Enum.GetValues(typeof(ImageOrientationId));
+
+            foreach(var id in orientationIds)
+            {
+                var orientationName = Enum.GetName(typeof(ImageOrientationId), id);
+                context.ImageOrientations.AddOrUpdate(new ImageOrientation() { Id = (ImageOrientationId)id, Name = orientationName });
             }
         }
     }
