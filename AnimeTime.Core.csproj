@@ -54,6 +54,7 @@
     <Compile Include="Domain\ImageLodLevel.cs" />
     <Compile Include="Domain\ImageType.cs" />
     <Compile Include="Domain\ImageTypeId.cs" />
+    <Compile Include="Domain\LodLevel.cs" />
     <Compile Include="Domain\Notification.cs" />
     <Compile Include="Domain\Source.cs" />
     <Compile Include="Domain\User.cs" />
