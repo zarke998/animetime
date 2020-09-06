@@ -15,7 +15,6 @@ namespace AnimeTime.Persistence.EntityConfigurations
             Property(i => i.Url).IsRequired();
             HasRequired(i => i.ImageType).WithMany();
             HasRequired(i => i.ImageLodLevel).WithMany();
-            HasRequired(i => i.Anime).WithMany(a => a.Images);
             HasRequired(i => i.Orientation).WithMany();
         }
     }

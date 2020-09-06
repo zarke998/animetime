@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="EntityConfigurations\AnimeConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AnimeImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\ImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterConfiguration.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
@@ -157,6 +158,10 @@
     <Compile Include="Migrations\202009061102367_RenameAnimeImagesToImages.designer.cs">
       <DependentUpon>202009061102367_RenameAnimeImagesToImages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009061702325_AddAnimeImagesTable.cs" />
+    <Compile Include="Migrations\202009061702325_AddAnimeImagesTable.designer.cs">
+      <DependentUpon>202009061702325_AddAnimeImagesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeRepository.cs" />
@@ -246,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009061102367_RenameAnimeImagesToImages.resx">
       <DependentUpon>202009061102367_RenameAnimeImagesToImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009061702325_AddAnimeImagesTable.resx">
+      <DependentUpon>202009061702325_AddAnimeImagesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
