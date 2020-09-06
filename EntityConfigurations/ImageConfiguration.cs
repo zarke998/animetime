@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Persistence.EntityConfigurations
 {
-    public class AnimeImageConfiguration : EntityTypeConfiguration<AnimeImage>
+    public class ImageConfiguration : EntityTypeConfiguration<Image>
     {
-        public AnimeImageConfiguration()
+        public ImageConfiguration()
         {
             Property(i => i.Url).IsRequired();
             HasRequired(i => i.ImageType).WithMany();
