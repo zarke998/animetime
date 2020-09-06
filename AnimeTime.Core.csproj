@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Anime.cs" />
-    <Compile Include="Domain\AnimeImage.cs" />
+    <Compile Include="Domain\Images.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Character.cs" />
     <Compile Include="Domain\Comparers\CategoryComparer.cs" />
