@@ -46,9 +46,11 @@
     <Compile Include="Domain\AnimeImage.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Character.cs" />
+    <Compile Include="Domain\CharacterRole.cs" />
     <Compile Include="Domain\Comparers\CategoryComparer.cs" />
     <Compile Include="Domain\Comparers\YearSeasonComparer.cs" />
     <Compile Include="Domain\Comparers\GenreComparer.cs" />
+    <Compile Include="Domain\Enums\CharacterRoleId.cs" />
     <Compile Include="Domain\Enums\ImageOrientationId.cs" />
     <Compile Include="Domain\Episode.cs" />
     <Compile Include="Domain\Genre.cs" />

@@ -16,6 +16,7 @@ namespace AnimeTime.Core.Domain
         public string Name { get; set; }
         public string Description { get; set; }
         public string SourceUrl { get; set; }
+        public CharacterRole Role { get; set; }
 
         public ICollection<Anime> Animes { get; set; }
     }
