@@ -18,6 +18,7 @@
         {
             SeedImageTypes(context);
             SeedImageOrientations(context);
+            SeedCharacterRoles(context);
         }
 
         private void SeedImageTypes(AnimeTimeDbContext context)
@@ -40,6 +41,16 @@
             {
                 var orientationName = Enum.GetName(typeof(ImageOrientationId), id);
                 context.ImageOrientations.AddOrUpdate(new ImageOrientation() { Id = (ImageOrientationId)id, Name = orientationName });
+            }
+        }
+        private void SeedCharacterRoles(AnimeTimeDbContext context)
+        {
+            foreach(var role in Enum.GetValues(typeof(CharacterRoleId)))
+            {
+                var id = (CharacterRoleId)role;
+                var name = Enum.GetName(typeof(CharacterRoleId), role);
+
+                context.CharacterRoles.AddOrUpdate(new CharacterRole() { Id = id, RoleName = name });
             }
         }
     }

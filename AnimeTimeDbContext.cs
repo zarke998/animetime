@@ -23,6 +23,7 @@ namespace AnimeTime.Persistence
         public DbSet<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<CharacterRole> CharacterRoles { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ImageType> ImageTypes { get; set; }
         public DbSet<ImageLodLevel> ImageLodLevels { get; set; }
@@ -50,6 +51,7 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new ImageLodLevelConfiguration());
             modelBuilder.Configurations.Add(new ImageOrienatationConfiguration());
             modelBuilder.Configurations.Add(new AnimeImageConfiguration());
+            modelBuilder.Configurations.Add(new CharacterRoleConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
