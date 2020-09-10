@@ -10,6 +10,7 @@ namespace AnimeTime.Core.Domain
     {
         public Anime()
         {
+            AltTitles = new HashSet<AnimeAltTitle>();
             Genres = new HashSet<Genre>();
             WebsiteAnimeUrls = new HashSet<WebsiteAnimeUrl>();
             Episodes = new HashSet<Episode>();
@@ -19,7 +20,6 @@ namespace AnimeTime.Core.Domain
 
         public int Id { get; set; }
         public string Title { get; set; }
-        public string TitleAlt { get; set; }
         public string Description { get; set; }
         public string CoverUrl { get; set; }
         public string CoverThumbUrl { get; set; }
@@ -27,6 +27,7 @@ namespace AnimeTime.Core.Domain
         public int? ReleaseYear { get; set; }
         public YearSeason YearSeason { get; set; }
         public Category Category { get; set; }
+        public ICollection<AnimeAltTitle> AltTitles { get; set; }
         public ICollection<AnimeImage> Images { get; set; }
         public ICollection<Genre> Genres { get; set; }
         public ICollection<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
@@ -39,7 +40,7 @@ namespace AnimeTime.Core.Domain
             StringBuilder s = new StringBuilder();
 
             s.AppendLine($"Title: {Title}");
-            s.AppendLine($"AltTitle: { (TitleAlt != null ? TitleAlt : "(none)") }");
+            s.AppendLine($"AltTitle: { (AltTitles.Count != 0 ? GetAltTitles() : "(none)") }");
             s.AppendLine($"\nDescription: {Description }\n");
             s.AppendLine($"CoverUrl: {CoverUrl}");
             s.AppendLine($"CoverThumbUrl: {CoverThumbUrl}");
@@ -49,6 +50,18 @@ namespace AnimeTime.Core.Domain
             s.AppendLine($"Category: {Category.Name}");
 
             return s.ToString();
+        }
+
+        private string GetAltTitles()
+        {
+            string altTitles = String.Empty;
+
+            foreach(var title in AltTitles) {
+                altTitles += $",{title.Title}";
+            }
+            altTitles = altTitles.Substring(1);
+
+            return altTitles;
         }
     }
 }
