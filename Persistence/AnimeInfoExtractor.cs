@@ -22,7 +22,7 @@ namespace AnimeTimeDbUpdater.Persistence
             _doc = doc;
         }
 
-        public IEnumerable<AnimeInfo> GetFromPage(string page, string websiteUrl = "")
+        public IEnumerable<AnimeInfo> GetFromPage(string page)
         {
             var animeResolves = new List<AnimeInfo>();
             
@@ -38,7 +38,7 @@ namespace AnimeTimeDbUpdater.Persistence
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
             foreach (var node in animeNodes)
             {
-                var animeInfoResolve = GetAnimeInfoResolvable(node.OuterHtml, websiteUrl);
+                var animeInfoResolve = GetAnimeInfoResolvable(node.OuterHtml);
                 animeResolves.Add(animeInfoResolve);
 
                 LogGroup.Log("Fetched: " + animeInfoResolve.Anime.Title);
@@ -55,9 +55,9 @@ namespace AnimeTimeDbUpdater.Persistence
                 return null;
 
             var nextPage = HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
-            return nextPage;
+            return Constants.WebsiteUrls.AnimePlanet + nextPage;
         }
-        private AnimeInfo GetAnimeInfoResolvable(string xmlNode, string websiteUrl = "")
+        private AnimeInfo GetAnimeInfoResolvable(string xmlNode)
         {           
             var animeResolve = new AnimeInfo();
             var doc = new HtmlDocument();
@@ -68,10 +68,10 @@ namespace AnimeTimeDbUpdater.Persistence
             animeResolve.Anime.Title = title;
 
             var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
-            animeResolve.AnimeDetailsUrl = websiteUrl + detailsUrl;
+            animeResolve.AnimeDetailsUrl = Constants.WebsiteUrls.AnimePlanet + detailsUrl;
 
             var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
-            animeResolve.AnimeCoverThumbUrl = websiteUrl + thumbUrl;
+            animeResolve.AnimeCoverThumbUrl = Constants.WebsiteUrls.AnimePlanet + thumbUrl;
 
             return animeResolve;
         }

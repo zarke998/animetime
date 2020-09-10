@@ -16,7 +16,6 @@ namespace AnimeTimeDbUpdater.Core
 
         string AnimeListUrl { get; }
         string AnimeListByDateUrl { get; }
-        string WebsiteUrl { get; }
 
         Anime Resolve(AnimeInfo animeInfoResolve);
         IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfo> animeInfoResolves);

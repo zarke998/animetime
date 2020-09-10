@@ -20,7 +20,6 @@ namespace AnimeTimeDbUpdater.Persistence
 
         public string AnimeListUrl { get; private set; } = "https://www.anime-planet.com/anime/all";
         public string AnimeListByDateUrl { get; private set; } = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
-        public string WebsiteUrl { get; private set; } = "https://www.anime-planet.com";
         
         public bool CanFetchByDateAdded { get; private set; }
         public string CurrentPage { get; private set; }
@@ -61,7 +60,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
         public IEnumerable<AnimeInfo> GetByDate()
         {
-            return _extractor.GetFromPage(CurrentPage, WebsiteUrl);
+            return _extractor.GetFromPage(CurrentPage);
         }
         public IEnumerable<AnimeInfo> GetAll()
         {
@@ -72,13 +71,11 @@ namespace AnimeTimeDbUpdater.Persistence
 
             while (!endOfFetching)
             {
-                animeResolves.AddRange(_extractor.GetFromPage(page, WebsiteUrl));
+                animeResolves.AddRange(_extractor.GetFromPage(page));
 
                 page = _extractor.NextPage();
                 if (page == null)
                     endOfFetching = true;
-                else
-                    page = WebsiteUrl + page;
             }
 
             return animeResolves;
@@ -91,7 +88,7 @@ namespace AnimeTimeDbUpdater.Persistence
             if (nextPage == null)
                 LastPageReached = true;
             else
-                CurrentPage = WebsiteUrl + nextPage;
+                CurrentPage = nextPage;
 
             return CurrentPage;
         }
