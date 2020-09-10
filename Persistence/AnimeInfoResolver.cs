@@ -55,11 +55,16 @@ namespace AnimeTimeDbUpdater.Persistence
             var titleNode = _doc.DocumentNode.SelectSingleNode("//h2[contains(@class,'aka')]");
             if (titleNode != null)
             {
-                var titleInfo = titleNode.InnerText;
+                var titleNodeText = titleNode.InnerText.Replace("\n", String.Empty);
 
-                var titleSplited = titleInfo.Split(new string[] { "Alt title: " }, StringSplitOptions.RemoveEmptyEntries);
-                var title = titleSplited[1].Replace("\n", String.Empty);
-                anime.TitleAlt = HttpUtility.HtmlDecode(title);
+                var titles = titleNodeText.Split(new string[] { "Alt title: ","Alt titles: ", "," }, StringSplitOptions.RemoveEmptyEntries);
+                foreach(var title in titles)
+                {
+                    var altTitle = HttpUtility.HtmlDecode(title);
+                    altTitle = altTitle.Trim();
+
+                    anime.AltTitles.Add(new AnimeAltTitle() { Title = altTitle });
+                }
             }
         }
         private void ResolveDescription(Anime anime) 
