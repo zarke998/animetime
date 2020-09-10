@@ -1,40 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Drawing;
-using System.Web;
-using System.Diagnostics;
-using HtmlAgilityPack;
-using AnimeTime.Core;
+﻿using AnimeTime.Core;
 using AnimeTime.Core.Domain;
 using AnimeTime.Core.Domain.Comparers;
-using AnimeTime.Persistence;
-using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Core;
-using AnimeTimeDbUpdater.Persistence;
+using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AnimeTimeDbUpdater
 {
     class MainApplication : IApplication
     {
-        IAnimeInfoRepository _repo;
+        IAnimeInfoRepository _animeRepo;
+        ICharacterInfoRepository _charRepo;
 
         HashSet<string> _titles;
         HashSet<Genre> _genres;
         HashSet<YearSeason> _yearSeasons;
         HashSet<Category> _categories;
+        HashSet<Character> _characters;
 
-        public MainApplication(IAnimeInfoRepository repo)
+        public MainApplication(IAnimeInfoRepository animeRepo, ICharacterInfoRepository charRepo)
         {
-            _repo = repo;
+            _animeRepo = animeRepo;
+            _charRepo = charRepo;
         }
 
         public void Run()
+        {
+            InitializeDatabaseCache();
+
+            UpdateDatabase();
+
+            Console.ReadLine();
+        }
+        private void InitializeDatabaseCache()
         {
             using (IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork())
             {
@@ -42,17 +43,14 @@ namespace AnimeTimeDbUpdater
                 _genres = new HashSet<Genre>(unitOfWork.Genres.GetAll(), new GenreComparer());
                 _yearSeasons = new HashSet<YearSeason>(unitOfWork.YearSeasons.GetAll(), new YearSeasonComparer());
                 _categories = new HashSet<Category>(unitOfWork.Categories.GetAll(), new CategoryComparer());
+                _characters = new HashSet<Character>(unitOfWork.Characters.GetAll(), new CharacterComparer());
             }
-
-            UpdateDatabase();
-
-            Console.ReadLine();
         }
 
         private void UpdateDatabase()
         {
             IEnumerable<AnimeInfo> newAnimes;
-            if (_repo.CanFetchByDateAdded)
+            if (_animeRepo.CanFetchByDateAdded)
             {
                 newAnimes = GetNewAnimesFast();
                 newAnimes.Reverse();
@@ -62,16 +60,16 @@ namespace AnimeTimeDbUpdater
                 newAnimes = GetNewAnimes();
             }
 
-            InsertAnimesIntoDatabase(newAnimes);
+            InsertAnimesAndData(newAnimes);
         }
-        
+
         private IEnumerable<AnimeInfo> GetNewAnimes()
         {
-            var newAnimes = _repo.GetAll();
+            var newAnimes = _animeRepo.GetAll();
             newAnimes = newAnimes.Where(a => !_titles.Contains(a.Anime.Title));
 
             return newAnimes;
-            
+
         }
         private IEnumerable<AnimeInfo> GetNewAnimesFast()
         {
@@ -81,7 +79,7 @@ namespace AnimeTimeDbUpdater
 
             do
             {
-                IEnumerable<AnimeInfo> infos = _repo.GetByDate();
+                IEnumerable<AnimeInfo> infos = _animeRepo.GetByDate();
 
                 foreach (var info in infos)
                 {
@@ -93,8 +91,8 @@ namespace AnimeTimeDbUpdater
                     newAnimes.Add(info);
                 }
 
-                _repo.NextPage();
-                if (_repo.LastPageReached)
+                _animeRepo.NextPage();
+                if (_animeRepo.LastPageReached)
                 {
                     endOfFetching = true;
                 }
@@ -103,40 +101,74 @@ namespace AnimeTimeDbUpdater
 
             return newAnimes;
         }
-        private void InsertAnimesIntoDatabase(IEnumerable<AnimeInfo> infos)
-        { 
+        private void InsertAnimesAndData(IEnumerable<AnimeInfo> infos)
+        {
             foreach (var info in infos)
             {
                 IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
                 InitializeUnitOfWork(unitOfWork);
 
-                _repo.Resolve(info);
+                _animeRepo.Resolve(info);
                 var anime = info.Anime;
 
-                AddAnimeRelationships(anime);
-                unitOfWork.Animes.Add(anime);
+                InsertAnimeCharacters(info);
+                InsertAnime(anime, unitOfWork);
 
                 Console.WriteLine("Inserting into database.");
                 unitOfWork.Complete();
+                Console.WriteLine($"Inserting done.");
+
 
                 UnitOfWorkToCache(unitOfWork);
-
-                Console.WriteLine($"Inserting done.");
             }
-        }        
+        }
+        private void InsertAnime(Anime anime, IUnitOfWork unitOfWork)
+        {
+            AddAnimeRelationships(anime);
+            unitOfWork.Animes.Add(anime);
+        }
+        private void InsertAnimeCharacters(AnimeInfo info)
+        {
+            ICollection<Character> chars = new List<Character>();
+
+            LogGroup.Log("Getting characters list.");
+            var charInfos = _charRepo.Extract(info.CharactersUrl);
+
+            foreach (var charInfo in charInfos)
+            {
+                if (_characters.TryGetValue(charInfo.Character, out Character c))
+                {
+                    LogGroup.Log($"Adding character: {c.Name}.");
+                    chars.Add(c);
+                }
+                else
+                {
+                    LogGroup.Log($"\nResolving character: {charInfo.Character.SourceUrl}.");
+                    _charRepo.Resolve(charInfo);
+                    var charResolved = charInfo.Character;
+
+                    LogGroup.Log($"Adding character: {charInfo.Character.Name}.\n");
+                    chars.Add(charResolved);
+                }
+            }
+            LogGroup.Log("-------------------------------------------------------------------------------------");
+            info.Anime.Characters = chars;
+        }
 
         private void UnitOfWorkToCache(IUnitOfWork unitOfWork)
         {
             _genres.UnionWith(unitOfWork.Genres.GetAllCached());
             _yearSeasons.UnionWith(unitOfWork.YearSeasons.GetAllCached());
             _categories.UnionWith(unitOfWork.Categories.GetAllCached());
+            _characters.UnionWith(unitOfWork.Characters.GetAllCached());
         }
         private void InitializeUnitOfWork(IUnitOfWork unitOfWork)
         {
-            unitOfWork.InsertOptimizationEnabled = true;
+            unitOfWork.InsertOptimizationEnabled = false;
             unitOfWork.Genres.AttachRange(_genres);
             unitOfWork.YearSeasons.AttachRange(_yearSeasons);
             unitOfWork.Categories.AttachRange(_categories);
+            unitOfWork.Characters.AttachRange(_characters);
         }
 
         private void AddAnimeRelationships(Anime anime)

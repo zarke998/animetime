@@ -10,6 +10,7 @@ namespace AnimeTimeDbUpdater.Core.Domain
     public class AnimeInfo
     {
         public Anime Anime { get; set; } = new Anime();
+        public string CharactersUrl { get; set; }
         public string AnimeDetailsUrl { get; set; }
         public string AnimeCoverThumbUrl { get; set; }
     }

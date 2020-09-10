@@ -40,6 +40,7 @@ namespace AnimeTimeDbUpdater.Persistence
             ResolveRating(anime);
             ResolveCategory(anime);
             ResolveGenres(anime);
+            info.CharactersUrl = GetCharactersUrl();
 
             LogGroup.Log($"Resolved: {info.AnimeDetailsUrl} ({anime.Title})");
         }
@@ -61,12 +62,12 @@ namespace AnimeTimeDbUpdater.Persistence
                 }
             }
         }
-        private void ResolveDescription(Anime anime) 
+        private void ResolveDescription(Anime anime)
         {
             var descriptionNode = _doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p");
-            if(descriptionNode != null)
+            if (descriptionNode != null)
                 anime.Description = HttpUtility.HtmlDecode(descriptionNode.InnerText);
-            
+
         }
         private void ResolveYear(Anime anime)
         {
@@ -125,8 +126,19 @@ namespace AnimeTimeDbUpdater.Persistence
             foreach (var tag in tags)
             {
                 var genreName = tag.InnerText.Replace("\n", String.Empty).Trim();
-                anime.Genres.Add(new Genre() { Name = genreName});
+                anime.Genres.Add(new Genre() { Name = genreName });
             }
+        }
+        private string GetCharactersUrl()
+        {
+            var charactersLinkNode = _doc.DocumentNode.SelectSingleNode("//ul[@class='subNav']/li/a[contains(text(),'characters')]");
+
+            string charactersUrl = String.Empty;
+
+            if(charactersLinkNode != null)
+                charactersUrl = charactersLinkNode.GetAttributeValue("href", String.Empty);
+
+            return Constants.WebsiteUrls.AnimePlanet + charactersUrl;
         }
     }
 }
