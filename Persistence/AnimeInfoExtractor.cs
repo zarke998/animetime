@@ -24,7 +24,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
         public IEnumerable<AnimeInfo> GetFromPage(string page)
         {
-            var animeResolves = new List<AnimeInfo>();
+            var infos = new List<AnimeInfo>();
             
             CrawlDelayer.ApplyDelay();
 
@@ -38,13 +38,13 @@ namespace AnimeTimeDbUpdater.Persistence
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
             foreach (var node in animeNodes)
             {
-                var animeInfoResolve = GetAnimeInfoResolvable(node.OuterHtml);
-                animeResolves.Add(animeInfoResolve);
+                var info = GetAnimeInfo(node.OuterHtml);
+                infos.Add(info);
 
-                LogGroup.Log("Fetched: " + animeInfoResolve.Anime.Title);
+                LogGroup.Log("Fetched: " + info.Anime.Title);
             }
 
-            return animeResolves;
+            return infos;
         }
         public string NextPage()
         {
@@ -57,23 +57,23 @@ namespace AnimeTimeDbUpdater.Persistence
             var nextPage = HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
             return Constants.WebsiteUrls.AnimePlanet + nextPage;
         }
-        private AnimeInfo GetAnimeInfoResolvable(string xmlNode)
+        private AnimeInfo GetAnimeInfo(string xmlNode)
         {           
-            var animeResolve = new AnimeInfo();
+            var info = new AnimeInfo();
             var doc = new HtmlDocument();
 
             doc.LoadHtml(xmlNode);
 
             var title = doc.DocumentNode.SelectSingleNode(".//h3[contains(@class, 'cardName')]").InnerText;
-            animeResolve.Anime.Title = title;
+            info.Anime.Title = title;
 
             var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
-            animeResolve.AnimeDetailsUrl = Constants.WebsiteUrls.AnimePlanet + detailsUrl;
+            info.AnimeDetailsUrl = Constants.WebsiteUrls.AnimePlanet + detailsUrl;
 
             var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
-            animeResolve.AnimeCoverThumbUrl = Constants.WebsiteUrls.AnimePlanet + thumbUrl;
+            info.AnimeCoverThumbUrl = Constants.WebsiteUrls.AnimePlanet + thumbUrl;
 
-            return animeResolve;
+            return info;
         }
     }
 }

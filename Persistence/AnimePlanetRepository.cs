@@ -33,10 +33,10 @@ namespace AnimeTimeDbUpdater.Persistence
             CurrentPage = AnimeListByDateUrl;
         }
 
-        public Anime Resolve(AnimeInfo animeInfoResolve)
+        public void Resolve(AnimeInfo animeInfo)
         {
-            var anime = _resolver.Resolve(animeInfoResolve);
-
+            _resolver.Resolve(animeInfo);
+            var anime = animeInfo.Anime;
 #if DEBUG
             Console.WriteLine("\n" + anime);
 
@@ -46,15 +46,12 @@ namespace AnimeTimeDbUpdater.Persistence
 
             Console.WriteLine("------------------------------------------------------------------------------------------------\n");
 #endif
-            return anime;
         }
-        public IEnumerable<Anime> ResolveRange(IEnumerable<AnimeInfo> animeInfoResolves)
+        public void ResolveRange(IEnumerable<AnimeInfo> animeInfos)
         {
             List<Anime> animeList = new List<Anime>();
 
             //foreach(var animeResolve in animeInfoResolves)
-
-            return null;
 
         }
 
@@ -64,21 +61,21 @@ namespace AnimeTimeDbUpdater.Persistence
         }
         public IEnumerable<AnimeInfo> GetAll()
         {
-            List<AnimeInfo> animeResolves = new List<AnimeInfo>();
+            List<AnimeInfo> animeInfos = new List<AnimeInfo>();
 
             var page = AnimeListUrl;
             var endOfFetching = false;
 
             while (!endOfFetching)
             {
-                animeResolves.AddRange(_extractor.GetFromPage(page));
+                animeInfos.AddRange(_extractor.GetFromPage(page));
 
                 page = _extractor.NextPage();
                 if (page == null)
                     endOfFetching = true;
             }
 
-            return animeResolves;
+            return animeInfos;
         }
 
         public string NextPage()

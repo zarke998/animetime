@@ -81,16 +81,16 @@ namespace AnimeTimeDbUpdater
 
             do
             {
-                IEnumerable<AnimeInfo> resolvables = _repo.GetByDate();
+                IEnumerable<AnimeInfo> infos = _repo.GetByDate();
 
-                foreach (var r in resolvables)
+                foreach (var info in infos)
                 {
-                    if (_titles.Contains(r.Anime.Title))
+                    if (_titles.Contains(info.Anime.Title))
                     {
                         endOfFetching = true;
                         break;
                     }
-                    newAnimes.Add(r);
+                    newAnimes.Add(info);
                 }
 
                 _repo.NextPage();
@@ -103,14 +103,15 @@ namespace AnimeTimeDbUpdater
 
             return newAnimes;
         }
-        private void InsertAnimesIntoDatabase(IEnumerable<AnimeInfo> animes)
+        private void InsertAnimesIntoDatabase(IEnumerable<AnimeInfo> infos)
         { 
-            foreach (var a in animes)
+            foreach (var info in infos)
             {
                 IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
                 InitializeUnitOfWork(unitOfWork);
 
-                Anime anime = _repo.Resolve(a);
+                _repo.Resolve(info);
+                var anime = info.Anime;
 
                 AddAnimeRelationships(anime);
                 unitOfWork.Animes.Add(anime);

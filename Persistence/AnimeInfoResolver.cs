@@ -25,16 +25,16 @@ namespace AnimeTimeDbUpdater.Persistence
             _doc = doc;
         }
 
-        public Anime Resolve(AnimeInfo animeInfoResolve)
+        public void Resolve(AnimeInfo info)
         {
-            var anime = animeInfoResolve.Anime;
+            var anime = info.Anime;
 
-            anime.CoverThumbUrl = animeInfoResolve.AnimeCoverThumbUrl;
+            anime.CoverThumbUrl = info.AnimeCoverThumbUrl;
 
             CrawlDelayer.ApplyDelay();
 
             CrawlDelayer.BeginCrawlTracking();
-            _doc = _web.Load(animeInfoResolve.AnimeDetailsUrl);
+            _doc = _web.Load(info.AnimeDetailsUrl);
             CrawlDelayer.EndCrawlTracking();
 
 
@@ -46,8 +46,7 @@ namespace AnimeTimeDbUpdater.Persistence
             ResolveCategory(anime);
             ResolveGenres(anime);
 
-            LogGroup.Log($"Resolved: {animeInfoResolve.AnimeDetailsUrl} ({anime.Title})");
-            return anime;
+            LogGroup.Log($"Resolved: {info.AnimeDetailsUrl} ({anime.Title})");
         }
 
         private void ResolveAltTitle(Anime anime)
