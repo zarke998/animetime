@@ -31,6 +31,7 @@ namespace AnimeTime.Persistence
         public IYearSeasonRepository YearSeasons { get; private set; }
         public IGenreRepository Genres { get; private set; }
         public ICharacterRepository Characters { get; private set; }
+        public ICharacterRoleRepository CharacterRoles { get; private set; }
 
         public UnitOfWork(AnimeTimeDbContext context)
         {
@@ -40,6 +41,7 @@ namespace AnimeTime.Persistence
             YearSeasons = new YearSeasonRepository(_animeTimeDbContext);
             Genres = new GenreRepository(_animeTimeDbContext);
             Characters = new CharacterRepository(_animeTimeDbContext);
+            CharacterRoles = new CharacterRoleRepository(_animeTimeDbContext);
         }
         public void Complete()
         {
