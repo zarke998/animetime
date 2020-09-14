@@ -13,6 +13,7 @@ namespace AnimeTime.Core
         ICategoryRepository Categories { get; }
         IYearSeasonRepository YearSeasons { get; }
         IGenreRepository Genres { get; }
+        ICharacterRepository Characters { get; }
 
         bool InsertOptimizationEnabled { get; set; }
 
