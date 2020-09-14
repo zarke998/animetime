@@ -49,6 +49,7 @@
     <Compile Include="Domain\Character.cs" />
     <Compile Include="Domain\CharacterRole.cs" />
     <Compile Include="Domain\Comparers\CategoryComparer.cs" />
+    <Compile Include="Domain\Comparers\CharacterComparer.cs" />
     <Compile Include="Domain\Comparers\YearSeasonComparer.cs" />
     <Compile Include="Domain\Comparers\GenreComparer.cs" />
     <Compile Include="Domain\Enums\CharacterRoleId.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IAnimeRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICharacterRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGenreRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\Interfaces\IYearSeasonRepository.cs" />
