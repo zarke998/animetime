@@ -74,6 +74,7 @@
     <Compile Include="Repositories\Interfaces\IAnimeRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICategoryRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICharacterRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICharacterRoleRepository.cs" />
     <Compile Include="Repositories\Interfaces\IGenreRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\Interfaces\IYearSeasonRepository.cs" />
