@@ -12,6 +12,11 @@ namespace AnimeTimeDbUpdater.Utilities
         private static Stopwatch _stopwatch = new Stopwatch();
         private static Stopwatch _crawlStopwatch = new Stopwatch();
 
+        private const double CrawlWait = 1.0;
+        private const double CrawlWaitOffset = 0.2;
+
+        private static bool IsFirstCrawl { get; set; } = true;
+
         private static double LastCrawledFor { get; set; }
         private static double ElapsedTimeFromLastCrawl
         {
@@ -22,33 +27,45 @@ namespace AnimeTimeDbUpdater.Utilities
             }            
         }
 
-        public static void ApplyDelay()
+        public static void ApplyDelay(Action crawlAction)
         {
-            if (!_stopwatch.IsRunning || _crawlStopwatch.IsRunning)
+            if(crawlAction == null)
                 return;
 
-            var elapsed = CrawlDelayer.ElapsedTimeFromLastCrawl;
-            var lastCrawledFor = CrawlDelayer.LastCrawledFor;
-            var timeToWait = Constants.CrawlWait + Constants.CrawlWaitOffset - (elapsed - lastCrawledFor);
+            if (!IsFirstCrawl)
+            {
+                var elapsed = CrawlDelayer.ElapsedTimeFromLastCrawl;
+                var lastCrawledFor = CrawlDelayer.LastCrawledFor;
+                var timeToWait = CrawlDelayer.CrawlWait + CrawlDelayer.CrawlWaitOffset - (elapsed - lastCrawledFor);
 
 #if DEBUG
-            Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
-            Console.WriteLine($"Last crawl elapsed: {elapsed}");
-            Console.WriteLine($"Time to wait: {timeToWait}");
-            Console.WriteLine();
+                Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
+                Console.WriteLine($"Last crawl elapsed: {elapsed}");
+                Console.WriteLine($"Time to wait: {timeToWait}");
+                Console.WriteLine();
 #endif
-
-            if (timeToWait > 0)
-            {
-                System.Threading.Thread.Sleep(Convert.ToInt32(timeToWait * 1000));   
+                if (timeToWait > 0)
+                {
+                    System.Threading.Thread.Sleep(Convert.ToInt32(timeToWait * 1000));
+                }
             }
+            ExecuteCrawl(crawlAction);
+
+            IsFirstCrawl = false;
         }
-        public static void BeginCrawlTracking()
+
+        private static void ExecuteCrawl(Action crawlAction)
+        {
+            BeginCrawlTracking();
+            crawlAction.Invoke();
+            EndCrawlTracking();
+        }
+        private static void BeginCrawlTracking()
         {
             _stopwatch.Restart();
             _crawlStopwatch.Restart();
         }
-        public static void EndCrawlTracking()
+        private static void EndCrawlTracking()
         {
             _crawlStopwatch.Stop();
             LastCrawledFor = _crawlStopwatch.ElapsedMilliseconds / 1000.0;

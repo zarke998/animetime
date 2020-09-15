@@ -31,12 +31,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
             anime.CoverThumbUrl = info.AnimeCoverThumbUrl;
 
-            CrawlDelayer.ApplyDelay();
-
-            CrawlDelayer.BeginCrawlTracking();
-            _doc = _web.Load(info.AnimeDetailsUrl);
-            CrawlDelayer.EndCrawlTracking();
-
+            CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(info.AnimeDetailsUrl); });
 
             ResolveAltTitle(anime);
             ResolveDescription(anime);

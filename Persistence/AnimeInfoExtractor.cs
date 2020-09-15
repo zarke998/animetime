@@ -25,13 +25,9 @@ namespace AnimeTimeDbUpdater.Persistence
         public IEnumerable<AnimeInfo> GetFromPage(string page)
         {
             var infos = new List<AnimeInfo>();
-            
-            CrawlDelayer.ApplyDelay();
 
-            CrawlDelayer.BeginCrawlTracking();
-            _doc = _web.Load(page);
+            CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(page); });
             LoadedPage = page;
-            CrawlDelayer.EndCrawlTracking();
 
             LogGroup.Log("\n\n\t\t\t\t Getting resolves from page: " + LoadedPage + "\n\n");
 
