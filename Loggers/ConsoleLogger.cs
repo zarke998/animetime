@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnimeTime.Core.Interfaces.Utilities;
+using AnimeTime.Core.Utilities;
 
 namespace AnimeTime.Utilities.Loggers
 {
