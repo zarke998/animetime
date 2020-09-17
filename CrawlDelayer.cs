@@ -35,9 +35,9 @@ namespace AnimeTime.Utilities
             if (!IsFirstCrawl)
             {
                 var elapsed = ElapsedTimeFromLastCrawl;
-                var lastCrawledFor = LastCrawledFor;
-                var timeToWait = CrawlWait + CrawlWaitOffset - (elapsed - lastCrawledFor);
+                var timeToWait = CrawlWait + CrawlWaitOffset - (elapsed);
 
+                var lastCrawledFor = LastCrawledFor;
 #if DEBUG
                 Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
                 Console.WriteLine($"Last crawl elapsed: {elapsed}");
@@ -62,13 +62,14 @@ namespace AnimeTime.Utilities
         }
         private static void BeginCrawlTracking()
         {
-            _stopwatch.Restart();
             _crawlStopwatch.Restart();
         }
         private static void EndCrawlTracking()
         {
             _crawlStopwatch.Stop();
             LastCrawledFor = _crawlStopwatch.ElapsedMilliseconds / 1000.0;
+
+            _stopwatch.Restart();
         }
     }
 }
