@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using AnimeTime.Core.Repositories.Interfaces;
+using AnimeTime.Core.Repositories;
 using System.Data.Entity;
 
 namespace AnimeTime.Persistence.Repositories

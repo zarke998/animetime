@@ -1,5 +1,5 @@
 ﻿using AnimeTime.Core.Domain;
-using AnimeTime.Core.Repositories.Interfaces;
+using AnimeTime.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
