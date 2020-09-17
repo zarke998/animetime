@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimeTime.Core.Repositories.Interfaces
+namespace AnimeTime.Core.Repositories
 {
-    public interface IGenreRepository : IRepository<Genre>
+    public interface IAnimeRepository : IRepository<Anime>
     {
+        IEnumerable<string> GetAllTitles();
     }
 }

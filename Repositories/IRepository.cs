@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimeTime.Core.Repositories.Interfaces
+namespace AnimeTime.Core.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimeTime.Core.Repositories.Interfaces
+namespace AnimeTime.Core.Repositories
 {
-    public interface ICharacterRoleRepository : IRepository<CharacterRole>
+    public interface ICategoryRepository : IRepository<Category>
     {
 
     }
