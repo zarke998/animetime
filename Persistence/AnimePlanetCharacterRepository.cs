@@ -1,8 +1,8 @@
 ﻿using AnimeTime.Core.Domain;
 using AnimeTime.Core.Domain.Enums;
+using AnimeTime.Utilities;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
-using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;

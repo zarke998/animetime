@@ -1,4 +1,5 @@
-﻿using AnimeTimeDbUpdater.Core;
+﻿using AnimeTime.Utilities;
+using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
 using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;

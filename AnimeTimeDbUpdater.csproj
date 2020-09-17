@@ -127,7 +127,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="TestApplication.cs" />
-    <Compile Include="Utilities\CrawlDelayer.cs" />
     <Compile Include="Utilities\FileLogger.cs" />
     <Compile Include="Utilities\LogGroup.cs" />
   </ItemGroup>

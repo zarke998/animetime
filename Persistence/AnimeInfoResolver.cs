@@ -11,6 +11,7 @@ using AnimeTimeDbUpdater.Utilities;
 using HtmlAgilityPack;
 using System.Web;
 using System.Diagnostics;
+using AnimeTime.Utilities;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
