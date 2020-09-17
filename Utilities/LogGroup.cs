@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnimeTime.Core.Interfaces.Utilities;
+using AnimeTime.Utilities.Loggers;
 
 namespace AnimeTimeDbUpdater.Utilities
 {

@@ -10,6 +10,7 @@ using HtmlAgilityPack;
 using AnimeTimeDbUpdater.Utilities;
 using AnimeTime.Persistence;
 using AnimeTime.Core;
+using AnimeTime.Utilities.Loggers;
 
 namespace AnimeTimeDbUpdater
 {

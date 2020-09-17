@@ -127,7 +127,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="TestApplication.cs" />
-    <Compile Include="Utilities\ConsoleLogger.cs" />
     <Compile Include="Utilities\CrawlDelayer.cs" />
     <Compile Include="Utilities\FileLogger.cs" />
     <Compile Include="Utilities\LogGroup.cs" />
@@ -159,6 +158,10 @@
     <ProjectReference Include="..\animetime-persistence\AnimeTime.Persistence.csproj">
       <Project>{15172c36-0a91-44aa-b9f5-e390d05479b8}</Project>
       <Name>AnimeTime.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\animetime-utilities\AnimeTime.Utilities.csproj">
+      <Project>{726f2a06-5f43-4cdf-b3bc-4aec6939f017}</Project>
+      <Name>AnimeTime.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
