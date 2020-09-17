@@ -1,4 +1,4 @@
-﻿using AnimeTimeDbUpdater.Core;
+﻿using AnimeTime.Core.Interfaces.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -118,7 +118,6 @@
     <Compile Include="Core\IAnimeInfoResolver.cs" />
     <Compile Include="Core\IAnimeInfoRepository.cs" />
     <Compile Include="Core\ICharacterInfoRepository.cs" />
-    <Compile Include="Core\ILogger.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="Persistence\AnimeInfoExtractor.cs" />
     <Compile Include="Persistence\AnimeInfoResolver.cs" />
