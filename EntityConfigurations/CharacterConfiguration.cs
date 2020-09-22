@@ -14,6 +14,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
         {
             Property(e => e.Name).IsRequired();
 
+            HasRequired(e => e.Role).WithMany(cr => cr.Characters).HasForeignKey(e => e.RoleId);
             HasMany(e => e.Animes).WithMany(a => a.Characters).Map(m => m.ToTable("AnimeCharacters"));
         }
     }

@@ -176,6 +176,10 @@
     <Compile Include="Migrations\202009101020547_AddAnimeAltTitlesTable.designer.cs">
       <DependentUpon>202009101020547_AddAnimeAltTitlesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009221421020_RenameRole_IdColumnInCharacters.cs" />
+    <Compile Include="Migrations\202009221421020_RenameRole_IdColumnInCharacters.designer.cs">
+      <DependentUpon>202009221421020_RenameRole_IdColumnInCharacters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeRepository.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009101020547_AddAnimeAltTitlesTable.resx">
       <DependentUpon>202009101020547_AddAnimeAltTitlesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009221421020_RenameRole_IdColumnInCharacters.resx">
+      <DependentUpon>202009221421020_RenameRole_IdColumnInCharacters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
