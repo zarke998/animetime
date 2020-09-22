@@ -1,4 +1,4 @@
-﻿using AnimeTime.Core.Utilities.Imaging;
+﻿using AnimeTime.Utilities.Core.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

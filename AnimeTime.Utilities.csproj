@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Imaging\IImageDownloader.cs" />
+    <Compile Include="Core\Loggers\ILogger.cs" />
     <Compile Include="CrawlDelayer.cs" />
     <Compile Include="Imaging\ImageDownloader.cs" />
     <Compile Include="Loggers\ConsoleLogger.cs" />
