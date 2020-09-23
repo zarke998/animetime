@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +11,6 @@ namespace AnimeTime.Utilities.Core.Imaging
 {
     public interface IImageDownloader
     {
-        Image Download(string imageUrl);
+        Image<Rgba32> Download(string imageUrl);
     }
 }
