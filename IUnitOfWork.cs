@@ -15,9 +15,11 @@ namespace AnimeTime.Core
         IGenreRepository Genres { get; }
         ICharacterRepository Characters { get; }
         ICharacterRoleRepository CharacterRoles { get; }
+        IImageLodLevelRepository ImageLodLevels { get; }
 
         bool InsertOptimizationEnabled { get; set; }
 
         void Complete();
     }
 }
+

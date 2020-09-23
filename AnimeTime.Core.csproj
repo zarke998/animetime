@@ -76,6 +76,7 @@
     <Compile Include="Repositories\ICharacterRepository.cs" />
     <Compile Include="Repositories\ICharacterRoleRepository.cs" />
     <Compile Include="Repositories\IGenreRepository.cs" />
+    <Compile Include="Repositories\IImageLodLevelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IYearSeasonRepository.cs" />
   </ItemGroup>
