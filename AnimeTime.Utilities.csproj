@@ -58,10 +58,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Domain\Thumbnail.cs" />
     <Compile Include="Core\Imaging\IImageDownloader.cs" />
+    <Compile Include="Core\Imaging\IImageResizer.cs" />
+    <Compile Include="Core\Imaging\IJpegCompressor.cs" />
+    <Compile Include="Core\Imaging\IThumbnailGenerator.cs" />
     <Compile Include="Core\Loggers\ILogger.cs" />
     <Compile Include="CrawlDelayer.cs" />
     <Compile Include="Imaging\ImageDownloader.cs" />
+    <Compile Include="Imaging\ImageResizer.cs" />
+    <Compile Include="Imaging\JpegCompressor.cs" />
+    <Compile Include="Imaging\ThumbnailGenerator.cs" />
     <Compile Include="Loggers\ConsoleLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,8 +82,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Domain\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
