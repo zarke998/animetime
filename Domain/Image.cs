@@ -8,10 +8,16 @@ namespace AnimeTime.Core.Domain
 {
     public class Image
     {
+        public Image()
+        {
+            Thumbnails = new HashSet<Thumbnail>();
+        }
+
         public int Id { get; set; }
         public string Url { get; set; }
         public ImageType ImageType { get; set; }
-        public ImageLodLevel ImageLodLevel { get; set; }
         public ImageOrientation Orientation { get; set; }
+
+        public ICollection<Thumbnail> Thumbnails { get; set; }
     }
 }

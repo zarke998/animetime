@@ -64,6 +64,7 @@
     <Compile Include="Domain\Enums\LodLevel.cs" />
     <Compile Include="Domain\Notification.cs" />
     <Compile Include="Domain\Source.cs" />
+    <Compile Include="Domain\Thumbnail.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserAnimeBookmark.cs" />
     <Compile Include="Domain\Website.cs" />
