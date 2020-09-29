@@ -7,18 +7,19 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AnimeTime.Persistence.AnimeTimeDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AnimeTimeDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AnimeTime.Persistence.AnimeTimeDbContext context)
+        protected override void Seed(AnimeTimeDbContext context)
         {
             SeedImageTypes(context);
             SeedImageOrientations(context);
             SeedCharacterRoles(context);
+            SeedImageLodLevels(context);
         }
 
         private void SeedImageTypes(AnimeTimeDbContext context)
@@ -37,7 +38,7 @@
         {
             var orientationIds = Enum.GetValues(typeof(ImageOrientationId));
 
-            foreach(var id in orientationIds)
+            foreach (var id in orientationIds)
             {
                 var orientationName = Enum.GetName(typeof(ImageOrientationId), id);
                 context.ImageOrientations.AddOrUpdate(new ImageOrientation() { Id = (ImageOrientationId)id, Name = orientationName });
@@ -45,13 +46,41 @@
         }
         private void SeedCharacterRoles(AnimeTimeDbContext context)
         {
-            foreach(var role in Enum.GetValues(typeof(CharacterRoleId)))
+            foreach (var role in Enum.GetValues(typeof(CharacterRoleId)))
             {
                 var id = (CharacterRoleId)role;
                 var name = Enum.GetName(typeof(CharacterRoleId), role);
 
                 context.CharacterRoles.AddOrUpdate(new CharacterRole() { Id = id, RoleName = name });
             }
+        }
+        private void SeedImageLodLevels(AnimeTimeDbContext context)
+        {
+            context.ImageLodLevels.AddOrUpdate(
+                new ImageLodLevel() 
+                { 
+                    Level = LodLevel.Big,
+                    Name = LodLevel.Big.ToString(),
+                    MaxWidthLandscape = 800,
+                    MaxHeightPortrait = 800,
+                    Quality = 0.7F
+                },
+                new ImageLodLevel() 
+                {
+                    Level = LodLevel.Medium,
+                    Name = LodLevel.Medium.ToString(),
+                    MaxWidthLandscape = 500,
+                    MaxHeightPortrait = 500,
+                    Quality = 0.9F
+                },
+                new ImageLodLevel()
+                {
+                    Level = LodLevel.Small,
+                    Name = LodLevel.Small.ToString(),
+                    MaxWidthLandscape = 200,
+                    MaxHeightPortrait = 200,
+                    Quality = 1.0F
+                });
         }
     }
 }
