@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SixLabors.ImageSharp;
+using Thumbnail = AnimeTime.Utilities.Core.Domain.Thumbnail;
 
 namespace AnimeTime.Utilities.Imaging
 {
