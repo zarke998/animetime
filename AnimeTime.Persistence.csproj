@@ -61,6 +61,7 @@
     <Compile Include="EntityConfigurations\AnimeConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterRoleConfiguration.cs" />
+    <Compile Include="EntityConfigurations\ThumbnailConfiguration.cs" />
     <Compile Include="EntityConfigurations\ImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterConfiguration.cs" />
     <Compile Include="EntityConfigurations\EpisodeConfiguration.cs" />
@@ -180,6 +181,10 @@
     <Compile Include="Migrations\202009221421020_RenameRole_IdColumnInCharacters.designer.cs">
       <DependentUpon>202009221421020_RenameRole_IdColumnInCharacters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009291459162_AddThumbnailsTable.cs" />
+    <Compile Include="Migrations\202009291459162_AddThumbnailsTable.designer.cs">
+      <DependentUpon>202009291459162_AddThumbnailsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ImageLodLevelRepository.cs" />
@@ -287,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009221421020_RenameRole_IdColumnInCharacters.resx">
       <DependentUpon>202009221421020_RenameRole_IdColumnInCharacters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009291459162_AddThumbnailsTable.resx">
+      <DependentUpon>202009291459162_AddThumbnailsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

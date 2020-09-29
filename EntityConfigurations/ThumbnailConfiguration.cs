@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Persistence.EntityConfigurations
 {
-    public class ImageConfiguration : EntityTypeConfiguration<Image>
+    public class ThumbnailConfiguration : EntityTypeConfiguration<Thumbnail>
     {
-        public ImageConfiguration()
+        public ThumbnailConfiguration()
         {
-            HasRequired(i => i.ImageType).WithMany();
-            HasRequired(i => i.Orientation).WithMany();
+            Property(t => t.Url).IsRequired();
+
+            HasRequired(t => t.Image).WithMany(i => i.Thumbnails);
+            HasRequired(t => t.ImageLodLevel);
         }
     }
 }
