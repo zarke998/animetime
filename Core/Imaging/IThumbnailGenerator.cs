@@ -13,5 +13,6 @@ namespace AnimeTime.Utilities.Core.Imaging
     public interface IThumbnailGenerator
     {
         IEnumerable<Thumbnail> Generate(SixLabors.ImageSharp.Image<Rgba32> image, IEnumerable<ImageLodLevel> lodLevels);
+        Task<IEnumerable<Thumbnail>> GenerateAsync(SixLabors.ImageSharp.Image<Rgba32> image, IEnumerable<ImageLodLevel> lodLevels);
     }
 }

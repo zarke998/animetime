@@ -31,6 +31,21 @@ namespace AnimeTime.Utilities.Imaging
 
             return compressedImage;
         }
+        public async Task<Image<Rgba32>> CompressAsync(Image<Rgba32> image, int quality)
+        {
+            Image<Rgba32> compressedImage;
+
+            using (var stream = new MemoryStream())
+            {
+                JpegEncoder encoder = new JpegEncoder();
+                encoder.Quality = GetConvertedQuality(quality);
+
+                await image.SaveAsync(stream, encoder);
+                compressedImage = Image.Load(stream.ToArray());
+            }
+
+            return compressedImage;
+        }
 
         private int GetConvertedQuality(int quality)
         {

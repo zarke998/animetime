@@ -42,5 +42,29 @@ namespace AnimeTime.Utilities.Imaging
 
             return thumbnails;
         }
+        public async Task<IEnumerable<Thumbnail>> GenerateAsync(Image<Rgba32> image, IEnumerable<ImageLodLevel> lodLevels)
+        {
+            ICollection<Task<Thumbnail>> thumbnailTasks = new List<Task<Thumbnail>>();
+            foreach (var lod in lodLevels)
+            {
+                thumbnailTasks.Add(GenerateSingleThumbnail(image, lod));
+            }
+
+            return await Task.WhenAll(thumbnailTasks);
+        }
+
+        private async Task<Thumbnail> GenerateSingleThumbnail(Image<Rgba32> image, ImageLodLevel lodLevel)
+        {
+            var copy = image.Clone();
+
+            await Task.Run(() => { _resizer.Resize(copy, lodLevel.MaxWidthLandscape, lodLevel.MaxHeightPortrait); });
+
+            var quality = Convert.ToInt32(lodLevel.Quality * 100);
+            var compressedImage = await _compressor.CompressAsync(copy, quality);
+
+            var thumbnail = new Thumbnail() { Image = compressedImage, LodLevel = lodLevel.Level };
+
+            return thumbnail;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace AnimeTime.Utilities.Core.Imaging
     public interface IJpegCompressor
     {
         Image<Rgba32> Compress(Image<Rgba32> image, int quality); 
+        Task<Image<Rgba32>> CompressAsync(Image<Rgba32> image, int quality);
     }
 }
