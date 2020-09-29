@@ -13,11 +13,15 @@ namespace AnimeTime.Utilities.Imaging
 {
     public class ImageDownloader : IImageDownloader
     {
-        public Image<Rgba32> Download(string imageUrl)
+        public Image<Rgba32> Download(string imageUrl, bool applyCrawlDelay)
         {
             using (WebClient client = new WebClient())
             {
-                byte[] imgData = client.DownloadData(imageUrl);
+                byte[] imgData = null;
+                if (applyCrawlDelay)
+                    CrawlDelayer.ApplyDelay(() => imgData = client.DownloadData(imageUrl));
+                else
+                    imgData = client.DownloadData(imageUrl);
 
                 var image = Image.Load(imgData);
                 return image;
