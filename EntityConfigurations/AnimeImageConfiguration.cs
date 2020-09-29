@@ -12,6 +12,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public AnimeImageConfiguration()
         {
+            HasRequired(ai => ai.Anime);
             HasRequired(ai => ai.Image).WithRequiredDependent().Map(mapConfig => mapConfig.MapKey("Image_Id"));
         }
     }
