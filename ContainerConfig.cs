@@ -11,6 +11,8 @@ using AnimeTimeDbUpdater.Utilities;
 using AnimeTime.Persistence;
 using AnimeTime.Core;
 using AnimeTime.Utilities.Loggers;
+using AnimeTime.Utilities.Imaging;
+using AnimeTime.Utilities.Core.Imaging;
 
 namespace AnimeTimeDbUpdater
 {
@@ -32,6 +34,11 @@ namespace AnimeTimeDbUpdater
             builder.RegisterType<FileLogger>();
             builder.RegisterType<ConsoleLogger>();
 
+            builder.RegisterType<ImageDownloader>().As<IImageDownloader>();
+            builder.RegisterType<ThumbnailGenerator>().As<IThumbnailGenerator>();
+
+            builder.RegisterType<ImageResizer>().As<IImageResizer>();
+            builder.RegisterType<JpegCompressor>().As<IJpegCompressor>();
 
             return builder.Build();
         }
