@@ -20,6 +20,8 @@ namespace AnimeTime.Core.Domain
         public CharacterRoleId RoleId { get; set; }
         public CharacterRole Role { get; set; }
 
+        public Image Image { get; set; }
+
         public ICollection<Anime> Animes { get; set; }
     }
 }
