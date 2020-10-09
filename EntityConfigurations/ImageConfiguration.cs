@@ -12,8 +12,8 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public ImageConfiguration()
         {
-            HasRequired(i => i.ImageType).WithMany();
-            HasRequired(i => i.Orientation).WithMany();
+            HasRequired(i => i.ImageType).WithMany().HasForeignKey(i => i.ImageType_Id);
+            HasRequired(i => i.Orientation).WithMany().HasForeignKey(i => i.Orientation_Id);
         }
     }
 }
