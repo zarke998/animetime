@@ -22,5 +22,10 @@ namespace AnimeTime.Persistence.Repositories
         {
 
         }
+
+        public IEnumerable<Character> GetAllWithSourceOnly()
+        {
+            return AnimeTimeDbContext.Characters.Select(c => new Character() { Id = c.Id, SourceUrl = c.SourceUrl });
+        }
     }
 }
