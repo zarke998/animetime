@@ -15,7 +15,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
             Property(t => t.Url).IsRequired();
 
             HasRequired(t => t.Image).WithMany(i => i.Thumbnails);
-            HasRequired(t => t.ImageLodLevel);
+            HasRequired(t => t.ImageLodLevel).WithMany().HasForeignKey(i => i.ImageLodLevel_Id);
         }
     }
 }
