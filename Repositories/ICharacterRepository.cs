@@ -9,6 +9,6 @@ namespace AnimeTime.Core.Repositories
 {
     public interface ICharacterRepository : IRepository<Character>
     {
-
+        IEnumerable<Character> GetAllWithSourceOnly();
     }
 }
