@@ -13,6 +13,11 @@ namespace AnimeTime.Core.Domain.Comparers
             if (y == null)
                 return false;
 
+            if(x.Id != 0 && y.Id != 0)
+            {
+                return x.Id == y.Id;
+            }
+
             return x.SourceUrl == y.SourceUrl;
         }
 
