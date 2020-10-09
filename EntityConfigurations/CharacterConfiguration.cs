@@ -16,6 +16,8 @@ namespace AnimeTime.Persistence.EntityConfigurations
 
             HasRequired(e => e.Role).WithMany(cr => cr.Characters).HasForeignKey(e => e.RoleId);
             HasMany(e => e.Animes).WithMany(a => a.Characters).Map(m => m.ToTable("AnimeCharacters"));
+
+            HasOptional(e => e.Image).WithOptionalDependent().WillCascadeOnDelete();
         }
     }
 }

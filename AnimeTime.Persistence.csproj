@@ -189,6 +189,10 @@
     <Compile Include="Migrations\202009291511391_AnimeImagesAnimeIdColumnIsRequired.designer.cs">
       <DependentUpon>202009291511391_AnimeImagesAnimeIdColumnIsRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010090948234_AddCharacterImageRelationship.cs" />
+    <Compile Include="Migrations\202010090948234_AddCharacterImageRelationship.designer.cs">
+      <DependentUpon>202010090948234_AddCharacterImageRelationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ImageLodLevelRepository.cs" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009291511391_AnimeImagesAnimeIdColumnIsRequired.resx">
       <DependentUpon>202009291511391_AnimeImagesAnimeIdColumnIsRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010090948234_AddCharacterImageRelationship.resx">
+      <DependentUpon>202010090948234_AddCharacterImageRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
