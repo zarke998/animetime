@@ -38,12 +38,7 @@ namespace AnimeTime.Utilities
                 var timeToWait = CrawlWait + CrawlWaitOffset - (elapsed);
 
                 var lastCrawledFor = LastCrawledFor;
-#if DEBUG
-                Console.WriteLine($"\nLast crawled for: {lastCrawledFor}");
-                Console.WriteLine($"Last crawl elapsed: {elapsed}");
-                Console.WriteLine($"Time to wait: {timeToWait}");
-                Console.WriteLine();
-#endif
+
                 if (timeToWait > 0)
                 {
                     System.Threading.Thread.Sleep(Convert.ToInt32(timeToWait * 1000));
