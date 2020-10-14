@@ -21,5 +21,9 @@ namespace AnimeTime.Utilities.Imaging
 
             return stream;
         }
+        public static bool IsPortrait(this Image<Rgba32> image)
+        {
+            return image.Height > image.Width;
+        }
     }
 }
