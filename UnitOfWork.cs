@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnimeTime.Core;
+using AnimeTime.Core.Exceptions;
 using AnimeTime.Core.Repositories;
 using AnimeTime.Persistence.Repositories;
 
@@ -47,7 +50,18 @@ namespace AnimeTime.Persistence
         }
         public void Complete()
         {
-            _animeTimeDbContext.SaveChanges();
+            try
+            {
+                _animeTimeDbContext.SaveChanges();
+            }
+            catch (DbUpdateException updateException)
+            {
+                throw new EntityInsertException("Saving to database failed.", updateException);
+            }
+            catch (DbEntityValidationException validationException)
+            {
+                throw new EntityInsertException("Entity validation failed.", validationException);
+            }
         }
         public void Dispose()
         {
