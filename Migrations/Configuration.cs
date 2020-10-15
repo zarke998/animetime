@@ -57,26 +57,26 @@
         private void SeedImageLodLevels(AnimeTimeDbContext context)
         {
             context.ImageLodLevels.AddOrUpdate(
-                new ImageLodLevel() 
-                { 
-                    Level = LodLevel.Big,
-                    Name = LodLevel.Big.ToString(),
+                new ImageLodLevel()
+                {
+                    Id = ImageLodLevelId.Big,
+                    Name = ImageLodLevelId.Big.ToString(),
                     MaxWidthLandscape = 800,
                     MaxHeightPortrait = 800,
                     Quality = 0.7F
                 },
-                new ImageLodLevel() 
+                new ImageLodLevel()
                 {
-                    Level = LodLevel.Medium,
-                    Name = LodLevel.Medium.ToString(),
+                    Id = ImageLodLevelId.Medium,
+                    Name = ImageLodLevelId.Medium.ToString(),
                     MaxWidthLandscape = 500,
                     MaxHeightPortrait = 500,
                     Quality = 0.9F
                 },
                 new ImageLodLevel()
                 {
-                    Level = LodLevel.Small,
-                    Name = LodLevel.Small.ToString(),
+                    Id = ImageLodLevelId.Small,
+                    Name = ImageLodLevelId.Small.ToString(),
                     MaxWidthLandscape = 200,
                     MaxHeightPortrait = 200,
                     Quality = 1.0F
