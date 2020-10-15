@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimeTime.Core.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace AnimeTime.Core.Domain
         public int Id { get; set; }
         public string Url { get; set; }
 
-        public int ImageLodLevel_Id { get; set; }
+        public LodLevel ImageLodLevel_Id { get; set; }
         public ImageLodLevel ImageLodLevel { get; set; }
 
         public Image Image { get; set; }
