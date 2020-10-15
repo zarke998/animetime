@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Core.Domain.Enums
 {
-    public enum ImageLodLevelId
+    public enum LodLevel
     {
         Original = 1,
         Big = 5,
