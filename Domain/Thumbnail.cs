@@ -12,7 +12,7 @@ namespace AnimeTime.Core.Domain
         public int Id { get; set; }
         public string Url { get; set; }
 
-        public LodLevel ImageLodLevel_Id { get; set; }
+        public ImageLodLevelId ImageLodLevel_Id { get; set; }
         public ImageLodLevel ImageLodLevel { get; set; }
 
         public Image Image { get; set; }

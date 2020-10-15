@@ -9,7 +9,7 @@ namespace AnimeTime.Core.Domain
 {
     public class ImageLodLevel
     {
-        public LodLevel Id { get; set; }
+        public ImageLodLevelId Id { get; set; }
         public string Name { get; set; }
         public int MaxHeightPortrait { get; set; }
         public int MaxWidthLandscape { get; set; }
