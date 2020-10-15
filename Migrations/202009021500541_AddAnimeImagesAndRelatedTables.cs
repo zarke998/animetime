@@ -29,7 +29,7 @@
                 "dbo.ImageLodLevels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: false),
+                        Id = c.Int(nullable: false, identity: true),
                         Level = c.Int(nullable: false),
                         Name = c.String(nullable: false),
                         MaxSizeInKb = c.Int(nullable: false),
