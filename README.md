@@ -1,1 +1,0 @@
-An application for watching anime.
