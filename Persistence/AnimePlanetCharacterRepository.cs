@@ -14,6 +14,8 @@ namespace AnimeTimeDbUpdater.Persistence
 {
     class AnimePlanetCharacterRepository : ICharacterInfoRepository
     {
+        private static string _blankCharacterImage = "blank_char.gif";
+
         public IEnumerable<CharacterInfo> Extract(string animeCharactersUrl)
         {
             ICollection<CharacterInfo> infos = new List<CharacterInfo>();
@@ -108,6 +110,12 @@ namespace AnimeTimeDbUpdater.Persistence
             var imageNode = document.DocumentNode.SelectSingleNode("//div[contains(@class,'entrySynopsis')]//div[@class='mainEntry']/img[@itemprop='image']");
 
             var imageUrl = imageNode.GetAttributeValue("src", String.Empty);
+
+            if (imageUrl.Contains(_blankCharacterImage))
+            {
+                return null;
+            }
+
             return Constants.WebsiteUrls.AnimePlanet + imageUrl;
         }
     }

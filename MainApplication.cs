@@ -28,7 +28,7 @@ namespace AnimeTimeDbUpdater
         IThumbnailGenerator _thumbnailGenerator;
 
         HashSet<string> _titles;
-        
+
         HashSet<Genre> _genres;
         HashSet<YearSeason> _yearSeasons;
         HashSet<Category> _categories;
@@ -140,7 +140,7 @@ namespace AnimeTimeDbUpdater
                 {
                     unitOfWork.Complete();
                 }
-                catch(EntityInsertException insertException)
+                catch (EntityInsertException insertException)
                 {
                     // Log exception to db
 
@@ -189,7 +189,7 @@ namespace AnimeTimeDbUpdater
                 }
             }
 
-            if(newChars.Count > 0)
+            if (newChars.Count > 0)
             {
                 InsertCharacterImages(newChars);
             }
@@ -208,13 +208,15 @@ namespace AnimeTimeDbUpdater
 
             // Generate thumbnails
             IList<Task<IEnumerable<ThumbnailUtil>>> thumbnailGenerationTasks = new List<Task<IEnumerable<ThumbnailUtil>>>();
-            foreach (var c in newChars)
+
+            var newCharsWithImage = newChars.Where(ci => ci.ImageUrl != null);
+            foreach (var c in newCharsWithImage)
             {
                 Console.Write($"Donwloading image for {c.Character.Name}."); // Switch to using LogGroup Write method (to be implemented)
                 var image = _imageDownloader.Download(c.ImageUrl, true);
                 Console.WriteLine("Done");
 
-                charImagePairs.Add(Tuple.Create(c, image, new List<Tuple<ThumbnailUtil,string>>()));
+                charImagePairs.Add(Tuple.Create(c, image, new List<Tuple<ThumbnailUtil, string>>()));
 
                 thumbnailGenerationTasks.Add(_thumbnailGenerator.GenerateAsync(image, _lodLevels));
             }
@@ -230,7 +232,7 @@ namespace AnimeTimeDbUpdater
             for (int i = 0; i < charThumbnails.Length; i++)
             {
                 var indexCopy = i;
-                foreach(var thumbnail in charThumbnails[i])
+                foreach (var thumbnail in charThumbnails[i])
                 {
                     uploadTasks.Add(imageStorage.UploadAsync(thumbnail.Image)
                         .ContinueWith(t => charImagePairs[indexCopy].Item3.Add(Tuple.Create(thumbnail, t.Result))));
@@ -241,7 +243,7 @@ namespace AnimeTimeDbUpdater
             Console.WriteLine("Done.");
 
             // Insert thumbnails into db
-            foreach(var pair in charImagePairs)
+            foreach (var pair in charImagePairs)
             {
                 var character = pair.Item1.Character;
                 var imageOriginal = pair.Item2;
@@ -259,7 +261,7 @@ namespace AnimeTimeDbUpdater
                     image.Orientation_Id = ImageOrientationId.Landscape;
                 }
 
-                foreach(var thumbUrlPair in thumbUrlPairs)
+                foreach (var thumbUrlPair in thumbUrlPairs)
                 {
                     var thumb = new Thumbnail();
                     thumb.ImageLodLevel_Id = _lodLevels.First(lod => lod.Level == thumbUrlPair.Item1.LodLevel).Id;
