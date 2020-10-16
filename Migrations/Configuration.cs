@@ -58,7 +58,8 @@
         {
             context.ImageLodLevels.AddOrUpdate(
                 new ImageLodLevel() 
-                { 
+                {
+                    Id = 1,
                     Level = LodLevel.Big,
                     Name = LodLevel.Big.ToString(),
                     MaxWidthLandscape = 800,
@@ -67,6 +68,7 @@
                 },
                 new ImageLodLevel() 
                 {
+                    Id = 2,
                     Level = LodLevel.Medium,
                     Name = LodLevel.Medium.ToString(),
                     MaxWidthLandscape = 500,
@@ -75,6 +77,7 @@
                 },
                 new ImageLodLevel()
                 {
+                    Id = 3,
                     Level = LodLevel.Small,
                     Name = LodLevel.Small.ToString(),
                     MaxWidthLandscape = 200,

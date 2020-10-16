@@ -5,6 +5,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AnimeTime.Persistence.EntityConfigurations
 {
@@ -12,6 +13,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public ImageLodLevelConfiguration()
         {
+            Property(imageLodLevel => imageLodLevel.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(imageLodLevel => imageLodLevel.Name).IsRequired();
         }
     }
