@@ -21,8 +21,6 @@ namespace AnimeTime.Core.Domain
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string CoverUrl { get; set; }
-        public string CoverThumbUrl { get; set; }
         public float Rating { get; set; }
         public int? ReleaseYear { get; set; }
         public YearSeason YearSeason { get; set; }
@@ -42,8 +40,6 @@ namespace AnimeTime.Core.Domain
             s.AppendLine($"Title: {Title}");
             s.AppendLine($"AltTitle: { (AltTitles.Count != 0 ? GetAltTitles() : "(none)") }");
             s.AppendLine($"\nDescription: {Description }\n");
-            s.AppendLine($"CoverUrl: {CoverUrl}");
-            s.AppendLine($"CoverThumbUrl: {CoverThumbUrl}");
             s.AppendLine($"ReleaseYear: {ReleaseYear}");
             s.AppendLine($"YearSeason: { (YearSeason != null ? YearSeason.Name : "(none)") }");
             s.AppendLine($"Rating: {Rating}");
