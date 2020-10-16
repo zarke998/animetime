@@ -30,7 +30,6 @@ namespace AnimeTimeDbUpdater.Persistence
         {
             var anime = info.Anime;
 
-            anime.CoverThumbUrl = info.AnimeCoverThumbUrl;
 
             CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(info.AnimeDetailsUrl); });
 
