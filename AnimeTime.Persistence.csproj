@@ -197,6 +197,10 @@
     <Compile Include="Migrations\202010151346303_RemoveIdentityFromIdColInImageLodLevel.designer.cs">
       <DependentUpon>202010151346303_RemoveIdentityFromIdColInImageLodLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010161039141_RemoveCoverUrlAndCoverThumbUrlColsFromAnime.cs" />
+    <Compile Include="Migrations\202010161039141_RemoveCoverUrlAndCoverThumbUrlColsFromAnime.designer.cs">
+      <DependentUpon>202010161039141_RemoveCoverUrlAndCoverThumbUrlColsFromAnime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ImageLodLevelRepository.cs" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010151346303_RemoveIdentityFromIdColInImageLodLevel.resx">
       <DependentUpon>202010151346303_RemoveIdentityFromIdColInImageLodLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010161039141_RemoveCoverUrlAndCoverThumbUrlColsFromAnime.resx">
+      <DependentUpon>202010161039141_RemoveCoverUrlAndCoverThumbUrlColsFromAnime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
