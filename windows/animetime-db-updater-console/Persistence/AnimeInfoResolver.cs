@@ -41,6 +41,7 @@ namespace AnimeTimeDbUpdater.Persistence
             ResolveCategory(anime);
             ResolveGenres(anime);
             info.CharactersUrl = GetCharactersUrl();
+            info.CoverUrl = GetCoverUrl();
 
             LogGroup.Log($"Resolved: {info.AnimeDetailsUrl} ({anime.Title})");
         }
@@ -139,6 +140,25 @@ namespace AnimeTimeDbUpdater.Persistence
                 charactersUrl = charactersLinkNode.GetAttributeValue("href", String.Empty);
 
             return Constants.WebsiteUrls.AnimePlanet + charactersUrl;
+        }
+        private string GetCoverUrl()
+        {
+            var coverNode = _doc.DocumentNode.SelectSingleNode("//section[@id='entry']//div[@class='mainEntry']//img[@itemprop='image']");
+
+            if(coverNode == null) // Error fetching node
+            {
+                // Log exception (log document content, and searched node)
+                return null;
+            }
+
+            var coverSrc = coverNode.GetAttributeValue("src", null);
+
+            if(coverSrc == null)
+            {
+                return null;
+            }
+
+            return Constants.WebsiteUrls.AnimePlanet + coverSrc;
         }
     }
 }
