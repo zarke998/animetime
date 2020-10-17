@@ -112,13 +112,13 @@ namespace AnimeTimeDbUpdater
                     newAnimes.Add(info);
                 }
 
-                _animeRepo.NextPage();
-                if (_animeRepo.LastPageReached)
-                {
-                    endOfFetching = true;
-                }
+            _animeRepo.NextPage();
+            if (_animeRepo.LastPageReached)
+            {
+                endOfFetching = true;
+            }
 
-            } while (!endOfFetching);
+        } while (!endOfFetching);
 
             return newAnimes;
         }
@@ -132,6 +132,7 @@ namespace AnimeTimeDbUpdater
                 _animeRepo.Resolve(info);
                 var anime = info.Anime;
 
+                InsertAnimeCover(info, unitOfWork);
                 InsertAnimeCharacters(info);
                 InsertAnime(anime, unitOfWork);
 
@@ -160,6 +161,68 @@ namespace AnimeTimeDbUpdater
         {
             AddAnimeRelationships(anime);
             unitOfWork.Animes.Add(anime);
+        }
+        private void InsertAnimeCover(AnimeInfo info, IUnitOfWork unitOfWork)
+        {
+            if(info.CoverUrl == null)
+            {
+                return;
+            }
+
+            Console.Write("Downloading cover image...");
+            var coverImage = _imageDownloader.Download(info.CoverUrl);
+            Console.WriteLine("Done");
+
+            Console.Write("Generating thumbnails...");
+            var thumbnails = _thumbnailGenerator.GenerateAsync(coverImage, _lodLevels).Result;
+            Console.WriteLine("Done");
+
+            #region Upload thumbnails
+            var imageStorage = ClassFactory.CreateImageStorage();
+
+            var uploadTasks = new List<Task>();
+            var urlLodPairs = new List<Tuple<string, LodLevel>>();
+
+            Console.Write("Uploading thumbnails...");
+            foreach (var thumb in thumbnails)
+            {
+                uploadTasks.Add(imageStorage.UploadAsync(thumb.Image).ContinueWith(t => urlLodPairs.Add(Tuple.Create(t.Result, thumb.LodLevel))));
+            }
+            Task.WhenAll(uploadTasks).Wait();
+            Console.WriteLine("Done");
+            #endregion
+
+            #region Insert anime cover into database
+            var animeImage = new AnimeImage();
+
+            var image = new AnimeTime.Core.Domain.Image();
+
+            if (coverImage.IsPortrait())
+            {
+                image.Orientation_Id = ImageOrientationId.Portrait;
+            }
+            else
+            {
+                image.Orientation_Id = ImageOrientationId.Landscape;
+            }
+
+            image.ImageType_Id = ImageTypeId.Cover;
+
+            foreach (var pair in urlLodPairs)
+            {
+                var thumbnail = new Thumbnail();
+
+                thumbnail.Url = pair.Item1;
+                thumbnail.ImageLodLevel_Id = _lodLevels.First(lod => lod.Level == pair.Item2).Id;
+
+                image.Thumbnails.Add(thumbnail);
+            }
+
+            animeImage.Anime = info.Anime;
+            animeImage.Image = image;
+
+            unitOfWork.AnimeImages.Add(animeImage);
+            #endregion
         }
         private void InsertAnimeCharacters(AnimeInfo info)
         {

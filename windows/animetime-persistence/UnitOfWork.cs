@@ -36,6 +36,7 @@ namespace AnimeTime.Persistence
         public ICharacterRepository Characters { get; private set; }
         public ICharacterRoleRepository CharacterRoles { get; private set; }
         public IImageLodLevelRepository ImageLodLevels { get; private set; }
+        public IAnimeImageRepository AnimeImages { get; private set; }
 
         public UnitOfWork(AnimeTimeDbContext context)
         {
@@ -47,6 +48,7 @@ namespace AnimeTime.Persistence
             Characters = new CharacterRepository(_animeTimeDbContext);
             CharacterRoles = new CharacterRoleRepository(_animeTimeDbContext);
             ImageLodLevels = new ImageLodLevelRepository(_animeTimeDbContext);
+            AnimeImages = new AnimeImageRepository(_animeTimeDbContext);
         }
         public void Complete()
         {
