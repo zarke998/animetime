@@ -68,7 +68,7 @@ namespace AnimeTimeDbUpdater.Persistence
             info.AnimeDetailsUrl = Constants.WebsiteUrls.AnimePlanet + detailsUrl;
 
             var thumbUrl = doc.DocumentNode.SelectSingleNode(".//img").GetAttributeValue("data-src", "");
-            info.AnimeCoverThumbUrl = Constants.WebsiteUrls.AnimePlanet + thumbUrl;
+            info.CoverUrl = Constants.WebsiteUrls.AnimePlanet + thumbUrl;
 
             return info;
         }
