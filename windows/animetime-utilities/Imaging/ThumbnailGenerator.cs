@@ -48,9 +48,9 @@ namespace AnimeTime.Utilities.Imaging
             ICollection<Task<Thumbnail>> thumbnailTasks = new List<Task<Thumbnail>>();
             foreach (var lod in lodLevels)
             {
-                // Dont generate thumbnail if image is bigger than lod level
+                // Dont generate thumbnail if image is smaller than lod level
                 var isPortrait = image.Height > image.Width;
-                if ((isPortrait && image.Height > lod.MaxHeightPortrait) || (!isPortrait && image.Width > lod.MaxWidthLandscape))
+                if ((isPortrait && image.Height < lod.MaxHeightPortrait) || (!isPortrait && image.Width < lod.MaxWidthLandscape))
                 {
                     continue;
                 }
