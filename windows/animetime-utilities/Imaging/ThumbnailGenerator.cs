@@ -27,8 +27,14 @@ namespace AnimeTime.Utilities.Imaging
         {
             ICollection<Thumbnail> thumbnails = new List<Thumbnail>();
 
+            var isPortrait = image.Height > image.Width;
             foreach (var lod in lodLevels)
             {
+                if((isPortrait && image.Height < lod.MaxHeightPortrait) || (!isPortrait && image.Width < lod.MaxWidthLandscape))
+                {
+                    continue;
+                }
+
                 var copy = image.Clone();
 
                 _resizer.Resize(copy, lod.MaxWidthLandscape, lod.MaxHeightPortrait);
