@@ -17,6 +17,8 @@ namespace AnimeTimeDbUpdater.Persistence
 {
     public class AnimeInfoResolver : IAnimeInfoResolver
     {
+        private static string _blankCover = "blank_main.jpg";
+
         private HtmlWeb _web;
         private HtmlDocument _doc;
 
@@ -153,7 +155,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
             var coverSrc = coverNode.GetAttributeValue("src", null);
 
-            if(coverSrc == null)
+            if(coverSrc == null || coverSrc.Contains(_blankCover))
             {
                 return null;
             }
