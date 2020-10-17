@@ -25,13 +25,21 @@ namespace AnimeTime.Utilities.Imaging
 
         public IEnumerable<Thumbnail> Generate(Image<Rgba32> image, IEnumerable<ImageLodLevel> lodLevels)
         {
+            var lodLevelsSorted = lodLevels.OrderBy(lod => lod.Level);
+            var originalThumbnail = new Thumbnail() { Image = image };
+            var originalThumbnailFound = false;
+
             ICollection<Thumbnail> thumbnails = new List<Thumbnail>();
 
             var isPortrait = image.Height > image.Width;
-            foreach (var lod in lodLevels)
+            foreach (var lod in lodLevelsSorted)
             {
                 if((isPortrait && image.Height < lod.MaxHeightPortrait) || (!isPortrait && image.Width < lod.MaxWidthLandscape))
                 {
+                    originalThumbnail.LodLevel = lod.Level;
+
+                    originalThumbnailFound = true;
+
                     continue;
                 }
 
@@ -47,24 +55,46 @@ namespace AnimeTime.Utilities.Imaging
                 thumbnails.Add(thumbnail);
             }
 
-            return thumbnails;
+            if (originalThumbnailFound)
+            {
+                return thumbnails.Prepend(originalThumbnail);
+            }
+            else
+            {
+                return thumbnails;
+            }
         }
         public async Task<IEnumerable<Thumbnail>> GenerateAsync(Image<Rgba32> image, IEnumerable<ImageLodLevel> lodLevels)
         {
+            var lodLevelsSorted = lodLevels.OrderBy(lod => lod.Level);
+            var originalThumbnail = new Thumbnail() { Image = image };
+            var originalThumbnailFound = false;
+
             ICollection<Task<Thumbnail>> thumbnailTasks = new List<Task<Thumbnail>>();
-            foreach (var lod in lodLevels)
+            foreach (var lod in lodLevelsSorted)
             {
-                // Dont generate thumbnail if image is smaller than lod level
+                // If image is smaller than lod, add original image as thumbnail
                 var isPortrait = image.Height > image.Width;
                 if ((isPortrait && image.Height < lod.MaxHeightPortrait) || (!isPortrait && image.Width < lod.MaxWidthLandscape))
                 {
+                    originalThumbnail.LodLevel = lod.Level;
+
+                    originalThumbnailFound = true;
                     continue;
                 }
 
                 thumbnailTasks.Add(GenerateSingleThumbnail(image, lod));
             }
 
-            return await Task.WhenAll(thumbnailTasks);
+            var thumbnails = await Task.WhenAll(thumbnailTasks);
+            if (originalThumbnailFound)
+            {
+                return thumbnails.Prepend(originalThumbnail);
+            }
+            else
+            {
+                return thumbnails;
+            }
         }
 
         private async Task<Thumbnail> GenerateSingleThumbnail(Image<Rgba32> image, ImageLodLevel lodLevel)
