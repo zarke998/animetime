@@ -132,7 +132,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Utilities\FileLogger.cs" />
+    <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\LogGroup.cs" />
+    <Compile Include="Utilities\TraceListeners\ConsoleWithoutPrefixListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

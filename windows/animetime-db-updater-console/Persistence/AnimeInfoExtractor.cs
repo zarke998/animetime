@@ -30,7 +30,7 @@ namespace AnimeTimeDbUpdater.Persistence
             CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(page); });
             LoadedPage = page;
 
-            LogGroup.Log("\n\n\t\t\t\t Getting resolves from page: " + LoadedPage + "\n\n");
+            Log.TraceEvent(TraceEventType.Information, 0, $"Getting infos from page: {LoadedPage}\n");
 
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
             foreach (var node in animeNodes)
@@ -38,7 +38,7 @@ namespace AnimeTimeDbUpdater.Persistence
                 var info = GetAnimeInfo(node.OuterHtml);
                 infos.Add(info);
 
-                LogGroup.Log("Fetched: " + info.Anime.Title);
+                Log.TraceEvent(TraceEventType.Information, 0, $"Fetched: {info.Anime.Title}");
             }
 
             return infos;
