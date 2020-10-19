@@ -112,13 +112,13 @@ namespace AnimeTimeDbUpdater
                     newAnimes.Add(info);
                 }
 
-            _animeRepo.NextPage();
-            if (_animeRepo.LastPageReached)
-            {
-                endOfFetching = true;
-            }
+                _animeRepo.NextPage();
+                if (_animeRepo.LastPageReached)
+                {
+                    endOfFetching = true;
+                }
 
-        } while (!endOfFetching);
+            } while (!endOfFetching);
 
             return newAnimes;
         }
@@ -129,14 +129,17 @@ namespace AnimeTimeDbUpdater
                 IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
                 InitializeUnitOfWork(unitOfWork);
 
+
+                Log.TraceEvent(TraceEventType.Information, 0, $"\nResolving anime: {info.AnimeDetailsUrl}");
                 _animeRepo.Resolve(info);
+
                 var anime = info.Anime;
 
                 InsertAnimeCover(info, unitOfWork);
                 InsertAnimeCharacters(info);
                 InsertAnime(anime, unitOfWork);
 
-                Console.WriteLine("Inserting into database.");
+                Log.TraceEvent(TraceEventType.Information, 0, "\nInserting anime into database.");
                 try
                 {
                     unitOfWork.Complete();
@@ -147,11 +150,12 @@ namespace AnimeTimeDbUpdater
 
                     // Cleanup uploaded images
 
-                    Debug.WriteLine(insertException.Message + insertException.InnerException.Message);
+                    Log.TraceEvent(TraceEventType.Error, 0, insertException.Message);
+                    Log.TraceEvent(TraceEventType.Error, 0, insertException.InnerException.Message);
 
                     Environment.Exit(0);
                 }
-                Console.WriteLine($"Inserting done.");
+                Log.TraceEvent(TraceEventType.Information, 0, "-------------------------------------");
 
                 UpdateCharacterCache(anime.Characters);
                 UnitOfWorkToCache(unitOfWork);
@@ -164,18 +168,16 @@ namespace AnimeTimeDbUpdater
         }
         private void InsertAnimeCover(AnimeInfo info, IUnitOfWork unitOfWork)
         {
-            if(info.CoverUrl == null)
+            if (info.CoverUrl == null)
             {
                 return;
             }
 
-            Console.Write("Downloading cover image...");
+            Log.TraceEvent(TraceEventType.Information, 0, "Downloading cover image...");
             var coverImage = _imageDownloader.Download(info.CoverUrl);
-            Console.WriteLine("Done");
 
-            Console.Write("Generating thumbnails...");
+            Log.TraceEvent(TraceEventType.Information, 0, "Generating thumbnails...");
             var thumbnails = _thumbnailGenerator.GenerateAsync(coverImage, _lodLevels).Result;
-            Console.WriteLine("Done");
 
             #region Upload thumbnails
             var imageStorage = ClassFactory.CreateImageStorage();
@@ -183,13 +185,12 @@ namespace AnimeTimeDbUpdater
             var uploadTasks = new List<Task>();
             var urlLodPairs = new List<Tuple<string, LodLevel>>();
 
-            Console.Write("Uploading thumbnails...");
+            Log.TraceEvent(TraceEventType.Information, 0, "Uploading thumbnails...");
             foreach (var thumb in thumbnails)
             {
                 uploadTasks.Add(imageStorage.UploadAsync(thumb.Image).ContinueWith(t => urlLodPairs.Add(Tuple.Create(t.Result, thumb.LodLevel))));
             }
             Task.WhenAll(uploadTasks).Wait();
-            Console.WriteLine("Done");
             #endregion
 
             #region Insert anime cover into database
@@ -222,6 +223,8 @@ namespace AnimeTimeDbUpdater
             animeImage.Image = image;
 
             unitOfWork.AnimeImages.Add(animeImage);
+
+            Log.TraceEvent(TraceEventType.Information, 0, "Attached cover to anime.");
             #endregion
         }
         private void InsertAnimeCharacters(AnimeInfo info)
@@ -229,35 +232,36 @@ namespace AnimeTimeDbUpdater
             ICollection<Character> chars = new List<Character>();
             ICollection<CharacterInfo> newChars = new List<CharacterInfo>();
 
-            LogGroup.Log("Getting characters list.");
+            Log.TraceEvent(TraceEventType.Information, 0, "\nFetching characters list.");
             var charInfos = _charRepo.Extract(info.CharactersUrl);
+            Log.TraceEvent(TraceEventType.Information, 0, $"Characters found ({charInfos.Count()}).");
+
+            if (charInfos.Count() == 0) return;
 
             foreach (var charInfo in charInfos)
             {
                 if (_characters.TryGetValue(charInfo.Character, out Character c))
                 {
-                    LogGroup.Log($"Adding character: {c.Name}.");
                     chars.Add(c);
                 }
                 else
                 {
-                    LogGroup.Log($"\nResolving character: {charInfo.Character.SourceUrl}.");
+                    Log.TraceEvent(TraceEventType.Information, 0, $"Resolving character: {charInfo.Character.SourceUrl}.");
                     _charRepo.Resolve(charInfo);
-                    var charResolved = charInfo.Character;
 
-                    LogGroup.Log($"Adding character: {charInfo.Character.Name}.\n");
+                    var charResolved = charInfo.Character;
                     chars.Add(charResolved);
 
                     newChars.Add(charInfo);
                 }
             }
+            Log.TraceEvent(TraceEventType.Information, 0, "Attached characters to anime.\n");
 
             if (newChars.Count > 0)
             {
                 InsertCharacterImages(newChars);
             }
 
-            LogGroup.Log("-------------------------------------------------------------------------------------");
             info.Anime.Characters = chars;
         }
 
@@ -275,23 +279,24 @@ namespace AnimeTimeDbUpdater
             var newCharsWithImage = newChars.Where(ci => ci.ImageUrl != null);
             foreach (var c in newCharsWithImage)
             {
-                Console.Write($"Donwloading image for {c.Character.Name}."); // Switch to using LogGroup Write method (to be implemented)
+                Log.TraceEvent(TraceEventType.Information, 0, $"Donwloading image for {c.Character.Name}.");
                 var image = _imageDownloader.Download(c.ImageUrl, true);
-                Console.WriteLine("Done");
 
                 charImagePairs.Add(Tuple.Create(c, image, new List<Tuple<ThumbnailUtil, string>>()));
 
                 thumbnailGenerationTasks.Add(_thumbnailGenerator.GenerateAsync(image, _lodLevels));
             }
 
-            Console.Write("Generating thumbnails...");
+            Log.TraceEvent(TraceEventType.Information, 0, "Generating thumbnails...");
             var charThumbnails = Task.WhenAll(thumbnailGenerationTasks).Result;
-            Console.WriteLine("Done.");
 
             // Upload thumbnails
             var imageStorage = ClassFactory.CreateImageStorage();
 
             var uploadTasks = new List<Task>();
+
+            Log.TraceEvent(TraceEventType.Information, 0, "Uploading thumbnails...");
+            var stopwatch = Stopwatch.StartNew();
             for (int i = 0; i < charThumbnails.Length; i++)
             {
                 var indexCopy = i;
@@ -301,9 +306,10 @@ namespace AnimeTimeDbUpdater
                         .ContinueWith(t => charImagePairs[indexCopy].Item3.Add(Tuple.Create(thumbnail, t.Result))));
                 }
             }
-            Console.Write("Uploading thumbnails...");
+
             Task.WhenAll(uploadTasks).Wait();
-            Console.WriteLine("Done.");
+            Log.TraceEvent(TraceEventType.Information, 0, $"Uploading finished in: {stopwatch.ElapsedMilliseconds}ms");
+
 
             // Insert thumbnails into db
             foreach (var pair in charImagePairs)
@@ -334,6 +340,7 @@ namespace AnimeTimeDbUpdater
                 }
                 character.Image = image;
             }
+            Log.TraceEvent(TraceEventType.Information, 0, "Attached images to characters.\n");
         }
 
         private void UnitOfWorkToCache(IUnitOfWork unitOfWork)

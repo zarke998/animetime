@@ -79,9 +79,9 @@ namespace AnimeTimeDbUpdater.Persistence
                 }
                 catch(RequestFailedException uploadException) // Upload failed
                 {
-                    LogGroup.Log($"Error uploading blob. Retry attempt {i + 1}.");
-                    Debug.WriteLine("Generated timestamp: {0}", timestamp);
-                    Debug.WriteLine(uploadException.Message);
+                    Log.TraceEvent(TraceEventType.Error, 0 , $"Error uploading blob. Retry attempt {i + 1}.");
+                    Log.TraceEvent(TraceEventType.Error, 0, $"Generated timestamp: {timestamp}");
+                    Log.TraceEvent(TraceEventType.Error, 0, uploadException.Message);
                 }
             }
 

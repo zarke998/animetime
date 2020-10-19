@@ -9,7 +9,9 @@ using AnimeTimeDbUpdater.Core.Domain;
 using HtmlAgilityPack;
 using System.Windows.Forms;
 using System.Threading;
+using System.Diagnostics;
 using System.Net;
+using AnimeTimeDbUpdater.Utilities;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -20,7 +22,7 @@ namespace AnimeTimeDbUpdater.Persistence
 
         public string AnimeListUrl { get; private set; } = "https://www.anime-planet.com/anime/all";
         public string AnimeListByDateUrl { get; private set; } = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
-        
+
         public bool CanFetchByDateAdded { get; private set; }
         public string CurrentPage { get; private set; }
         public bool LastPageReached { get; private set; }
@@ -37,15 +39,15 @@ namespace AnimeTimeDbUpdater.Persistence
         {
             _resolver.Resolve(animeInfo);
             var anime = animeInfo.Anime;
-#if DEBUG
-            Console.WriteLine("\n" + anime);
 
-            Console.WriteLine("Genres: \n");
+            Log.TraceEvent(TraceEventType.Verbose, 0, $"\n{anime}");
+
+            Log.TraceEvent(TraceEventType.Verbose, 0, "Genres: \n");
             foreach (var genre in anime.Genres)
-                Console.WriteLine("\t" + genre.Name);
-
-            Console.WriteLine("------------------------------------------------------------------------------------------------\n");
-#endif
+            {
+                Log.TraceEvent(TraceEventType.Verbose, 0, $"\t{genre.Name}");
+            }
+            Log.TraceEvent(TraceEventType.Verbose, 0, String.Empty);
         }
         public void ResolveRange(IEnumerable<AnimeInfo> animeInfos)
         {

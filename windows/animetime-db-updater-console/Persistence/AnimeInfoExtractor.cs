@@ -30,7 +30,7 @@ namespace AnimeTimeDbUpdater.Persistence
             CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(page); });
             LoadedPage = page;
 
-            Log.TraceEvent(TraceEventType.Information, 0, $"Getting infos from page: {LoadedPage}\n");
+            Log.TraceEvent(TraceEventType.Information, 0, $"\nGetting infos from page: {LoadedPage}\n");
 
             var animeNodes = _doc.DocumentNode.SelectNodes(".//li[contains(@class,'card')]");
             foreach (var node in animeNodes)

@@ -45,7 +45,7 @@ namespace AnimeTimeDbUpdater.Persistence
             info.CharactersUrl = GetCharactersUrl();
             info.CoverUrl = GetCoverUrl();
 
-            LogGroup.Log($"Resolved: {info.AnimeDetailsUrl} ({anime.Title})");
+            
         }
 
         private void ResolveAltTitle(Anime anime)
@@ -84,7 +84,7 @@ namespace AnimeTimeDbUpdater.Persistence
             else
             {
 #if DEBUG
-                Console.WriteLine($"[Exception caught]: Could not parse release year. Value: {year}");
+                Log.TraceEvent(TraceEventType.Error, 0, $"[Exception caught]: Could not parse release year. Value: {year}");
 #endif
                 anime.ReleaseYear = null;
             }

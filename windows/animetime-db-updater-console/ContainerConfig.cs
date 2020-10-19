@@ -10,7 +10,6 @@ using HtmlAgilityPack;
 using AnimeTimeDbUpdater.Utilities;
 using AnimeTime.Persistence;
 using AnimeTime.Core;
-using AnimeTime.Utilities.Loggers;
 using AnimeTime.Utilities.Imaging;
 using AnimeTime.Utilities.Core.Imaging;
 
@@ -30,9 +29,6 @@ namespace AnimeTimeDbUpdater
             builder.RegisterType<AnimeInfoResolver>().As<IAnimeInfoResolver>();
             builder.RegisterType<HtmlWeb>();
             builder.RegisterType<HtmlDocument>();
-
-            builder.RegisterType<FileLogger>();
-            builder.RegisterType<ConsoleLogger>();
 
             builder.RegisterType<ImageDownloader>().As<IImageDownloader>();
             builder.RegisterType<ThumbnailGenerator>().As<IThumbnailGenerator>();

@@ -11,7 +11,7 @@ namespace AnimeTimeDbUpdater.Utilities.TraceListeners
     {
         public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id, string message)
         {
-            if(eventType == TraceEventType.Information)
+            if(eventType == TraceEventType.Information || eventType == TraceEventType.Verbose)
             {
                 WriteLine(message);
             }
