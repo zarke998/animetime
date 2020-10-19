@@ -134,7 +134,6 @@
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\TraceListeners\ConsoleWithoutPrefixListener.cs" />
     <Compile Include="Utilities\TraceListeners\FileListener.cs" />
-    <Compile Include="Utilities\TraceListeners\TraceListenerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
