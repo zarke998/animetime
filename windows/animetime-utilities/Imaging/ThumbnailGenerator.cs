@@ -86,7 +86,7 @@ namespace AnimeTime.Utilities.Imaging
                 thumbnailTasks.Add(GenerateSingleThumbnail(image, lod));
             }
 
-            var thumbnails = await Task.WhenAll(thumbnailTasks);
+            var thumbnails = await Task.WhenAll(thumbnailTasks).ConfigureAwait(false);
             if (originalThumbnailFound)
             {
                 return thumbnails.Prepend(originalThumbnail);
@@ -101,10 +101,10 @@ namespace AnimeTime.Utilities.Imaging
         {
             var copy = image.Clone();
 
-            await Task.Run(() => { _resizer.Resize(copy, lodLevel.MaxWidthLandscape, lodLevel.MaxHeightPortrait); });
+            await Task.Run(() => { _resizer.Resize(copy, lodLevel.MaxWidthLandscape, lodLevel.MaxHeightPortrait); }).ConfigureAwait(false);
 
             var quality = Convert.ToInt32(lodLevel.Quality * 100);
-            var compressedImage = await _compressor.CompressAsync(copy, quality);
+            var compressedImage = await _compressor.CompressAsync(copy, quality).ConfigureAwait(false);
 
             var thumbnail = new Thumbnail() { Image = compressedImage, LodLevel = lodLevel.Level };
 

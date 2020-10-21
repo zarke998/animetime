@@ -40,7 +40,7 @@ namespace AnimeTime.Utilities.Imaging
                 JpegEncoder encoder = new JpegEncoder();
                 encoder.Quality = GetConvertedQuality(quality);
 
-                await image.SaveAsync(stream, encoder);
+                await image.SaveAsync(stream, encoder).ConfigureAwait(false);
                 compressedImage = Image.Load(stream.ToArray());
             }
 

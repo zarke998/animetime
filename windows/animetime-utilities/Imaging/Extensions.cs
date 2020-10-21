@@ -15,7 +15,7 @@ namespace AnimeTime.Utilities.Imaging
         public static async Task<Stream> ToStreamAsync(this Image<Rgba32> image)
         {
             var stream = new MemoryStream();
-            await image.SaveAsync(stream, new JpegEncoder());
+            await image.SaveAsync(stream, new JpegEncoder()).ConfigureAwait(false);
 
             stream.Seek(0, SeekOrigin.Begin);
 
