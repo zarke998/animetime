@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Core.Domain
 {
-    public class WebsiteAnimeUrl
+    public class AnimeSource
     {
         public int WebsiteId { get; set; }
         public int AnimeId { get; set; }

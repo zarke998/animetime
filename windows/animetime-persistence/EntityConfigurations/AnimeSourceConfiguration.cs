@@ -8,17 +8,17 @@ using AnimeTime.Core.Domain;
 
 namespace AnimeTime.Persistence.EntityConfigurations
 {
-    public class WebsiteAnimeUrlConfiguration : EntityTypeConfiguration<WebsiteAnimeUrl>
+    public class AnimeSourceConfiguration : EntityTypeConfiguration<AnimeSource>
     {
-        public WebsiteAnimeUrlConfiguration()
+        public AnimeSourceConfiguration()
         {
             HasKey(e => new { e.AnimeId, e.WebsiteId });
 
             // Relationship to Anime
-            HasRequired(e => e.Anime).WithMany(a => a.WebsiteAnimeUrls).HasForeignKey(e => e.AnimeId).WillCascadeOnDelete(true);
+            HasRequired(e => e.Anime).WithMany(a => a.AnimeSources).HasForeignKey(e => e.AnimeId).WillCascadeOnDelete(true);
 
             // Relationship to Website
-            HasRequired(e => e.Website).WithMany(w => w.WebsiteAnimeUrls).HasForeignKey(e => e.WebsiteId).WillCascadeOnDelete(true);
+            HasRequired(e => e.Website).WithMany(w => w.AnimeSources).HasForeignKey(e => e.WebsiteId).WillCascadeOnDelete(true);
 
             Property(e => e.Url).IsRequired();
         }

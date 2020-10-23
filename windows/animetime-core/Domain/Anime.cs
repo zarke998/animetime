@@ -12,10 +12,10 @@ namespace AnimeTime.Core.Domain
         {
             AltTitles = new HashSet<AnimeAltTitle>();
             Genres = new HashSet<Genre>();
-            WebsiteAnimeUrls = new HashSet<WebsiteAnimeUrl>();
             Episodes = new HashSet<Episode>();
             UserAnimeBookmarks = new HashSet<UserAnimeBookmark>();
             Characters = new HashSet<Character>();
+            AnimeSources = new HashSet<AnimeSource>();
         }
 
         public int Id { get; set; }
@@ -28,7 +28,7 @@ namespace AnimeTime.Core.Domain
         public ICollection<AnimeAltTitle> AltTitles { get; set; }
         public ICollection<AnimeImage> Images { get; set; }
         public ICollection<Genre> Genres { get; set; }
-        public ICollection<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
+        public ICollection<AnimeSource> AnimeSources { get; set; }
         public ICollection<Episode> Episodes { get; set; }
         public ICollection<UserAnimeBookmark> UserAnimeBookmarks { get; set; }
         public ICollection<Character> Characters { get; set; }

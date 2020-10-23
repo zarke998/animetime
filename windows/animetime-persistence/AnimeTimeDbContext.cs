@@ -17,7 +17,6 @@ namespace AnimeTime.Persistence
         public DbSet<YearSeason> YearSeasons { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Genre> Genres { get; set; }
-        public DbSet<WebsiteAnimeUrl> WebsiteAnimeUrls { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Source> Sources { get; set; }
         public DbSet<User> Users { get; set; }
@@ -32,6 +31,7 @@ namespace AnimeTime.Persistence
         public DbSet<ImageOrientation> ImageOrientations { get; set; }
         public DbSet<AnimeImage> AnimeImages { get; set; }
         public DbSet<AnimeAltTitle> AnimeAltTitles { get; set; }
+        public DbSet<AnimeSource> AnimeSources { get; set; }
 
 
 
@@ -42,7 +42,6 @@ namespace AnimeTime.Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new WebsiteAnimeUrlConfiguration());
             modelBuilder.Configurations.Add(new EpisodeConfiguration());
             modelBuilder.Configurations.Add(new SourceConfiguration());
             modelBuilder.Configurations.Add(new UserAnimeBookmarkConfiguration());
@@ -58,6 +57,7 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new CharacterRoleConfiguration());
             modelBuilder.Configurations.Add(new AnimeAltTitleConfiguration());
             modelBuilder.Configurations.Add(new ThumbnailConfiguration());
+            modelBuilder.Configurations.Add(new AnimeSourceConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
