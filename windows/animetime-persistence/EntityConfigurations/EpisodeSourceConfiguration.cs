@@ -8,9 +8,9 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace AnimeTime.Persistence.EntityConfigurations
 {
-    public class SourceConfiguration : EntityTypeConfiguration<Source>
+    public class EpisodeSourceConfiguration : EntityTypeConfiguration<EpisodeSource>
     {
-        public SourceConfiguration()
+        public EpisodeSourceConfiguration()
         {
             Property(s => s.Url).IsRequired();
 
@@ -18,7 +18,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
             HasRequired(s => s.Episode).WithMany(e => e.Sources).HasForeignKey(s => s.EpisodeId).WillCascadeOnDelete(true);
 
             // Relationship to Website
-            HasRequired(s => s.Website).WithMany(w => w.Sources).HasForeignKey(s => s.WebsiteId).WillCascadeOnDelete(true);
+            HasRequired(s => s.Website).WithMany(w => w.EpisodeSources).HasForeignKey(s => s.WebsiteId).WillCascadeOnDelete(true);
         }
     }
 }

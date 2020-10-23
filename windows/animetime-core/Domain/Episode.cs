@@ -10,12 +10,12 @@ namespace AnimeTime.Core.Domain
     {
         public Episode()
         {
-            Sources = new HashSet<Source>();
+            Sources = new HashSet<EpisodeSource>();
         }
         public int Id { get; set; }
         public int EpNum { get; set; }
         public int AnimeId { get; set; }
         public Anime Anime { get; set; }
-        public ICollection<Source> Sources { get; set; }
+        public ICollection<EpisodeSource> Sources { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Core.Domain
 {
-    public class Source
+    public class EpisodeSource
     {
         public int Id { get; set; }
         public string Url { get; set; }
