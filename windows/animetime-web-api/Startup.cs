@@ -1,4 +1,5 @@
-﻿using Owin;
+﻿using AnimeTime.WebAPI.MessageHandlers;
+using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace AnimeTime.WebAPI
         public void Configuration(IAppBuilder appBuilder)
         {
             var configuration = new HttpConfiguration();
+
+            configuration.MessageHandlers.Add(new ApiKeyHandler());
 
             configuration.Routes.MapHttpRoute(
                 name: "DefaultApi",
