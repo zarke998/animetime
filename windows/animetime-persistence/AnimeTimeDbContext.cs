@@ -9,6 +9,7 @@ using AnimeTime.Persistence.EntityConfigurations;
 
 namespace AnimeTime.Persistence
 {
+    [DbConfigurationType(typeof(AnimeTimeDbContextConfiguration))]
     public class AnimeTimeDbContext : DbContext
     {
         public DbSet<Website> Websites { get; set; }
