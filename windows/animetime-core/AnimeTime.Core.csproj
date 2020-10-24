@@ -78,6 +78,7 @@
     <Compile Include="Repositories\ICategoryRepository.cs" />
     <Compile Include="Repositories\ICharacterRepository.cs" />
     <Compile Include="Repositories\ICharacterRoleRepository.cs" />
+    <Compile Include="Repositories\IEpisodeRepository.cs" />
     <Compile Include="Repositories\IGenreRepository.cs" />
     <Compile Include="Repositories\IImageLodLevelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
