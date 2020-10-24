@@ -74,6 +74,7 @@
     <Compile Include="EntityConfigurations\EpisodeSourceConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserAnimeBookmarkConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeSourceConfiguration.cs" />
+    <Compile Include="EntityConfigurations\WebsiteConfiguration.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.cs" />
     <Compile Include="Migrations\202004141328495_AddWebsitesTable.designer.cs">
       <DependentUpon>202004141328495_AddWebsitesTable.cs</DependentUpon>
@@ -218,6 +219,10 @@
     <Compile Include="Migrations\202010231334277_AddEpisodeSourcesTable.designer.cs">
       <DependentUpon>202010231334277_AddEpisodeSourcesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010241015248_AddQuerySuffixColToWebsitesTable.cs" />
+    <Compile Include="Migrations\202010241015248_AddQuerySuffixColToWebsitesTable.designer.cs">
+      <DependentUpon>202010241015248_AddQuerySuffixColToWebsitesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeImageRepository.cs" />
@@ -354,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010231334277_AddEpisodeSourcesTable.resx">
       <DependentUpon>202010231334277_AddEpisodeSourcesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010241015248_AddQuerySuffixColToWebsitesTable.resx">
+      <DependentUpon>202010241015248_AddQuerySuffixColToWebsitesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
