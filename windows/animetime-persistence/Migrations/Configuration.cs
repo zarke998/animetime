@@ -20,6 +20,7 @@
             SeedImageOrientations(context);
             SeedCharacterRoles(context);
             SeedImageLodLevels(context);
+            SeedAnimeSourceStatuses(context);
         }
 
         private void SeedImageTypes(AnimeTimeDbContext context)
@@ -85,5 +86,15 @@
                     Quality = 1.0F
                 });
         }        
+        private void SeedAnimeSourceStatuses(AnimeTimeDbContext context)
+        {
+            foreach(var status in Enum.GetValues(typeof(AnimeSourceStatusIds)))
+            {
+                var id = (AnimeSourceStatusIds)status;
+                var name = Enum.GetName(typeof(AnimeSourceStatusIds), status);
+
+                context.AnimeSourceStatuses.AddOrUpdate(new AnimeSourceStatus() { Id = id, Name = name });
+            }
+        }
     }
 }

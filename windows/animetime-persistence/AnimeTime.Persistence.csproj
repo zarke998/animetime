@@ -59,8 +59,10 @@
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="AnimeTimeDbContextConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeAltTitleConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AnimeMetadataConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeImageConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AnimeSourceStatusesConfiguration.cs" />
     <Compile Include="EntityConfigurations\CategoryConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterRoleConfiguration.cs" />
     <Compile Include="EntityConfigurations\ThumbnailConfiguration.cs" />
@@ -228,9 +230,27 @@
     <Compile Include="Migrations\202010251421039_RemoveIdentityFromCategoriesTable.designer.cs">
       <DependentUpon>202010251421039_RemoveIdentityFromCategoriesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011041118076_AddAnimeSourceStatusesTable.cs" />
+    <Compile Include="Migrations\202011041118076_AddAnimeSourceStatusesTable.designer.cs">
+      <DependentUpon>202011041118076_AddAnimeSourceStatusesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011041128468_AddAnimeSourceToAnimeSourceStatusRelationship.cs" />
+    <Compile Include="Migrations\202011041128468_AddAnimeSourceToAnimeSourceStatusRelationship.designer.cs">
+      <DependentUpon>202011041128468_AddAnimeSourceToAnimeSourceStatusRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011041342020_AddAnimeMetadatasTable.cs" />
+    <Compile Include="Migrations\202011041342020_AddAnimeMetadatasTable.designer.cs">
+      <DependentUpon>202011041342020_AddAnimeMetadatasTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011051339030_RemoveAddEpisodeToNotificationsTrigger.cs" />
+    <Compile Include="Migrations\202011051339030_RemoveAddEpisodeToNotificationsTrigger.designer.cs">
+      <DependentUpon>202011051339030_RemoveAddEpisodeToNotificationsTrigger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\WebsiteRepository.cs" />
     <Compile Include="Repositories\AnimeImageRepository.cs" />
+    <Compile Include="Repositories\AnimeMetadataRepository.cs" />
     <Compile Include="Repositories\EpisodeRepository.cs" />
     <Compile Include="Repositories\ImageLodLevelRepository.cs" />
     <Compile Include="Repositories\AnimeRepository.cs" />
@@ -370,6 +390,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010251421039_RemoveIdentityFromCategoriesTable.resx">
       <DependentUpon>202010251421039_RemoveIdentityFromCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011041118076_AddAnimeSourceStatusesTable.resx">
+      <DependentUpon>202011041118076_AddAnimeSourceStatusesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011041128468_AddAnimeSourceToAnimeSourceStatusRelationship.resx">
+      <DependentUpon>202011041128468_AddAnimeSourceToAnimeSourceStatusRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011041342020_AddAnimeMetadatasTable.resx">
+      <DependentUpon>202011041342020_AddAnimeMetadatasTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051339030_RemoveAddEpisodeToNotificationsTrigger.resx">
+      <DependentUpon>202011051339030_RemoveAddEpisodeToNotificationsTrigger.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

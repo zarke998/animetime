@@ -21,6 +21,8 @@ namespace AnimeTime.Persistence.EntityConfigurations
             HasRequired(e => e.Website).WithMany(w => w.AnimeSources).HasForeignKey(e => e.WebsiteId).WillCascadeOnDelete(true);
 
             Property(e => e.Url).IsRequired();
+
+            HasRequired(e => e.Status).WithMany(s => s.Sources).HasForeignKey(e => e.Status_Id).WillCascadeOnDelete(true);
         }
     }
 }

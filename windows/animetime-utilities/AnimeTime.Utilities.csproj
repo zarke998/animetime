@@ -70,7 +70,11 @@
     <Compile Include="Imaging\ImageResizer.cs" />
     <Compile Include="Imaging\JpegCompressor.cs" />
     <Compile Include="Imaging\ThumbnailGenerator.cs" />
+    <Compile Include="Number\Extensions.cs" />
+    <Compile Include="Number\RomanToArabic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="String\Extensions.cs" />
+    <Compile Include="Web\UrlUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">

@@ -10,5 +10,6 @@ namespace AnimeTime.Core.Repositories
     public interface IAnimeRepository : IRepository<Anime>
     {
         IEnumerable<string> GetAllTitles();
+        Anime GetWithSources(int id, bool includeWebsites);
     }
 }

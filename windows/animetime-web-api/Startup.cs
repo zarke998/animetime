@@ -14,7 +14,11 @@ namespace AnimeTime.WebAPI
         {
             var configuration = new HttpConfiguration();
 
+            configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             configuration.MessageHandlers.Add(new ApiKeyHandler());
+
+            configuration.MapHttpAttributeRoutes();
 
             configuration.Routes.MapHttpRoute(
                 name: "DefaultApi",

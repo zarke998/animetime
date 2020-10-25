@@ -45,7 +45,9 @@
     <Compile Include="Domain\Anime.cs" />
     <Compile Include="Domain\AnimeAltTitle.cs" />
     <Compile Include="Domain\AnimeImage.cs" />
+    <Compile Include="Domain\AnimeMetadata.cs" />
     <Compile Include="Domain\AnimeSource.cs" />
+    <Compile Include="Domain\AnimeSourceStatus.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Character.cs" />
     <Compile Include="Domain\CharacterRole.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="Domain\Comparers\CharacterComparer.cs" />
     <Compile Include="Domain\Comparers\YearSeasonComparer.cs" />
     <Compile Include="Domain\Comparers\GenreComparer.cs" />
+    <Compile Include="Domain\Enums\AnimeSourceStatusIds.cs" />
     <Compile Include="Domain\Enums\CharacterRoleId.cs" />
     <Compile Include="Domain\Enums\CategoryId.cs" />
     <Compile Include="Domain\Enums\ImageOrientationId.cs" />
@@ -74,7 +77,9 @@
     <Compile Include="Exceptions\EntityInsertException.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IWebsiteRepository.cs" />
     <Compile Include="Repositories\IAnimeImageRepository.cs" />
+    <Compile Include="Repositories\IAnimeMetadataRepository.cs" />
     <Compile Include="Repositories\IAnimeRepository.cs" />
     <Compile Include="Repositories\ICategoryRepository.cs" />
     <Compile Include="Repositories\ICharacterRepository.cs" />
@@ -84,6 +89,7 @@
     <Compile Include="Repositories\IImageLodLevelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IYearSeasonRepository.cs" />
+    <Compile Include="WebsiteProcessors\IWebsiteProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
