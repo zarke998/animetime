@@ -16,6 +16,8 @@ namespace AnimeTime.WebAPI
 
             configuration.MessageHandlers.Add(new ApiKeyHandler());
 
+            configuration.MapHttpAttributeRoutes();
+
             configuration.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
