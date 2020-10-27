@@ -84,6 +84,6 @@
                     MaxHeightPortrait = 200,
                     Quality = 1.0F
                 });
-        }
+        }        
     }
 }

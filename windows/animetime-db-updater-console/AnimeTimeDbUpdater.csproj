@@ -120,6 +120,7 @@
     <Compile Include="IApplication.cs" />
     <Compile Include="Persistence\AnimeInfoExtractor.cs" />
     <Compile Include="Persistence\AnimeInfoResolver.cs" />
+    <Compile Include="Persistence\AnimePlanetCategoryMapper.cs" />
     <Compile Include="Persistence\AnimePlanetCharacterRepository.cs" />
     <Compile Include="Persistence\AnimePlanetRepository.cs" />
     <Compile Include="Persistence\AzureImageStorage.cs" />

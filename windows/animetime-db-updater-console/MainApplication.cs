@@ -410,14 +410,32 @@ namespace AnimeTimeDbUpdater
             if (detailedInfo.Category == null) return;
 
             var category = new Category() { Name = detailedInfo.Category };
-
-            if (_categories.TryGetValue(category, out Category existingCategory))
+            if (_categories.TryGetValue(category, out Category c))
             {
-                anime.Category = existingCategory;
+                anime.Category = c;
             }
             else
             {
                 anime.Category = category;
+
+                var mapper = ClassFactory.CreateCategoryMapper();
+                var catId = mapper.Map(detailedInfo.Category);
+
+                if(catId != CategoryId.Other)
+                {
+                    category.Id = (int)catId;
+                }
+                else
+                {
+                    var maxId = _categories.Select(cat => cat.Id).Max();
+
+                    var lastEnumValue = Enum.GetValues(typeof(CategoryId)).Length - 1;
+                    
+                    var nextId = maxId < lastEnumValue ? lastEnumValue: maxId;
+                    nextId++;
+
+                    anime.Category.Id = nextId;
+                }
             }
         }
     }

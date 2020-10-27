@@ -58,6 +58,7 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new ThumbnailConfiguration());
             modelBuilder.Configurations.Add(new AnimeSourceConfiguration());
             modelBuilder.Configurations.Add(new EpisodeSourceConfiguration());
+            modelBuilder.Configurations.Add(new CategoryConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

@@ -54,6 +54,7 @@
     <Compile Include="Domain\Comparers\YearSeasonComparer.cs" />
     <Compile Include="Domain\Comparers\GenreComparer.cs" />
     <Compile Include="Domain\Enums\CharacterRoleId.cs" />
+    <Compile Include="Domain\Enums\CategoryId.cs" />
     <Compile Include="Domain\Enums\ImageOrientationId.cs" />
     <Compile Include="Domain\Episode.cs" />
     <Compile Include="Domain\Genre.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Domain\ImageType.cs" />
     <Compile Include="Domain\Enums\ImageTypeId.cs" />
     <Compile Include="Domain\Enums\LodLevel.cs" />
+    <Compile Include="Domain\Mappers\ICategoryMapper.cs" />
     <Compile Include="Domain\Notification.cs" />
     <Compile Include="Domain\EpisodeSource.cs" />
     <Compile Include="Domain\Thumbnail.cs" />
