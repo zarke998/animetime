@@ -81,7 +81,7 @@ namespace AnimeTimeDbUpdater
                 newAnimes = GetNewAnimes();
             }
 
-            InsertAnimesAndData(newAnimes);
+            InsertAnimes(newAnimes);
         }
 
         private IEnumerable<AnimeBasicInfo> GetNewAnimes()
@@ -122,7 +122,7 @@ namespace AnimeTimeDbUpdater
 
             return newAnimes;
         }
-        private void InsertAnimesAndData(IEnumerable<AnimeBasicInfo> infos)
+        private void InsertAnimes(IEnumerable<AnimeBasicInfo> infos)
         {
             foreach (var basicInfo in infos)
             {
@@ -135,8 +135,8 @@ namespace AnimeTimeDbUpdater
 
                 var anime = new Anime();
 
-                InsertAnimeCover(detailedInfo, anime);
-                InsertAnimeCharacters(detailedInfo, anime);
+                AddAnimeCover(detailedInfo, anime);
+                AddAnimeCharacters(detailedInfo, anime);
                 AddAnimeRelationships(detailedInfo, anime);
                 AddAnimeData(detailedInfo, anime);
 
@@ -172,7 +172,7 @@ namespace AnimeTimeDbUpdater
             anime.Rating = detailedInfo.Rating;
             anime.ReleaseYear = detailedInfo.ReleaseYear;
         }
-        private void InsertAnimeCover(AnimeDetailedInfo infoDetails, Anime anime)
+        private void AddAnimeCover(AnimeDetailedInfo infoDetails, Anime anime)
         {
             if (infoDetails.CoverUrl == null) return;
 
@@ -228,7 +228,7 @@ namespace AnimeTimeDbUpdater
             Log.TraceEvent(TraceEventType.Information, 0, "Attached cover to anime.");
             #endregion
         }
-        private void InsertAnimeCharacters(AnimeDetailedInfo info, Anime anime)
+        private void AddAnimeCharacters(AnimeDetailedInfo info, Anime anime)
         {
             ICollection<Character> chars = new List<Character>();
             var newChars = new List<(CharacterDetailedInfo detailedInfo, Character character)>();
@@ -266,12 +266,12 @@ namespace AnimeTimeDbUpdater
 
             if (newChars.Count > 0)
             {
-                InsertCharacterImages(newChars);
+                AddCharacterImages(newChars);
             }
 
             anime.Characters = chars;
         }
-        private void InsertCharacterImages(IEnumerable<(CharacterDetailedInfo DetailedInfo, Character Character)> newChars)
+        private void AddCharacterImages(IEnumerable<(CharacterDetailedInfo DetailedInfo, Character Character)> newChars)
         {
             var charImagePairs = new List<(
                 Character Character,
@@ -347,6 +347,14 @@ namespace AnimeTimeDbUpdater
             }
             Log.TraceEvent(TraceEventType.Information, 0, "Attached images to characters.\n");
         }
+        private void AddAnimeRelationships(AnimeDetailedInfo detailedInfo, Anime anime)
+        {
+            AddAnimeAltTitles(detailedInfo, anime);
+
+            AddAnimeGenresRelationship(detailedInfo, anime);
+            AddAnimeYearSeasonRelationship(detailedInfo, anime);
+            AddAnimeCategoryRelationship(detailedInfo, anime);
+        }
 
         private void UnitOfWorkToCache(IUnitOfWork unitOfWork)
         {
@@ -362,15 +370,6 @@ namespace AnimeTimeDbUpdater
             unitOfWork.YearSeasons.AttachRange(_yearSeasons);
             unitOfWork.Categories.AttachRange(_categories);
             unitOfWork.Characters.AttachRange(_characters);
-        }
-
-        private void AddAnimeRelationships(AnimeDetailedInfo detailedInfo, Anime anime)
-        {
-            AddAnimeAltTitles(detailedInfo, anime);
-
-            AddAnimeGenresRelationship(detailedInfo, anime);
-            AddAnimeYearSeasonRelationship(detailedInfo, anime);
-            AddAnimeCategoryRelationship(detailedInfo, anime);
         }
 
         private void AddAnimeAltTitles(AnimeDetailedInfo detailedInfo, Anime anime)
