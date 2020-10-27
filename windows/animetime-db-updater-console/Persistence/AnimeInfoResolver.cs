@@ -71,7 +71,7 @@ namespace AnimeTimeDbUpdater.Persistence
         }
         private string ResolveDescription()
         {
-            var descriptionNode = _doc.DocumentNode.SelectSingleNode("//div[contains(@itemprop,'description')]/p");
+            var descriptionNode = _doc.DocumentNode.SelectSingleNode(".//section[@id='entry']//div[contains(@class,'entrySynopsis')]/div[2]/div[1]/p[1]");
             if (descriptionNode == null) return null;
 
             return HttpUtility.HtmlDecode(descriptionNode.InnerText);
@@ -103,11 +103,25 @@ namespace AnimeTimeDbUpdater.Persistence
         }
         private float ResolveRating()
         {
-            var ratingNode = _doc.DocumentNode.SelectSingleNode("//meta[contains(@itemprop,'ratingValue')]");
+            var ratingNode = _doc.DocumentNode.SelectSingleNode(".//section[contains(@class,'entryBar')]//div[contains(@class,'avgRating')]/span");
 
-            if (ratingNode == null) return 0F;
+            if (ratingNode == null)
+            {
+                // Log html change
 
-            float ratingValue = Convert.ToSingle(ratingNode.GetAttributeValue("content", "0"));
+                return 0F;
+            }
+
+            var styleAttr = ratingNode.GetAttributeValue("style", null);
+            if(styleAttr == null)
+            {
+                // Log html change
+
+                return 0F;
+            }
+            if (styleAttr.Contains("0%")) return 0F;
+
+            float ratingValue = Convert.ToSingle(ratingNode.InnerText.Split(' ')[0]);
             return ratingValue;
         }
         private string ResolveCategory()
