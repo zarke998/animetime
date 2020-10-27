@@ -16,6 +16,7 @@ namespace AnimeTime.Core.Domain
             UserAnimeBookmarks = new HashSet<UserAnimeBookmark>();
             Characters = new HashSet<Character>();
             AnimeSources = new HashSet<AnimeSource>();
+            Images = new HashSet<AnimeImage>();
         }
 
         public int Id { get; set; }
