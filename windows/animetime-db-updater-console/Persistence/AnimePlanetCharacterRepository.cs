@@ -16,10 +16,8 @@ namespace AnimeTimeDbUpdater.Persistence
     {
         private static string _blankCharacterImage = "blank_char.gif";
 
-        public IEnumerable<CharacterInfo> Extract(string animeCharactersUrl)
+        public IEnumerable<CharacterBasicInfo> Extract(string animeCharactersUrl)
         {
-            ICollection<CharacterInfo> infos = new List<CharacterInfo>();
-
             var htmlExtractor = new HtmlWeb();
 
             HtmlDocument htmlDocument = null;
@@ -31,9 +29,9 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return mainChars.Union(secondaryChars).Union(minorChars);
         }
-        private ICollection<CharacterInfo> ExtractCharacterByRole(HtmlDocument document, CharacterRoleId role)
+        private ICollection<CharacterBasicInfo> ExtractCharacterByRole(HtmlDocument document, CharacterRoleId role)
         {
-            ICollection<CharacterInfo> infos = new List<CharacterInfo>();
+            var basicInfos = new List<CharacterBasicInfo>();
 
             string charsSelector = "";
             switch (role)
@@ -48,62 +46,61 @@ namespace AnimeTimeDbUpdater.Persistence
                     charsSelector = @"//h3[contains(text(),'Minor Characters')]/following-sibling::table[1]//td[@class='tableCharInfo']/a[@class='name']";
                     break;
                 default:
-                    return infos;
+                    return basicInfos;
             }
 
             var charNodes = document.DocumentNode.SelectNodes(charsSelector);
-            if(charNodes != null)
+            if (charNodes != null)
             {
                 foreach (var node in charNodes)
                 {
                     var sourceUrl = node.GetAttributeValue("href", String.Empty);
 
-                    var info = new CharacterInfo();
-                    info.Character.SourceUrl = Constants.WebsiteUrls.AnimePlanet + sourceUrl;
-                    info.Character.RoleId = role;
+                    var info = new CharacterBasicInfo();
+                    info.DetailsUrl = Constants.WebsiteUrls.AnimePlanet + sourceUrl;
+                    info.Role = role;
 
-                    infos.Add(info);
+                    basicInfos.Add(info);
                 }
             }
 
-            return infos;
+            return basicInfos;
         }
 
-        public void Resolve(CharacterInfo characterInfo)
+        public CharacterDetailedInfo Resolve(CharacterBasicInfo basicInfo)
         {
-            var sourceUrl = characterInfo.Character.SourceUrl;
+            var detailedInfo = new CharacterDetailedInfo();
 
             var htmlExtractor = new HtmlWeb();
 
             HtmlDocument document = null;
-            CrawlDelayer.ApplyDelay(() => document = htmlExtractor.Load(sourceUrl));
+            CrawlDelayer.ApplyDelay(() => document = htmlExtractor.Load(basicInfo.DetailsUrl));
 
-            var character = characterInfo.Character;
+            detailedInfo.BasicInfo = basicInfo;
+            detailedInfo.Name = ResolveName(document);
+            detailedInfo.Description = ResolveDescription(document);
+            detailedInfo.ImageUrl = GetImageUrl(document);
 
-            ResolveName(document, character);
-            ResolveDescription(document, character);
-            characterInfo.ImageUrl = GetImageUrl(document);
+            return detailedInfo;
         }
 
-        private void ResolveName(HtmlDocument document, Character character)
+        private string ResolveName(HtmlDocument document)
         {
             var nameNode = document.DocumentNode.SelectSingleNode("//h1[@itemprop='name']");
-            character.Name = nameNode.InnerText;
+            return nameNode.InnerText;
         }
-        private void ResolveDescription(HtmlDocument document, Character character)
+        private string ResolveDescription(HtmlDocument document)
         {
             var descriptionNodes = document.DocumentNode.SelectNodes("//div[contains(@class,'entrySynopsis')]//div[@itemprop='description']/p//text()");
+            if (descriptionNodes == null) return null;
 
-            if(descriptionNodes != null)
+            string description = "";
+            foreach (var node in descriptionNodes)
             {
-                string description = "";
-                foreach (var node in descriptionNodes)
-                {
-                    description += node.InnerText;
-                }
-
-                character.Description = description;
+                description += node.InnerText;
             }
+
+            return description;
         }
         private string GetImageUrl(HtmlDocument document)
         {

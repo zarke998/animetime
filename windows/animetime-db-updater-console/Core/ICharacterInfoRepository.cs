@@ -9,7 +9,7 @@ namespace AnimeTimeDbUpdater.Core
 {
     interface ICharacterInfoRepository
     {
-        IEnumerable<CharacterInfo> Extract(string animeCharactersUrl);
-        void Resolve(CharacterInfo characterInfo);
+        IEnumerable<CharacterBasicInfo> Extract(string animeCharactersUrl);
+        CharacterDetailedInfo Resolve(CharacterBasicInfo characterInfo);
     }
 }

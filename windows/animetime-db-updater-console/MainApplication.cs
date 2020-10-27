@@ -70,7 +70,7 @@ namespace AnimeTimeDbUpdater
 
         private void UpdateDatabase()
         {
-            IEnumerable<AnimeInfo> newAnimes;
+            IEnumerable<AnimeBasicInfo> newAnimes;
             if (_animeRepo.CanFetchByDateAdded)
             {
                 newAnimes = GetNewAnimesFast();
@@ -84,27 +84,27 @@ namespace AnimeTimeDbUpdater
             InsertAnimesAndData(newAnimes);
         }
 
-        private IEnumerable<AnimeInfo> GetNewAnimes()
+        private IEnumerable<AnimeBasicInfo> GetNewAnimes()
         {
             var newAnimes = _animeRepo.GetAll();
-            newAnimes = newAnimes.Where(a => !_titles.Contains(a.Anime.Title));
+            newAnimes = newAnimes.Where(basicInfo => !_titles.Contains(basicInfo.Title));
 
             return newAnimes;
 
         }
-        private IEnumerable<AnimeInfo> GetNewAnimesFast()
+        private IEnumerable<AnimeBasicInfo> GetNewAnimesFast()
         {
-            ICollection<AnimeInfo> newAnimes = new List<AnimeInfo>();
+            ICollection<AnimeBasicInfo> newAnimes = new List<AnimeBasicInfo>();
 
             var endOfFetching = false;
 
             do
             {
-                IEnumerable<AnimeInfo> infos = _animeRepo.GetByDate();
+                IEnumerable<AnimeBasicInfo> infos = _animeRepo.GetByDate();
 
                 foreach (var info in infos)
                 {
-                    if (_titles.Contains(info.Anime.Title))
+                    if (_titles.Contains(info.Title))
                     {
                         endOfFetching = true;
                         break;
@@ -122,22 +122,25 @@ namespace AnimeTimeDbUpdater
 
             return newAnimes;
         }
-        private void InsertAnimesAndData(IEnumerable<AnimeInfo> infos)
+        private void InsertAnimesAndData(IEnumerable<AnimeBasicInfo> infos)
         {
-            foreach (var info in infos)
+            foreach (var basicInfo in infos)
             {
                 IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
                 InitializeUnitOfWork(unitOfWork);
 
 
-                Log.TraceEvent(TraceEventType.Information, 0, $"\nResolving anime: {info.AnimeDetailsUrl}");
-                _animeRepo.Resolve(info);
+                Log.TraceEvent(TraceEventType.Information, 0, $"\nResolving anime: {basicInfo.DetailsUrl}");
+                var detailedInfo = _animeRepo.Resolve(basicInfo);
 
-                var anime = info.Anime;
+                var anime = new Anime();
 
-                InsertAnimeCover(info, unitOfWork);
-                InsertAnimeCharacters(info);
-                InsertAnime(anime, unitOfWork);
+                InsertAnimeCover(detailedInfo, anime);
+                InsertAnimeCharacters(detailedInfo, anime);
+                AddAnimeRelationships(detailedInfo, anime);
+                AddAnimeData(detailedInfo, anime);
+
+                unitOfWork.Animes.Add(anime);
 
                 Log.TraceEvent(TraceEventType.Information, 0, "\nInserting anime into database.");
                 try
@@ -161,20 +164,20 @@ namespace AnimeTimeDbUpdater
                 UnitOfWorkToCache(unitOfWork);
             }
         }
-        private void InsertAnime(Anime anime, IUnitOfWork unitOfWork)
+
+        private void AddAnimeData(AnimeDetailedInfo detailedInfo, Anime anime)
         {
-            AddAnimeRelationships(anime);
-            unitOfWork.Animes.Add(anime);
+            anime.Title = detailedInfo.BasicInfo.Title;
+            anime.Description = detailedInfo.Description;
+            anime.Rating = detailedInfo.Rating;
+            anime.ReleaseYear = detailedInfo.ReleaseYear;
         }
-        private void InsertAnimeCover(AnimeInfo info, IUnitOfWork unitOfWork)
+        private void InsertAnimeCover(AnimeDetailedInfo infoDetails, Anime anime)
         {
-            if (info.CoverUrl == null)
-            {
-                return;
-            }
+            if (infoDetails.CoverUrl == null) return;
 
             Log.TraceEvent(TraceEventType.Information, 0, "Downloading cover image...");
-            var coverImage = _imageDownloader.Download(info.CoverUrl);
+            var coverImage = _imageDownloader.Download(infoDetails.CoverUrl);
 
             Log.TraceEvent(TraceEventType.Information, 0, "Generating thumbnails...");
             var thumbnails = _thumbnailGenerator.GenerateAsync(coverImage, _lodLevels).Result;
@@ -218,41 +221,45 @@ namespace AnimeTimeDbUpdater
 
                 image.Thumbnails.Add(thumbnail);
             }
-
-            animeImage.Anime = info.Anime;
             animeImage.Image = image;
 
-            unitOfWork.AnimeImages.Add(animeImage);
+            anime.Images.Add(animeImage);
 
             Log.TraceEvent(TraceEventType.Information, 0, "Attached cover to anime.");
             #endregion
         }
-        private void InsertAnimeCharacters(AnimeInfo info)
+        private void InsertAnimeCharacters(AnimeDetailedInfo info, Anime anime)
         {
             ICollection<Character> chars = new List<Character>();
-            ICollection<CharacterInfo> newChars = new List<CharacterInfo>();
+            var newChars = new List<(CharacterDetailedInfo detailedInfo, Character character)>();
 
             Log.TraceEvent(TraceEventType.Information, 0, "\nFetching characters list.");
-            var charInfos = _charRepo.Extract(info.CharactersUrl);
-            Log.TraceEvent(TraceEventType.Information, 0, $"Characters found ({charInfos.Count()}).");
+            var charBasicInfos = _charRepo.Extract(info.CharactersUrl);
+            Log.TraceEvent(TraceEventType.Information, 0, $"Characters found ({charBasicInfos.Count()}).");
 
-            if (charInfos.Count() == 0) return;
+            if (charBasicInfos.Count() == 0) return;
 
-            foreach (var charInfo in charInfos)
+            foreach (var basicInfo in charBasicInfos)
             {
-                if (_characters.TryGetValue(charInfo.Character, out Character c))
+                var character = new Character();
+                character.SourceUrl = basicInfo.DetailsUrl;
+
+                if (_characters.TryGetValue(character, out Character c))
                 {
                     chars.Add(c);
                 }
                 else
                 {
-                    Log.TraceEvent(TraceEventType.Information, 0, $"Resolving character: {charInfo.Character.SourceUrl}.");
-                    _charRepo.Resolve(charInfo);
+                    Log.TraceEvent(TraceEventType.Information, 0, $"Resolving character: {basicInfo.DetailsUrl}.");
+                    var detailedInfo = _charRepo.Resolve(basicInfo);
 
-                    var charResolved = charInfo.Character;
-                    chars.Add(charResolved);
+                    character.Name = detailedInfo.Name;
+                    character.RoleId = detailedInfo.BasicInfo.Role;
+                    character.SourceUrl = detailedInfo.BasicInfo.DetailsUrl;
 
-                    newChars.Add(charInfo);
+                    chars.Add(character);
+
+                    newChars.Add((detailedInfo, character));
                 }
             }
             Log.TraceEvent(TraceEventType.Information, 0, "Attached characters to anime.\n");
@@ -262,27 +269,25 @@ namespace AnimeTimeDbUpdater
                 InsertCharacterImages(newChars);
             }
 
-            info.Anime.Characters = chars;
+            anime.Characters = chars;
         }
-
-        private void InsertCharacterImages(IEnumerable<CharacterInfo> newChars)
+        private void InsertCharacterImages(IEnumerable<(CharacterDetailedInfo DetailedInfo, Character Character)> newChars)
         {
-            var charImagePairs = new List<Tuple<
-                CharacterInfo,
-                Image<Rgba32>,
-                List<Tuple<ThumbnailUtil, string>>>>();
-
-
+            var charImagePairs = new List<(
+                Character Character,
+                Image<Rgba32> Image,
+                List<(ThumbnailUtil GeneratedThumb, string UploadedUrl)> Thumbnails
+                )>();
             // Generate thumbnails
             IList<Task<IEnumerable<ThumbnailUtil>>> thumbnailGenerationTasks = new List<Task<IEnumerable<ThumbnailUtil>>>();
 
-            var newCharsWithImage = newChars.Where(ci => ci.ImageUrl != null);
-            foreach (var c in newCharsWithImage)
+            var newCharsWithImage = newChars.Where(pair => pair.DetailedInfo.ImageUrl != null);
+            foreach (var newChar in newCharsWithImage)
             {
-                Log.TraceEvent(TraceEventType.Information, 0, $"Donwloading image for {c.Character.Name}.");
-                var image = _imageDownloader.Download(c.ImageUrl, true);
+                Log.TraceEvent(TraceEventType.Information, 0, $"Donwloading image for {newChar.DetailedInfo.Name }.");
+                var image = _imageDownloader.Download(newChar.DetailedInfo.ImageUrl, true);
 
-                charImagePairs.Add(Tuple.Create(c, image, new List<Tuple<ThumbnailUtil, string>>()));
+                charImagePairs.Add((newChar.Character, image, new List<(ThumbnailUtil GeneratedThumb, string UploadedUrl)>()));
 
                 thumbnailGenerationTasks.Add(_thumbnailGenerator.GenerateAsync(image, _lodLevels));
             }
@@ -303,7 +308,7 @@ namespace AnimeTimeDbUpdater
                 foreach (var thumbnail in charThumbnails[i])
                 {
                     uploadTasks.Add(imageStorage.UploadAsync(thumbnail.Image)
-                        .ContinueWith(t => charImagePairs[indexCopy].Item3.Add(Tuple.Create(thumbnail, t.Result))));
+                        .ContinueWith(t => charImagePairs[indexCopy].Thumbnails.Add((thumbnail, t.Result))));
                 }
             }
 
@@ -314,9 +319,9 @@ namespace AnimeTimeDbUpdater
             // Insert thumbnails into db
             foreach (var pair in charImagePairs)
             {
-                var character = pair.Item1.Character;
-                var imageOriginal = pair.Item2;
-                var thumbUrlPairs = pair.Item3;
+                var character = pair.Character;
+                var imageOriginal = pair.Image;
+                var thumbUrlPairs = pair.Thumbnails;
 
                 var image = new AnimeTime.Core.Domain.Image();
                 image.ImageType_Id = ImageTypeId.Character;
@@ -359,37 +364,62 @@ namespace AnimeTimeDbUpdater
             unitOfWork.Characters.AttachRange(_characters);
         }
 
-        private void AddAnimeRelationships(Anime anime)
+        private void AddAnimeRelationships(AnimeDetailedInfo detailedInfo, Anime anime)
         {
-            AddAnimeGenresRelationship(anime);
-            AddAnimeYearSeasonRelationship(anime);
-            AddAnimeCategoryRelationship(anime);
+            AddAnimeAltTitles(detailedInfo, anime);
+
+            AddAnimeGenresRelationship(detailedInfo, anime);
+            AddAnimeYearSeasonRelationship(detailedInfo, anime);
+            AddAnimeCategoryRelationship(detailedInfo, anime);
         }
-        private void AddAnimeGenresRelationship(Anime anime)
+
+        private void AddAnimeAltTitles(AnimeDetailedInfo detailedInfo, Anime anime)
         {
-            ICollection<Genre> genres = new List<Genre>();
-            foreach (var g in anime.Genres)
+            foreach(var altTitle in detailedInfo.AltTitles)
             {
-                if (_genres.TryGetValue(g, out Genre genre))
-                    genres.Add(genre);
-                else
-                    genres.Add(g);
+                anime.AltTitles.Add(new AnimeAltTitle() { Title = altTitle });
             }
-            anime.Genres = genres;
         }
-        private void AddAnimeYearSeasonRelationship(Anime anime)
+        private void AddAnimeGenresRelationship(AnimeDetailedInfo detailedInfo, Anime anime)
         {
-            if (anime.YearSeason == null) return;
+            foreach (var genreName in detailedInfo.Genres)
+            {
+                var genre = new Genre() { Name = genreName };
 
-            if (_yearSeasons.TryGetValue(anime.YearSeason, out YearSeason y))
-                anime.YearSeason = y;
+                if (_genres.TryGetValue(genre, out Genre existingGenre))
+                    anime.Genres.Add(existingGenre);
+                else
+                    anime.Genres.Add(genre);
+            }
         }
-        private void AddAnimeCategoryRelationship(Anime anime)
+        private void AddAnimeYearSeasonRelationship(AnimeDetailedInfo detailedInfo, Anime anime)
         {
-            if (anime.Category == null) return;
+            if (detailedInfo.YearSeason == null) return;
 
-            if (_categories.TryGetValue(anime.Category, out Category c))
-                anime.Category = c;
+            var yearSeason = new YearSeason() { Name = detailedInfo.YearSeason };
+            if (_yearSeasons.TryGetValue(yearSeason, out YearSeason existingYearSeason))
+            {
+                anime.YearSeason = existingYearSeason;
+            }
+            else
+            {
+                anime.YearSeason = yearSeason;
+            }
+        }
+        private void AddAnimeCategoryRelationship(AnimeDetailedInfo detailedInfo, Anime anime)
+        {
+            if (detailedInfo.Category == null) return;
+
+            var category = new Category() { Name = detailedInfo.Category };
+
+            if (_categories.TryGetValue(category, out Category existingCategory))
+            {
+                anime.Category = existingCategory;
+            }
+            else
+            {
+                anime.Category = category;
+            }
         }
     }
 }

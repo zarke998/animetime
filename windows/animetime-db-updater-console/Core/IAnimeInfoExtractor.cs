@@ -11,7 +11,7 @@ namespace AnimeTimeDbUpdater.Core
     {
         string LoadedPage { get; }
 
-        IEnumerable<AnimeInfo> GetFromPage(string page);
+        IEnumerable<AnimeBasicInfo> GetFromPage(string page);
         string NextPage();
     }
 }

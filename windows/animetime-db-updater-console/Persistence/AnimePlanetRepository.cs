@@ -35,49 +35,44 @@ namespace AnimeTimeDbUpdater.Persistence
             CurrentPage = AnimeListByDateUrl;
         }
 
-        public void Resolve(AnimeInfo animeInfo)
+        public AnimeDetailedInfo Resolve(AnimeBasicInfo basicInfo)
         {
-            _resolver.Resolve(animeInfo);
-            var anime = animeInfo.Anime;
+            var detailedInfo = _resolver.Resolve(basicInfo);
 
-            Log.TraceEvent(TraceEventType.Verbose, 0, $"\n{anime}");
-
-            Log.TraceEvent(TraceEventType.Verbose, 0, "Genres: \n");
-            foreach (var genre in anime.Genres)
-            {
-                Log.TraceEvent(TraceEventType.Verbose, 0, $"\t{genre.Name}");
-            }
+            Log.TraceEvent(TraceEventType.Verbose, 0, $"\n{detailedInfo}");
             Log.TraceEvent(TraceEventType.Verbose, 0, String.Empty);
+
+            return detailedInfo;
         }
-        public void ResolveRange(IEnumerable<AnimeInfo> animeInfos)
+        public IEnumerable<AnimeDetailedInfo> ResolveRange(IEnumerable<AnimeBasicInfo> basicInfos)
         {
             List<Anime> animeList = new List<Anime>();
 
             //foreach(var animeResolve in animeInfoResolves)
-
+            return null;
         }
 
-        public IEnumerable<AnimeInfo> GetByDate()
+        public IEnumerable<AnimeBasicInfo> GetByDate()
         {
             return _extractor.GetFromPage(CurrentPage);
         }
-        public IEnumerable<AnimeInfo> GetAll()
+        public IEnumerable<AnimeBasicInfo> GetAll()
         {
-            List<AnimeInfo> animeInfos = new List<AnimeInfo>();
+            var basicInfos = new List<AnimeBasicInfo>();
 
             var page = AnimeListUrl;
             var endOfFetching = false;
 
             while (!endOfFetching)
             {
-                animeInfos.AddRange(_extractor.GetFromPage(page));
+                basicInfos.AddRange(_extractor.GetFromPage(page));
 
                 page = _extractor.NextPage();
                 if (page == null)
                     endOfFetching = true;
             }
 
-            return animeInfos;
+            return basicInfos;
         }
 
         public string NextPage()

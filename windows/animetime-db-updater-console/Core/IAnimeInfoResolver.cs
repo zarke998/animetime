@@ -10,6 +10,6 @@ namespace AnimeTimeDbUpdater.Core
 {
     public interface IAnimeInfoResolver
     {
-        void Resolve(AnimeInfo info);
+        AnimeDetailedInfo Resolve(AnimeBasicInfo basicInfo);
     }
 }

@@ -23,9 +23,9 @@ namespace AnimeTimeDbUpdater.Persistence
             _doc = doc;
         }
 
-        public IEnumerable<AnimeInfo> GetFromPage(string page)
+        public IEnumerable<AnimeBasicInfo> GetFromPage(string page)
         {
-            var infos = new List<AnimeInfo>();
+            var basicInfos = new List<AnimeBasicInfo>();
 
             CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(page); });
             LoadedPage = page;
@@ -36,12 +36,12 @@ namespace AnimeTimeDbUpdater.Persistence
             foreach (var node in animeNodes)
             {
                 var info = GetAnimeInfo(node.OuterHtml);
-                infos.Add(info);
+                basicInfos.Add(info);
 
-                Log.TraceEvent(TraceEventType.Information, 0, $"Fetched: {info.Anime.Title}");
+                Log.TraceEvent(TraceEventType.Information, 0, $"Fetched: {info.Title}");
             }
 
-            return infos;
+            return basicInfos;
         }
         public string NextPage()
         {
@@ -54,18 +54,18 @@ namespace AnimeTimeDbUpdater.Persistence
             var nextPage = HttpUtility.HtmlDecode(nextPageLinkNode.GetAttributeValue("href",""));
             return Constants.WebsiteUrls.AnimePlanet + nextPage;
         }
-        private AnimeInfo GetAnimeInfo(string xmlNode)
+        private AnimeBasicInfo GetAnimeInfo(string xmlNode)
         {           
-            var info = new AnimeInfo();
+            var info = new AnimeBasicInfo();
             var doc = new HtmlDocument();
 
             doc.LoadHtml(xmlNode);
 
             var title = doc.DocumentNode.SelectSingleNode(".//h3[contains(@class, 'cardName')]").InnerText;
-            info.Anime.Title = title;
+            info.Title = title;
 
             var detailsUrl = doc.DocumentNode.SelectSingleNode(".//a").GetAttributeValue("href", "");
-            info.AnimeDetailsUrl = Constants.WebsiteUrls.AnimePlanet + detailsUrl;
+            info.DetailsUrl = Constants.WebsiteUrls.AnimePlanet + detailsUrl;
 
             return info;
         }

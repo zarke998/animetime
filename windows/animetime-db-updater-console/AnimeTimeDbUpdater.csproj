@@ -108,8 +108,10 @@
     <Compile Include="ClassFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerConfig.cs" />
-    <Compile Include="Core\Domain\AnimeInfo.cs" />
-    <Compile Include="Core\Domain\CharacterInfo.cs" />
+    <Compile Include="Core\Domain\AnimeBasicInfo.cs" />
+    <Compile Include="Core\Domain\AnimeDetailedInfo.cs" />
+    <Compile Include="Core\Domain\CharacterBasicInfo.cs" />
+    <Compile Include="Core\Domain\CharacterDetailedInfo.cs" />
     <Compile Include="Core\IAnimeInfoExtractor.cs" />
     <Compile Include="Core\IAnimeInfoResolver.cs" />
     <Compile Include="Core\IAnimeInfoRepository.cs" />

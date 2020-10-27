@@ -17,11 +17,11 @@ namespace AnimeTimeDbUpdater.Core
         string AnimeListUrl { get; }
         string AnimeListByDateUrl { get; }
 
-        void Resolve(AnimeInfo animeInfo);
-        void ResolveRange(IEnumerable<AnimeInfo> animeInfos);
+        AnimeDetailedInfo Resolve(AnimeBasicInfo basicInfo);
+        IEnumerable<AnimeDetailedInfo> ResolveRange(IEnumerable<AnimeBasicInfo> basicInfos);
 
-        IEnumerable<AnimeInfo> GetAll();
-        IEnumerable<AnimeInfo> GetByDate();
+        IEnumerable<AnimeBasicInfo> GetAll();
+        IEnumerable<AnimeBasicInfo> GetByDate();
 
         string NextPage();
         void ResetToFirstPage();
