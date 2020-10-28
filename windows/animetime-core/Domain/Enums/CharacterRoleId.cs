@@ -10,6 +10,7 @@ namespace AnimeTime.Core.Domain.Enums
     {
         Main = 1,
         Secondary = 2,
-        Minor = 3
+        Minor = 3,
+        Other = 4,
     }
 }

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Domain\Thumbnail.cs" />
+    <Compile Include="Core\IEnumMapper.cs" />
     <Compile Include="Core\Imaging\IImageDownloader.cs" />
     <Compile Include="Core\Imaging\IImageResizer.cs" />
     <Compile Include="Core\Imaging\IJpegCompressor.cs" />

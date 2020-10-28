@@ -253,8 +253,11 @@ namespace AnimeTimeDbUpdater
                     Log.TraceEvent(TraceEventType.Information, 0, $"Resolving character: {basicInfo.DetailsUrl}.");
                     var detailedInfo = _charRepo.Resolve(basicInfo);
 
+                    var roleMapper = ClassFactory.CreateCharacterRoleMapper();
+                    var roleId = roleMapper.Map(detailedInfo.BasicInfo.Role);
+
                     character.Name = detailedInfo.Name;
-                    character.RoleId = detailedInfo.BasicInfo.Role;
+                    character.RoleId = roleId;
                     character.SourceUrl = detailedInfo.BasicInfo.DetailsUrl;
 
                     chars.Add(character);
