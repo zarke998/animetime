@@ -1,8 +1,10 @@
 ﻿using AnimeTime.Core;
-using AnimeTime.Core.Domain.Mappers;
+using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Persistence;
+using AnimeTime.Utilities.Core;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Persistence;
+using AnimeTimeDbUpdater.Persistence.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace AnimeTimeDbUpdater
     {
         public static IUnitOfWork CreateUnitOfWork() => new UnitOfWork(new AnimeTimeDbContext());
         public static IImageStorage CreateImageStorage() => new AzureImageStorage();
-        public static ICategoryMapper CreateCategoryMapper() => new AnimePlanetCategoryMapper();
+        public static IEnumMapper<CategoryId> CreateCategoryMapper() => new AnimePlanetCategoryMapper();
+        public static IEnumMapper<CharacterRoleId> CreateCharacterRoleMapper() => new AnimePlanetCharacterRoleMapper();
     }
 }

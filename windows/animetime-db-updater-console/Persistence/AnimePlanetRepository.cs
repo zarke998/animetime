@@ -52,6 +52,7 @@ namespace AnimeTimeDbUpdater.Persistence
             return null;
         }
 
+
         public IEnumerable<AnimeBasicInfo> GetByDate()
         {
             return _extractor.GetFromPage(CurrentPage);

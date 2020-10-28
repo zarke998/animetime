@@ -23,26 +23,26 @@ namespace AnimeTimeDbUpdater.Persistence
             HtmlDocument htmlDocument = null;
             CrawlDelayer.ApplyDelay(() => htmlDocument = htmlExtractor.Load(animeCharactersUrl));
 
-            var mainChars = ExtractCharacterByRole(htmlDocument, CharacterRoleId.Main);
-            var secondaryChars = ExtractCharacterByRole(htmlDocument, CharacterRoleId.Secondary);
-            var minorChars = ExtractCharacterByRole(htmlDocument, CharacterRoleId.Minor);
+            var mainChars = ExtractCharacterByRole(htmlDocument, "Main");
+            var secondaryChars = ExtractCharacterByRole(htmlDocument, "Secondary");
+            var minorChars = ExtractCharacterByRole(htmlDocument, "Minor");
 
             return mainChars.Union(secondaryChars).Union(minorChars);
         }
-        private ICollection<CharacterBasicInfo> ExtractCharacterByRole(HtmlDocument document, CharacterRoleId role)
+        private ICollection<CharacterBasicInfo> ExtractCharacterByRole(HtmlDocument document, string role)
         {
             var basicInfos = new List<CharacterBasicInfo>();
 
             string charsSelector = "";
             switch (role)
             {
-                case CharacterRoleId.Main:
+                case "Main":
                     charsSelector = @"//h3[contains(text(),'Main Characters')]/following-sibling::table[1]//td[@class='tableCharInfo']/a[@class='name']";
                     break;
-                case CharacterRoleId.Secondary:
+                case "Secondary":
                     charsSelector = @"//h3[contains(text(),'Secondary Characters')]/following-sibling::table[1]//td[@class='tableCharInfo']/a[@class='name']";
                     break;
-                case CharacterRoleId.Minor:
+                case "Minor":
                     charsSelector = @"//h3[contains(text(),'Minor Characters')]/following-sibling::table[1]//td[@class='tableCharInfo']/a[@class='name']";
                     break;
                 default:

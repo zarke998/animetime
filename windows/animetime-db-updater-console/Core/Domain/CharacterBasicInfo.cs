@@ -9,7 +9,7 @@ namespace AnimeTimeDbUpdater.Core.Domain
 {
     public class CharacterBasicInfo
     {
-        public CharacterRoleId Role { get; set; }
+        public string Role { get; set; }
         public string DetailsUrl { get; set; }
     }
 }

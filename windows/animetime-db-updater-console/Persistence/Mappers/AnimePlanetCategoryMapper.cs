@@ -1,14 +1,14 @@
 ﻿using AnimeTime.Core.Domain.Enums;
-using AnimeTime.Core.Domain.Mappers;
+using AnimeTime.Utilities.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimeTimeDbUpdater.Persistence
+namespace AnimeTimeDbUpdater.Persistence.Mappers
 {
-    public class AnimePlanetCategoryMapper : ICategoryMapper
+    public class AnimePlanetCategoryMapper : IEnumMapper<CategoryId>
     {
         public CategoryId Map(string categoryName)
         {
