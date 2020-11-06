@@ -26,5 +26,17 @@ namespace AnimeTime.Persistence.Repositories
         {
             return AnimeTimeDbContext.Animes.Select(a => a.Title).ToList();
         }
+
+        public Anime GetWithSources(int id, bool includeWebsites)
+        {
+            if (includeWebsites)
+            {
+                return AnimeTimeDbContext.Animes.Include(a => a.AnimeSources.Select(s => s.Website)).FirstOrDefault(a => a.Id == id);
+            }
+            else
+            {
+                return AnimeTimeDbContext.Animes.Include(a => a.AnimeSources).FirstOrDefault(a => a.Id == id);
+            }
+        }
     }
 }

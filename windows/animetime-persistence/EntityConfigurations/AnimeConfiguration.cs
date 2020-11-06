@@ -12,7 +12,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public AnimeConfiguration()
         {
-
+            HasOptional(e => e.Metadata).WithRequired(m => m.Anime);
         }
     }
 }

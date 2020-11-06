@@ -9,6 +9,8 @@ namespace AnimeTime.Core.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        bool Exists(Expression<Func<TEntity, bool>> expression);
+
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetAllCached();

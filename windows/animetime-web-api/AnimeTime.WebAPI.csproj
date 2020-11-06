@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.18.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.18\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -100,6 +103,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ClassFactory.cs" />
+    <Compile Include="Controllers\AnimesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -119,8 +124,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Core\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
+      <Project>{F4CA9E32-6E3D-4269-9E5D-ECEEB5C6EB25}</Project>
+      <Name>AnimeTime.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\animetime-persistence\AnimeTime.Persistence.csproj">
+      <Project>{15172C36-0A91-44AA-B9F5-E390D05479B8}</Project>
+      <Name>AnimeTime.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\animetime-utilities\AnimeTime.Utilities.csproj">
+      <Project>{726F2A06-5F43-4CDF-B3BC-4AEC6939F017}</Project>
+      <Name>AnimeTime.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\animetime-website-processors\AnimeTime.WebsiteProcessors.csproj">
+      <Project>{52E9A70A-2466-4B70-86C2-14CD5C022DDD}</Project>
+      <Name>AnimeTime.WebsiteProcessors</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

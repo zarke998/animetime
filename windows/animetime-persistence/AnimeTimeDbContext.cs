@@ -32,8 +32,8 @@ namespace AnimeTime.Persistence
         public DbSet<AnimeAltTitle> AnimeAltTitles { get; set; }
         public DbSet<AnimeSource> AnimeSources { get; set; }
         public DbSet<EpisodeSource> EpisodeSources { get; set; }
-
-
+        public DbSet<AnimeSourceStatus> AnimeSourceStatuses { get; set; }
+        public DbSet<AnimeMetadata> AnimeMetadatas { get; set; }
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
@@ -59,6 +59,8 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new AnimeSourceConfiguration());
             modelBuilder.Configurations.Add(new EpisodeSourceConfiguration());
             modelBuilder.Configurations.Add(new CategoryConfiguration());
+            modelBuilder.Configurations.Add(new AnimeSourceStatusesConfiguration());
+            modelBuilder.Configurations.Add(new AnimeMetadataConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

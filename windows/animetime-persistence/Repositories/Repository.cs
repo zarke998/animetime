@@ -39,6 +39,11 @@ namespace AnimeTime.Persistence.Repositories
             _dbContext.Set<TEntity>().AddRange(entities);
         }
 
+        public bool Exists(Expression<Func<TEntity, bool>> expression)
+        {
+            return _dbContext.Set<TEntity>().Any(expression);
+        }
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression)
         {
             return _dbContext.Set<TEntity>().Where(expression).ToList();

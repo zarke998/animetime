@@ -26,6 +26,7 @@ namespace AnimeTime.Core.Domain
         public int? ReleaseYear { get; set; }
         public YearSeason YearSeason { get; set; }
         public Category Category { get; set; }
+        public AnimeMetadata Metadata { get; set; }
         public ICollection<AnimeAltTitle> AltTitles { get; set; }
         public ICollection<AnimeImage> Images { get; set; }
         public ICollection<Genre> Genres { get; set; }
