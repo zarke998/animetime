@@ -13,7 +13,7 @@ namespace AnimeTime.Core.Domain
             Sources = new HashSet<EpisodeSource>();
         }
         public int Id { get; set; }
-        public decimal EpNum { get; set; }
+        public float EpNum { get; set; }
         public int AnimeId { get; set; }
         public Anime Anime { get; set; }
         public ICollection<EpisodeSource> Sources { get; set; }

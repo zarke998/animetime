@@ -12,7 +12,6 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public EpisodeConfiguration()
         {
-            Property(e => e.EpNum).HasPrecision(5, 1);
             HasRequired(e => e.Anime).WithMany(a => a.Episodes).HasForeignKey(e => e.AnimeId).WillCascadeOnDelete(true);
         }
     }
