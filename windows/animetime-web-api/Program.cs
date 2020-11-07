@@ -24,7 +24,7 @@ namespace AnimeTime.WebAPI
                 var request = new HttpRequestMessage()
                 { 
                     Method = HttpMethod.Get,
-                    RequestUri = new Uri(serverAddress + "api/animes/101/episodes-with-sources")
+                    RequestUri = new Uri(serverAddress + "api/animes/4/episodes-with-sources")
                 };
                 request.Headers.Add("api-key", apiKey);
 

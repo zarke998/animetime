@@ -8,6 +8,11 @@ namespace AnimeTime.Utilities.String
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Removes extra white spaces at the begging and end of a string, and inside of a string.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string RemoveExtraWhitespaces(this string value) 
         {
             value = value.Trim();

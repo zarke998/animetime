@@ -103,7 +103,8 @@ namespace AnimeTime.WebAPI.Controllers
 
                 var websiteProcessor = WebsiteProcessorFactory.CreateWebsiteProcessor(source.Website.Name, source.Website.Url, source.Website.QuerySuffix);
                 var episodes = websiteProcessor.GetEpisodes(source.Url);
-
+                
+                // If anime has half episodes (eg. 18.5), this calculation will be incorrect
                 var episodeNumDifference = episodes.Count() - anime.Episodes.Count;
                 if (episodeNumDifference <= 0) continue;
 

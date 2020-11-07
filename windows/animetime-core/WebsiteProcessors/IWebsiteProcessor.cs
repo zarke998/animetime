@@ -12,6 +12,6 @@ namespace AnimeTime.Core.WebsiteProcessors
         (string animeUrl, string animeDubUrl) GetAnimeUrl(string animeName, int releaseYear, string animeAltTitle = null);
         IEnumerable<(string Title, string Url, int releaseYear)> SearchAnimes(string searchString);
 
-        IEnumerable<(int epNum, string epUrl)> GetEpisodes(string animeUrl);
+        IEnumerable<(float epNum, string epUrl)> GetEpisodes(string animeUrl);
     }
 }
