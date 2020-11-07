@@ -246,6 +246,10 @@
     <Compile Include="Migrations\202011051339030_RemoveAddEpisodeToNotificationsTrigger.designer.cs">
       <DependentUpon>202011051339030_RemoveAddEpisodeToNotificationsTrigger.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011070936160_ChangeEpNumToDecimal.cs" />
+    <Compile Include="Migrations\202011070936160_ChangeEpNumToDecimal.designer.cs">
+      <DependentUpon>202011070936160_ChangeEpNumToDecimal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\WebsiteRepository.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011051339030_RemoveAddEpisodeToNotificationsTrigger.resx">
       <DependentUpon>202011051339030_RemoveAddEpisodeToNotificationsTrigger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011070936160_ChangeEpNumToDecimal.resx">
+      <DependentUpon>202011070936160_ChangeEpNumToDecimal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
