@@ -89,7 +89,6 @@ namespace AnimeTime.WebAPI.Controllers
         private bool UpdateEpisodes(int animeId)
         {
             var unitOfWork = ClassFactory.CreateUnitOfWork();
-
             var anime = unitOfWork.Animes.GetWithSources(animeId, true);
 
             if (anime.AnimeSources.Count == 0) return false;
@@ -103,23 +102,24 @@ namespace AnimeTime.WebAPI.Controllers
 
                 var websiteProcessor = WebsiteProcessorFactory.CreateWebsiteProcessor(source.Website.Name, source.Website.Url, source.Website.QuerySuffix);
                 var episodes = websiteProcessor.GetEpisodes(source.Url);
-                
-                // If anime has half episodes (eg. 18.5), this calculation will be incorrect
-                var episodeNumDifference = episodes.Count() - anime.Episodes.Count;
-                if (episodeNumDifference <= 0) continue;
 
-                foreach (var newEpisode in episodes.Skip(anime.Episodes.Count))
+                var differentEpisodes = GetDifferentEpisodes(episodes);
+
+                if(differentEpisodes.Count() > 0)
                 {
-                    var episode = newEpisodes.FirstOrDefault(e => e.EpNum == newEpisode.epNum);
-                    if (episode == null)
+                    foreach (var newEpisode in differentEpisodes)
                     {
-                        episode = new Episode() { EpNum = newEpisode.epNum };
-                    }
+                        var episode = newEpisodes.FirstOrDefault(e => e.EpNum == newEpisode.epNum);
+                        if (episode == null)
+                        {
+                            episode = new Episode() { EpNum = newEpisode.epNum };
+                        }
 
-                    episode.Sources.Add(new EpisodeSource() { Url = newEpisode.epUrl, WebsiteId = source.WebsiteId });
-                    newEpisodes.Add(episode);
+                        episode.Sources.Add(new EpisodeSource() { Url = newEpisode.epUrl, WebsiteId = source.WebsiteId });
+                        newEpisodes.Add(episode);
+                    }
+                    atLeastOneSourceUsed = true;
                 }
-                atLeastOneSourceUsed = true;
             }
             newEpisodes.ForEach(e => anime.Episodes.Add(e));
             try
@@ -132,8 +132,26 @@ namespace AnimeTime.WebAPI.Controllers
 
                 atLeastOneSourceUsed = false;
             }
-
             return atLeastOneSourceUsed;
+
+            IEnumerable<(float epNum, string epUrl)> GetDifferentEpisodes(IEnumerable<(float epNum, string epUrl)> episodes)
+            {
+                var differentEpisodes = new List<(float epNum, string epUrl)>();
+
+                if (anime.Episodes.Count == 0 || episodes.Count() == 0) return episodes;
+
+                var animeEpisodeNumbers = anime.Episodes.Select(e => e.EpNum);
+
+                foreach(var episode in episodes)
+                {
+                    if (!animeEpisodeNumbers.Contains(episode.epNum))
+                    {
+                        differentEpisodes.Add(episode);
+                    }
+                }
+
+                return differentEpisodes;
+            }
         }
     }
 }
