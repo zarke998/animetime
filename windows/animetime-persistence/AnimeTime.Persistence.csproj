@@ -254,6 +254,10 @@
     <Compile Include="Migrations\202011071304253_ChangeEpNumTypeToFloat.designer.cs">
       <DependentUpon>202011071304253_ChangeEpNumTypeToFloat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011121134405_AddSourcesInitializedColToAnimeMetadata.cs" />
+    <Compile Include="Migrations\202011121134405_AddSourcesInitializedColToAnimeMetadata.designer.cs">
+      <DependentUpon>202011121134405_AddSourcesInitializedColToAnimeMetadata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\WebsiteRepository.cs" />
@@ -416,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011071304253_ChangeEpNumTypeToFloat.resx">
       <DependentUpon>202011071304253_ChangeEpNumTypeToFloat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011121134405_AddSourcesInitializedColToAnimeMetadata.resx">
+      <DependentUpon>202011121134405_AddSourcesInitializedColToAnimeMetadata.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
