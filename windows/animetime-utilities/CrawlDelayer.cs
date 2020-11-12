@@ -53,11 +53,38 @@ namespace AnimeTime.Utilities
 
             IsFirstCrawl = false;
         }
+        public async Task ApplyDelayAsync(Func<Task> crawlFunc)
+        {
+            if (crawlFunc == null)
+                return;
+
+            if (!IsFirstCrawl)
+            {
+                var elapsed = ElapsedTimeFromLastCrawl;
+                var timeToWait = CrawlWait + CrawlWaitOffset - (elapsed);
+
+                var lastCrawledFor = LastCrawledFor;
+
+                if (timeToWait > 0)
+                {
+                    await Task.Delay((int)(timeToWait * 1000));
+                }
+            }
+            await ExecuteCrawl(crawlFunc);
+
+            IsFirstCrawl = false;
+        }
 
         private void ExecuteCrawl(Action crawlAction)
         {
             BeginCrawlTracking();
             crawlAction.Invoke();
+            EndCrawlTracking();
+        }
+        private async Task ExecuteCrawl(Func<Task> crawlFunc)
+        {
+            BeginCrawlTracking();
+            await crawlFunc();
             EndCrawlTracking();
         }
         private void BeginCrawlTracking()

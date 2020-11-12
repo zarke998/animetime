@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AnimeTime.Utilities
 {
@@ -8,5 +9,6 @@ namespace AnimeTime.Utilities
         double CrawlWaitOffset { get; set; }
 
         void ApplyDelay(Action crawlAction);
+        Task ApplyDelayAsync(Func<Task> crawlFunc);
     }
 }
