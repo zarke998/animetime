@@ -16,6 +16,7 @@ using ThumbnailUtil = AnimeTime.Utilities.Core.Domain.Thumbnail;
 using AnimeTime.Utilities.Imaging;
 using AnimeTime.Core.Exceptions;
 using System.Diagnostics;
+using AnimeTime.Utilities;
 
 namespace AnimeTimeDbUpdater
 {
@@ -27,6 +28,8 @@ namespace AnimeTimeDbUpdater
         IImageDownloader _imageDownloader;
         IThumbnailGenerator _thumbnailGenerator;
 
+        ICrawlDelayer _crawlDelayer;
+
         HashSet<string> _titles;
 
         HashSet<Genre> _genres;
@@ -35,12 +38,17 @@ namespace AnimeTimeDbUpdater
         HashSet<Character> _characters;
         HashSet<ImageLodLevel> _lodLevels;
 
-        public MainApplication(IAnimeInfoRepository animeRepo, ICharacterInfoRepository charRepo, IImageDownloader imageDownloader, IThumbnailGenerator thumbnailGenerator)
+        public MainApplication(IAnimeInfoRepository animeRepo, ICharacterInfoRepository charRepo, IImageDownloader imageDownloader, IThumbnailGenerator thumbnailGenerator, ICrawlDelayer crawlDelayer)
         {
             _animeRepo = animeRepo;
             _charRepo = charRepo;
             this._imageDownloader = imageDownloader;
             this._thumbnailGenerator = thumbnailGenerator;
+
+            _crawlDelayer = crawlDelayer;
+
+            _animeRepo.CrawlDelayer = _crawlDelayer;
+            _imageDownloader.CrawlDelayer = _crawlDelayer;
         }
 
         public void Run()
@@ -288,7 +296,7 @@ namespace AnimeTimeDbUpdater
             foreach (var newChar in newCharsWithImage)
             {
                 Log.TraceEvent(TraceEventType.Information, 0, $"Donwloading image for {newChar.DetailedInfo.Name }.");
-                var image = _imageDownloader.Download(newChar.DetailedInfo.ImageUrl, true);
+                var image = _imageDownloader.Download(newChar.DetailedInfo.ImageUrl);
 
                 charImagePairs.Add((newChar.Character, image, new List<(ThumbnailUtil GeneratedThumb, string UploadedUrl)>()));
 

@@ -22,6 +22,8 @@ namespace AnimeTimeDbUpdater.Persistence
         private HtmlWeb _web;
         private HtmlDocument _doc;
 
+        public ICrawlDelayer CrawlDelayer { get; set; }
+
         public AnimeInfoResolver(HtmlWeb web, HtmlDocument doc)
         {
             _web = web;
@@ -32,8 +34,14 @@ namespace AnimeTimeDbUpdater.Persistence
         {
             var detailedInfo = new AnimeDetailedInfo();
 
-
-            CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(basicInfo.DetailsUrl); });
+            if(CrawlDelayer != null)
+            {
+                CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(basicInfo.DetailsUrl); });
+            }
+            else
+            {
+                _doc = _web.Load(basicInfo.DetailsUrl);
+            }
 
             detailedInfo.BasicInfo = basicInfo;
             detailedInfo.AltTitles = new List<string>(ResolveAltTitles());

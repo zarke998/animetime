@@ -12,6 +12,7 @@ using AnimeTime.Persistence;
 using AnimeTime.Core;
 using AnimeTime.Utilities.Imaging;
 using AnimeTime.Utilities.Core.Imaging;
+using AnimeTime.Utilities;
 
 namespace AnimeTimeDbUpdater
 {
@@ -35,6 +36,8 @@ namespace AnimeTimeDbUpdater
 
             builder.RegisterType<ImageResizer>().As<IImageResizer>();
             builder.RegisterType<JpegCompressor>().As<IJpegCompressor>();
+
+            builder.RegisterType<CrawlDelayer>().As<ICrawlDelayer>();
 
             return builder.Build();
         }

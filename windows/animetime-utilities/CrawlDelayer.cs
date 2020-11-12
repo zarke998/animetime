@@ -7,18 +7,14 @@ using System.Diagnostics;
 
 namespace AnimeTime.Utilities
 {
-    public static class CrawlDelayer
+    public class CrawlDelayer : ICrawlDelayer
     {
-        private static Stopwatch _stopwatch = new Stopwatch();
-        private static Stopwatch _crawlStopwatch = new Stopwatch();
+        private Stopwatch _stopwatch = new Stopwatch();
+        private Stopwatch _crawlStopwatch = new Stopwatch();
+        private bool IsFirstCrawl { get; set; } = true;
 
-        private const double CrawlWait = 1.0;
-        private const double CrawlWaitOffset = 0.2;
-
-        private static bool IsFirstCrawl { get; set; } = true;
-
-        private static double LastCrawledFor { get; set; }
-        private static double ElapsedTimeFromLastCrawl
+        private double LastCrawledFor { get; set; }
+        private double ElapsedTimeFromLastCrawl
         {
             get
             {
@@ -27,7 +23,16 @@ namespace AnimeTime.Utilities
             }
         }
 
-        public static void ApplyDelay(Action crawlAction)
+        public double CrawlWait { get; set; }
+        public double CrawlWaitOffset { get; set; }
+
+        public CrawlDelayer(double crawlWait = 1.0, double crawlWaitOffset = 0.2)
+        {
+            CrawlWait = crawlWait;
+            CrawlWaitOffset = crawlWaitOffset;
+        }
+
+        public void ApplyDelay(Action crawlAction)
         {
             if (crawlAction == null)
                 return;
@@ -49,17 +54,17 @@ namespace AnimeTime.Utilities
             IsFirstCrawl = false;
         }
 
-        private static void ExecuteCrawl(Action crawlAction)
+        private void ExecuteCrawl(Action crawlAction)
         {
             BeginCrawlTracking();
             crawlAction.Invoke();
             EndCrawlTracking();
         }
-        private static void BeginCrawlTracking()
+        private void BeginCrawlTracking()
         {
             _crawlStopwatch.Restart();
         }
-        private static void EndCrawlTracking()
+        private void EndCrawlTracking()
         {
             _crawlStopwatch.Stop();
             LastCrawledFor = _crawlStopwatch.ElapsedMilliseconds / 1000.0;

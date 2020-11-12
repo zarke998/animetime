@@ -16,6 +16,7 @@ namespace AnimeTimeDbUpdater.Persistence
         private HtmlDocument _doc;
 
         public string LoadedPage { get; private set; }
+        public ICrawlDelayer CrawlDelayer { get; set; }
 
         public AnimeInfoExtractor(HtmlWeb web, HtmlDocument doc)
         {
@@ -27,7 +28,15 @@ namespace AnimeTimeDbUpdater.Persistence
         {
             var basicInfos = new List<AnimeBasicInfo>();
 
-            CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(page); });
+            if(CrawlDelayer != null)
+            {
+                CrawlDelayer.ApplyDelay(() => { _doc = _web.Load(page); });
+            }
+            else
+            {
+                _doc = _web.Load(page);
+            }
+            
             LoadedPage = page;
 
             Log.TraceEvent(TraceEventType.Information, 0, $"\nGetting infos from page: {LoadedPage}\n");

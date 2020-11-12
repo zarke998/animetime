@@ -65,6 +65,7 @@
     <Compile Include="Core\Imaging\IJpegCompressor.cs" />
     <Compile Include="Core\Imaging\IThumbnailGenerator.cs" />
     <Compile Include="CrawlDelayer.cs" />
+    <Compile Include="ICrawlDelayer.cs" />
     <Compile Include="Imaging\Extensions.cs" />
     <Compile Include="Imaging\ImageDownloader.cs" />
     <Compile Include="Imaging\ImageResizer.cs" />

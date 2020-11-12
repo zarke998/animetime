@@ -16,12 +16,21 @@ namespace AnimeTimeDbUpdater.Persistence
     {
         private static string _blankCharacterImage = "blank_char.gif";
 
+        public ICrawlDelayer CrawlDelayer { get; set; }
+
         public IEnumerable<CharacterBasicInfo> Extract(string animeCharactersUrl)
         {
             var htmlExtractor = new HtmlWeb();
 
             HtmlDocument htmlDocument = null;
-            CrawlDelayer.ApplyDelay(() => htmlDocument = htmlExtractor.Load(animeCharactersUrl));
+            if(CrawlDelayer != null)
+            {
+                CrawlDelayer.ApplyDelay(() => htmlDocument = htmlExtractor.Load(animeCharactersUrl));
+            }
+            else
+            {
+                htmlDocument = htmlExtractor.Load(animeCharactersUrl);
+            }
 
             var mainChars = ExtractCharacterByRole(htmlDocument, "Main");
             var secondaryChars = ExtractCharacterByRole(htmlDocument, "Secondary");
@@ -74,7 +83,14 @@ namespace AnimeTimeDbUpdater.Persistence
             var htmlExtractor = new HtmlWeb();
 
             HtmlDocument document = null;
-            CrawlDelayer.ApplyDelay(() => document = htmlExtractor.Load(basicInfo.DetailsUrl));
+            if(CrawlDelayer != null)
+            {
+                CrawlDelayer.ApplyDelay(() => document = htmlExtractor.Load(basicInfo.DetailsUrl));
+            }
+            else
+            {
+                document = htmlExtractor.Load(basicInfo.DetailsUrl);
+            }
 
             detailedInfo.BasicInfo = basicInfo;
             detailedInfo.Name = ResolveName(document);

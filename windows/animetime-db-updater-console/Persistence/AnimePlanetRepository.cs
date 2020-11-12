@@ -12,6 +12,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Net;
 using AnimeTimeDbUpdater.Utilities;
+using AnimeTime.Utilities;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -26,17 +27,24 @@ namespace AnimeTimeDbUpdater.Persistence
         public bool CanFetchByDateAdded { get; private set; }
         public string CurrentPage { get; private set; }
         public bool LastPageReached { get; private set; }
+        public ICrawlDelayer CrawlDelayer { get; set ; }
 
         public AnimePlanetRepository(IAnimeInfoExtractor extractor, IAnimeInfoResolver resolver)
         {
             _extractor = extractor;
             _resolver = resolver;
+
+            _extractor.CrawlDelayer = CrawlDelayer;
+            _resolver.CrawlDelayer = CrawlDelayer;
+
             CanFetchByDateAdded = UrlIsAvailable(AnimeListByDateUrl);
             CurrentPage = AnimeListByDateUrl;
         }
 
         public AnimeDetailedInfo Resolve(AnimeBasicInfo basicInfo)
         {
+            _resolver.CrawlDelayer = CrawlDelayer;
+
             var detailedInfo = _resolver.Resolve(basicInfo);
 
             Log.TraceEvent(TraceEventType.Verbose, 0, $"\n{detailedInfo}");
@@ -52,13 +60,15 @@ namespace AnimeTimeDbUpdater.Persistence
             return null;
         }
 
-
         public IEnumerable<AnimeBasicInfo> GetByDate()
         {
+            _extractor.CrawlDelayer = CrawlDelayer;
             return _extractor.GetFromPage(CurrentPage);
         }
         public IEnumerable<AnimeBasicInfo> GetAll()
         {
+            _extractor.CrawlDelayer = CrawlDelayer;
+
             var basicInfos = new List<AnimeBasicInfo>();
 
             var page = AnimeListUrl;
