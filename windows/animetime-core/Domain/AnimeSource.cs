@@ -9,6 +9,8 @@ namespace AnimeTime.Core.Domain
 {
     public class AnimeSource
     {
+        public int Id { get; set; }
+
         public int WebsiteId { get; set; }
         public int AnimeId { get; set; }
         public string Url { get; set; }

@@ -12,8 +12,6 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public AnimeSourceConfiguration()
         {
-            HasKey(e => new { e.AnimeId, e.WebsiteId });
-
             // Relationship to Anime
             HasRequired(e => e.Anime).WithMany(a => a.AnimeSources).HasForeignKey(e => e.AnimeId).WillCascadeOnDelete(true);
 
