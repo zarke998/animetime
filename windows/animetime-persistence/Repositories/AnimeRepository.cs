@@ -26,7 +26,6 @@ namespace AnimeTime.Persistence.Repositories
         {
             return AnimeTimeDbContext.Animes.Select(a => a.Title).ToList();
         }
-
         public Anime GetWithSources(int id, bool includeWebsites)
         {
             if (includeWebsites)
@@ -37,6 +36,14 @@ namespace AnimeTime.Persistence.Repositories
             {
                 return AnimeTimeDbContext.Animes.Include(a => a.AnimeSources).FirstOrDefault(a => a.Id == id);
             }
+        }
+        public IEnumerable<int> GetIdsWithNoSources()
+        {
+            return AnimeTimeDbContext.Animes.Where(a => a.AnimeSources.Count == 0).Select(a => a.Id).ToList();
+        }
+        public Anime GetWithAltTitles(int id)
+        {
+            return AnimeTimeDbContext.Animes.Include(a => a.AltTitles).FirstOrDefault(a => a.Id == id);
         }
     }
 }

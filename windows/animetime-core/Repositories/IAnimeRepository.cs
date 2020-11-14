@@ -11,5 +11,8 @@ namespace AnimeTime.Core.Repositories
     {
         IEnumerable<string> GetAllTitles();
         Anime GetWithSources(int id, bool includeWebsites);
+        Anime GetWithAltTitles(int id);
+        IEnumerable<int> GetIdsWithNoSources();
+
     }
 }
