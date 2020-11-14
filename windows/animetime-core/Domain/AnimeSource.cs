@@ -15,6 +15,9 @@ namespace AnimeTime.Core.Domain
         public int AnimeId { get; set; }
         public string Url { get; set; }
 
+        public AnimeVersionIds AnimeVersion_Id { get; set; }
+        public AnimeVersion AnimeVersion { get; set; }
+
         public AnimeSourceStatusIds Status_Id { get; set; }
         public AnimeSourceStatus Status { get; set; }
 

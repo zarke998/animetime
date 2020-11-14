@@ -9,8 +9,13 @@ namespace AnimeTime.Core.Domain
 {
     public class AnimeVersion
     {
+        public AnimeVersion()
+        {
+            AnimeSources = new HashSet<AnimeSource>();
+        }
         public AnimeVersionIds Id { get; set; }
-
         public string VersionName { get; set; }
+
+        public ICollection<AnimeSource> AnimeSources { get; set; }
     }
 }
