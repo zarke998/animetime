@@ -48,6 +48,7 @@
     <Compile Include="Domain\AnimeMetadata.cs" />
     <Compile Include="Domain\AnimeSource.cs" />
     <Compile Include="Domain\AnimeSourceStatus.cs" />
+    <Compile Include="Domain\AnimeVersion.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Character.cs" />
     <Compile Include="Domain\CharacterRole.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Domain\Comparers\YearSeasonComparer.cs" />
     <Compile Include="Domain\Comparers\GenreComparer.cs" />
     <Compile Include="Domain\Enums\AnimeSourceStatusIds.cs" />
+    <Compile Include="Domain\Enums\AnimeVersionIds.cs" />
     <Compile Include="Domain\Enums\CharacterRoleId.cs" />
     <Compile Include="Domain\Enums\CategoryId.cs" />
     <Compile Include="Domain\Enums\ImageOrientationId.cs" />

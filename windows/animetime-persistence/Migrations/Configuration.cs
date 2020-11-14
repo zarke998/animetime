@@ -21,6 +21,7 @@
             SeedCharacterRoles(context);
             SeedImageLodLevels(context);
             SeedAnimeSourceStatuses(context);
+            SeedAnimeVersions(context);
         }
 
         private void SeedImageTypes(AnimeTimeDbContext context)
@@ -94,6 +95,18 @@
                 var name = Enum.GetName(typeof(AnimeSourceStatusIds), status);
 
                 context.AnimeSourceStatuses.AddOrUpdate(new AnimeSourceStatus() { Id = id, Name = name });
+            }
+        }
+        private void SeedAnimeVersions(AnimeTimeDbContext context)
+        {
+            var versions = Enum.GetValues(typeof(AnimeVersionIds));
+
+            foreach(var version in versions)
+            {
+                var id = (AnimeVersionIds)version;
+                var versionName = Enum.GetName(typeof(AnimeVersionIds), version);
+
+                context.AnimeVersions.AddOrUpdate(new AnimeVersion() { Id = id, VersionName = versionName });
             }
         }
     }
