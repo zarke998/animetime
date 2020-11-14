@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace AnimeTime.WebsiteProcessors
@@ -25,16 +26,16 @@ namespace AnimeTime.WebsiteProcessors
 
         }
 
-        public override (string animeUrl, string animeDubUrl) GetAnimeUrl(string animeTitle, int releaseYear, string animeAltTitle = null)
+        public override async Task<(string animeUrl, string animeDubUrl)> GetAnimeUrlAsync(string animeTitle, int? releaseYear,IEnumerable<string> animeAltTitles)
         {
             string animeUrl = null;
             string animeDubUrl = null;
 
-            var searchStrings = GetSearchStrings(animeTitle, animeAltTitle);
+            var searchStrings = GetSearchStrings(animeTitle, animeAltTitles);
 
             foreach(var searchString in searchStrings)
             {
-                var foundAnimes = SearchAnimes(searchString);
+                var foundAnimes = await SearchAnimesAsync(searchString);
 
                 if (foundAnimes.Count() == 0) continue;
 
@@ -89,11 +90,20 @@ namespace AnimeTime.WebsiteProcessors
 
             return (animeUrl, animeDubUrl);
         }
-        public override IEnumerable<(string Title, string Url, int releaseYear)> SearchAnimes(string searchString)
+        public override async Task<IEnumerable<(string Title, string Url, int releaseYear)>> SearchAnimesAsync(string searchString)
         {
             var animesFound = new List<(string Title, string Url, int releaseYear)>();
 
-            var doc = _web.Load(UrlUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter));
+            HtmlDocument doc = null;
+            if(CrawlDelayer != null)
+            {
+                await CrawlDelayer.ApplyDelayAsync(async () => doc = await _web.LoadFromWebAsync(UrlUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter)));
+            }
+            else
+            {
+                doc = await _web.LoadFromWebAsync(UrlUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter));
+            }
+            
             var animeNodes = doc.DocumentNode.SelectNodes(".//div[@class='last_episodes']//ul[@class='items']/li");
 
             if (animeNodes == null) return animesFound;
@@ -119,14 +129,14 @@ namespace AnimeTime.WebsiteProcessors
             }
             return animesFound;
         }
-        private IEnumerable<string> GetSearchStrings(string animeTitle, string animeAltTitle = null)
+        private IEnumerable<string> GetSearchStrings(string animeTitle, IEnumerable<string> animeAltTitles)
         {
             var searchStrings = new List<string>();
 
             searchStrings.Add(animeTitle);
-            if(animeAltTitle != null)
+            foreach (var altTitle in animeAltTitles)
             {
-                searchStrings.Add(animeAltTitle);
+                searchStrings.Add(altTitle);
             }
 
             string formatedTitle = animeTitle
@@ -135,14 +145,15 @@ namespace AnimeTime.WebsiteProcessors
                 .Replace(')', ' ');
             searchStrings.Add(formatedTitle);
 
-            string formatedAltTitle = String.Empty;
-            if (animeAltTitle != null)
+            foreach (var altTitle in animeAltTitles)
             {
-                formatedAltTitle = animeAltTitle
+                var formatedAltTitle = altTitle
                     .Replace(": ", " ")
                     .Replace('(', ' ')
                     .Replace(')', ' ');
-                searchStrings.Add(formatedAltTitle);
+
+                if(formatedAltTitle != altTitle)
+                    searchStrings.Add(formatedAltTitle);
             }
 
             return searchStrings;

@@ -91,7 +91,6 @@
     <Compile Include="Repositories\IImageLodLevelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IYearSeasonRepository.cs" />
-    <Compile Include="WebsiteProcessors\IWebsiteProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
