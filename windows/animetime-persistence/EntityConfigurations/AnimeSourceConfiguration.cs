@@ -11,17 +11,17 @@ namespace AnimeTime.Persistence.EntityConfigurations
     public class AnimeSourceConfiguration : EntityTypeConfiguration<AnimeSource>
     {
         public AnimeSourceConfiguration()
-        {
+        { 
             // Relationship to Anime
             HasRequired(e => e.Anime).WithMany(a => a.AnimeSources).HasForeignKey(e => e.AnimeId).WillCascadeOnDelete(true);
 
             // Relationship to Website
             HasRequired(e => e.Website).WithMany(w => w.AnimeSources).HasForeignKey(e => e.WebsiteId).WillCascadeOnDelete(true);
 
-            Property(e => e.Url).IsRequired();
+            Property(e => e.Url).IsOptional();
 
             HasRequired(e => e.Status).WithMany(s => s.Sources).HasForeignKey(e => e.Status_Id).WillCascadeOnDelete(true);
-            HasRequired(e => e.AnimeVersion).WithMany(v => v.AnimeSources).HasForeignKey(e => e.AnimeVersion_Id).WillCascadeOnDelete(true);
+            HasOptional(e => e.AnimeVersion).WithMany(v => v.AnimeSources).HasForeignKey(e => e.AnimeVersion_Id).WillCascadeOnDelete(true);
         }
     }
 }
