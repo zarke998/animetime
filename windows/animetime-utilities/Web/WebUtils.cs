@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,37 @@ namespace AnimeTime.Utilities.Web
             }
 
             return result;
+        }
+
+        public static async Task<bool> WebpageExistsAsync(string url)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Head,
+                RequestUri = new Uri(url)
+            };
+            var response = await client.SendAsync(request).ConfigureAwait(false);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                return false;
+            else if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+            else if (response.StatusCode == System.Net.HttpStatusCode.MethodNotAllowed)
+            {
+                var fullResponse = await client.GetAsync(url);
+
+                switch (fullResponse.StatusCode)
+                {
+                    case System.Net.HttpStatusCode.OK: return true;
+                    case System.Net.HttpStatusCode.NotFound: return false;
+                    default: return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
