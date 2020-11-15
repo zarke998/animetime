@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Utilities.Web
 {
-    public static class UrlUtils
+    public static class WebUtils
     {
         /// <summary>
         /// Combines urls by joining them with '/'.

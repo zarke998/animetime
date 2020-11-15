@@ -97,11 +97,11 @@ namespace AnimeTime.WebsiteProcessors
             HtmlDocument doc = null;
             if(CrawlDelayer != null)
             {
-                await CrawlDelayer.ApplyDelayAsync(async () => doc = await _web.LoadFromWebAsync(UrlUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter)));
+                await CrawlDelayer.ApplyDelayAsync(async () => doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter)));
             }
             else
             {
-                doc = await _web.LoadFromWebAsync(UrlUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter));
+                doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', _whiteSpaceDelimiter));
             }
             
             var animeNodes = doc.DocumentNode.SelectNodes(".//div[@class='last_episodes']//ul[@class='items']/li");
