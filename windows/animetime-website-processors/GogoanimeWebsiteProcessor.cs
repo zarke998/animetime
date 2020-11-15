@@ -17,7 +17,9 @@ namespace AnimeTime.WebsiteProcessors
     public class GogoanimeWebsiteProcessor : WebsiteProcessor
     {
         private string _episodesPageAjaxUrl = "https://ajax.gogocdn.net/ajax/load-list-episode?ep_start={0}&ep_end={1}&id={2}&default_ep=0";
+        private readonly string _dubUrlExtension = "-dub";
 
+            // NOTE: Refactor property names (Capitalize)
         protected override char _whiteSpaceDelimiter => '-';
         protected override string _dubAnimeIdentifier => "(Dub)";
 
@@ -33,29 +35,38 @@ namespace AnimeTime.WebsiteProcessors
 
             var searchStrings = GetSearchStrings(animeTitle, animeAltTitles);
 
+            var resultFound = false;
             foreach(var searchString in searchStrings)
             {
                 var foundAnimes = await SearchAnimesAsync(searchString);
 
                 if (foundAnimes.Count() == 0) continue;
 
-                var exactMatch = foundAnimes.FirstOrDefault(t => t.Title.RemoveExtraWhitespaces().Equals(searchString.RemoveExtraWhitespaces(), StringComparison.OrdinalIgnoreCase));
+                var exactMatch = foundAnimes.FirstOrDefault(
+                    t => t.Title
+                    .Replace(": "," ")
+                    .RemoveExtraWhitespaces()
+                    .Equals(searchString.RemoveExtraWhitespaces(), StringComparison.OrdinalIgnoreCase));
 
                 if (exactMatch != (null, null, 0))
                 {
                     animeUrl = exactMatch.Url;
-
+                    resultFound = true;
+                    
                     var exatchMatchDub = foundAnimes.FirstOrDefault(t => t.Title.RemoveExtraWhitespaces().Equals(searchString.RemoveExtraWhitespaces() + " " + _dubAnimeIdentifier, StringComparison.OrdinalIgnoreCase));
+                    var animeDubUrlCheck = animeUrl + _dubUrlExtension;
 
                     if (exatchMatchDub != (null, null, 0))
                     {
                         animeDubUrl = exatchMatchDub.Url;
                     }
+                    else if(await WebUtils.WebpageExistsAsync(WebUtils.CombineUrls(_websiteUrl,animeDubUrlCheck)))
+                    {
+                        animeDubUrl = animeDubUrlCheck;
+                    }
                 }
-
-                if (foundAnimes.Count() > 2) continue;
-
-                if(foundAnimes.Count() == 1)
+                else if (foundAnimes.Count() > 2) continue;
+                else if(foundAnimes.Count() == 1)
                 {
                     var match = foundAnimes.ElementAt(0);
                     if(match.releaseYear == releaseYear)
@@ -68,6 +79,7 @@ namespace AnimeTime.WebsiteProcessors
                         {
                             animeUrl = match.Url;
                         }
+                        resultFound = true;
                     }
                 }
                 else if(foundAnimes.Count() == 2)
@@ -79,14 +91,21 @@ namespace AnimeTime.WebsiteProcessors
                     {
                         animeUrl = first.Url;
                         animeDubUrl = second.Url;
+                        resultFound = true;
                     }
                     else if(first.Title.Contains(second.Title + " " + _dubAnimeIdentifier))
                     {
                         animeUrl = second.Url;
                         animeDubUrl = first.Url;
+                        resultFound = true;
                     }
                 }
+
+                if (resultFound) break;
             }
+
+            if (animeUrl != null) animeUrl = WebUtils.CombineUrls(_websiteUrl, animeUrl);
+            if (animeDubUrl != null) animeDubUrl = WebUtils.CombineUrls(_websiteUrl, animeDubUrl);
 
             return (animeUrl, animeDubUrl);
         }
