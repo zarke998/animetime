@@ -283,6 +283,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
+    <Compile Include="Repositories\MetadataRepository.cs" />
     <Compile Include="Repositories\WebsiteRepository.cs" />
     <Compile Include="Repositories\AnimeImageRepository.cs" />
     <Compile Include="Repositories\AnimeMetadataRepository.cs" />

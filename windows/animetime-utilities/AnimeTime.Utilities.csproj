@@ -75,6 +75,7 @@
     <Compile Include="Number\RomanToArabic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="String\Extensions.cs" />
+    <Compile Include="Web\WebUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
@@ -86,8 +87,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
