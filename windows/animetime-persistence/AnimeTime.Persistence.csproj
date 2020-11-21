@@ -64,6 +64,7 @@
     <Compile Include="EntityConfigurations\AnimeImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeSourceStatusesConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeVersionConfiguration.cs" />
+    <Compile Include="EntityConfigurations\MetadataConfiguration.cs" />
     <Compile Include="EntityConfigurations\CategoryConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterRoleConfiguration.cs" />
     <Compile Include="EntityConfigurations\ThumbnailConfiguration.cs" />
@@ -271,6 +272,10 @@
     <Compile Include="Migrations\202011140956107_AddAnimeSourceToAnimeVersionRelationship.designer.cs">
       <DependentUpon>202011140956107_AddAnimeSourceToAnimeVersionRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011211114290_AddMetadataTable.cs" />
+    <Compile Include="Migrations\202011211114290_AddMetadataTable.designer.cs">
+      <DependentUpon>202011211114290_AddMetadataTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
@@ -446,6 +451,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011140956107_AddAnimeSourceToAnimeVersionRelationship.resx">
       <DependentUpon>202011140956107_AddAnimeSourceToAnimeVersionRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011211114290_AddMetadataTable.resx">
+      <DependentUpon>202011211114290_AddMetadataTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

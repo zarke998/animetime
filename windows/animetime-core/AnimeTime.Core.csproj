@@ -69,6 +69,7 @@
     <Compile Include="Domain\ImageType.cs" />
     <Compile Include="Domain\Enums\ImageTypeId.cs" />
     <Compile Include="Domain\Enums\LodLevel.cs" />
+    <Compile Include="Domain\Metadata.cs" />
     <Compile Include="Domain\Notification.cs" />
     <Compile Include="Domain\EpisodeSource.cs" />
     <Compile Include="Domain\Thumbnail.cs" />

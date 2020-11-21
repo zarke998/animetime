@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.Core.Domain
 {
-    public class AnimeMetadata
+    public class Metadata
     {
         public int Id { get; set; }
-        public DateTime? EpisodesLastUpdate { get; set; }        
-
-        public Anime Anime { get; set; }
+        public bool AnimeSourcesInitialized { get; set; }
     }
 }
