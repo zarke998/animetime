@@ -17,8 +17,8 @@ namespace AnimeTime.WebsiteProcessors
 
         protected HtmlWeb _web;
 
-        protected abstract char _whiteSpaceDelimiter { get; }
-        protected abstract string _dubAnimeIdentifier { get; }
+        protected abstract char WhitespaceDelimiter { get; }
+        protected abstract string DubAnimeIdentifier { get; }
 
         public ICrawlDelayer CrawlDelayer { get; set; }
 
@@ -31,8 +31,7 @@ namespace AnimeTime.WebsiteProcessors
         }
 
         public abstract Task<(string animeUrl, string animeDubUrl)> GetAnimeUrlAsync(string animeName, int? releaseYear, IEnumerable<string> animeAltTitles);
-        public abstract Task<IEnumerable<(string Title, string Url, int releaseYear)>> SearchAnimesAsync(string searchString);
-
+        public abstract Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);
         public abstract IEnumerable<(float epNum, string epUrl)> GetEpisodes(string animeUrl);
     }
 }
