@@ -11,6 +11,7 @@ using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Core.Exceptions;
 using AnimeTime.WebsiteProcessors;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AnimeTime.WebAPI.Controllers
 {
@@ -25,7 +26,7 @@ namespace AnimeTime.WebAPI.Controllers
         }
 
         [Route("{id}/episodes-with-sources")]
-        public IHttpActionResult GetEpisodesWithSources(int id)
+        public async Task<IHttpActionResult> GetEpisodesWithSources(int id)
         {
             var unitOfWork = ClassFactory.CreateUnitOfWork();
 
@@ -43,7 +44,7 @@ namespace AnimeTime.WebAPI.Controllers
                 }
                 else
                 {
-                    if (UpdateEpisodes(id))
+                    if (await UpdateEpisodes(id))
                     {
                         animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
 
@@ -54,7 +55,7 @@ namespace AnimeTime.WebAPI.Controllers
             }
             else
             {
-                if (UpdateEpisodes(id))
+                if (await UpdateEpisodes(id))
                 {
                     if (animeMetadata == null)
                     {
@@ -86,7 +87,7 @@ namespace AnimeTime.WebAPI.Controllers
             }
         }
 
-        private bool UpdateEpisodes(int animeId)
+        private async Task<bool> UpdateEpisodes(int animeId)
         {
             var unitOfWork = ClassFactory.CreateUnitOfWork();
             var anime = unitOfWork.Animes.GetWithSources(animeId, true);
@@ -101,7 +102,7 @@ namespace AnimeTime.WebAPI.Controllers
                 if (source.Status_Id == AnimeSourceStatusIds.Conflict || source.Status_Id == AnimeSourceStatusIds.CouldNotResolve) continue;
 
                 var websiteProcessor = WebsiteProcessorFactory.CreateWebsiteProcessor(source.Website.Name, source.Website.Url, source.Website.QuerySuffix);
-                var episodes = websiteProcessor.GetAnimeEpisodes(source.Url);
+                var episodes = await websiteProcessor.GetAnimeEpisodesAsync(source.Url);
 
                 var differentEpisodes = GetDifferentEpisodes(episodes);
 

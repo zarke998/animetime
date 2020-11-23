@@ -183,11 +183,11 @@ namespace AnimeTime.WebsiteProcessors
             return searchStrings;
         }
 
-        public override IEnumerable<(float epNum, string epUrl)> GetAnimeEpisodes(string animeUrl)
+        public override async Task<IEnumerable<(float epNum, string epUrl)>> GetAnimeEpisodesAsync(string animeUrl)
         {
             var episodes = new List<(float epNum, string epUrl)>();
 
-            var doc = _web.Load(animeUrl);
+            var doc = await _web.LoadFromWebAsync(animeUrl);
 
             var animeIdNode = doc.DocumentNode.SelectSingleNode(".//input[@id='movie_id']");
             if (animeIdNode == null)
@@ -220,7 +220,7 @@ namespace AnimeTime.WebsiteProcessors
                 HtmlDocument pageDoc;
                 try
                 {
-                    pageDoc = _web.Load(string.Format(_episodesPageAjaxUrl, episodeStart, episodeEnd, animeId));
+                    pageDoc = await _web.LoadFromWebAsync(string.Format(_episodesPageAjaxUrl, episodeStart, episodeEnd, animeId));
                 }
                 catch (Exception e) // Url is not valid
                 {
