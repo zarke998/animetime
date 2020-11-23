@@ -23,6 +23,7 @@ namespace AnimeTime.Core
         IAnimeSourceRepository AnimeSources { get; }
         IMetadataRepository Metadata { get; }
         IEpisodeSourceRepository EpisodeSources { get; }
+        IEpisodeVideoSourceRepository EpisodeVideoSources { get; }
 
         bool InsertOptimizationEnabled { get; set; }
 
