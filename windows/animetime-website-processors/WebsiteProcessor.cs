@@ -32,6 +32,6 @@ namespace AnimeTime.WebsiteProcessors
 
         public abstract Task<(string animeUrl, string animeDubUrl)> GetAnimeUrlAsync(string animeName, int? releaseYear, IEnumerable<string> animeAltTitles);
         public abstract Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);
-        public abstract IEnumerable<(float epNum, string epUrl)> GetEpisodes(string animeUrl);
+        public abstract IEnumerable<(float epNum, string epUrl)> GetAnimeEpisodes(string animeUrl);
     }
 }

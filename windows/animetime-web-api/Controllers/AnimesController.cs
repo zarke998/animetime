@@ -101,7 +101,7 @@ namespace AnimeTime.WebAPI.Controllers
                 if (source.Status_Id == AnimeSourceStatusIds.Conflict || source.Status_Id == AnimeSourceStatusIds.CouldNotResolve) continue;
 
                 var websiteProcessor = WebsiteProcessorFactory.CreateWebsiteProcessor(source.Website.Name, source.Website.Url, source.Website.QuerySuffix);
-                var episodes = websiteProcessor.GetEpisodes(source.Url);
+                var episodes = websiteProcessor.GetAnimeEpisodes(source.Url);
 
                 var differentEpisodes = GetDifferentEpisodes(episodes);
 

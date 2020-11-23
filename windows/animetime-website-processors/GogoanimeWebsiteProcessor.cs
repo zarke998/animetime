@@ -183,7 +183,7 @@ namespace AnimeTime.WebsiteProcessors
             return searchStrings;
         }
 
-        public override IEnumerable<(float epNum, string epUrl)> GetEpisodes(string animeUrl)
+        public override IEnumerable<(float epNum, string epUrl)> GetAnimeEpisodes(string animeUrl)
         {
             var episodes = new List<(float epNum, string epUrl)>();
 
