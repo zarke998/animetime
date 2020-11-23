@@ -82,6 +82,7 @@
     <Compile Include="Exceptions\EntityInsertException.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IEpisodeSourceRepository.cs" />
     <Compile Include="Repositories\IMetadataRepository.cs" />
     <Compile Include="Repositories\IAnimeSourceRepository.cs" />
     <Compile Include="Repositories\IWebsiteRepository.cs" />
