@@ -10,7 +10,7 @@ namespace AnimeTime.Core.Domain
     {
         public EpisodeSource()
         {
-            VideoSources = new HashSet<EpisodeSourceVideo>();
+            VideoSources = new HashSet<EpisodeVideoSource>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace AnimeTime.Core.Domain
         public Episode Episode { get; set; }
         public Website Website { get; set; }
 
-        public ICollection<EpisodeSourceVideo> VideoSources { get; set; }
+        public ICollection<EpisodeVideoSource> VideoSources { get; set; }
     }
 }

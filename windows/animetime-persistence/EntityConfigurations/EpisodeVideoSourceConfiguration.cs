@@ -8,9 +8,9 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace AnimeTime.Persistence.EntityConfigurations
 {
-    public class EpisodeSourceVideoConfiguration : EntityTypeConfiguration<EpisodeSourceVideo>
+    public class EpisodeVideoSourceConfiguration : EntityTypeConfiguration<EpisodeVideoSource>
     {
-        public EpisodeSourceVideoConfiguration()
+        public EpisodeVideoSourceConfiguration()
         {
             Property(e => e.Url).IsRequired();
         }

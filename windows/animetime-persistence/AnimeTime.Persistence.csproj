@@ -65,7 +65,7 @@
     <Compile Include="EntityConfigurations\AnimeSourceStatusesConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeVersionConfiguration.cs" />
     <Compile Include="EntityConfigurations\EpisodeMetadataConfiguration.cs" />
-    <Compile Include="EntityConfigurations\EpisodeSourceVideoConfiguration.cs" />
+    <Compile Include="EntityConfigurations\EpisodeVideoSourceConfiguration.cs" />
     <Compile Include="EntityConfigurations\MetadataConfiguration.cs" />
     <Compile Include="EntityConfigurations\CategoryConfiguration.cs" />
     <Compile Include="EntityConfigurations\CharacterRoleConfiguration.cs" />
@@ -290,6 +290,10 @@
     <Compile Include="Migrations\202011231130011_AddEpisodeSourceVideosTable.designer.cs">
       <DependentUpon>202011231130011_AddEpisodeSourceVideosTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.cs" />
+    <Compile Include="Migrations\202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.designer.cs">
+      <DependentUpon>202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
@@ -479,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011231130011_AddEpisodeSourceVideosTable.resx">
       <DependentUpon>202011231130011_AddEpisodeSourceVideosTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.resx">
+      <DependentUpon>202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
