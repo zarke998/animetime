@@ -14,8 +14,11 @@ namespace AnimeTime.Core.Domain
         }
         public int Id { get; set; }
         public float EpNum { get; set; }
+
         public int AnimeId { get; set; }
         public Anime Anime { get; set; }
+
+        public EpisodeMetadata Metadata { get; set; }
         public ICollection<EpisodeSource> Sources { get; set; }
     }
 }
