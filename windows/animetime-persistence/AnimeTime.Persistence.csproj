@@ -294,6 +294,10 @@
     <Compile Include="Migrations\202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.designer.cs">
       <DependentUpon>202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011231659409_ChangeFkOnEpisodeSource_IdToNotNullable.cs" />
+    <Compile Include="Migrations\202011231659409_ChangeFkOnEpisodeSource_IdToNotNullable.designer.cs">
+      <DependentUpon>202011231659409_ChangeFkOnEpisodeSource_IdToNotNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
@@ -487,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.resx">
       <DependentUpon>202011231635047_RenameEpisodeSourceVideosToEpisodeVideoSources.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011231659409_ChangeFkOnEpisodeSource_IdToNotNullable.resx">
+      <DependentUpon>202011231659409_ChangeFkOnEpisodeSource_IdToNotNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

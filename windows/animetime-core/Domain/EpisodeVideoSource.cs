@@ -11,6 +11,7 @@ namespace AnimeTime.Core.Domain
         public int Id { get; set; }
         public string Url { get; set; }
 
+        public int EpisodeSource_Id { get; set; }
         public EpisodeSource EpisodeSource { get; set; }
     }
 }

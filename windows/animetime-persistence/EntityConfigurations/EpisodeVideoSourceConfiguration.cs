@@ -13,6 +13,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
         public EpisodeVideoSourceConfiguration()
         {
             Property(e => e.Url).IsRequired();
+            HasRequired(e => e.EpisodeSource).WithMany(s => s.VideoSources).HasForeignKey(e => e.EpisodeSource_Id).WillCascadeOnDelete(false);
         }
     }
 }
