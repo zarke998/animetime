@@ -37,6 +37,7 @@ namespace AnimeTime.Persistence
         public DbSet<AnimeVersion> AnimeVersions { get; set; }
         public DbSet<Metadata> Metadata { get; set; }
         public DbSet<EpisodeMetadata> EpisodeMetadatas { get; set; }
+        public DbSet<EpisodeSourceVideo> EpisodeSourceVideos { get; set; }
 
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
@@ -67,6 +68,7 @@ namespace AnimeTime.Persistence
             modelBuilder.Configurations.Add(new AnimeVersionConfiguration());
             modelBuilder.Configurations.Add(new MetadataConfiguration());
             modelBuilder.Configurations.Add(new EpisodeMetadataConfiguration());
+            modelBuilder.Configurations.Add(new EpisodeSourceVideoConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

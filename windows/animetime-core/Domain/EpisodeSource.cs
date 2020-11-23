@@ -8,11 +8,18 @@ namespace AnimeTime.Core.Domain
 {
     public class EpisodeSource
     {
+        public EpisodeSource()
+        {
+            VideoSources = new HashSet<EpisodeSourceVideo>();
+        }
+
         public int Id { get; set; }
         public string Url { get; set; }
         public int EpisodeId { get; set; }
         public int WebsiteId { get; set; }
         public Episode Episode { get; set; }
         public Website Website { get; set; }
+
+        public ICollection<EpisodeSourceVideo> VideoSources { get; set; }
     }
 }

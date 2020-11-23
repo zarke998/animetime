@@ -63,6 +63,7 @@
     <Compile Include="Domain\Enums\CategoryId.cs" />
     <Compile Include="Domain\Enums\ImageOrientationId.cs" />
     <Compile Include="Domain\Episode.cs" />
+    <Compile Include="Domain\EpisodeSourceVideo.cs" />
     <Compile Include="Domain\Genre.cs" />
     <Compile Include="Domain\Image.cs" />
     <Compile Include="Domain\ImageLodLevel.cs" />
