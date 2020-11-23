@@ -23,9 +23,16 @@ namespace AnimeTime.Persistence.Repositories
 
         }
 
-        public IEnumerable<EpisodeSource> GetWithVideoSources(int epId)
+        public IEnumerable<EpisodeSource> GetByEpisode(int epId, bool includeVideoSources = false, bool includeWebsites = false)
         {
-            return AnimeTimeDbContext.EpisodeSources.Include(e => e.VideoSources).Where(e => e.EpisodeId == epId).ToList();
+            IQueryable<EpisodeSource> query = AnimeTimeDbContext.EpisodeSources.Where(e => e.EpisodeId == epId);
+
+            if (includeVideoSources)
+                query = query.Include(e => e.VideoSources);
+            if (includeWebsites)
+                query = query.Include(e => e.Website);
+
+            return query.ToList();
         }
     }
 }
