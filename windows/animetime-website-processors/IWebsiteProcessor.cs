@@ -16,5 +16,6 @@ namespace AnimeTime.WebsiteProcessors
         Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);        
 
         Task<IEnumerable<(float epNum, string epUrl)>> GetAnimeEpisodesAsync(string animeUrl);
+        Task<IEnumerable<string>> GetVideoSourcesForEpisodeAsync(string episodeUrl);
     }
 }

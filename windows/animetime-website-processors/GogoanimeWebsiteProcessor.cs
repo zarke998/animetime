@@ -251,5 +251,44 @@ namespace AnimeTime.WebsiteProcessors
 
             return episodes.OrderBy(e => e.epNum);
         }
+        public override async Task<IEnumerable<string>> GetVideoSourcesForEpisodeAsync(string episodeUrl)
+        {
+            var videoSources = new List<string>();
+
+            HtmlDocument doc;
+            try
+            {
+                doc = await _web.LoadFromWebAsync(episodeUrl).ConfigureAwait(false);
+            }
+            catch(Exception e)
+            {
+                // Log url changed
+
+                return new List<string>();
+            }
+
+            var videoSourceNodes = doc.DocumentNode.SelectNodes(".//div[contains(@class,'anime_muti_link')]/ul/li/a");
+            if(videoSourceNodes == null)
+            {
+                // Log html change
+
+                return new List<string>();
+            }
+
+            foreach(var sourceNode in videoSourceNodes)
+            {
+                var source = sourceNode.GetAttributeValue("data-video", null);
+                if(source == null)
+                {
+                    // Log html change
+
+                    return new List<string>();
+                }
+
+                videoSources.Add(source);
+            }
+
+            return videoSources;
+        }
     }
 }
