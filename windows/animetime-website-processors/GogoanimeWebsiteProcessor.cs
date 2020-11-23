@@ -1,4 +1,5 @@
-﻿using AnimeTime.Core.Domain;
+﻿
+using AnimeTime.Core.Domain;
 using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Utilities.Number;
 using AnimeTime.Utilities.String;
@@ -37,7 +38,7 @@ namespace AnimeTime.WebsiteProcessors
             var resultFound = false;
             foreach (var searchString in searchStrings)
             {
-                var foundAnimes = await SearchAnimesAsync(searchString);
+                var foundAnimes = await SearchAnimesAsync(searchString).ConfigureAwait(false);
 
                 if (foundAnimes.Count() == 0) continue;
 
@@ -60,7 +61,7 @@ namespace AnimeTime.WebsiteProcessors
                     {
                         animeDubUrl = exatchMatchDub.Url;
                     }
-                    else if (await WebUtils.WebpageExistsAsync(WebUtils.CombineUrls(_websiteUrl, animeDubUrlCheck)))
+                    else if (await WebUtils.WebpageExistsAsync(WebUtils.CombineUrls(_websiteUrl, animeDubUrlCheck)).ConfigureAwait(false))
                     {
                         animeDubUrl = animeDubUrlCheck;
                     }
@@ -116,11 +117,11 @@ namespace AnimeTime.WebsiteProcessors
             HtmlDocument doc = null;
             if (CrawlDelayer != null)
             {
-                await CrawlDelayer.ApplyDelayAsync(async () => doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter)));
+                await CrawlDelayer.ApplyDelayAsync(async () => doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter)).ConfigureAwait(false));
             }
             else
             {
-                doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter));
+                doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter)).ConfigureAwait(false);
             }
 
             var animeNodes = doc.DocumentNode.SelectNodes(".//div[@class='last_episodes']//ul[@class='items']/li");
@@ -187,7 +188,7 @@ namespace AnimeTime.WebsiteProcessors
         {
             var episodes = new List<(float epNum, string epUrl)>();
 
-            var doc = await _web.LoadFromWebAsync(animeUrl);
+            var doc = await _web.LoadFromWebAsync(animeUrl).ConfigureAwait(false);
 
             var animeIdNode = doc.DocumentNode.SelectSingleNode(".//input[@id='movie_id']");
             if (animeIdNode == null)
@@ -220,7 +221,7 @@ namespace AnimeTime.WebsiteProcessors
                 HtmlDocument pageDoc;
                 try
                 {
-                    pageDoc = await _web.LoadFromWebAsync(string.Format(_episodesPageAjaxUrl, episodeStart, episodeEnd, animeId));
+                    pageDoc = await _web.LoadFromWebAsync(string.Format(_episodesPageAjaxUrl, episodeStart, episodeEnd, animeId)).ConfigureAwait(false);
                 }
                 catch (Exception e) // Url is not valid
                 {
