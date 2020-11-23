@@ -30,5 +30,9 @@ namespace AnimeTime.Persistence.Repositories
                 .Where(e => e.AnimeId == animeId)
                 .ToList();
         }
+        public EpisodeMetadata GetMetadata(int epId)
+        {
+            return AnimeTimeDbContext.Episodes.Where(e => e.Id == epId).Select(e => e.Metadata).FirstOrDefault();
+        }
     }
 }
