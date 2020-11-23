@@ -9,6 +9,7 @@ namespace AnimeTime.Core.Repositories
 {
     public interface IEpisodeRepository : IRepository<Episode>
     {
+        Episode Get(int epId, bool includeMetadata = false);
         EpisodeMetadata GetMetadata(int epId);
         IEnumerable<Episode> GetWithSources(int animeId);
     }

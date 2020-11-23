@@ -23,6 +23,13 @@ namespace AnimeTime.Persistence.Repositories
 
         }
 
+        public Episode Get(int epId, bool includeMetadata = false)
+        {
+            if (includeMetadata)
+                return AnimeTimeDbContext.Episodes.Include(e => e.Metadata).FirstOrDefault(e => e.Id == epId);
+            else
+                return Get(epId);
+        }
         public IEnumerable<Episode> GetWithSources(int animeId)
         {
             return AnimeTimeDbContext.Episodes
