@@ -44,7 +44,7 @@ namespace AnimeTime.WebAPI.Controllers
                 }
                 else
                 {
-                    if (await UpdateEpisodes(id))
+                    if (await AddNewEpisodes(id))
                     {
                         animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
 
@@ -55,7 +55,7 @@ namespace AnimeTime.WebAPI.Controllers
             }
             else
             {
-                if (await UpdateEpisodes(id))
+                if (await AddNewEpisodes(id))
                 {
                     if (animeMetadata == null)
                     {
@@ -87,7 +87,7 @@ namespace AnimeTime.WebAPI.Controllers
             }
         }
 
-        private async Task<bool> UpdateEpisodes(int animeId)
+        private async Task<bool> AddNewEpisodes(int animeId)
         {
             var unitOfWork = ClassFactory.CreateUnitOfWork();
             var anime = unitOfWork.Animes.GetWithSources(animeId, true);
