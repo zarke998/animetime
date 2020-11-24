@@ -10,6 +10,7 @@ namespace AnimeTime.WebAPI.DTOs.EpisodeSource
     public class EpisodeSourceDtoNormal
     {
         public string Url { get; set; }
+        public string AnimeVersion { get; set; }
         public WebsiteDtoShort Website { get; set; }
         public ICollection<EpisodeVideoSourceDtoShort> VideoSources { get; set; }
     }

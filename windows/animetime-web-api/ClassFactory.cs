@@ -21,7 +21,9 @@ namespace AnimeTime.WebAPI
             AutomapperConfiguration = new MapperConfiguration(
                 cfg =>
                 {
-                    cfg.CreateMap<EpisodeSource, EpisodeSourceDtoNormal>();
+                    cfg.CreateMap<EpisodeSource, EpisodeSourceDtoNormal>().ForMember(
+                        dto => dto.AnimeVersion, 
+                        mc => mc.MapFrom(og => og.AnimeVersionId == null ? null : og.AnimeVersionId.ToString()));
                     cfg.CreateMap<EpisodeVideoSource, EpisodeVideoSourceDtoShort>();
                     cfg.CreateMap<Website, WebsiteDtoShort>();
                 }
