@@ -19,6 +19,8 @@ namespace AnimeTime.Persistence.EntityConfigurations
 
             // Relationship to Website
             HasRequired(s => s.Website).WithMany(w => w.EpisodeSources).HasForeignKey(s => s.WebsiteId).WillCascadeOnDelete(true);
+
+            HasOptional(s => s.AnimeVersion).WithMany().HasForeignKey(s => s.AnimeVersionId).WillCascadeOnDelete(false);
         }
     }
 }
