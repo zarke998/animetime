@@ -38,49 +38,46 @@ namespace AnimeTime.WebAPI.Controllers
             var animeMetadata = unitOfWork.AnimeMetadatas.Get(id);
             if (animeMetadata != null && animeMetadata.EpisodesLastUpdate != null)
             {
-                if ((animeMetadata.EpisodesLastUpdate.Value - DateTime.UtcNow).TotalHours < _episodeUpdateInterval)
+                if ((DateTime.UtcNow - animeMetadata.EpisodesLastUpdate.Value).TotalHours < _episodeUpdateInterval)
                 {
                     return Ok(unitOfWork.Episodes.GetWithSources(id));
                 }
                 else
                 {
-                    if (await AddNewEpisodes(id))
-                    {
-                        animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
+                    await AddNewEpisodes(id);
 
-                        unitOfWork.Complete();
-                    }
+                    animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
+                    unitOfWork.Complete();
+
                     return Ok(unitOfWork.Episodes.GetWithSources(id));
                 }
             }
             else
             {
-                if (await AddNewEpisodes(id))
+                await AddNewEpisodes(id);
+                if (animeMetadata == null)
                 {
-                    if (animeMetadata == null)
-                    {
-                        unitOfWork.AnimeMetadatas.Add(new AnimeMetadata() { Id = id, EpisodesLastUpdate = DateTime.UtcNow });
+                    unitOfWork.AnimeMetadatas.Add(new AnimeMetadata() { Id = id, EpisodesLastUpdate = DateTime.UtcNow });
 
-                        try
-                        {
-                            unitOfWork.Complete();
-                        }
-                        catch (Exception e)
-                        {
-                            // Log exception
-                        }
-                    }
-                    else
+                    try
                     {
-                        animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
-                        try
-                        {
-                            unitOfWork.Complete();
-                        }
-                        catch (Exception e)
-                        {
-                            // Log exception
-                        }
+                        unitOfWork.Complete();
+                    }
+                    catch (Exception e)
+                    {
+                        // Log exception
+                    }
+                }
+                else
+                {
+                    animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
+                    try
+                    {
+                        unitOfWork.Complete();
+                    }
+                    catch (Exception e)
+                    {
+                        // Log exception
                     }
                 }
                 return Ok(unitOfWork.Episodes.GetWithSources(id));
