@@ -13,6 +13,7 @@ namespace AnimeTime.Persistence.EntityConfigurations
         public AnimeConfiguration()
         {
             HasOptional(e => e.Metadata).WithRequired(m => m.Anime);
+            HasOptional(e => e.Status).WithMany(s => s.Animes).HasForeignKey(e => e.Status_Id).WillCascadeOnDelete(false);
         }
     }
 }

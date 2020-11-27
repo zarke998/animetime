@@ -311,6 +311,10 @@
     <Compile Include="Migrations\202011270848071_AddAnimeStatusesTable.designer.cs">
       <DependentUpon>202011270848071_AddAnimeStatusesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011270854189_AddAnimeToAnimeStatusesRelationship.cs" />
+    <Compile Include="Migrations\202011270854189_AddAnimeToAnimeStatusesRelationship.designer.cs">
+      <DependentUpon>202011270854189_AddAnimeToAnimeStatusesRelationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
@@ -516,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011270848071_AddAnimeStatusesTable.resx">
       <DependentUpon>202011270848071_AddAnimeStatusesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011270854189_AddAnimeToAnimeStatusesRelationship.resx">
+      <DependentUpon>202011270854189_AddAnimeToAnimeStatusesRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
