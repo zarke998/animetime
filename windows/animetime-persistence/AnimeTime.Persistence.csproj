@@ -59,6 +59,7 @@
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="AnimeTimeDbContextConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeAltTitleConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AnimeStatusConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeMetadataConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeImageConfiguration.cs" />
@@ -306,6 +307,10 @@
     <Compile Include="Migrations\202011270831446_AddFinishYearToAnime.designer.cs">
       <DependentUpon>202011270831446_AddFinishYearToAnime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011270848071_AddAnimeStatusesTable.cs" />
+    <Compile Include="Migrations\202011270848071_AddAnimeStatusesTable.designer.cs">
+      <DependentUpon>202011270848071_AddAnimeStatusesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
@@ -508,6 +513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011270831446_AddFinishYearToAnime.resx">
       <DependentUpon>202011270831446_AddFinishYearToAnime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011270848071_AddAnimeStatusesTable.resx">
+      <DependentUpon>202011270848071_AddAnimeStatusesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

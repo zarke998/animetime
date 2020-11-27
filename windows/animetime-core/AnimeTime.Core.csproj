@@ -45,7 +45,9 @@
     <Compile Include="Domain\Anime.cs" />
     <Compile Include="Domain\AnimeAltTitle.cs" />
     <Compile Include="Domain\AnimeImage.cs" />
+    <Compile Include="Domain\AnimeStatus.cs" />
     <Compile Include="Domain\Comparers\EpisodeVideoSourceComparer.cs" />
+    <Compile Include="Domain\Enums\AnimeStatusIds.cs" />
     <Compile Include="Domain\EpisodeMetadata.cs" />
     <Compile Include="Domain\AnimeMetadata.cs" />
     <Compile Include="Domain\AnimeSource.cs" />
