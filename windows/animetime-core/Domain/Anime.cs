@@ -24,6 +24,7 @@ namespace AnimeTime.Core.Domain
         public string Description { get; set; }
         public float Rating { get; set; }
         public int? ReleaseYear { get; set; }
+        public int? FinishYear { get; set; }
         public YearSeason YearSeason { get; set; }
         public Category Category { get; set; }
         public AnimeMetadata Metadata { get; set; }
