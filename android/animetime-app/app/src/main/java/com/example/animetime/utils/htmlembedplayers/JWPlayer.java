@@ -5,6 +5,9 @@ import android.webkit.WebView;
 
 import com.example.animetime.utils.Procedure;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     public JWPlayer(WebView webView) {
         super(webView);
@@ -63,7 +66,37 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     public void seekAsync(int pos, Procedure callback) {
         String seekCommand = getFunctionCommand(String.format("jwplayer().seek(%s);", pos));
         injectJavascript(seekCommand, value -> {
-            if(callback != null) callback.run();
+
+            Timer t = new Timer();
+            TimerTask tTask = new TimerTask(){
+                int runCount = 0;
+                boolean posCheckIsProcessing = false;
+
+                @Override
+                public void run() {
+                    runCount++;
+                    if(runCount > 30) {
+                        t.cancel();
+                        return;
+                    }
+
+                    if(!posCheckIsProcessing){
+                        mWebView.post(() -> {
+                            getVideoPositionAsync(position -> {
+                                if(position >= pos){
+                                    if(callback != null){
+                                        callback.run();
+                                    }
+                                    t.cancel();
+                                }
+                                posCheckIsProcessing = false;
+                            });
+                        });
+                    }
+                    posCheckIsProcessing = true;
+                }
+            };
+            t.schedule(tTask, 0, 100);
         });
     }
     @Override
