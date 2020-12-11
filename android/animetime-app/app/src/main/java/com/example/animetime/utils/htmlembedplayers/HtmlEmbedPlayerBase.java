@@ -18,7 +18,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
             webView.evaluateJavascript(javascript, value -> {
                 if(callback != null) callback.onReceiveValue(value);
             });
-        }
+    }
     }
     protected void injectJavascript(String javascript){
         injectJavascript(javascript, null);
@@ -27,4 +27,3 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         return String.format("(function x(){%s})()", commandBody);
     }
 }
-

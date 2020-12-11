@@ -1,24 +1,37 @@
 package com.example.animetime.utils.htmlembedplayers;
 
+import android.graphics.Point;
+import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 import com.example.animetime.utils.Procedure;
+import com.example.animetime.utils.ViewExtensions;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
+    private boolean mIsPlayActionSimulated = false;
+
     public JWPlayer(WebView webView) {
         super(webView);
     }
 
     @Override
     public void playAsync(Procedure callback) {
-        String playCommand = getFunctionCommand("jwplayer().play();");
-        injectJavascript(playCommand, value -> {
-            if(callback != null) callback.run();
-        });
+        if(!mIsPlayActionSimulated){
+            simulateUserPlayAction();
+            mIsPlayActionSimulated = true;
+
+            callback.run();
+        }
+        else{
+            String playCommand = getFunctionCommand("jwplayer().play();");
+            injectJavascript(playCommand, value -> {
+                if(callback != null) callback.run();
+            });
+        }
     }
     @Override
     public void pauseAsync(Procedure callback) {
@@ -123,5 +136,34 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         });
 
         return 0;
+    }
+
+    private void simulateUserPlayAction(){
+
+        String playBtnPosCommand = getFunctionCommand("var playBtnRect = $(\"div[aria-label='Play']\")[0].getBoundingClientRect(); return playBtnRect.x + ',' + playBtnRect.y;");
+        String windowDimensionsCommand = getFunctionCommand("return window.innerWidth + ',' + window.innerHeight;");
+        injectJavascript(playBtnPosCommand, playBtnString -> {
+            String[] playBtnPos = playBtnString.replace("\"","").split(",");
+            injectJavascript(windowDimensionsCommand, winDimString -> {
+                String[] windowDimensions =  winDimString.replace("\"","").split(",");
+                Float[] elPosOnWebView = htmlElementPosToWebViewPos(
+                        Float.parseFloat(windowDimensions[0]),
+                        Float.parseFloat(windowDimensions[1]),
+                        Float.parseFloat(playBtnPos[0]),
+                        Float.parseFloat(playBtnPos[1])
+                        );
+                int positionOffset = 5;
+                ViewExtensions.simulateTouch(mWebViewRef.get(), elPosOnWebView[0] + positionOffset, elPosOnWebView[1] + positionOffset);
+            });
+        });
+    }
+    private Float[] htmlElementPosToWebViewPos(float htmlWindowWidth, float htmlWindowHeight, float elWidth, float elHeight){
+        WebView webView = mWebViewRef.get();
+
+        Float[] result = new Float[2];
+        result[0] = elWidth * (webView.getWidth() / htmlWindowWidth);
+        result[1] = elHeight * (webView.getHeight() / htmlWindowHeight);
+
+        return result;
     }
 }
