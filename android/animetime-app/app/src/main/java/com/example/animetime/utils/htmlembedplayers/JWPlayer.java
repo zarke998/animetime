@@ -80,8 +80,8 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
                         return;
                     }
 
-                    if(!posCheckIsProcessing){
-                        mWebView.post(() -> {
+                    if(!posCheckIsProcessing && mWebViewRef.get() != null){
+                        mWebViewRef.get().post(() -> {
                             getVideoPositionAsync(position -> {
                                 if(position >= pos){
                                     if(callback != null){
