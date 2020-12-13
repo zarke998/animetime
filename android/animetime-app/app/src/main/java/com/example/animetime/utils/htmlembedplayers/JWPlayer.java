@@ -143,7 +143,17 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
 
         String fullscreenCommand = getFunctionCommand(String.format("jwplayer().setFullscreen(%s)", jsParam));
         injectJavascript(fullscreenCommand, value -> {
-            if(callback != null) callback.run();
+            if (callback != null) {
+                waitFullscreenChangeAsync(!fullscreen, callback);
+            }
+        });
+    }
+    @Override
+    public void getFullscreenAsync(ValueCallback<Boolean> resultCallback) {
+        String getFullscreenCommand = getFunctionCommand("jwplayer().getFullscreen();");
+        injectJavascript(getFullscreenCommand, value -> {
+            if(value == "true") resultCallback.onReceiveValue(true);
+            else if(value == "false") resultCallback.onReceiveValue(false);
         });
     }
 
@@ -174,5 +184,45 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         result[1] = elHeight * (webView.getHeight() / htmlWindowHeight);
 
         return result;
+    }
+
+    private void waitFullscreenChangeAsync(boolean originalValue, Procedure callback){
+        if(callback == null) return;
+
+        Timer t = new Timer();
+        TimerTask tTask = new TimerTask() {
+            boolean fullscreenIsChecking = false;
+            int runCount = 0;
+
+            @Override
+            public void run() {
+                if(runCount > 30){
+                    t.cancel();
+                    return;
+                }
+                WebView webView = mWebViewRef.get();
+                if(webView == null) {
+                    t.cancel();
+                    return;
+                }
+                if(!fullscreenIsChecking){
+                    webView.post(() -> {
+                        getFullscreenAsync(value ->
+                        {
+                            if(originalValue != value){
+                                callback.run();
+                            }
+
+                            fullscreenIsChecking = false;
+                        });
+                    });
+                }
+                fullscreenIsChecking = true;
+
+                runCount++;
+            }
+        };
+
+        t.schedule(tTask, 0, 100);
     }
 }

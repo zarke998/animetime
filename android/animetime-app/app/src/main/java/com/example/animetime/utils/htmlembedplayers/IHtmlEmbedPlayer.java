@@ -17,4 +17,5 @@ interface IHtmlEmbedPlayer {
     int getVolumeAsync(ValueCallback<Integer> resultCallback);
 
     void setFullscreenAsync(boolean fullsreen, Procedure callback);
+    void getFullscreenAsync(ValueCallback<Boolean> resultCallback);
 }
