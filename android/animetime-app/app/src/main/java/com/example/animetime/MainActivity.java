@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 
 
 import com.example.animetime.utils.htmlembedplayers.JWPlayer;
@@ -20,11 +22,17 @@ public class MainActivity extends AppCompatActivity {
 
     private JWPlayer mJWPlayer;
     private AdblockWebView mWebView;
+    private boolean isFullscreen = false;
+
+//    private RelativeLayout fullscreenContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        fullscreenContainer = findViewById(R.id.webViewFullscreenContainer);
+//        fullscreenContainer.setVisibility(View.GONE);
 
         mWebView = findViewById(R.id.webView);
         configureWebView();
@@ -35,9 +43,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testBtnClick(View v){
-        mJWPlayer.seekAsync(900, () -> {
-            Log.d(TAG, "Seek finished.");
-        });
+//        mJWPlayer.seekAsync(900, () -> {
+//            Log.d(TAG, "Seek finished.");
+//        });
+
+        if(!isFullscreen){
+            mJWPlayer.requestFullscreen(() -> {});
+        }
+        else{
+            mJWPlayer.exitFullscreen(() -> {});
+        }
+        isFullscreen = !isFullscreen;
     }
 
     private void configureWebView(){
@@ -51,12 +67,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mWebView.setWebChromeClient(new WebChromeClient(){
+            private View mFullscreenView;
+            private CustomViewCallback mCustomCallback;
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 super.onConsoleMessage(consoleMessage);
 
                 Log.d(TAG, consoleMessage.message());
                 return true;
+            }
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                if(mFullscreenView != null){
+                    callback.onCustomViewHidden();
+                    return;
+                }
+
+                mFullscreenView = view;
+                mWebView.setVisibility(View.GONE);
+                ViewGroup rootLayout = (ViewGroup)mWebView.getRootView();
+                rootLayout.addView(mFullscreenView);
+
+//                fullscreenContainer.setVisibility(View.VISIBLE);
+//                fullscreenContainer.addView(mFullscreenView);
+
+                mCustomCallback = callback;
+            }
+
+            @Override
+            public void onHideCustomView() {
+                super.onHideCustomView();
+                if(mFullscreenView == null){
+                    return;
+                }
+
+                ViewGroup rootLayout = (ViewGroup)mWebView.getRootView();
+                mWebView.setVisibility(View.VISIBLE);
+
+                mFullscreenView.setVisibility(View.GONE);
+//                fullscreenContainer.setVisibility(View.GONE);
+
+//                fullscreenContainer.removeView(mFullscreenView);
+                rootLayout.removeView(mFullscreenView);
+                mCustomCallback.onCustomViewHidden();
+
+                mFullscreenView = null;
             }
         });
     }
