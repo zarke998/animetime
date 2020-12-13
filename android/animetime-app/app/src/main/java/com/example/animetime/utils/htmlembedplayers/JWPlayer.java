@@ -24,7 +24,7 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
             simulateUserPlayAction();
             mIsPlayActionSimulated = true;
 
-            callback.run();
+            if(callback != null) callback.run();
         }
         else{
             String playCommand = getFunctionCommand("jwplayer().play();");
