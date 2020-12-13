@@ -137,6 +137,15 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
 
         return 0;
     }
+    @Override
+    public void setFullscreenAsync(boolean fullscreen, Procedure callback) {
+        String jsParam = fullscreen ? "true" : "false";
+
+        String fullscreenCommand = getFunctionCommand(String.format("jwplayer().setFullscreen(%s)", jsParam));
+        injectJavascript(fullscreenCommand, value -> {
+            if(callback != null) callback.run();
+        });
+    }
 
     private void simulateUserPlayAction(){
 
