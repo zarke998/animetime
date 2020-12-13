@@ -7,6 +7,8 @@ import com.example.animetime.utils.Procedure;
 interface IHtmlEmbedPlayer {
     void playAsync(Procedure callback);
     void pauseAsync(Procedure callback);
+    void isPlayingAsync(ValueCallback<Boolean> resultCallback);
+    void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback);
 
     int getVideoDurationAsync(ValueCallback<Float> resultCallback);
     int getVideoPositionAsync(ValueCallback<Float> resultCallback);
