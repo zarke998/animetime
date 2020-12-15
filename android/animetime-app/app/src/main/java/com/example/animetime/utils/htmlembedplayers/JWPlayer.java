@@ -27,11 +27,11 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
             simulateUserPlayAction();
             mIsPlayActionSimulated = true;
 
-            if (callback != null) callback.run();
+            if (callback != null) waitPlayerPlaying(callback);
         } else {
             String playCommand = getFunctionCommand("jwplayer().play();");
             injectJavascript(playCommand, value -> {
-                if (callback != null) callback.run();
+                if (callback != null) waitPlayerPlaying(callback);
             });
         }
     }
@@ -275,6 +275,34 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
                     });
                 }
                 posCheckIsProcessing = true;
+            }
+        };
+        t.schedule(tTask, 0, 100);
+    }
+    private void waitPlayerPlaying(Procedure callback){
+        Timer t = new Timer();
+        TimerTask tTask = new TimerTask() {
+            int runCount = 0;
+            boolean isChecking = false;
+            @Override
+            public void run() {
+                if(runCount > 1500){
+                    t.cancel();
+                    return;
+                }
+
+                if(!isChecking && mWebViewRef.get() != null){
+                    mWebViewRef.get().post(() -> {
+                        getPlayerState(state -> {
+                            if(state == EmbedPlayerState.PLAYING){
+                                callback.run();
+                                t.cancel();
+                            }
+                            isChecking = false;
+                        });
+                    });
+                }
+                isChecking = true;
             }
         };
         t.schedule(tTask, 0, 100);
