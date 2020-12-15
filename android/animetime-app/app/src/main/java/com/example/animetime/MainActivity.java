@@ -43,17 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testBtnClick(View v){
-//        mJWPlayer.seekAsync(900, () -> {
-//            Log.d(TAG, "Seek finished.");
-//        });
-
-        if(!isFullscreen){
-            mJWPlayer.requestFullscreen(() -> {});
-        }
-        else{
-            mJWPlayer.exitFullscreen(() -> {});
-        }
-        isFullscreen = !isFullscreen;
+        mJWPlayer.playAsync(() -> {
+            Log.d(TAG, "Playing.");
+        });
     }
 
     private void configureWebView(){
