@@ -1,7 +1,5 @@
 package com.example.animetime.utils.htmlembedplayers;
 
-import android.graphics.Point;
-import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
@@ -27,11 +25,11 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
             simulateUserPlayAction();
             mIsPlayActionSimulated = true;
 
-            if (callback != null) waitPlayerPlaying(callback);
+            if (callback != null) waitPlayerState(EmbedPlayerState.PLAYING ,callback);
         } else {
             String playCommand = getFunctionCommand("jwplayer().play();");
             injectJavascript(playCommand, value -> {
-                if (callback != null) waitPlayerPlaying(callback);
+                if (callback != null) waitPlayerState(EmbedPlayerState.PLAYING ,callback);
             });
         }
     }
@@ -40,18 +38,7 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
     public void pauseAsync(Procedure callback) {
         String pauseCommand = getFunctionCommand("jwplayer().pause();");
         injectJavascript(pauseCommand, value -> {
-            if (callback != null) callback.run();
-        });
-    }
-
-    @Override
-    public void isPlayingAsync(ValueCallback<Boolean> resultCallback) {
-        if (resultCallback == null) throw new IllegalArgumentException("Callback can not be null.");
-
-        String isPlayingCommand = getFunctionCommand("return jwplayer().getState() == \"playing\"");
-        injectJavascript(isPlayingCommand, value -> {
-            if (value.equals("true")) resultCallback.onReceiveValue(true);
-            else if (value.equals("false")) resultCallback.onReceiveValue(false);
+            if (callback != null) waitPlayerState(EmbedPlayerState.PAUSED, callback);
         });
     }
 
@@ -279,7 +266,7 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
         };
         t.schedule(tTask, 0, 100);
     }
-    private void waitPlayerPlaying(Procedure callback){
+    private void waitPlayerState(EmbedPlayerState targetState, Procedure callback){
         Timer t = new Timer();
         TimerTask tTask = new TimerTask() {
             int runCount = 0;
@@ -294,7 +281,7 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
                 if(!isChecking && mWebViewRef.get() != null){
                     mWebViewRef.get().post(() -> {
                         getPlayerState(state -> {
-                            if(state == EmbedPlayerState.PLAYING){
+                            if(state == targetState){
                                 callback.run();
                                 t.cancel();
                             }
