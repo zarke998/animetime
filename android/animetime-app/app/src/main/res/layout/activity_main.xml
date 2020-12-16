@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <org.adblockplus.libadblockplus.android.webview.AdblockWebView
+    <com.example.animetime.widgets.AnimeTimeWebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/webView"/>
