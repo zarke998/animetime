@@ -243,7 +243,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
             boolean isChecking = false;
             @Override
             public void run() {
-                if(runCount > 1500){
+                if(runCount > 150){
                     t.cancel();
                     return;
                 }
