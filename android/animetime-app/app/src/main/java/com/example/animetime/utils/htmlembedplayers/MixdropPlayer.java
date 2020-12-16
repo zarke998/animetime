@@ -5,15 +5,22 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 import com.example.animetime.utils.Procedure;
+import com.example.animetime.utils.ViewExtensions;
 
-public class MixdropPlayer extends HtmlEmbedPlayerBase{
+public class MixdropPlayer extends HtmlEmbedPlayerBase {
     public MixdropPlayer(WebView webView) {
         super(webView);
     }
 
     @Override
     protected void simulateUserPlayAction() {
-
+        if (mWebViewRef.get() != null) {
+            ViewExtensions.simulateTouchOnCenter(mWebViewRef.get());
+        }
+    }
+    @Override
+    protected boolean playerHasNewTabAds() {
+        return true;
     }
 
     @Override
@@ -59,7 +66,7 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase{
 
     @Override
     protected String getSetFullscreenCommand(boolean fullscreen) {
-        if(fullscreen) return "MDCore.player.requestFullscreen();";
+        if (fullscreen) return "MDCore.player.requestFullscreen();";
         else return "MDCore.player.exitFullscreen();";
     }
 
@@ -70,21 +77,21 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase{
 
         injectJavascript(isPausedCommand, isPauseBoolStr -> {
             Boolean isPaused = tryGetBoolFromStr(isPauseBoolStr);
-            if(isPaused == null){
+            if (isPaused == null) {
                 // Log js change
                 resultCallback.onReceiveValue(EmbedPlayerState.NONE);
                 return;
             }
             injectJavascript(isSeekingCommand, isSeekingBoolStr -> {
                 Boolean isSeeking = tryGetBoolFromStr(isSeekingBoolStr);
-                if(isSeekingBoolStr == null){
+                if (isSeekingBoolStr == null) {
                     //Log js change
                     resultCallback.onReceiveValue(EmbedPlayerState.NONE);
                     return;
                 }
 
-                if(isPaused) resultCallback.onReceiveValue(EmbedPlayerState.PAUSED);
-                else if(isSeeking) resultCallback.onReceiveValue(EmbedPlayerState.SEEKING);
+                if (isPaused) resultCallback.onReceiveValue(EmbedPlayerState.PAUSED);
+                else if (isSeeking) resultCallback.onReceiveValue(EmbedPlayerState.SEEKING);
                 else resultCallback.onReceiveValue(EmbedPlayerState.PLAYING);
 
                 return;
@@ -93,13 +100,13 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase{
         });
     }
 
-    private Boolean tryGetBoolFromStr(String stringedBool){
-        if(stringedBool == null) return null;
+    private Boolean tryGetBoolFromStr(String stringedBool) {
+        if (stringedBool == null) return null;
 
-        stringedBool = stringedBool.replace("\"","");
+        stringedBool = stringedBool.replace("\"", "");
 
-        if(stringedBool.equals("true")) return true;
-        else if(stringedBool.equals("false")) return false;
+        if (stringedBool.equals("true")) return true;
+        else if (stringedBool.equals("false")) return false;
         else return null;
     }
 }

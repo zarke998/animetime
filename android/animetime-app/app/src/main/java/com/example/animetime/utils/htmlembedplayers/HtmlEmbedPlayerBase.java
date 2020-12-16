@@ -1,11 +1,13 @@
 package com.example.animetime.utils.htmlembedplayers;
 
+import android.os.CancellationSignal;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 import com.example.animetime.utils.Procedure;
 
 import java.lang.ref.WeakReference;
+import java.net.ProtocolException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,10 +23,18 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     @Override
     public void playAsync(Procedure callback) {
         if (!mIsPlayActionSimulated) {
-            simulateUserPlayAction();
+            if(playerHasNewTabAds())
+            {
+                simulateUserPlayActionRepeteadly(() -> {
+                    if (callback != null) callback.run();
+                });
+            }
+            else{
+                simulateUserPlayAction();
+                if (callback != null) waitPlayerState(EmbedPlayerState.PLAYING ,callback);
+            }
             mIsPlayActionSimulated = true;
 
-            if (callback != null) waitPlayerState(EmbedPlayerState.PLAYING ,callback);
         } else {
             String playCommand = getFunctionCommand(getPlayCommand());
             injectJavascript(playCommand, value -> {
@@ -118,6 +128,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         return 0;
     }
 
+
     @Override
     public void setFullscreenAsync(boolean fullscreen, Procedure callback) {
         String fullscreenCommand = getFunctionCommand(getSetFullscreenCommand(fullscreen));
@@ -148,7 +159,6 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     protected void injectJavascript(String javascript){
         injectJavascript(javascript, null);
     }
-
     protected String getFunctionCommand(String commandBody){
         return String.format("(function x(){%s})()", commandBody);
     }
@@ -236,6 +246,10 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         };
         t.schedule(tTask, 0, 100);
     }
+    /** Waits for player to enter targetState, then executes callback on UI thread.
+     * @param targetState
+     * @param callback
+     */
     protected void waitPlayerState(EmbedPlayerState targetState, Procedure callback){
         Timer t = new Timer();
         TimerTask tTask = new TimerTask() {
@@ -264,7 +278,41 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         };
         t.schedule(tTask, 0, 100);
     }
+
     protected abstract void simulateUserPlayAction();
+    protected abstract boolean playerHasNewTabAds();
+    /** Simulate user play action repeteadly and execute callback on UI thread when player gets in
+     * playing state.
+     * @param callback
+     */
+    private void simulateUserPlayActionRepeteadly(Procedure callback){
+        Timer t = new Timer();
+        TimerTask tTask = new TimerTask() {
+            int runCount;
+            boolean callbackCalled = false;
+
+            @Override
+            public void run() {
+                if(mWebViewRef.get() == null && runCount > 10){
+                    t.cancel();
+                    return;
+                }
+                mWebViewRef.get().post(() -> {
+                    simulateUserPlayAction();
+                    waitPlayerState(EmbedPlayerState.PLAYING, () -> {
+                        t.cancel();
+                        if(callback != null && callbackCalled == false){
+                            callbackCalled = true;
+                            callback.run();
+                        }
+                    });
+                });
+
+                runCount++;
+            }
+        };
+        t.schedule(tTask, 0, 500);
+    }
 
     // Player commands
     protected abstract String getPlayCommand();

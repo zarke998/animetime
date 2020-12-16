@@ -59,6 +59,11 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
         });
     }
 
+    @Override
+    protected boolean playerHasNewTabAds() {
+        return false;
+    }
+
     //Player commands
     @Override
     protected String getPlayCommand() {
