@@ -36,7 +36,7 @@ public class AnimeTimeWebView extends AdblockWebView {
     private void configureWebView(){
         this.getSettings().setJavaScriptEnabled(true);
         this.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
-        
+
         this.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -63,6 +63,8 @@ public class AnimeTimeWebView extends AdblockWebView {
 
                 mFullscreenView = view;
                 mFullscreenView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                mFullscreenView.setZ(-1);
+
                 mWebView.setVisibility(View.GONE);
 
                 ViewGroup rootLayout = (ViewGroup)mWebView.getRootView();
