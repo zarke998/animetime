@@ -128,7 +128,6 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         return 0;
     }
 
-
     @Override
     public void setFullscreenAsync(boolean fullscreen, Procedure callback) {
         String fullscreenCommand = getFunctionCommand(getSetFullscreenCommand(fullscreen));
@@ -148,6 +147,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         });
     }
 
+    // Injecting javascript
     protected void injectJavascript(String javascript, ValueCallback<String> callback){
         WebView webView = mWebViewRef.get();
         if(webView != null){
@@ -172,6 +172,8 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
 
         return result;
     }
+
+    // Waiting for player to get into a state
     protected void waitFullscreenChangeAsync(boolean originalValue, Procedure callback) {
         if (callback == null) return;
 
@@ -279,7 +281,9 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         t.schedule(tTask, 0, 100);
     }
 
+
     protected abstract void simulateUserPlayAction();
+    public abstract void simulateUserFullscreenAction();
     protected abstract boolean playerHasNewTabAds();
     /** Simulate user play action repeteadly and execute callback on UI thread when player gets in
      * playing state.
@@ -313,6 +317,8 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         };
         t.schedule(tTask, 0, 500);
     }
+
+    protected abstract boolean isFullscreenProtected();
 
     // Player commands
     protected abstract String getPlayCommand();

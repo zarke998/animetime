@@ -60,6 +60,16 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
     }
 
     @Override
+    public void simulateUserFullscreenAction() {
+        return;
+    }
+
+    @Override
+    protected boolean isFullscreenProtected() {
+        return false;
+    }
+
+    @Override
     protected boolean playerHasNewTabAds() {
         return false;
     }
