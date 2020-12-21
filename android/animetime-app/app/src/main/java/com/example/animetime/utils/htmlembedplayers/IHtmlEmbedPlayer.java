@@ -20,4 +20,6 @@ interface IHtmlEmbedPlayer {
     void setFullscreenAsync(boolean fullsreen, Procedure callback);
     void getFullscreenAsync(ValueCallback<Boolean> resultCallback);
     boolean isFullscreenProtected();
+
+    void hidePlayerControlsAsync(Procedure callback);
 }

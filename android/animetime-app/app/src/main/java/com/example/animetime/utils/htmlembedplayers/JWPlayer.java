@@ -127,5 +127,10 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
         return String.format("jwplayer().setFullscreen(%s)", jsParam);
     }
 
-    // endregion
+    @Override
+    protected String getHideControlsCommand() {
+        return "document.getElementsByClassName(\"jw-controls\")[0].style = \"visibility: hidden !important\";\n" +
+                "document.getElementById(\"list-server-more\").display = \"none\";";
+    }
+// endregion
 }

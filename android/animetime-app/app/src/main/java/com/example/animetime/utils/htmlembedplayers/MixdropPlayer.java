@@ -132,6 +132,14 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
         else return "MDCore.player.exitFullscreen();";
     }
 
+    @Override
+    protected String getHideControlsCommand() {
+        return "$(\".vjs-control-bar\").hide();" +
+                "$(\".vjs-big-play-button\").hide();" +
+                "$(\".vjs-loading-spinner\").hide();" +
+                "$(\".title\").css('visibility', 'hidden');";
+    }
+
     // endregion
 
     // Helper methods

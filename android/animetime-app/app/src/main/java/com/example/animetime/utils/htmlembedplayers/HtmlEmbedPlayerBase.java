@@ -152,6 +152,14 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         });
     }
 
+    @Override
+    public void hidePlayerControlsAsync(Procedure callback) {
+        String command = getFunctionCommand(getHideControlsCommand());
+        injectJavascript(command, value -> {
+            if(callback != null) callback.run();
+        });
+    }
+
     // endregion
     // region Injecting javascript
     protected void injectJavascript(String javascript, ValueCallback<String> callback){
@@ -339,5 +347,6 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     protected abstract String getGetVolumeCommand();
     protected abstract String getGetFullscreenCommand();
     protected abstract String getSetFullscreenCommand(boolean fullscreen);
+    protected abstract String getHideControlsCommand();
     // endregion
 }
