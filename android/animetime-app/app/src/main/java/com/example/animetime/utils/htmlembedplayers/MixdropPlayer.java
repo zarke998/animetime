@@ -45,7 +45,12 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
     }
 
     @Override
-    protected boolean isFullscreenProtected() {
+    public boolean isFullscreenProtected() {
+        return true;
+    }
+
+    @Override
+    protected boolean isAlreadyFullscreened() {
         return true;
     }
 
@@ -79,7 +84,7 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
         });
     }
 
-    // Player commands
+    // region Player commands
     @Override
     protected String getPlayCommand() {
         return "MDCore.player.play();";
@@ -127,6 +132,9 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
         else return "MDCore.player.exitFullscreen();";
     }
 
+    // endregion
+
+    // Helper methods
     private Boolean tryGetBoolFromStr(String stringedBool) {
         if (stringedBool == null) return null;
 

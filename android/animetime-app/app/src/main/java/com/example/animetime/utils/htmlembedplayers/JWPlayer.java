@@ -65,7 +65,12 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
     }
 
     @Override
-    protected boolean isFullscreenProtected() {
+    public boolean isFullscreenProtected() {
+        return false;
+    }
+
+    @Override
+    protected boolean isAlreadyFullscreened() {
         return false;
     }
 
@@ -74,7 +79,7 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
         return false;
     }
 
-    //Player commands
+    // region Player commands
     @Override
     protected String getPlayCommand() {
         return "jwplayer().play();";
@@ -121,4 +126,6 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
 
         return String.format("jwplayer().setFullscreen(%s)", jsParam);
     }
+
+    // endregion
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -13,6 +14,8 @@ import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
 
 public class AnimeTimeWebView extends AdblockWebView {
     private WebView mWebView;
+
+    private WebViewEventListener webViewEventListener;
 
     public AnimeTimeWebView(Context context) {
         super(context);
@@ -33,6 +36,10 @@ public class AnimeTimeWebView extends AdblockWebView {
         configureWebView();
     }
 
+    public void setWebViewEventListener(WebViewEventListener listener){
+        webViewEventListener = listener;
+    }
+
     private void configureWebView(){
         this.getSettings().setJavaScriptEnabled(true);
         this.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
@@ -42,6 +49,12 @@ public class AnimeTimeWebView extends AdblockWebView {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                super.shouldOverrideUrlLoading(view, request);
+                return true;
+            }
         });
         this.setWebChromeClient(new WebChromeClient(){
             private View mFullscreenView;
@@ -50,6 +63,8 @@ public class AnimeTimeWebView extends AdblockWebView {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 super.onConsoleMessage(consoleMessage);
+
+                if(webViewEventListener != null) webViewEventListener.onConsoleMessage(consoleMessage.message());
 
                 return true;
             }
@@ -90,5 +105,9 @@ public class AnimeTimeWebView extends AdblockWebView {
                 mFullscreenView = null;
             }
         });
+    }
+
+    public static class WebViewEventListener {
+        public void onConsoleMessage(String message) {}
     }
 }
