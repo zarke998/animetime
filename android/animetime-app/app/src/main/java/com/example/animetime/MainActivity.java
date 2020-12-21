@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testBtnClick(View v){
-        mMixdropPlayer.playAsync(() -> {
-            Log.d(TAG, "Played.");
+        mMixdropPlayer.hidePlayerControlsAsync(() -> {
+            Log.d(TAG, "Controls hidden.");
         });
     }}
