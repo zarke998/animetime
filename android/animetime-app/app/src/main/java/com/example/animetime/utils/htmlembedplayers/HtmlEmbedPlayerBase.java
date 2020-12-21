@@ -104,7 +104,6 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     public void setVolumeAsync(int volumeLevel, Procedure callback) {
         if (volumeLevel < 0) volumeLevel = 0;
         else if (volumeLevel > 100) volumeLevel = 100;
-
         String volumeSetCommand = getFunctionCommand(getSetVolumeCommand(volumeLevel));
         injectJavascript(volumeSetCommand, value -> {
             if (callback != null) callback.run();
@@ -343,6 +342,11 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     protected abstract String getVideoDurationCommand();
     protected abstract String getVideoPositionCommand();
     protected abstract String getSeekCommand(int pos);
+
+    /** Get setVolumeCommand.
+     * @param volumeLevel Range 0-100.
+     * @return
+     */
     protected abstract String getSetVolumeCommand(int volumeLevel);
     protected abstract String getGetVolumeCommand();
     protected abstract String getGetFullscreenCommand();

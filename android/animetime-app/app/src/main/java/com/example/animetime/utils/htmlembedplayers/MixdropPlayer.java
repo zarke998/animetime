@@ -6,6 +6,9 @@ import android.webkit.WebView;
 
 import com.example.animetime.utils.Procedure;
 import com.example.animetime.utils.ViewExtensions;
+import com.example.animetime.utils.values.BooleanExtensions;
+
+import com.example.animetime.utils.values.*;
 
 public class MixdropPlayer extends HtmlEmbedPlayerBase {
     public MixdropPlayer(WebView webView) {
@@ -60,14 +63,14 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
         String isSeekingCommand = getFunctionCommand("return MDCore.player.seeking();");
 
         injectJavascript(isPausedCommand, isPauseBoolStr -> {
-            Boolean isPaused = tryGetBoolFromStr(isPauseBoolStr);
+            Boolean isPaused = BooleanExtensions.tryGetBoolFromStr(isPauseBoolStr);
             if (isPaused == null) {
                 // Log js change
                 resultCallback.onReceiveValue(EmbedPlayerState.NONE);
                 return;
             }
             injectJavascript(isSeekingCommand, isSeekingBoolStr -> {
-                Boolean isSeeking = tryGetBoolFromStr(isSeekingBoolStr);
+                Boolean isSeeking = BooleanExtensions.tryGetBoolFromStr(isSeekingBoolStr);
                 if (isSeekingBoolStr == null) {
                     //Log js change
                     resultCallback.onReceiveValue(EmbedPlayerState.NONE);
@@ -143,13 +146,5 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
     // endregion
 
     // Helper methods
-    private Boolean tryGetBoolFromStr(String stringedBool) {
-        if (stringedBool == null) return null;
 
-        stringedBool = stringedBool.replace("\"", "");
-
-        if (stringedBool.equals("true")) return true;
-        else if (stringedBool.equals("false")) return false;
-        else return null;
-    }
 }

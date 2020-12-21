@@ -14,6 +14,11 @@ interface IHtmlEmbedPlayer {
 
     void seekAsync(int pos, Procedure callback);
 
+
+    /** Set player volume
+     * @param volumeLevel Range 0-100.
+     * @param callback
+     */
     void setVolumeAsync(int volumeLevel, Procedure callback);
     int getVolumeAsync(ValueCallback<Integer> resultCallback);
 
