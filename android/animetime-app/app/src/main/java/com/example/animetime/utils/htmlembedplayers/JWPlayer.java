@@ -1,5 +1,6 @@
 package com.example.animetime.utils.htmlembedplayers;
 
+import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
@@ -38,25 +39,31 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
 
     }
 
+//    @Override
+//    protected void simulateUserPlayAction() {
+//        String playBtnPosCommand = getFunctionCommand("var playBtnRect = $(\"div[aria-label='Play']\")[0].getBoundingClientRect(); return playBtnRect.x + ',' + playBtnRect.y;");
+//        String windowDimensionsCommand = getFunctionCommand("return window.innerWidth + ',' + window.innerHeight;");
+//        injectJavascript(playBtnPosCommand, playBtnString -> {
+//            String[] playBtnPos = playBtnString.replace("\"", "").split(",");
+//            injectJavascript(windowDimensionsCommand, winDimString -> {
+//                String[] windowDimensions = winDimString.replace("\"", "").split(",");
+//                Float[] elPosOnWebView = htmlElementPosToWebViewPos(
+//                        Float.parseFloat(windowDimensions[0]),
+//                        Float.parseFloat(windowDimensions[1]),
+//                        Float.parseFloat(playBtnPos[0]),
+//                        Float.parseFloat(playBtnPos[1])
+//                );
+//                int positionOffset = 5;
+//                ViewExtensions.simulateTouch(mWebViewRef.get(), elPosOnWebView[0] + positionOffset, elPosOnWebView[1] + positionOffset);
+//            });
+//        });
+//    }
+
+
     @Override
     protected void simulateUserPlayAction() {
-
-        String playBtnPosCommand = getFunctionCommand("var playBtnRect = $(\"div[aria-label='Play']\")[0].getBoundingClientRect(); return playBtnRect.x + ',' + playBtnRect.y;");
-        String windowDimensionsCommand = getFunctionCommand("return window.innerWidth + ',' + window.innerHeight;");
-        injectJavascript(playBtnPosCommand, playBtnString -> {
-            String[] playBtnPos = playBtnString.replace("\"", "").split(",");
-            injectJavascript(windowDimensionsCommand, winDimString -> {
-                String[] windowDimensions = winDimString.replace("\"", "").split(",");
-                Float[] elPosOnWebView = htmlElementPosToWebViewPos(
-                        Float.parseFloat(windowDimensions[0]),
-                        Float.parseFloat(windowDimensions[1]),
-                        Float.parseFloat(playBtnPos[0]),
-                        Float.parseFloat(playBtnPos[1])
-                );
-                int positionOffset = 5;
-                ViewExtensions.simulateTouch(mWebViewRef.get(), elPosOnWebView[0] + positionOffset, elPosOnWebView[1] + positionOffset);
-            });
-        });
+        if(mWebViewRef.get() != null)
+            ViewExtensions.simulateTouchOnCenter(mWebViewRef.get());
     }
 
     @Override
