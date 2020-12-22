@@ -251,13 +251,15 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
                 if (!posCheckIsProcessing && mWebViewRef.get() != null) {
                     mWebViewRef.get().post(() -> {
                         getPlayerState(state -> {
-                            if (state != EmbedPlayerState.SEEKING) {
-                                if (callback != null) {
-                                    callback.run();
+                            getVideoPositionAsync(pos -> {
+                                if (state != EmbedPlayerState.SEEKING && pos > targetPos) {
+                                    if (callback != null) {
+                                        callback.run();
+                                    }
+                                    t.cancel();
                                 }
-                                t.cancel();
-                            }
-                            posCheckIsProcessing = false;
+                                posCheckIsProcessing = false;
+                            });
                         });
                     });
                 }
