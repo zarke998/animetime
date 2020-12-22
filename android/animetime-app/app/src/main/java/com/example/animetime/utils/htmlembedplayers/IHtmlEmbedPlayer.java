@@ -14,7 +14,6 @@ interface IHtmlEmbedPlayer {
 
     void seekAsync(int pos, Procedure callback);
 
-
     /** Set player volume
      * @param volumeLevel Range 0-100.
      * @param callback
@@ -27,4 +26,5 @@ interface IHtmlEmbedPlayer {
     boolean isFullscreenProtected();
 
     void hidePlayerControlsAsync(Procedure callback);
+    void setup(Procedure callback);
 }

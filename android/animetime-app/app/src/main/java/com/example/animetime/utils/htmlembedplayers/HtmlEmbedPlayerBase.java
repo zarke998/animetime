@@ -162,6 +162,20 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         });
     }
 
+    @Override
+    public void setup(Procedure callback) {
+        playAsync(() -> {
+            if(!isFullscreenProtected()){
+                setFullscreenAsync(true, () -> {
+                    hidePlayerControlsAsync(callback);
+                });
+            }
+            else{
+                hidePlayerControlsAsync(callback);
+            }
+        });
+    }
+
     // endregion
     // region Injecting javascript
     protected void injectJavascript(String javascript, ValueCallback<String> callback){
