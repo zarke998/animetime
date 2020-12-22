@@ -13,6 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/testBtn"
-        android:text="Test btn"
+        android:text="Test"
         android:onClick="testBtnClick"/>
+
+    <Button
+        android:id="@+id/repeatTestBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Repeat test"
+        android:onClick="repeatTestBtnClick"
+        app:layout_constraintTop_toBottomOf="@+id/testBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
