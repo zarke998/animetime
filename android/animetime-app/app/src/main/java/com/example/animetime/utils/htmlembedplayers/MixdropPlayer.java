@@ -48,6 +48,11 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
     }
 
     @Override
+    protected boolean isVolumeMax100() {
+        return false;
+    }
+
+    @Override
     public boolean isFullscreenProtected() {
         return true;
     }

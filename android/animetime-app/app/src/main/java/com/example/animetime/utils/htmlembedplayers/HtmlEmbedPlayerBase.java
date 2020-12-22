@@ -118,8 +118,11 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
         String getVolumeCommand = getFunctionCommand(getGetVolumeCommand());
         injectJavascript(getVolumeCommand, value -> {
             try {
-                int result = Integer.parseInt(value);
-                resultCallback.onReceiveValue(result);
+                float result = Float.parseFloat(value);
+                if(!isVolumeMax100()){
+                    result = result * 100;
+                }
+                resultCallback.onReceiveValue((int)result);
             } catch (NumberFormatException exception) {
                 resultCallback.onReceiveValue(0);
             }
@@ -335,6 +338,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     // region Custom properties
     protected abstract boolean isAlreadyFullscreened();
     protected abstract boolean playerHasNewTabAds();
+    protected abstract boolean isVolumeMax100();
     // endregion
     // region Player commands
     protected abstract String getPlayCommand();

@@ -86,6 +86,11 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
         return false;
     }
 
+    @Override
+    protected boolean isVolumeMax100() {
+        return true;
+    }
+
     // region Player commands
     @Override
     protected String getPlayCommand() {

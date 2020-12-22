@@ -73,6 +73,11 @@ public class StreamtapePlayer extends HtmlEmbedPlayerBase {
         return true;
     }
 
+    @Override
+    protected boolean isVolumeMax100() {
+        return false;
+    }
+
     // region Player commands
     @Override
     protected String getPlayCommand() {
