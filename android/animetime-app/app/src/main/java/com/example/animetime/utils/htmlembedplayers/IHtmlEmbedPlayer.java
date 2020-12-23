@@ -4,7 +4,7 @@ import android.webkit.ValueCallback;
 
 import com.example.animetime.utils.Procedure;
 
-interface IHtmlEmbedPlayer {
+public interface IHtmlEmbedPlayer {
     void playAsync(Procedure callback);
     void pauseAsync(Procedure callback);
     void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback);
