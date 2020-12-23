@@ -55,7 +55,12 @@ public class MainActivity extends AppCompatActivity {
 //        mWebView.loadUrl("https://gogo-stream.com/streaming.php?id=MTE3MTU=&title=Bleach+Episode+366");
 //        mWebView.loadUrl("https://mixdrop.co/e/dqkj98rqbez9mj");
 //        mWebView.loadUrl("https://streamta.pe/e/bQbAopJKlBsPM78/bleach-episode-366.mp4");
-        mWebView.loadUrl("https://www.mp4upload.com/embed-hzl1fw4wkedt.html");
+//        mWebView.loadUrl("https://www.mp4upload.com/embed-hzl1fw4wkedt.html");
+//        mWebView.loadUrl("https://streamsb.net/embed-3bi5o72jrey8.html"); // cannot open dev tools
+        mWebView.loadUrl("https://dood.to/e/w9of539v4bky"); // cannot open dev tools
+
+
+
     }
 
 
