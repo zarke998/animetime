@@ -63,7 +63,7 @@ public class MixdropPlayer extends HtmlEmbedPlayerBase {
     }
 
     @Override
-    public void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback) {
+    public void getPlayerStateAsync(ValueCallback<EmbedPlayerState> resultCallback) {
         String isPausedCommand = getFunctionCommand("return MDCore.player.paused();");
         String isSeekingCommand = getFunctionCommand("return MDCore.player.seeking();");
 

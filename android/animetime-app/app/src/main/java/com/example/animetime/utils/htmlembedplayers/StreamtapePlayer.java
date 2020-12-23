@@ -12,7 +12,7 @@ public class StreamtapePlayer extends HtmlEmbedPlayerBase {
     }
 
     @Override
-    public void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback) {
+    public void getPlayerStateAsync(ValueCallback<EmbedPlayerState> resultCallback) {
         String playingCommand = getFunctionCommand("return player.playing");
         String pausedCommand = getFunctionCommand("return player.paused");
         String seekingCommand = getFunctionCommand("return player.seeking");

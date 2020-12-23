@@ -7,7 +7,7 @@ import com.example.animetime.utils.Procedure;
 public interface IHtmlEmbedPlayer {
     void playAsync(Procedure callback);
     void pauseAsync(Procedure callback);
-    void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback);
+    void getPlayerStateAsync(ValueCallback<EmbedPlayerState> resultCallback);
 
     int getVideoDurationAsync(ValueCallback<Float> resultCallback);
     int getVideoPositionAsync(ValueCallback<Float> resultCallback);
@@ -26,5 +26,5 @@ public interface IHtmlEmbedPlayer {
     boolean isFullscreenProtected();
 
     void hidePlayerControlsAsync(Procedure callback);
-    void setup(Procedure callback);
+    void setupAsync(Procedure callback);
 }

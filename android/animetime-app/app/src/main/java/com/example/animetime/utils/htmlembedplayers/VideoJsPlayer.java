@@ -13,7 +13,7 @@ public class VideoJsPlayer extends HtmlEmbedPlayerBase {
     }
 
     @Override
-    public void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback) {
+    public void getPlayerStateAsync(ValueCallback<EmbedPlayerState> resultCallback) {
         String isPausedCommand = getFunctionCommand("return player.paused();");
         String isSeekingCommand = getFunctionCommand("return player.seeking();");
 

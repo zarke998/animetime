@@ -16,7 +16,7 @@ public class JWPlayer extends HtmlEmbedPlayerBase implements IHtmlEmbedPlayer {
     }
 
     @Override
-    public void getPlayerState(ValueCallback<EmbedPlayerState> resultCallback) {
+    public void getPlayerStateAsync(ValueCallback<EmbedPlayerState> resultCallback) {
         String playerStateCommand = getFunctionCommand("return jwplayer().getState();");
         injectJavascript(playerStateCommand, value -> {
             if (value == null) resultCallback.onReceiveValue(EmbedPlayerState.NONE);

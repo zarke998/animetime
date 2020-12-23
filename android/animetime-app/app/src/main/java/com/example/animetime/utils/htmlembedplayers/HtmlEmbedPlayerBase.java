@@ -1,13 +1,11 @@
 package com.example.animetime.utils.htmlembedplayers;
 
-import android.os.CancellationSignal;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 import com.example.animetime.utils.Procedure;
 
 import java.lang.ref.WeakReference;
-import java.net.ProtocolException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -163,7 +161,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
     }
 
     @Override
-    public void setup(Procedure callback) {
+    public void setupAsync(Procedure callback) {
         playAsync(() -> {
             if(!isFullscreenProtected()){
                 setFullscreenAsync(true, () -> {
@@ -264,7 +262,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
 
                 if (!posCheckIsProcessing && mWebViewRef.get() != null) {
                     mWebViewRef.get().post(() -> {
-                        getPlayerState(state -> {
+                        getPlayerStateAsync(state -> {
                             getVideoPositionAsync(pos -> {
                                 if (state != EmbedPlayerState.SEEKING && pos > targetPos) {
                                     if (callback != null) {
@@ -300,7 +298,7 @@ public abstract class HtmlEmbedPlayerBase implements IHtmlEmbedPlayer{
 
                 if(!isChecking && mWebViewRef.get() != null){
                     mWebViewRef.get().post(() -> {
-                        getPlayerState(state -> {
+                        getPlayerStateAsync(state -> {
                             if(state == targetState){
                                 callback.run();
                                 t.cancel();
