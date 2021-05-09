@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.Core", "animetime
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.AnimeSourceUpdater", "animetime-anime-source-updater\AnimeTime.AnimeSourceUpdater.csproj", "{B1E0F5E3-C73F-443B-8853-579913DC3453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTimeDbUpdater", "animetime-db-updater-console\AnimeTimeDbUpdater.csproj", "{3685E4FB-9B98-4275-AEB4-8E9CEDD15F05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.DbUpdater", "animetime-db-updater-console\AnimeTime.DbUpdater.csproj", "{3685E4FB-9B98-4275-AEB4-8E9CEDD15F05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.Persistence", "animetime-persistence\AnimeTime.Persistence.csproj", "{15172C36-0A91-44AA-B9F5-E390D05479B8}"
 EndProject
