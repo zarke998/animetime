@@ -134,19 +134,19 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
-      <Project>{F4CA9E32-6E3D-4269-9E5D-ECEEB5C6EB25}</Project>
+    <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
+      <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
       <Name>AnimeTime.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\animetime-persistence\AnimeTime.Persistence.csproj">
+    <ProjectReference Include="..\AnimeTime.Persistence\AnimeTime.Persistence.csproj">
       <Project>{15172C36-0A91-44AA-B9F5-E390D05479B8}</Project>
       <Name>AnimeTime.Persistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\animetime-utilities\AnimeTime.Utilities.csproj">
+    <ProjectReference Include="..\AnimeTime.Utilities\AnimeTime.Utilities.csproj">
       <Project>{726F2A06-5F43-4CDF-B3BC-4AEC6939F017}</Project>
       <Name>AnimeTime.Utilities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\animetime-website-processors\AnimeTime.WebsiteProcessors.csproj">
+    <ProjectReference Include="..\AnimeTime.WebsiteProcessors\AnimeTime.WebsiteProcessors.csproj">
       <Project>{52E9A70A-2466-4B70-86C2-14CD5C022DDD}</Project>
       <Name>AnimeTime.WebsiteProcessors</Name>
     </ProjectReference>

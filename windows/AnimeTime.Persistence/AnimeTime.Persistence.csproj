@@ -344,12 +344,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
-      <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
-      <Name>AnimeTime.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\202004141328495_AddWebsitesTable.resx">
       <DependentUpon>202004141328495_AddWebsitesTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -525,7 +519,12 @@
       <DependentUpon>202011270854189_AddAnimeToAnimeStatusesRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
+      <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
+      <Name>AnimeTime.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

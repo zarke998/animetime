@@ -152,15 +152,15 @@
     <Content Include="dependencies.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\animetime-core\AnimeTime.Core.csproj">
+    <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
       <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
       <Name>AnimeTime.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\animetime-persistence\AnimeTime.Persistence.csproj">
+    <ProjectReference Include="..\AnimeTime.Persistence\AnimeTime.Persistence.csproj">
       <Project>{15172c36-0a91-44aa-b9f5-e390d05479b8}</Project>
       <Name>AnimeTime.Persistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\animetime-utilities\AnimeTime.Utilities.csproj">
+    <ProjectReference Include="..\AnimeTime.Utilities\AnimeTime.Utilities.csproj">
       <Project>{726f2a06-5f43-4cdf-b3bc-4aec6939f017}</Project>
       <Name>AnimeTime.Utilities</Name>
     </ProjectReference>
