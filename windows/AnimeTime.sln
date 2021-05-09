@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.Core", "animetime-core\AnimeTime.Core.csproj", "{F4CA9E32-6E3D-4269-9E5D-ECEEB5C6EB25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTimeAnimeSourceUpdater", "animetime-anime-source-updater\AnimeTimeAnimeSourceUpdater.csproj", "{B1E0F5E3-C73F-443B-8853-579913DC3453}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.AnimeSourceUpdater", "animetime-anime-source-updater\AnimeTime.AnimeSourceUpdater.csproj", "{B1E0F5E3-C73F-443B-8853-579913DC3453}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTimeDbUpdater", "animetime-db-updater-console\AnimeTimeDbUpdater.csproj", "{3685E4FB-9B98-4275-AEB4-8E9CEDD15F05}"
 EndProject
