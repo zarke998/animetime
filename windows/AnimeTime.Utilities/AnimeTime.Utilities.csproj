@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="SixLabors.ImageSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.ImageSharp.1.0.1\lib\net472\SixLabors.ImageSharp.dll</HintPath>
     </Reference>
@@ -58,6 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Colors\ColorExtensions.cs" />
+    <Compile Include="Colors\HslaColor.cs" />
+    <Compile Include="Colors\RgbaColor.cs" />
+    <Compile Include="Colors\RgbaHslaConverter.cs" />
     <Compile Include="Core\Domain\Thumbnail.cs" />
     <Compile Include="Core\IEnumMapper.cs" />
     <Compile Include="Core\Imaging\IImageDownloader.cs" />
