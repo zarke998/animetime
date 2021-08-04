@@ -8,6 +8,6 @@ namespace AnimeTime.WPF.ViewModels
 {
     public class WindowViewModel : ViewModelBase
     {
-
+        public List<string> NavItems { get; set; } = new List<string>() { "Home", "Library", "Discover", "Music" };
     }
 }

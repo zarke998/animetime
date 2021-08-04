@@ -68,6 +68,9 @@
     <Compile Include="Views\Controls\ImageRounded.xaml.cs">
       <DependentUpon>ImageRounded.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\TabsWithSlider.xaml.cs">
+      <DependentUpon>TabsWithSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExtendedProperties.cs" />
     <Compile Include="Views\Controls\ImageButton.xaml.cs">
       <DependentUpon>ImageButton.xaml</DependentUpon>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ImageRounded.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\TabsWithSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
