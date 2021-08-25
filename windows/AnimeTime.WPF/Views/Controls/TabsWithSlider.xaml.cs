@@ -29,10 +29,42 @@ namespace AnimeTime.WPF.Views.Controls
             get { return (IEnumerable<string>)GetValue(ItemsProperty); }
             set { SetValue(ItemsProperty, value); }
         }
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(TabsWithSlider), new PropertyMetadata(OnCommandChanged));
 
         // Using a DependencyProperty as the backing store for Items.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ItemsProperty =
             DependencyProperty.Register("Items", typeof(IEnumerable<string>), typeof(TabsWithSlider), new PropertyMetadata(null, OnItemsChanged));
+
+        private static void OnCommandChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var slider = (TabsWithSlider)obj;
+
+            var oldCmd = args.OldValue as ICommand;
+            var newCmd = args.NewValue as ICommand;
+
+            if (newCmd == null)
+            {
+                oldCmd.CanExecuteChanged -= slider.Command_CanExecuteChanged;
+            }
+
+            else if (oldCmd == null)
+            {
+                newCmd.CanExecuteChanged += slider.Command_CanExecuteChanged;
+            }
+            else
+            {
+                oldCmd.CanExecuteChanged -= slider.Command_CanExecuteChanged;
+                newCmd.CanExecuteChanged += slider.Command_CanExecuteChanged;
+            }
+        }
 
         private static void OnItemsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
@@ -67,6 +99,8 @@ namespace AnimeTime.WPF.Views.Controls
         #region Slider
         private void InitializeSliderPosition()
         {
+            if (TabsContainer.Children.Count == 0) return;
+
             Slider.Width = SliderWidthFromTab(TabsContainer.Children[0] as Button);
         }
         private void AnimateSlider(int targetTabIndex, int duration)
@@ -154,11 +188,42 @@ namespace AnimeTime.WPF.Views.Controls
             {
                 return;
             }
-
             _activeTab = tab;
+
+            if(Command != null && Command.CanExecute(null))
+            {
+                Command.Execute(ActiveTab);
+            }
             AnimateSlider(TabsContainer.Children.IndexOf(tab), 500);
         }
+
+        private void DisableTabs()
+        {
+            foreach (Button tab in TabsContainer.Children)
+            {
+                tab.IsEnabled = false;
+            }
+        }
+        private void EnableTabs()
+        {
+            foreach (Button tab in TabsContainer.Children)
+            {
+                tab.IsEnabled = true;
+            }
+        }
         #endregion
+
+        private void Command_CanExecuteChanged(object sender, EventArgs e)
+        {
+            if(Command.CanExecute(null))
+            {
+                EnableTabs();
+            }
+            else
+            {
+                DisableTabs();
+            }
+        }
 
     }
 }
