@@ -29,11 +29,6 @@ namespace AnimeTimeDbUpdater.Persistence
             _generatedIds = new HashSet<long>();
         }
 
-        public IEnumerable<string> Upload(IEnumerable<Image<Rgba32>> images)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<string> UploadAsync(Image<Rgba32> image)
         {
             var stream = await image.ToStreamAsync();

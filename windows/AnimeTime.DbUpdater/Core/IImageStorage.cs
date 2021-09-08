@@ -10,8 +10,6 @@ namespace AnimeTimeDbUpdater.Core
 {
     public interface IImageStorage
     {
-        IEnumerable<string> Upload(IEnumerable<Image<Rgba32>> images);
-
         Task<string> UploadAsync(Image<Rgba32> image);
         Task<IEnumerable<string>> UploadAsync(IEnumerable<Image<Rgba32>> images);
     }
