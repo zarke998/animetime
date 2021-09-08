@@ -38,6 +38,7 @@ namespace AnimeTimeDbUpdater
             builder.RegisterType<JpegCompressor>().As<IJpegCompressor>();
 
             builder.RegisterType<CrawlDelayer>().As<ICrawlDelayer>();
+            builder.RegisterType<AzureImageStorage>().As<IImageStorage>();
 
             return builder.Build();
         }

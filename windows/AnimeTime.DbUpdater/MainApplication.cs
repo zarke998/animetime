@@ -29,6 +29,7 @@ namespace AnimeTimeDbUpdater
         IThumbnailGenerator _thumbnailGenerator;
 
         ICrawlDelayer _crawlDelayer;
+        private readonly IImageStorage _imageStorage;
 
         HashSet<string> _titles;
 
@@ -38,7 +39,7 @@ namespace AnimeTimeDbUpdater
         HashSet<Character> _characters;
         HashSet<ImageLodLevel> _lodLevels;
 
-        public MainApplication(IAnimeInfoRepository animeRepo, ICharacterInfoRepository charRepo, IImageDownloader imageDownloader, IThumbnailGenerator thumbnailGenerator, ICrawlDelayer crawlDelayer)
+        public MainApplication(IAnimeInfoRepository animeRepo, ICharacterInfoRepository charRepo, IImageDownloader imageDownloader, IThumbnailGenerator thumbnailGenerator, ICrawlDelayer crawlDelayer, IImageStorage imageStorage)
         {
             _animeRepo = animeRepo;
             _charRepo = charRepo;
@@ -46,7 +47,7 @@ namespace AnimeTimeDbUpdater
             this._thumbnailGenerator = thumbnailGenerator;
 
             _crawlDelayer = crawlDelayer;
-
+            this._imageStorage = imageStorage;
             _animeRepo.CrawlDelayer = _crawlDelayer;
             _imageDownloader.CrawlDelayer = _crawlDelayer;
         }
@@ -191,15 +192,13 @@ namespace AnimeTimeDbUpdater
             var thumbnails = _thumbnailGenerator.GenerateAsync(coverImage, _lodLevels).Result;
 
             #region Upload thumbnails
-            var imageStorage = ClassFactory.CreateImageStorage();
-
             var uploadTasks = new List<Task>();
             var urlLodPairs = new List<Tuple<string, LodLevel>>();
 
             Log.TraceEvent(TraceEventType.Information, 0, "Uploading thumbnails...");
             foreach (var thumb in thumbnails)
             {
-                uploadTasks.Add(imageStorage.UploadAsync(thumb.Image).ContinueWith(t => urlLodPairs.Add(Tuple.Create(t.Result, thumb.LodLevel))));
+                uploadTasks.Add(_imageStorage.UploadAsync(thumb.Image).ContinueWith(t => urlLodPairs.Add(Tuple.Create(t.Result, thumb.LodLevel))));
             }
             Task.WhenAll(uploadTasks).Wait();
             #endregion
@@ -307,7 +306,6 @@ namespace AnimeTimeDbUpdater
             var charThumbnails = Task.WhenAll(thumbnailGenerationTasks).Result;
 
             // Upload thumbnails
-            var imageStorage = ClassFactory.CreateImageStorage();
 
             var uploadTasks = new List<Task>();
 
@@ -318,7 +316,7 @@ namespace AnimeTimeDbUpdater
                 var indexCopy = i;
                 foreach (var thumbnail in charThumbnails[i])
                 {
-                    uploadTasks.Add(imageStorage.UploadAsync(thumbnail.Image)
+                    uploadTasks.Add(_imageStorage.UploadAsync(thumbnail.Image)
                         .ContinueWith(t => charImagePairs[indexCopy].Thumbnails.Add((thumbnail, t.Result))));
                 }
             }

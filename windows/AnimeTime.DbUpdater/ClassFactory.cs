@@ -16,7 +16,6 @@ namespace AnimeTimeDbUpdater
     public static class ClassFactory
     {
         public static IUnitOfWork CreateUnitOfWork() => new UnitOfWork(new AnimeTimeDbContext());
-        public static IImageStorage CreateImageStorage() => new AzureImageStorage();
         public static IEnumMapper<CategoryId> CreateCategoryMapper() => new AnimePlanetCategoryMapper();
         public static IEnumMapper<CharacterRoleId> CreateCharacterRoleMapper() => new AnimePlanetCharacterRoleMapper();
     }

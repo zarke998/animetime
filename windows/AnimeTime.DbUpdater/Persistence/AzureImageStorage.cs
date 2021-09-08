@@ -114,7 +114,6 @@ namespace AnimeTimeDbUpdater.Persistence
                 try
                 {
                     await UploadStreams(notUploadedStreams);
-
                 }
                 catch(RequestFailedException requestFailedSecondException)
                 {
