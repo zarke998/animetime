@@ -30,21 +30,6 @@ namespace AnimeTimeDbUpdater.Persistence
             _thumbnailContainer = new BlobContainerClient(_connectionString, _thumbnailContainerName);
             _generatedIds = new HashSet<long>();
         }
-        private static HashSet<int> GetGeneratedIds()
-        {
-            ICollection<int> ids = new List<int>();
-
-            var blobItems = _thumbnailContainer.GetBlobs().AsEnumerable();
-            var blobs = blobItems.Select(bi => bi.Name);
-
-            foreach (var b in blobs)
-            {
-                var id = Convert.ToInt32(b.Split('.')[0]);
-                ids.Add(id);
-            }
-
-            return new HashSet<int>(ids);
-        }
 
         public IEnumerable<string> Upload(IEnumerable<Image<Rgba32>> images)
         {
