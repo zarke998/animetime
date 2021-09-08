@@ -18,16 +18,14 @@ namespace AnimeTimeDbUpdater.Persistence
 {
     public class AzureImageStorage : IImageStorage
     {
-        static HashSet<long> _generatedIds;
-
-        private const string _connectionString = "DefaultEndpointsProtocol=https;AccountName=animetime;AccountKey=vS1Z/ZAhE7S08n92xLwYGgH7xKkcA8F8DrLQnnkH3YefEF5GQeLJ/+XsCaI0O9rSeWhTcsY0bwlDDYYiFKfzTA==;EndpointSuffix=core.windows.net";
-
         private const string _thumbnailContainerName = "thumb";
-        private static BlobContainerClient _thumbnailContainer;
+        private BlobContainerClient _thumbnailContainer;
 
-        static AzureImageStorage()
+        private HashSet<long> _generatedIds;
+
+        public AzureImageStorage(string connectionString)
         {
-            _thumbnailContainer = new BlobContainerClient(_connectionString, _thumbnailContainerName);
+            _thumbnailContainer = new BlobContainerClient(connectionString, _thumbnailContainerName);
             _generatedIds = new HashSet<long>();
         }
 

@@ -13,6 +13,8 @@ using AnimeTime.Core;
 using AnimeTime.Utilities.Imaging;
 using AnimeTime.Utilities.Core.Imaging;
 using AnimeTime.Utilities;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace AnimeTimeDbUpdater
 {
@@ -21,6 +23,17 @@ namespace AnimeTimeDbUpdater
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
+            builder.Register(c =>
+            {
+                var configBuilder = new ConfigurationBuilder();
+
+                var config = configBuilder.SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appSettings.json", optional: false)
+                            .Build();
+
+                var appSettings = config.Get<AppSettings>();
+                return appSettings;
+            }).SingleInstance();
 
             builder.RegisterType<MainApplication>().As<IApplication>();
             builder.RegisterType<AnimePlanetRepository>().As<IAnimeInfoRepository>();
@@ -38,7 +51,11 @@ namespace AnimeTimeDbUpdater
             builder.RegisterType<JpegCompressor>().As<IJpegCompressor>();
 
             builder.RegisterType<CrawlDelayer>().As<ICrawlDelayer>();
-            builder.RegisterType<AzureImageStorage>().As<IImageStorage>();
+            builder.Register(c =>
+            {
+                var appSettings = c.Resolve<AppSettings>();
+                return new AzureImageStorage(appSettings.AzureBlobStorageConnectionString);
+            }).As<IImageStorage>();
 
             return builder.Build();
         }
