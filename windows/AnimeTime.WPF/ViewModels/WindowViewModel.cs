@@ -11,7 +11,6 @@ namespace AnimeTime.WPF.ViewModels
 {
     public class WindowViewModel : ViewModelBase
     {
-        public ICommand TabClickCommand { get; set; } = new DelegateCommand(tab => MessageBox.Show(tab.ToString()));
         public List<string> NavItems { get; set; } = new List<string>() { "Home", "Library", "Discover", "Music" };
     }
 }

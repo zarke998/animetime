@@ -31,8 +31,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="0">
                 <controls:ImageRounded Source="/AnimeTime.WPF;component/Assets/Images/anime_logo.jpg" Radius="35"/>
-                <controls:TabsWithSlider Margin="25,0,0,0" Items="{Binding NavItems}"
-                                         Command="{Binding TabClickCommand}"/>
+                <controls:TabsWithSlider Margin="25,0,0,0" Items="{Binding NavItems}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                 <TextBox Style="{StaticResource Search}" Width="150"/>
