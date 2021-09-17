@@ -6,14 +6,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border Height="25" 
+                    <Border 
                             BorderBrush="#202020" 
                             BorderThickness="2" 
                             CornerRadius="12" 
-                            Background="#1D1D1D"
-                            Padding="10,0,15,0">
-                        <TextBox Text="{TemplateBinding Text}"
+                            Background="#1D1D1D">
+                        <TextBox
+                                Name="tb"
+                                Text="{TemplateBinding Text}"
+                                Width="{TemplateBinding Width}"
+                                Height="25"
                                  BorderBrush="Transparent"
+                                 Padding="10,0,15,0"
                                  Background="Transparent"
                                  Foreground="#a6a6a6"
                                  BorderThickness="0"
@@ -26,5 +30,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
 </ResourceDictionary>
