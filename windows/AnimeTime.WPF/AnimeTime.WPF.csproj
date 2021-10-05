@@ -62,9 +62,11 @@
     </Compile>
     <Compile Include="AttachedProperties\TextBoxAttachedProperties.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Common\ICloseable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\Controls\ClippedBorder.xaml.cs">
       <DependentUpon>ClippedBorder.xaml</DependentUpon>
     </Compile>
@@ -182,7 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utility\" />
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\expand.png" />

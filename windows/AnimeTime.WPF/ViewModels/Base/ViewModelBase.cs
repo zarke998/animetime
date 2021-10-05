@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimeTime.WPF.ViewModels
+namespace AnimeTime.WPF.ViewModels.Base
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

@@ -74,7 +74,7 @@
                                         VerticalAlignment="Top"
                                         Height="Auto"
                                         Orientation="Horizontal">
-                                
+
                                 <Button Style="{StaticResource CaptionButtonHollow}">
                                     <Image Source="/Assets/Icons/cogwheel.png" Width="16" VerticalAlignment="Center"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -87,8 +87,10 @@
                                     <Image Source="/Assets/Icons/expand.png" Width="12"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Button>
-                                
-                                <Button Style="{StaticResource CaptionButtonClose}">
+
+                                <Button Style="{StaticResource CaptionButtonClose}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CloseCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}">
                                     <Image Source="/Assets/Icons/shuriken-white.png" Width="12"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Button>

@@ -1,4 +1,5 @@
-﻿using AnimeTime.WPF.ViewModels;
+﻿using AnimeTime.WPF.Common;
+using AnimeTime.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,12 @@ namespace AnimeTime.DesktopClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, ICloseable
     {
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new WindowViewModel();
+            DataContext = new MainWindowViewModel();
         }
 
         private void ImageRounded_Loaded(object sender, RoutedEventArgs e)
