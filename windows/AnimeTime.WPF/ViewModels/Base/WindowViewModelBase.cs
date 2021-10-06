@@ -14,11 +14,19 @@ namespace AnimeTime.WPF.ViewModels.Base
     {
         public DelegateCommand CloseCommand { get; set; }
         public DelegateCommand MaximizeCommand { get; set; }
+        public DelegateCommand MinimizeCommand { get; set; }
 
         public WindowViewModelBase()
         {
             CloseCommand = new DelegateCommand(Close);
             MaximizeCommand = new DelegateCommand(Maximize);
+            MinimizeCommand = new DelegateCommand(Minimize);
+        }
+
+        private void Minimize(object param)
+        {
+            var minimizable = param as IMinimizable;
+            minimizable?.Minimize();
         }
 
         public void Maximize(object param)

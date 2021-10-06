@@ -64,6 +64,7 @@
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Common\ICloseable.cs" />
     <Compile Include="Common\IMaximizable.cs" />
+    <Compile Include="Common\IMinimizable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />

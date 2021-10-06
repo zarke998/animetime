@@ -80,7 +80,9 @@
                                     <Image Source="/Assets/Icons/cogwheel.png" Width="16" VerticalAlignment="Center"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Button>
-                                <Button Style="{StaticResource CaptionButton}">
+                                <Button Style="{StaticResource CaptionButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.MinimizeCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}">
                                     <Image Source="/Assets/Icons/minimize.png" Width="12" VerticalAlignment="Bottom" Margin="0,0,0,5"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Button>

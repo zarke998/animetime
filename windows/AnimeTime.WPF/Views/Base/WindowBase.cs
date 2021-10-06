@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace AnimeTime.WPF.Views.Base
 {
-    public class WindowBase : Window, ICloseable, IMaximizable
+    public class WindowBase : Window, ICloseable, IMaximizable, IMinimizable
     {
         public void Maximize()
         {
@@ -21,6 +21,11 @@ namespace AnimeTime.WPF.Views.Base
                     this.WindowState = WindowState.Normal;
                     break;
             }
+        }
+
+        public void Minimize()
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
