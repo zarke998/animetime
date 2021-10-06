@@ -62,14 +62,15 @@
                 <ControlTemplate TargetType="{x:Type Window}">
                     <c:ClippedBorder
                             x:Name="windowBorder"
-                            Background="{StaticResource WindowBackgroundBrush}" 
+                            Background="{StaticResource WindowBackgroundBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{Binding Source={StaticResource WindowCaptionHeight}}"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" 
+                            <StackPanel Grid.Row="0"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
                                         Height="Auto"
@@ -83,7 +84,9 @@
                                     <Image Source="/Assets/Icons/minimize.png" Width="12" VerticalAlignment="Bottom" Margin="0,0,0,5"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Button>
-                                <Button Style="{StaticResource CaptionButton}">
+                                <Button Style="{StaticResource CaptionButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.MaximizeCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}">
                                     <Image Source="/Assets/Icons/expand.png" Width="12"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
                                 </Button>
@@ -101,5 +104,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="WindowState" Value="Maximized">
+                <Setter Property="BorderThickness" Value="7"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

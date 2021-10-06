@@ -1,5 +1,6 @@
 ﻿using AnimeTime.WPF.Common;
 using AnimeTime.WPF.ViewModels;
+using AnimeTime.WPF.Views.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace AnimeTime.DesktopClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, ICloseable
+    public partial class MainWindow : WindowBase
     {
         public MainWindow()
         {

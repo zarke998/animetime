@@ -63,6 +63,7 @@
     <Compile Include="AttachedProperties\TextBoxAttachedProperties.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Common\ICloseable.cs" />
+    <Compile Include="Common\IMaximizable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Base\WindowBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ColorLightnessConverter.cs" />

@@ -13,10 +13,18 @@ namespace AnimeTime.WPF.ViewModels.Base
     public abstract class WindowViewModelBase : ViewModelBase
     {
         public DelegateCommand CloseCommand { get; set; }
+        public DelegateCommand MaximizeCommand { get; set; }
 
         public WindowViewModelBase()
         {
             CloseCommand = new DelegateCommand(Close);
+            MaximizeCommand = new DelegateCommand(Maximize);
+        }
+
+        public void Maximize(object param)
+        {
+            var maximizable = param as IMaximizable;
+            maximizable?.Maximize();
         }
 
         public void Close(object param)
