@@ -54,15 +54,8 @@
         <StackPanel Canvas.Top="{Binding ElementName=SearchBox, Path=ActualHeight, Converter={StaticResource AdditionConverter}, ConverterParameter=5}"
                     Width="{Binding ElementName=SearchBox, Path=Width}">
             <Border BorderThickness="2"
-                    Height="200">
-                <Border.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#F510EE" Offset="0"/>
-                            <GradientStop Color="#2B88FA" Offset="1"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
+                    Height="200"
+                    Style="{StaticResource BorderGradiented}">
             </Border>
         </StackPanel>
     </Canvas>
