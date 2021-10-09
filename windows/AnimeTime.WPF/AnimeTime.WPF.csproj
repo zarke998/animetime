@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AE3519A7-A472-4839-84DE-688398901B5B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>AnimeTime.WPF</RootNamespace>
     <AssemblyName>AnimeTime.WPF</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -33,6 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -66,6 +69,12 @@
     <Compile Include="Common\IMaximizable.cs" />
     <Compile Include="Common\IMinimizable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
+    <Compile Include="Utility\Win32Structs\MINMAXINFO.cs" />
+    <Compile Include="Utility\Win32Structs\MONITORINFO.cs" />
+    <Compile Include="Utility\Win32Structs\POINT.cs" />
+    <Compile Include="Utility\Win32Structs\RECT.cs" />
+    <Compile Include="Utility\SystemInfoUtil.cs" />
+    <Compile Include="Views\Base\Win32Window.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -185,9 +194,7 @@
       <Name>AnimeTime.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utility\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\Icons\expand.png" />
   </ItemGroup>

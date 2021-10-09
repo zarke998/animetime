@@ -8,6 +8,6 @@ namespace AnimeTime.WPF.Common
 {
     public interface IMaximizable
     {
-        void Maximize();
+        void ToggleMaximize();
     }
 }

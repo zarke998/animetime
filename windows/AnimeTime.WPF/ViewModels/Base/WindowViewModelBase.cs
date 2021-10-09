@@ -32,7 +32,7 @@ namespace AnimeTime.WPF.ViewModels.Base
         public void Maximize(object param)
         {
             var maximizable = param as IMaximizable;
-            maximizable?.Maximize();
+            maximizable?.ToggleMaximize();
         }
 
         public void Close(object param)
