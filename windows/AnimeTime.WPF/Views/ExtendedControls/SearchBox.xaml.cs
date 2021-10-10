@@ -24,6 +24,19 @@ namespace AnimeTime.WPF.Views.ExtendedControls
         {
             InitializeComponent();
             this.GotFocus += Search_GotFocus;
+            this.Loaded += SearchBox_Loaded;
+        }
+
+        private void SearchBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var innerTb = this.GetTemplateChild("tb") as TextBox;
+            innerTb.TextChanged += InnerTb_TextChanged;
+        }
+
+        private void InnerTb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            e.Handled = true;
+            this.Text = (e.OriginalSource as TextBox).Text;
         }
 
         private void Search_GotFocus(object sender, RoutedEventArgs e)
