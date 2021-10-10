@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Name="Root">
     <TextBox.Template>
-        <ControlTemplate>
+        <ControlTemplate TargetType="{x:Type TextBox}">
             <Border 
                 BorderBrush="#202020" 
                 BorderThickness="2" 
@@ -17,8 +17,8 @@
                 Background="#1D1D1D">
                 <TextBox
                     Name="tb"
-                    Text="{TemplateBinding Width}"
                     Width="{TemplateBinding Width}"
+                    Text="{TemplateBinding Text}"
                     Height="25"
                     BorderBrush="Transparent"
                     Padding="10,0,15,0"
