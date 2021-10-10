@@ -21,9 +21,28 @@ namespace AnimeTime.WPF.Views.Controls
     /// </summary>
     public partial class Search : UserControl
     {
+        #region Dependency Properties
+        public ICommand KeywordChangedCommand
+        {
+            get { return (ICommand)GetValue(KeywordChangedCommandProperty); }
+            set { SetValue(KeywordChangedCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for KeywordChangedCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty KeywordChangedCommandProperty =
+            DependencyProperty.Register(nameof(KeywordChangedCommand), typeof(ICommand), typeof(Search), new PropertyMetadata(null));
+        #endregion
+
         public Search()
         {
             InitializeComponent();
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (KeywordChangedCommand == null || !KeywordChangedCommand.CanExecute(null)) return;
+
+            KeywordChangedCommand.Execute(SearchBox.Text);
         }
     }
 }

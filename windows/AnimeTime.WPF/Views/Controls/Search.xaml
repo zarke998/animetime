@@ -50,7 +50,8 @@
     <Canvas Width="{Binding ElementName=Root, Path=Width}">
         <extControls:SearchBox 
             x:Name="SearchBox"
-            Width="{Binding ElementName=Root, Path=Width}"/>
+            Width="{Binding ElementName=Root, Path=Width}"
+            TextChanged="SearchBox_TextChanged"/>
         <StackPanel Canvas.Top="{Binding ElementName=SearchBox, Path=ActualHeight, Converter={StaticResource AdditionConverter}, ConverterParameter=5}"
                     Width="{Binding ElementName=SearchBox, Path=Width}">
             <Border BorderThickness="2.5"
