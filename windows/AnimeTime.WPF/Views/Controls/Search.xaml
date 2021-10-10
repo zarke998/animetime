@@ -53,7 +53,8 @@
             Width="{Binding ElementName=Root, Path=Width}"/>
         <StackPanel Canvas.Top="{Binding ElementName=SearchBox, Path=ActualHeight, Converter={StaticResource AdditionConverter}, ConverterParameter=5}"
                     Width="{Binding ElementName=SearchBox, Path=Width}">
-            <Border BorderThickness="2"
+            <Border BorderThickness="2.5"
+                    CornerRadius="5"
                     Height="200"
                     Style="{StaticResource BorderGradiented}">
             </Border>
