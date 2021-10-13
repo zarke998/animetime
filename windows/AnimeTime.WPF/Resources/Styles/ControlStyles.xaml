@@ -47,4 +47,94 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="SearchResultsListView" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#EEEEEE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListView}">
+                    <Border BorderThickness="2.5"
+                            CornerRadius="5"
+                            Height="{TemplateBinding Height}"
+                            Width="{TemplateBinding Width}"
+                            Style="{StaticResource BorderGradiented}">
+                        <ItemsPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border BorderThickness="0,0,0,0.5"
+                            BorderBrush="#2E2E2E"
+                            Padding="0,5">
+                        <DockPanel LastChildFill="False">
+                            <TextBlock Text="{Binding Title}"
+                                           VerticalAlignment="Center"
+                                       DockPanel.Dock="Left"/>
+                            <StackPanel DockPanel.Dock="Right"
+                                        Orientation="Horizontal">
+                                <TextBlock Text="Movie"
+                                           FontSize="9"
+                                           Margin="0,-1,4,0"
+                                       VerticalAlignment="Top"/>
+                                <Image Width="40"
+                                       Height="60"
+                                       Stretch="UniformToFill"
+                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </StackPanel>
+                            
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border Background="{TemplateBinding Background}"
+                                        Padding="10,0">
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#181818"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                         Storyboard.TargetProperty="MaxHeight"
+                                         From="0"
+                                Duration="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="False">
+                <Setter Property="MaxHeight" Value="0"/>
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

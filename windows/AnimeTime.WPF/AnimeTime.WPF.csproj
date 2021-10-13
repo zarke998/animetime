@@ -87,6 +87,7 @@
     <Compile Include="Views\Controls\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\SearchResult.cs" />
     <Compile Include="Views\Controls\TabsWithSlider.xaml.cs">
       <DependentUpon>TabsWithSlider.xaml</DependentUpon>
     </Compile>
