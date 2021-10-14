@@ -56,10 +56,24 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
                     <Border BorderThickness="2.5"
+                            x:Name="border"
                             CornerRadius="5"
                             Height="{TemplateBinding Height}"
                             Width="{TemplateBinding Width}"
                             Style="{StaticResource BorderGradiented}">
+                        <Border.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border 
+                                        CornerRadius="5"
+                                        x:Name="borderMask"
+                                        Background="White"
+                                        BorderThickness="2.5"
+                                        Width="{Binding ElementName=border, Path=ActualWidth}"
+                                        Height="{Binding ElementName=border, Path=ActualHeight}"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.OpacityMask>
                         <ItemsPresenter/>
                     </Border>
                 </ControlTemplate>
@@ -95,6 +109,7 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListViewItem">
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">

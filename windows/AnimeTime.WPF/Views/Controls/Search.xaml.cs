@@ -28,24 +28,36 @@ namespace AnimeTime.WPF.Views.Controls
             get { return (ICommand)GetValue(KeywordChangedCommandProperty); }
             set { SetValue(KeywordChangedCommandProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for KeywordChangedCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty KeywordChangedCommandProperty =
             DependencyProperty.Register(nameof(KeywordChangedCommand), typeof(ICommand), typeof(Search), new PropertyMetadata(null));
+
 
         public ObservableCollection<SearchResult> SearchResults
         {
             get { return (ObservableCollection<SearchResult>)GetValue(SearchResultsProperty); }
             set { SetValue(SearchResultsProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SearchResultsProperty =
             DependencyProperty.Register(nameof(SearchResults), typeof(ObservableCollection<SearchResult>), typeof(Search), new PropertyMetadata(null));
+
+
+
+        public ICommand ItemSelectedCommand
+        {
+            get { return (ICommand)GetValue(ItemSelectedCommandProperty); }
+            set { SetValue(ItemSelectedCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ItemSelectedCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemSelectedCommandProperty =
+            DependencyProperty.Register(nameof(ItemSelectedCommand), typeof(ICommand), typeof(Search), new PropertyMetadata(null));
+
+
         #endregion
 
         public Search()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -53,6 +65,13 @@ namespace AnimeTime.WPF.Views.Controls
             if (KeywordChangedCommand == null || !KeywordChangedCommand.CanExecute(null)) return;
 
             KeywordChangedCommand.Execute(SearchBox.Text);
+        }
+
+        private void SearchResultsLvw_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ItemSelectedCommand == null || !ItemSelectedCommand.CanExecute(null)) return;
+
+            ItemSelectedCommand.Execute(SearchResultsLvw.SelectedItem as SearchResult);
         }
     }
 }

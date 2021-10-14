@@ -58,7 +58,9 @@
                   MaxHeight="350"
                   ItemsSource="{Binding ElementName=Root, Path=SearchResults}"
                   Width="{Binding ElementName=SearchBox, Path=Width}"
-                  Canvas.Top="{Binding ElementName=SearchBox, Path=ActualHeight, Converter={StaticResource AdditionConverter}, ConverterParameter=5}">
+                  Canvas.Top="{Binding ElementName=SearchBox, Path=ActualHeight, Converter={StaticResource AdditionConverter}, ConverterParameter=5}"
+                  SelectionChanged="SearchResultsLvw_SelectionChanged">
+
         </ListView>
     </Canvas>
 </UserControl>

@@ -36,7 +36,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                 <controls:Search SearchResults="{Binding SearchResults}"
-                                 Width="200"/>
+                                 Width="200"
+                                 ItemSelectedCommand="{Binding SearchResultSelectedCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>
