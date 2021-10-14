@@ -1,4 +1,9 @@
-﻿<Border x:Class="AnimeTime.WPF.Views.Controls.ClippedBorder"
+﻿<!--
+    Doesn't work if border thickness is set.
+    In that case, to achieve desired behaviour, place this border inside your 
+    styled border with thickness.
+-->
+    <Border x:Class="AnimeTime.WPF.Views.Controls.ClippedBorder"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,14 +12,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
         Name="border">
-
     <Border.OpacityMask>
         <VisualBrush>
             <VisualBrush.Visual>
                 <Border Width="{Binding ElementName=border, Path=ActualWidth}"
                         Height="{Binding ElementName=border, Path=ActualHeight}"
                         CornerRadius="{Binding ElementName=border, Path=CornerRadius}"
-                        Background="{Binding ElementName=border, Path=Background}"/>
+                        Background="White"/>
             </VisualBrush.Visual>
         </VisualBrush>
     </Border.OpacityMask>
