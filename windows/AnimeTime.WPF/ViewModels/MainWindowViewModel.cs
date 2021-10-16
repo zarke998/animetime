@@ -47,6 +47,26 @@ namespace AnimeTime.WPF.ViewModels
                 new SearchResult()
                 {
                     Title = "Anime 3"
+                },
+                new SearchResult()
+                {
+                    Title = "Anime 2"
+                },
+                new SearchResult()
+                {
+                    Title = "Anime 2"
+                },
+                new SearchResult()
+                {
+                    Title = "Anime 2"
+                },
+                new SearchResult()
+                {
+                    Title = "Anime 2"
+                },
+                new SearchResult()
+                {
+                    Title = "Anime 2"
                 }
             };
 
@@ -56,8 +76,8 @@ namespace AnimeTime.WPF.ViewModels
         private void ResultSelected(object obj)
         {
             var result = obj as SearchResult;
+            SearchResults.Remove(result);
 
-            MessageBox.Show(result.Title);
         }
     }
 }
