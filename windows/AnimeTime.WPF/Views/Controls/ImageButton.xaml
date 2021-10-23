@@ -6,8 +6,18 @@
              xmlns:local="clr-namespace:AnimeTime.WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-        Name="Root">
-    <Border Background="{Binding ElementName=Root, Path=Background}">
-        <Image Source="{Binding ElementName=Root, Path=Source}"/>
-    </Border>
+             Name="Root">
+    <Button.Template>
+        <ControlTemplate TargetType="{x:Type Button}">
+            <Border Background="{TemplateBinding Background}"
+                    Padding="{TemplateBinding Padding}">
+                <Image Source="{Binding ElementName=Root, Path=Source}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Button.Template>
 </Button>

@@ -33,5 +33,10 @@ namespace AnimeTime.DesktopClient
         {
 
         }
+
+        private void NotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("test");
+        }
     }
 }

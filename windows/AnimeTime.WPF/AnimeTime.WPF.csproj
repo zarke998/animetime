@@ -69,6 +69,7 @@
     <Compile Include="Common\IMaximizable.cs" />
     <Compile Include="Common\IMinimizable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
+    <Compile Include="Converters\NumberToVisibilityConverter.cs" />
     <Compile Include="Utility\Win32Structs\MINMAXINFO.cs" />
     <Compile Include="Utility\Win32Structs\MONITORINFO.cs" />
     <Compile Include="Utility\Win32Structs\POINT.cs" />
@@ -83,6 +84,9 @@
     </Compile>
     <Compile Include="Views\Controls\ImageRounded.xaml.cs">
       <DependentUpon>ImageRounded.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\NotificationButton.xaml.cs">
+      <DependentUpon>NotificationButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
@@ -168,6 +172,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\NotificationButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,7 +203,9 @@
       <Name>AnimeTime.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Icons\bell.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\expand.png" />
   </ItemGroup>

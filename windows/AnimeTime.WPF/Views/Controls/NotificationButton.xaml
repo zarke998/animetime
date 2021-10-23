@@ -1,0 +1,66 @@
+﻿<Button x:Class="AnimeTime.WPF.Views.Controls.NotificationButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:AnimeTime.WPF.Views.Controls"
+        xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
+        mc:Ignorable="d"
+        d:DesignHeight="50"
+        d:DesignWidth="50"
+        x:Name="Root"
+        Width="30"
+        Height="30"
+        Padding="0"
+        Margin="0"
+        Click="UserControl_Click">
+    <Button.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Brushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter" />
+        </ResourceDictionary>
+    </Button.Resources>
+    <Button.Style>
+        <Style TargetType="{x:Type local:NotificationButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:NotificationButton}">
+                        <Canvas Width="{Binding ElementName=Root, Path=Width}"
+                                Height="{Binding ElementName=Root, Path=Height}"
+                                Name="Canvas">
+                            <local:ImageButton Padding="4"
+                                               Width="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                               Height="{Binding ElementName=Canvas, Path=ActualHeight}"
+                                               Background="Transparent"
+                                               BorderBrush="Transparent"
+                                               Source="/AnimeTime.WPF;component/Assets/Icons/bell.png">
+                            </local:ImageButton>
+                            <Label Height="18"
+                                   Width="18"
+                                   Canvas.Top="-5"
+                                   Canvas.Right="-5"
+                                   Visibility="{Binding NumberOfNotifications, Converter={StaticResource NumberToVisibilityConverter}}">
+                                <Label.Template>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border CornerRadius="100"
+                                                BorderThickness="2"
+                                                BorderBrush="{StaticResource MainGradientBrush}">
+                                            <ContentPresenter />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Label.Template>
+                                <TextBlock Foreground="White"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,2"
+                                           Text="{Binding NumberOfNotifications}" />
+                            </Label>
+                        </Canvas>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Button.Style>
+</Button>

@@ -17,15 +17,11 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="461*"/>
-            <ColumnDefinition Width="339*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="15,0,15,0.2" Grid.ColumnSpan="2">
+        <Grid Grid.Row="0" Margin="15,0,15,0.2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="4*"/>
@@ -34,10 +30,15 @@
                 <controls:ImageRounded Source="/AnimeTime.WPF;component/Assets/Images/anime_logo.jpg" Radius="35"/>
                 <controls:TabsWithSlider Margin="25,0,0,0" Items="{Binding NavItems}"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Right"
+                        Height="30">
                 <controls:Search SearchResults="{Binding SearchResults}"
                                  Width="200"
                                  ItemSelectedCommand="{Binding SearchResultSelectedCommand}"/>
+                <controls:NotificationButton Click="NotificationButton_Click"
+                                             VerticalAlignment="Top"/>
             </StackPanel>
         </Grid>
     </Grid>
