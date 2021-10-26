@@ -37,8 +37,9 @@
                 <controls:Search SearchResults="{Binding SearchResults}"
                                  Width="200"
                                  ItemSelectedCommand="{Binding SearchResultSelectedCommand}"/>
-                <controls:NotificationButton Click="NotificationButton_Click"
-                                             VerticalAlignment="Top"/>
+                <controls:Notifications Width="30"
+                                        Height="30"
+                                        NotificationList="{Binding Notifications}" />
             </StackPanel>
         </Grid>
     </Grid>

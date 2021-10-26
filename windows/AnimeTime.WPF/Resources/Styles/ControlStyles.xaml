@@ -1,26 +1,26 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties" xmlns:converters="clr-namespace:AnimeTime.WPF.Converters" 
+                    xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties"
+                    xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
                     xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Resources/Brushes.xaml"/>
+        <ResourceDictionary Source="/Resources/Brushes.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
-    <Style x:Key="Search" TargetType="{x:Type TextBox}">
+
+    <Style x:Key="Search"
+           TargetType="{x:Type TextBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border 
-                            BorderBrush="#202020" 
-                            BorderThickness="2" 
-                            CornerRadius="12" 
+                    <Border BorderBrush="#202020"
+                            BorderThickness="2"
+                            CornerRadius="12"
                             Background="#1D1D1D">
-                        <TextBox
-                                Name="tb"
-                                Text="{TemplateBinding Text}"
-                                Width="{TemplateBinding Width}"
-                                Height="25"
+                        <TextBox Name="tb"
+                                 Text="{TemplateBinding Text}"
+                                 Width="{TemplateBinding Width}"
+                                 Height="25"
                                  BorderBrush="Transparent"
                                  Padding="10,0,15,0"
                                  Background="Transparent"
@@ -29,20 +29,24 @@
                                  VerticalContentAlignment="Center"
                                  CaretBrush="White"
                                  FontSize="11"
-                                 aprop:TextBoxAttachedProperties.Placeholder="Search..."/>
+                                 aprop:TextBoxAttachedProperties.Placeholder="Search..." />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="BorderGradiented" TargetType="{x:Type Border}">
+    <Style x:Key="BorderGradiented"
+           TargetType="{x:Type Border}">
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <LinearGradientBrush StartPoint="0,1"
+                                     EndPoint="1,0">
                     <LinearGradientBrush.GradientStops>
-                        <GradientStop Color="{StaticResource SecondaryColor}" Offset="0"/>
-                        <GradientStop Color="{StaticResource PrimaryColor}" Offset="1"/>
+                        <GradientStop Color="{StaticResource SecondaryColor}"
+                                      Offset="0" />
+                        <GradientStop Color="{StaticResource PrimaryColor}"
+                                      Offset="1" />
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Setter.Value>
@@ -51,13 +55,13 @@
 
     <!--ScrollViewer-->
     <ControlTemplate x:Key="DefaultVerticalScrollBar"
-                 TargetType="{x:Type ScrollBar}">
+                     TargetType="{x:Type ScrollBar}">
         <Grid HorizontalAlignment="Right">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="12" />
             </Grid.ColumnDefinitions>
             <!--<Border
                     CornerRadius="5"
@@ -80,7 +84,7 @@
                                         CornerRadius="5"
                                         Background="#1D1D1D"
                                         Height="{TemplateBinding Height}"
-                                        Width="{TemplateBinding Width}"/>
+                                        Width="{TemplateBinding Width}" />
                             </ControlTemplate>
                         </Thumb.Template>
                     </Thumb>
@@ -89,28 +93,29 @@
         </Grid>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type ScrollViewer}" x:Key="MyCustomScrollViewer">
+    <Style TargetType="{x:Type ScrollViewer}"
+           x:Key="MyCustomScrollViewer">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate  TargetType="{x:Type ScrollViewer}">
                     <Grid x:Name="Grid">
-                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
-                                                CanContentScroll="False" 
-                                                CanHorizontallyScroll="False" 
-                                                CanVerticallyScroll="False" 
-                                                ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                Content="{TemplateBinding Content}" 
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                CanContentScroll="False"
+                                                CanHorizontallyScroll="False"
+                                                CanVerticallyScroll="False"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                Content="{TemplateBinding Content}"
                                                 Margin="{TemplateBinding Padding}" />
-                        <ScrollBar x:Name="PART_VerticalScrollBar" 
-                                   HorizontalAlignment="Right" 
-                                   Cursor="Arrow"  
-                                   Maximum="{TemplateBinding ScrollableHeight}" 
-                                   Minimum="0" 
-                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                                   HorizontalAlignment="Right"
+                                   Cursor="Arrow"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   Minimum="0"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
                                    ViewportSize="{TemplateBinding ViewportHeight}"
                                    Template="{StaticResource DefaultVerticalScrollBar}"
-                                   Opacity="0"/>
+                                   Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="MouseLeave"
@@ -121,7 +126,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                          Storyboard.TargetName="PART_VerticalScrollBar"
                                                          To="0"
-                                                         Duration="0:0:0.2"/>
+                                                         Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>
@@ -134,7 +139,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                          Storyboard.TargetName="PART_VerticalScrollBar"
                                                          To="1"
-                                                         Duration="0:0:0.2"/>
+                                                         Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>
@@ -144,11 +149,15 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Style x:Key="SearchResultsListView" TargetType="{x:Type ListView}">
-        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#EEEEEE"/>
+
+    <Style x:Key="DefaultListView"
+           TargetType="{x:Type ListView}">
+        <Setter Property="Background"
+                Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="#EEEEEE" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
@@ -160,7 +169,113 @@
                             Style="{StaticResource BorderGradiented}">
                         <controls:ClippedBorder CornerRadius="{Binding ElementName=border, Path=CornerRadius}">
                             <ScrollViewer Style="{StaticResource MyCustomScrollViewer}">
-                                <ItemsPresenter/>
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </controls:ClippedBorder>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="SnapsToDevicePixels"
+                            Value="True" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border Background="{TemplateBinding Background}"
+                                        Padding="10,0">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="#181818" />
+                            <Setter Property="Cursor"
+                                    Value="Hand" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SearchResultsListView"
+           TargetType="{x:Type ListView}"
+           BasedOn="{StaticResource DefaultListView}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border BorderThickness="0,0,0,0.5"
+                            BorderBrush="#2E2E2E"
+                            Padding="0,5">
+                        <DockPanel LastChildFill="False">
+                            <TextBlock Text="{Binding Title}"
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Left" />
+                            <StackPanel DockPanel.Dock="Right"
+                                        Orientation="Horizontal">
+                                <TextBlock Text="Movie"
+                                           FontSize="9"
+                                           Margin="0,-1,4,0"
+                                           VerticalAlignment="Top" />
+                                <Image Width="40"
+                                       Height="60"
+                                       Stretch="UniformToFill"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                            </StackPanel>
+
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}"
+                         Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="MaxHeight"
+                                             From="0"
+                                             Duration="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}"
+                         Value="False">
+                <Setter Property="MaxHeight"
+                        Value="0" />
+                <Setter Property="Visibility"
+                        Value="Hidden" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NotificationsListView"
+           TargetType="{x:Type ListView}"
+           BasedOn="{StaticResource DefaultListView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListView}">
+                    <Border BorderThickness="2.5"
+                            x:Name="border"
+                            CornerRadius="5"
+                            Height="{TemplateBinding Height}"
+                            Width="{TemplateBinding Width}">
+                        <controls:ClippedBorder CornerRadius="{Binding ElementName=border, Path=CornerRadius}">
+                            <ScrollViewer Style="{StaticResource MyCustomScrollViewer}">
+                                <ItemsPresenter />
                             </ScrollViewer>
                         </controls:ClippedBorder>
                     </Border>
@@ -170,76 +285,61 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Border BorderThickness="0,0,0,0.5"
-                            BorderBrush="#2E2E2E"
-                            Padding="0,5">
-                        <DockPanel LastChildFill="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0"
+                                   Height="70"
+                                   Width="50"
+                                   Fill="White"/>
+                        <StackPanel Grid.Column="1"
+                                    Margin="8,0,0,0">
                             <TextBlock Text="{Binding Title}"
-                                           VerticalAlignment="Center"
-                                       DockPanel.Dock="Left"/>
-                            <StackPanel DockPanel.Dock="Right"
-                                        Orientation="Horizontal">
-                                <TextBlock Text="Movie"
-                                           FontSize="9"
-                                           Margin="0,-1,4,0"
-                                       VerticalAlignment="Top"/>
-                                <Image Width="40"
-                                       Height="60"
-                                       Stretch="UniformToFill"
-                                       RenderOptions.BitmapScalingMode="HighQuality"/>
-                            </StackPanel>
-                            
-                        </DockPanel>
-                    </Border>
+                                       FontSize="16" />
+                            <TextBlock Text="{Binding NewEpisodes}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+                            <Image Width="18"
+                                       Height="18"
+                                       Source="/Assets/Icons/shuriken-white.png"
+                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                    <Setter Property="SnapsToDevicePixels"
+                            Value="True" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
                                 <Border Background="{TemplateBinding Background}"
-                                        Padding="10,0">
-                                    <ContentPresenter/>
+                                        Padding="10,10">
+                                    <ContentPresenter />
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#181818"/>
-                            <Setter Property="Cursor" Value="Hand"/>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="#181818" />
+                            <Setter Property="Cursor"
+                                    Value="Hand" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="True">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                         Storyboard.TargetProperty="MaxHeight"
-                                         From="0"
-                                Duration="0:0:0.4">
-                                <DoubleAnimation.EasingFunction>
-                                    <QuadraticEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </DataTrigger.EnterActions>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="False">
-                <Setter Property="MaxHeight" Value="0"/>
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 
-    
 </ResourceDictionary>

@@ -15,7 +15,6 @@ namespace AnimeTime.WPF.ViewModels
     public class MainWindowViewModel : WindowViewModelBase
     {
         private ObservableCollection<SearchResult> _searchResults;
-
         public ObservableCollection<SearchResult> SearchResults
         {
             get
@@ -28,56 +27,39 @@ namespace AnimeTime.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private ObservableCollection<Notification> _notifications;
+        public ObservableCollection<Notification> Notifications
+        {
+            get
+            {
+                return _notifications;
+            }
+            set
+            {
+                _notifications = value;
+                OnPropertyChanged();
+            }
+        }
+        public ICommand SearchResultSelectedCommand { get; set; }
+        public ICommand TestCommand { get; set; }
+
         public List<string> NavItems { get; set; } = new List<string>() { "Home", "Library", "Discover", "Music" };
 
-        public ICommand SearchResultSelectedCommand { get; set; }
 
         public MainWindowViewModel()
         {
-            SearchResults = new ObservableCollection<SearchResult>()
+            Notifications = new ObservableCollection<Notification>()
             {
-                new SearchResult()
+                new Notification()
                 {
-                    Title = "Anime 1"
+                    Title = "Test"
                 },
-                new SearchResult()
+                new Notification()
                 {
-                    Title = "Anime 2"
-                },
-                new SearchResult()
-                {
-                    Title = "Anime 3"
-                },
-                new SearchResult()
-                {
-                    Title = "Anime 2"
-                },
-                new SearchResult()
-                {
-                    Title = "Anime 2"
-                },
-                new SearchResult()
-                {
-                    Title = "Anime 2"
-                },
-                new SearchResult()
-                {
-                    Title = "Anime 2"
-                },
-                new SearchResult()
-                {
-                    Title = "Anime 2"
+                    Title = "Test"
                 }
             };
-
-            SearchResultSelectedCommand = new DelegateCommand(ResultSelected);
-        }
-
-        private void ResultSelected(object obj)
-        {
-            var result = obj as SearchResult;
-            SearchResults.Remove(result);
-
         }
     }
 }

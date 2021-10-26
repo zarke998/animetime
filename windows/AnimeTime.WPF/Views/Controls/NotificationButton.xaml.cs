@@ -45,8 +45,6 @@ namespace AnimeTime.WPF.Views.Controls
         {
             //e.Handled = e.OriginalSource is Button ? false : true;
             e.Handled = !(e.OriginalSource is Button) || e.OriginalSource == this;
-
-            NumberOfNotifications = 2;
         }
     }
 }

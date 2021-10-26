@@ -7,6 +7,8 @@
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource MainThemeColor}"/>
     <SolidColorBrush x:Key="CaptionCloseBtnBrush" Color="{StaticResource PrimaryRedColor}"/>
 
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+
     <LinearGradientBrush x:Key="MainGradientBrush" StartPoint="0,0.5" EndPoint="1,0">
         <GradientStop Color="{StaticResource SecondaryColor}" Offset="0"/>
         <GradientStop Color="{StaticResource PrimaryColor}" Offset="1"/>
