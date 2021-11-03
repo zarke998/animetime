@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AttachedProperties\GeneralAttachedProperties.cs" />
     <Compile Include="AttachedProperties\TextBoxAttachedProperties.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Common\ICloseable.cs" />
@@ -71,16 +72,24 @@
     <Compile Include="Converters\AdditionConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\GreaterOrEqualToBooleanConverter.cs" />
+    <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\NumberToVisibilityConverter.cs" />
     <Compile Include="Utility\Win32Structs\MINMAXINFO.cs" />
     <Compile Include="Utility\Win32Structs\MONITORINFO.cs" />
     <Compile Include="Utility\Win32Structs\POINT.cs" />
     <Compile Include="Utility\Win32Structs\RECT.cs" />
     <Compile Include="Utility\SystemInfoUtil.cs" />
+    <Compile Include="ViewModels\ContentViewModels\HomeViewModel.cs" />
     <Compile Include="Views\Base\Win32Window.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\Controls\Carousel.xaml.cs">
+      <DependentUpon>Carousel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CarouselItem.xaml.cs">
+      <DependentUpon>CarouselItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ClippedBorder.xaml.cs">
       <DependentUpon>ClippedBorder.xaml</DependentUpon>
     </Compile>
@@ -114,6 +123,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Base\WindowBase.cs" />
+    <Compile Include="Views\ContentViews\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ColorLightnessConverter.cs" />
@@ -145,6 +157,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ContentViews\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -162,6 +178,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\ControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Carousel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CarouselItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +253,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\anime_logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Naruto - cover.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\arrow-white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

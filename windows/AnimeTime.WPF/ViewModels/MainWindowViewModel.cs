@@ -1,5 +1,6 @@
 ﻿using AnimeTime.WPF.Commands;
 using AnimeTime.WPF.ViewModels.Base;
+using AnimeTime.WPF.ViewModels.ContentViewModels;
 using AnimeTime.WPF.Views.Controls;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,7 @@ namespace AnimeTime.WPF.ViewModels
         public ICommand TestCommand { get; set; }
 
         public List<string> NavItems { get; set; } = new List<string>() { "Home", "Library", "Discover", "Music" };
+        public ViewModelBase ActiveTab { get; set; } = new HomeViewModel();
 
 
         public MainWindowViewModel()
