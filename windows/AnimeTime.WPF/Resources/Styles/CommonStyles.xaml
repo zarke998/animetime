@@ -11,6 +11,8 @@
 
     <conv:TopRightCornerConverter x:Key="TopRightCornerConverter"></conv:TopRightCornerConverter>
     <conv:ColorLightnessConverter x:Key="ColorLightnessConverter"></conv:ColorLightnessConverter>
+    <conv:WidthHeightToRectConverter x:Key="WidthHeightToRectConverter" />
+    <conv:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
 
     <Style x:Key="CaptionButton" TargetType="{x:Type Button}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
@@ -60,11 +62,23 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <c:ClippedBorder
+                    <Border
                             x:Name="windowBorder"
                             Background="{StaticResource WindowBackgroundBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3">
+                        <Border.Clip>
+                            <RectangleGeometry RadiusX="{Binding ElementName=windowBorder, Path=CornerRadius, Converter={StaticResource CornerRadiusToDoubleConverter}}"
+                                               RadiusY="{Binding ElementName=windowBorder, Path=CornerRadius, Converter={StaticResource CornerRadiusToDoubleConverter}}">
+                                <RectangleGeometry.Rect>
+                                    <MultiBinding Converter="{StaticResource WidthHeightToRectConverter}">
+                                        <Binding ElementName="windowBorder"
+                                                 Path="ActualWidth" />
+                                        <Binding ElementName="windowBorder"
+                                                 Path="ActualHeight" />
+                                    </MultiBinding>
+                                </RectangleGeometry.Rect>
+                            </RectangleGeometry>
+                        </Border.Clip>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{Binding Source={StaticResource WindowCaptionHeight}}"/>
@@ -75,7 +89,6 @@
                                         VerticalAlignment="Top"
                                         Height="Auto"
                                         Orientation="Horizontal">
-
                                 <Button Style="{StaticResource CaptionButtonHollow}">
                                     <Image Source="/Assets/Icons/cogwheel.png" Width="16" VerticalAlignment="Center"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -89,20 +102,21 @@
                                 <Button Style="{StaticResource CaptionButton}"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.MaximizeCommand}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}">
-                                    <Image Source="/Assets/Icons/expand.png" Width="12"
-                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <Image Source="/Assets/Icons/expand.png"
+                                           Width="12"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
                                 </Button>
-
                                 <Button Style="{StaticResource CaptionButtonClose}"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CloseCommand}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}">
-                                    <Image Source="/Assets/Icons/shuriken-white.png" Width="12"
-                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <Image Source="/Assets/Icons/shuriken-white.png"
+                                           Width="12"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
                                 </Button>
                             </StackPanel>
                             <ContentPresenter Grid.Row="1"/>
                         </Grid>
-                    </c:ClippedBorder>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

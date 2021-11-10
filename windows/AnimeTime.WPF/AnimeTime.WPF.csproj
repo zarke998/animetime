@@ -71,6 +71,8 @@
     <Compile Include="Common\IMinimizable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BorderToRectConverter.cs" />
+    <Compile Include="Converters\CornerRadiusToDoubleConverter.cs" />
     <Compile Include="Converters\GreaterOrEqualToBooleanConverter.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\NumberToVisibilityConverter.cs" />
