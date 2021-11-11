@@ -26,8 +26,10 @@ namespace AnimeTime.WPF.Converters
             float lightness = float.Parse(parameter.ToString());
 
             var inputBrush = value as SolidColorBrush;
-            if (inputBrush == null)
-                throw new ArgumentException("Target not a solid color brush.");
+
+            if (inputBrush == null) 
+                return null;
+                //throw new ArgumentException("Target not a solid color brush.");
 
             var hsla = inputBrush.Color.ToHslaColor();
 

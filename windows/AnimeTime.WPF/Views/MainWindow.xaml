@@ -9,19 +9,21 @@
                  xmlns:cvm="clr-namespace:AnimeTime.WPF.ViewModels.ContentViewModels"
                  xmlns:contentviews="clr-namespace:AnimeTime.WPF.Views.ContentViews"
                  mc:Ignorable="d"
-        Height="560" Width="940"
-        Style="{StaticResource DefaultWindow}">
+                 ResizeMode="NoResize"
+                 Height="560"
+                 Width="940"
+                 Style="{StaticResource DefaultWindow}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/ControlStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-            
+
+
             <DataTemplate DataType="{x:Type cvm:HomeViewModel}">
                 <contentviews:HomeView />
             </DataTemplate>
-            
+
         </ResourceDictionary>
     </Window.Resources>
     <Grid>

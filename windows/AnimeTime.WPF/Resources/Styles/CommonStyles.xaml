@@ -101,7 +101,8 @@
                                 </Button>
                                 <Button Style="{StaticResource CaptionButton}"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.MaximizeCommand}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}">
+                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=.}"
+                                        IsEnabled="False">
                                     <Image Source="/Assets/Icons/expand.png"
                                            Width="12"
                                            RenderOptions.BitmapScalingMode="HighQuality" />
