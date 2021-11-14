@@ -38,6 +38,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Flexpanel.Wpf">
+      <HintPath>..\..\..\..\..\..\source\repos\Flexpanel\Flexpanel.Wpf\bin\Debug\Flexpanel.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -70,6 +73,7 @@
     <Compile Include="Common\IMaximizable.cs" />
     <Compile Include="Common\IMinimizable.cs" />
     <Compile Include="Converters\AdditionConverter.cs" />
+    <Compile Include="Converters\BooleanToScrollBarVisibility.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BorderToRectConverter.cs" />
     <Compile Include="Converters\CornerRadiusToDoubleConverter.cs" />
@@ -95,8 +99,12 @@
     <Compile Include="Views\Controls\ClippedBorder.xaml.cs">
       <DependentUpon>ClippedBorder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\FlexboxPanel.cs" />
     <Compile Include="Views\Controls\ImageRounded.xaml.cs">
       <DependentUpon>ImageRounded.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ListViewExpandable.xaml.cs">
+      <DependentUpon>ListViewExpandable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
@@ -200,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ImageRounded.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ListViewExpandable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

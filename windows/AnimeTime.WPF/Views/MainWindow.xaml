@@ -10,7 +10,7 @@
                  xmlns:contentviews="clr-namespace:AnimeTime.WPF.Views.ContentViews"
                  mc:Ignorable="d"
                  ResizeMode="NoResize"
-                 Height="560"
+                 Height="800"
                  Width="940"
                  Style="{StaticResource DefaultWindow}">
     <Window.Resources>

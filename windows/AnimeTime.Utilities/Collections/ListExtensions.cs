@@ -27,5 +27,10 @@ namespace AnimeTime.Utilities.Collections
 
             return source;
         }
+
+        public static R MaxOrDefault<T, R>(this IEnumerable<T> list, Func<T, R> maxFunc)
+        {
+            return list.Count() > 0 ? list.Max(maxFunc) : default(R);
+        }
     }
 }
