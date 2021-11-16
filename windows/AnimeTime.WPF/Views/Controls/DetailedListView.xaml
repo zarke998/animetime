@@ -47,7 +47,7 @@
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Grid Width="450"
+                            <Grid Width="440"
                                   Margin="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="6*" />
