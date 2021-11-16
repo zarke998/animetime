@@ -17,19 +17,23 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer Style="{StaticResource MyCustomScrollViewer}">
-        <StackPanel>
-            <TextBlock Text="Winter 2020/2021"
-                       TextAlignment="Center"
-                       Foreground="White"
-                       FontSize="22"
-                       Margin="0,5,0,15" />
-            <controls:Carousel Height="200" />
-            <Border Padding="20,0">
-                <StackPanel>
-                    <controls:ListViewExpandable Title="Recent Releases" />
-                    <controls:DetailedListView Title="Recommended" />
-                </StackPanel>
-            </Border>
-        </StackPanel>
+        <Border Padding="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Winter 2020/2021"
+                           TextAlignment="Center"
+                           Foreground="White"
+                           FontSize="22"
+                           Margin="0,5,0,15" />
+                <controls:Carousel Height="200"
+                                   Margin="0,0,0,30"/>
+                <Border Padding="20,0">
+                    <StackPanel>
+                        <controls:ListViewExpandable Title="Recent Releases"
+                                                     Margin="0,0,0,10"/>
+                        <controls:DetailedListView Title="Recommended"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
     </ScrollViewer>
 </UserControl>
