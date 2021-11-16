@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="AnimeTime.WPF.Views.Controls.TextRated"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:local="clr-namespace:AnimeTime.WPF.Views.Controls"
+           xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
+           mc:Ignorable="d"
+           d:DesignHeight="450"
+           d:DesignWidth="800"
+             x:Name="Root">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:MultiplyConverter x:Key="MultiplyConverter" />
+            <converters:AdditionConverter x:Key="AdditionConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Canvas Width="{Binding ElementName=TextBlock, Path=ActualWidth}"
+            Height="{Binding ElementName=TextBlock, Path=ActualHeight}">
+        <TextBlock x:Name="TextBlock"
+            Text="{Binding ElementName=Root, Path=Text}" />
+        <StackPanel Orientation="Horizontal"
+                    Canvas.Top="{Binding ElementName=TextBlock, Path=ActualHeight, Converter={StaticResource MultiplyConverter}, ConverterParameter=-0.4}"
+                    Canvas.Left="{Binding ElementName=TextBlock, Path=ActualWidth, Converter={StaticResource AdditionConverter}, ConverterParameter=5}">
+            <TextBlock Text="{Binding ElementName=Root, Path=Rating}"
+                       FontSize="{Binding ElementName=Root, Path=FontSize, Converter={StaticResource AdditionConverter}, ConverterParameter=-6}"
+                       VerticalAlignment="Center"/>
+            <Image Source="/Assets/Icons/star.png"
+                   Width="20"
+                   Height="20"
+                   Margin="3,0,0,0"
+                   RenderOptions.BitmapScalingMode="HighQuality"/>
+        </StackPanel>
+    </Canvas>
+</UserControl>

@@ -99,6 +99,9 @@
     <Compile Include="Views\Controls\ClippedBorder.xaml.cs">
       <DependentUpon>ClippedBorder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\DetailedListView.xaml.cs">
+      <DependentUpon>DetailedListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\FlexboxPanel.cs" />
     <Compile Include="Views\Controls\ImageRounded.xaml.cs">
       <DependentUpon>ImageRounded.xaml</DependentUpon>
@@ -118,6 +121,9 @@
     <Compile Include="Views\Controls\SearchResult.cs" />
     <Compile Include="Views\Controls\TabsWithSlider.xaml.cs">
       <DependentUpon>TabsWithSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\TextRated.xaml.cs">
+      <DependentUpon>TextRated.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtendedControls\BorderGradiented.xaml.cs">
       <DependentUpon>BorderGradiented.xaml</DependentUpon>
@@ -203,6 +209,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Controls\DetailedListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\ImageButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\TabsWithSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\TextRated.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +287,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\arrow-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\star.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
