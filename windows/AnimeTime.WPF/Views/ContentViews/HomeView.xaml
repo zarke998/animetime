@@ -26,7 +26,7 @@
             <controls:Carousel Height="200" />
             <Border Padding="20,0">
                 <StackPanel>
-                    <controls:ListViewExpandable Title="" />
+                    <controls:ListViewExpandable Title="Recent Releases" />
                     <controls:DetailedListView Title="Recommended" />
                 </StackPanel>
             </Border>
