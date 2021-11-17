@@ -18,12 +18,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/ControlStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-
             <DataTemplate DataType="{x:Type cvm:HomeViewModel}">
                 <contentviews:HomeView />
             </DataTemplate>
-
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -32,7 +29,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
-              Margin="15,0,15,0.2"
+              Margin="15,0,15,10"
               Panel.ZIndex="999">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*" />
