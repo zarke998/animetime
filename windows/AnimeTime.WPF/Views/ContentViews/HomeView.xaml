@@ -31,6 +31,10 @@
                         <controls:ListViewExpandable Title="Recent Releases"
                                                      Margin="0,0,0,10"/>
                         <controls:DetailedListView Title="Recommended"/>
+                        <controls:ListViewExpandable Title="Top Anime"
+                                                     Margin="0,40" />
+                        <controls:ListViewExpandable Title="2020 Most popular"
+                                                     Margin="0,0,0,10" />
                     </StackPanel>
                 </Border>
             </StackPanel>
