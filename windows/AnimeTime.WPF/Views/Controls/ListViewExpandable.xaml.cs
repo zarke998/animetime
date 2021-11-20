@@ -81,13 +81,6 @@ namespace AnimeTime.WPF.Views.Controls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             IsExpanded = !IsExpanded;
-            ResetScrollViewerPosition();
-        }
-
-        private void ResetScrollViewerPosition()
-        {
-            var scrollViewer = _container.Template.FindName("ScrollViewer", _container) as ScrollViewer;
-            scrollViewer.ScrollToVerticalOffset(0);
         }
 
         private void DoubleAnimation_Completed(object sender, EventArgs e)
