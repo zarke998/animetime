@@ -38,9 +38,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Flexpanel.Wpf">
-      <HintPath>..\..\..\..\..\..\source\repos\Flexpanel\Flexpanel.Wpf\bin\Debug\Flexpanel.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

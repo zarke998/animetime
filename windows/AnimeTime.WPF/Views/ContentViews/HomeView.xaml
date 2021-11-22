@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:AnimeTime.WPF.Views.ContentViews"
              xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
-             xmlns:f="clr-namespace:FlexPanelLayout;assembly=Flexpanel.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
