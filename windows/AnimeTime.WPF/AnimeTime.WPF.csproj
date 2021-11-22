@@ -96,6 +96,9 @@
     <Compile Include="Views\Controls\ClippedBorder.xaml.cs">
       <DependentUpon>ClippedBorder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\DefaultScrollViewer.xaml.cs">
+      <DependentUpon>DefaultScrollViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\DetailedListView.xaml.cs">
       <DependentUpon>DetailedListView.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
     <Page Include="Views\Controls\ClippedBorder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\DefaultScrollViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\DetailedListView.xaml">
       <SubType>Designer</SubType>

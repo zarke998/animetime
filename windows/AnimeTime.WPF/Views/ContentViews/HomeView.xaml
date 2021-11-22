@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <ScrollViewer Style="{StaticResource MyCustomScrollViewer}">
+    <controls:DefaultScrollViewer>
         <Border Padding="0,0,0,20">
             <StackPanel>
                 <TextBlock Text="Winter 2020/2021"
@@ -38,5 +38,5 @@
                 </Border>
             </StackPanel>
         </Border>
-    </ScrollViewer>
+    </controls:DefaultScrollViewer>
 </UserControl>
