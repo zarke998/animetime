@@ -82,7 +82,7 @@
     <Compile Include="Utility\Win32Structs\POINT.cs" />
     <Compile Include="Utility\Win32Structs\RECT.cs" />
     <Compile Include="Utility\SystemInfoUtil.cs" />
-    <Compile Include="ViewModels\ContentViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\Pages\HomeViewModel.cs" />
     <Compile Include="Views\Base\Win32Window.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
@@ -139,7 +139,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Base\WindowBase.cs" />
-    <Compile Include="Views\ContentViews\HomeView.xaml.cs">
+    <Compile Include="Views\Pages\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -173,7 +173,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ContentViews\HomeView.xaml">
+    <Page Include="Views\Pages\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

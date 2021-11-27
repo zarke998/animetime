@@ -1,6 +1,6 @@
 ﻿using AnimeTime.WPF.Commands;
 using AnimeTime.WPF.ViewModels.Base;
-using AnimeTime.WPF.ViewModels.ContentViewModels;
+using AnimeTime.WPF.ViewModels.Pages;
 using AnimeTime.WPF.Views.Controls;
 using System;
 using System.Collections.Generic;

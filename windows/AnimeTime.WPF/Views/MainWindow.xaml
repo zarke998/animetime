@@ -6,8 +6,8 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:AnimeTime.DesktopClient"
                  xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
-                 xmlns:cvm="clr-namespace:AnimeTime.WPF.ViewModels.ContentViewModels"
-                 xmlns:contentviews="clr-namespace:AnimeTime.WPF.Views.ContentViews"
+                 xmlns:vmpages="clr-namespace:AnimeTime.WPF.ViewModels.Pages"
+                 xmlns:pages="clr-namespace:AnimeTime.WPF.Views.Pages"
                  mc:Ignorable="d"
                  ResizeMode="NoResize"
                  Height="800"
@@ -18,8 +18,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/ControlStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate DataType="{x:Type cvm:HomeViewModel}">
-                <contentviews:HomeView />
+            <DataTemplate DataType="{x:Type vmpages:HomeViewModel}">
+                <pages:HomeView />
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
