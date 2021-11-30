@@ -18,32 +18,124 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Canvas x:Name="Canvas">
-        <Border x:Name="BackgroundContainer"
-                ap:GeneralAttachedProperties.MarginTop="{Binding ElementName=Root, Path=VerticalContentOffset}">
-            <Image x:Name="Image"
-                   Height="500"
-                   Width="{Binding ElementName=Canvas, Path=ActualWidth}"
-                   Source="/Assets/Images/default-background.jpg"
-                   Stretch="UniformToFill" />
-        </Border>
-        <excontrols:DefaultScrollViewer Height="{Binding ElementName=Canvas, Path=ActualHeight}"
-                                        Width="{Binding ElementName=Canvas, Path=ActualWidth}"
-                                        Style="{StaticResource DefaultScrollViewer}">
-            <StackPanel Width="{Binding ElementName=Canvas, Path=ActualWidth}">
-                <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
-                <StackPanel Background="{StaticResource WindowBackgroundBrush}">
-                    <Grid Margin="0,-40,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="8*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0"
-                                   Height="200"
-                                   Fill="Red" />
-                    </Grid>
-                </StackPanel>
-            </StackPanel>
-        </excontrols:DefaultScrollViewer>
-    </Canvas>
+    <UserControl.Style>
+        <Style TargetType="{x:Type local:DetailsView}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:DetailsView}">
+                        <Canvas x:Name="Canvas">
+                            <Border x:Name="BackgroundContainer"
+                                    ap:GeneralAttachedProperties.MarginTop="{Binding ElementName=Root, Path=VerticalContentOffset}">
+                                <Image x:Name="Image"
+                                       Height="500"
+                                       Width="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                       Source="/Assets/Images/default-background.jpg"
+                                       Stretch="UniformToFill" />
+                            </Border>
+                            <excontrols:DefaultScrollViewer x:Name="DefaultScrollViewer"
+                                                            Height="{Binding ElementName=Canvas, Path=ActualHeight}"
+                                                            Width="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                                            Style="{StaticResource DefaultScrollViewer}">
+                                <StackPanel Width="{Binding ElementName=Canvas, Path=ActualWidth}">
+                                    <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
+                                    <StackPanel Background="{StaticResource WindowBackgroundBrush}"
+                                                x:Name="ContentContainer">
+                                        <Grid Margin="0,-40,0,0"
+                                              x:Name="AnimeInfoContainer">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                        <Grid Margin="0,-40,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                        <Grid Margin="0,-40,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                        <Grid Margin="0,-40,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                        <Grid Margin="0,-40,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                        <Grid Margin="0,-40,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                        <Grid Margin="0,-40,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="8*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.Column="0"
+                                                       Height="200"
+                                                       Fill="Red" />
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </excontrols:DefaultScrollViewer>
+                        </Canvas>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=WallpaperPassedViewport}"
+                                         Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.2"
+                                                             To="0"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             Storyboard.TargetName="Image" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.2"
+                                                             To="1"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             Storyboard.TargetName="Image" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Style>
 </UserControl>
