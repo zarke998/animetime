@@ -8,6 +8,8 @@
                  xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
                  xmlns:vmpages="clr-namespace:AnimeTime.WPF.ViewModels.Pages"
                  xmlns:pages="clr-namespace:AnimeTime.WPF.Views.Pages"
+                 xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
+                 xmlns:qc="http://QuickConverter.CodePlex.com/"
                  mc:Ignorable="d"
                  ResizeMode="NoResize"
                  Height="800"
@@ -16,10 +18,15 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Constants.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ControlStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:MarginToSingleConverter x:Key="MarginToSingleConverter" />
             <DataTemplate DataType="{x:Type vmpages:HomeViewModel}">
                 <pages:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmpages:DetailsViewModel}">
+                <pages:DetailsView VerticalContentOffset="{qc:MultiBinding '-($P1 + $P2 + $P3)', P1={Binding ElementName=NavBar, Path=ActualHeight}, P2={Binding ElementName=NavBar, Path=Margin, Converter={StaticResource MarginToSingleConverter}, ConverterParameter=Bottom}, P3={Binding Source={StaticResource WindowCaptionHeight}}}" />
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
@@ -30,7 +37,8 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
               Margin="15,0,15,10"
-              Panel.ZIndex="999">
+              Panel.ZIndex="999"
+              x:Name="NavBar">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="4*" />

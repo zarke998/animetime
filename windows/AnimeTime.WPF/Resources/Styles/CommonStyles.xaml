@@ -88,7 +88,8 @@
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
                                         Height="Auto"
-                                        Orientation="Horizontal">
+                                        Orientation="Horizontal"
+                                        Panel.ZIndex="999">
                                 <Button Style="{StaticResource CaptionButtonHollow}">
                                     <Image Source="/Assets/Icons/cogwheel.png" Width="16" VerticalAlignment="Center"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>

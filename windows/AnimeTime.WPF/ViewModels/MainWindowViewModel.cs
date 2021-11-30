@@ -46,7 +46,7 @@ namespace AnimeTime.WPF.ViewModels
         public ICommand TestCommand { get; set; }
 
         public List<string> NavItems { get; set; } = new List<string>() { "Home", "Library", "Discover", "Music" };
-        public ViewModelBase ActiveTab { get; set; } = new HomeViewModel();
+        public ViewModelBase ActiveTab { get; set; } = new DetailsViewModel();
 
 
         public MainWindowViewModel()
