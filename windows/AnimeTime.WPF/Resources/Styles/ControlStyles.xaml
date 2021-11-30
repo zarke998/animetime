@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties"
                     xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
-                    xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls">
+                    xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
+                    xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Brushes.xaml" />
@@ -245,4 +246,100 @@
         </Setter>
     </Style>
 
+
+    <ControlTemplate x:Key="DefaultVerticalScrollBar"
+                     TargetType="{x:Type ScrollBar}">
+        <Grid HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12" />
+            </Grid.ColumnDefinitions>
+            <!--<Border
+                    CornerRadius="5"
+                    Background="#1A303030"
+                    Grid.Row="0"
+                BorderBrush="White"
+                BorderThickness="0.1"
+                Margin="0,5"/>-->
+            <Track x:Name="PART_Track"
+                   Grid.Row="0"
+                   IsDirectionReversed="true"
+                   Margin="0,2,3,1"
+                   Opacity="0.5">
+                <Track.Thumb>
+                    <Thumb>
+                        <Thumb.Template>
+                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                <Border BorderBrush="#494949"
+                                        BorderThickness="1"
+                                        CornerRadius="5"
+                                        Background="#1D1D1D"
+                                        Height="{TemplateBinding Height}"
+                                        Width="{TemplateBinding Width}" />
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+    
+    <Style TargetType="{x:Type excontrols:DefaultScrollViewer}"
+           x:Key="DefaultScrollViewer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type excontrols:DefaultScrollViewer}">
+                    <Grid x:Name="Grid">
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                CanContentScroll="False"
+                                                CanHorizontallyScroll="False"
+                                                CanVerticallyScroll="False"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                Content="{TemplateBinding Content}"
+                                                Margin="{TemplateBinding Padding}" />
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                                   HorizontalAlignment="Right"
+                                   Cursor="Arrow"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   Minimum="0"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Template="{StaticResource DefaultVerticalScrollBar}"
+                                   Opacity="0" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsScrolling"
+                                 Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="PART_VerticalScrollBar"
+                                                         To="1"
+                                                         Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="PART_VerticalScrollBar"
+                                                         To="0"
+                                                         BeginTime="0:0:3"
+                                                         Duration="0:0:0.2">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>

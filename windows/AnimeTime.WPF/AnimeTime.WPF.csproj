@@ -109,6 +109,7 @@
     <Compile Include="Views\Controls\ListViewExpandable.xaml.cs">
       <DependentUpon>ListViewExpandable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExtendedControls\DefaultScrollViewer.cs" />
     <Compile Include="Views\Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
     </Compile>
