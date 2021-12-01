@@ -27,86 +27,77 @@
                             <Border x:Name="BackgroundContainer"
                                     ap:GeneralAttachedProperties.MarginTop="{Binding ElementName=Root, Path=VerticalContentOffset}">
                                 <Image x:Name="Image"
-                                       Height="500"
+                                       Height="400"
                                        Width="{Binding ElementName=Canvas, Path=ActualWidth}"
                                        Source="/Assets/Images/default-background.jpg"
-                                       Stretch="UniformToFill" />
+                                       Stretch="UniformToFill"
+                                       Opacity="0.6"/>
                             </Border>
-                            <excontrols:DefaultScrollViewer x:Name="DefaultScrollViewer"
-                                                            Height="{Binding ElementName=Canvas, Path=ActualHeight}"
-                                                            Width="{Binding ElementName=Canvas, Path=ActualWidth}"
-                                                            Style="{StaticResource DefaultScrollViewer}">
-                                <StackPanel Width="{Binding ElementName=Canvas, Path=ActualWidth}">
-                                    <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
-                                    <StackPanel Background="{StaticResource WindowBackgroundBrush}"
-                                                x:Name="ContentContainer">
-                                        <Grid Margin="0,-40,0,0"
-                                              x:Name="AnimeInfoContainer">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
-                                        <Grid Margin="0,-40,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
-                                        <Grid Margin="0,-40,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
-                                        <Grid Margin="0,-40,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
-                                        <Grid Margin="0,-40,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
-                                        <Grid Margin="0,-40,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
-                                        <Grid Margin="0,-40,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="8*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Height="200"
-                                                       Fill="Red" />
-                                        </Grid>
+                            <Border Padding="25, 0"
+                                    Width="{Binding ElementName=Canvas, Path=ActualWidth}">
+                                <excontrols:DefaultScrollViewer x:Name="DefaultScrollViewer"
+                                                                Height="{Binding ElementName=Canvas, Path=ActualHeight}"
+                                                                                                Style="{StaticResource DefaultScrollViewer}">
+                                    <StackPanel>
+                                        <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
+                                        <StackPanel Background="{StaticResource WindowBackgroundBrush}"
+                                                    x:Name="ContentContainer">
+                                            <Grid Margin="0,-50,0,0"
+                                                  x:Name="AnimeInfoContainer">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*" />
+                                                    <ColumnDefinition Width="8*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Rectangle Grid.Column="0"
+                                                           Height="225"
+                                                           Fill="Red" />
+                                                <Border Padding="20, 0, 0, 0"
+                                                        Grid.Column="1">
+                                                <StackPanel Margin="0,0,0,0">
+                                                        <DockPanel LastChildFill="True">
+                                                            <StackPanel DockPanel.Dock="Right"
+                                                                        VerticalAlignment="Center"
+                                                                        Orientation="Horizontal">
+                                                                <Button>
+                                                                    <Button.Template>
+                                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                                            <ContentPresenter />
+                                                                        </ControlTemplate>
+                                                                    </Button.Template>
+                                                                    <StackPanel>
+                                                                        <Image Source="/Assets/Icons/star.png"
+                                                                               Width="25"/>
+                                                                        <TextBlock Text="8.5/10"
+                                                                                   Margin="0,2,0,0"
+                                                                                   Foreground="White"/>
+                                                                    </StackPanel>
+                                                                </Button>
+                                                            </StackPanel>
+                                                            <TextBlock Text="Naruto: Shippuden"
+                                                                       DockPanel.Dock="Left"
+                                                                       FontSize="28"
+                                                                       Foreground="White" />
+                                                        </DockPanel>
+                                                        <TextBlock Margin="0,25,0,0"
+                                                                   Foreground="White"
+                                                                   FontSize="16">
+                                                            <StackPanel>
+                                                                <TextBlock Text="Type: TV" />
+                                                                <TextBlock Text="Alternative Titles: sakdlas"
+                                                                           Margin="0,10,0,0"/>    
+                                                                <TextBlock Text="Season 2019"
+                                                                           Margin="0,10,0,0" />    
+                                                                <TextBlock Text="Studio: ufotable"
+                                                                           Margin="0,10,0,0" />    
+                                                            </StackPanel>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </excontrols:DefaultScrollViewer>
+                                </excontrols:DefaultScrollViewer>
+                            </Border>
                         </Canvas>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=WallpaperPassedViewport}"
