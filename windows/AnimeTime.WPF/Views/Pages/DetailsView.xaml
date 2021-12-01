@@ -33,15 +33,16 @@
                                        Stretch="UniformToFill"
                                        Opacity="0.6"/>
                             </Border>
-                            <Border Padding="25, 0"
-                                    Width="{Binding ElementName=Canvas, Path=ActualWidth}">
-                                <excontrols:DefaultScrollViewer x:Name="DefaultScrollViewer"
-                                                                Height="{Binding ElementName=Canvas, Path=ActualHeight}"
-                                                                                                Style="{StaticResource DefaultScrollViewer}">
-                                    <StackPanel>
-                                        <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
-                                        <StackPanel Background="{StaticResource WindowBackgroundBrush}"
-                                                    x:Name="ContentContainer">
+
+                            <excontrols:DefaultScrollViewer x:Name="DefaultScrollViewer"
+                                                            Height="{Binding ElementName=Canvas, Path=ActualHeight}"
+                                                            Width="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                                            Style="{StaticResource DefaultScrollViewer}">
+                                <StackPanel>
+                                    <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
+                                    <Border Padding="25, 0"
+                                            Background="{StaticResource WindowBackgroundBrush}">
+                                        <StackPanel x:Name="ContentContainer">
                                             <Grid Margin="0,-50,0,0"
                                                   x:Name="AnimeInfoContainer">
                                                 <Grid.ColumnDefinitions>
@@ -149,12 +150,13 @@
                                                            Foreground="White"
                                                            FontSize="14"
                                                            Width="{Binding ElementName=SynopsisContainer, Path=ActualWidth}"
-                                                           TextWrapping="Wrap"/>
+                                                           TextWrapping="Wrap" />
                                             </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </excontrols:DefaultScrollViewer>
-                            </Border>
+                                    </Border>
+                                </StackPanel>
+
+                            </excontrols:DefaultScrollViewer>
                         </Canvas>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=WallpaperPassedViewport}"
