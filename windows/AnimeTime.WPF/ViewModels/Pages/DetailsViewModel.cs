@@ -12,6 +12,8 @@ namespace AnimeTime.WPF.ViewModels.Pages
     {
         public ObservableCollection<Genre> Genres { get; set; }
 
+        public string Synopsis { get; set; } = "KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj";
+
         public DetailsViewModel()
         {
             Genres = new ObservableCollection<Genre>()

@@ -140,6 +140,17 @@
                                                     </ListView.ItemTemplate>
                                                 </ListView>
                                             </DockPanel>
+                                            <StackPanel x:Name="SynopsisContainer">
+                                                <TextBlock Text="Synopsis"
+                                                           FontSize="24"
+                                                           Foreground="White"
+                                                           Margin="0,10" />
+                                                <TextBlock Text="{Binding Synopsis}"
+                                                           Foreground="White"
+                                                           FontSize="14"
+                                                           Width="{Binding ElementName=SynopsisContainer, Path=ActualWidth}"
+                                                           TextWrapping="Wrap"/>
+                                            </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
                                 </excontrols:DefaultScrollViewer>
