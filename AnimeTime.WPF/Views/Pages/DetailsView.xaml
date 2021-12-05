@@ -40,7 +40,7 @@
                                                             Style="{StaticResource DefaultScrollViewer}">
                                 <StackPanel>
                                     <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
-                                    <Border Padding="25, 0"
+                                    <Border Padding="25, 0, 25, 15"
                                             Background="{StaticResource WindowBackgroundBrush}">
                                         <StackPanel x:Name="ContentContainer">
                                             <Grid Margin="0,-50,0,0"
