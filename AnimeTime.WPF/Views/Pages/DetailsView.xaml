@@ -102,10 +102,15 @@
                                                            FontSize="24"
                                                            DockPanel.Dock="Left" />
                                                 <ListView ItemsSource="{Binding Genres}"
-                                                          Background="Transparent"
                                                           BorderBrush="Transparent"
                                                           Margin="15,3,0,0"
-                                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                          IsEnabled="False">
+                                                    <ListView.Template>
+                                                        <ControlTemplate TargetType="{x:Type ListView}">
+                                                            <ItemsPresenter />
+                                                        </ControlTemplate>
+                                                    </ListView.Template>
                                                     <ListView.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <WrapPanel Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth}"/>
