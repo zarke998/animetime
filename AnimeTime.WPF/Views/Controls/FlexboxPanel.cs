@@ -146,7 +146,7 @@ namespace AnimeTime.WPF.Views.Controls
         }
         private int GetMaxItemsPerRow(double availableWidth)
         {
-            if (InternalChildren.Count == 0) return 0;
+            if (InternalChildren.Count == 0 || availableWidth == 0) return 0;
 
             return Convert.ToInt32((availableWidth + Spacing) / (InternalChildren[0].DesiredSize.Width + Spacing));
         }
