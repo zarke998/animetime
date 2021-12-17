@@ -45,12 +45,15 @@ namespace AnimeTime.WPF.ViewModels
         public ICommand SearchResultSelectedCommand { get; set; }
         public ICommand TestCommand { get; set; }
 
-        public List<string> NavItems { get; set; } = new List<string>() { "Home", "Library", "Discover", "Music" };
+        public Dictionary<string, object> NavItems { get; set; }
         public ViewModelBase ActiveTab { get; set; } = new DetailsViewModel();
 
 
         public MainWindowViewModel()
         {
+            NavItems = new Dictionary<string, object>();
+            NavItems.Add("Home", new HomeViewModel());
+
             Notifications = new ObservableCollection<Notification>()
             {
                 new Notification()

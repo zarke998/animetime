@@ -22,11 +22,10 @@ namespace AnimeTime.WPF.Views.Controls
     /// </summary>
     public partial class TabsWithSlider : UserControl
     {
-
         #region Dependency Properties
-        public IEnumerable<string> Items
+        public Dictionary<string, object> Items
         {
-            get { return (IEnumerable<string>)GetValue(ItemsProperty); }
+            get { return (Dictionary<string, object>)GetValue(ItemsProperty); }
             set { SetValue(ItemsProperty, value); }
         }
         public ICommand Command
@@ -41,7 +40,7 @@ namespace AnimeTime.WPF.Views.Controls
 
         // Using a DependencyProperty as the backing store for Items.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register("Items", typeof(IEnumerable<string>), typeof(TabsWithSlider), new PropertyMetadata(null, OnItemsChanged));
+            DependencyProperty.Register("Items", typeof(Dictionary<string, object>), typeof(TabsWithSlider), new PropertyMetadata(new Dictionary<string, object>(), OnItemsChanged));
 
         private static void OnCommandChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
@@ -166,16 +165,17 @@ namespace AnimeTime.WPF.Views.Controls
         {
             foreach (var item in Items)
             {
-                var button = CreateTab(item);
+                var button = CreateTab(item.Key, item.Value);
                 TabsContainer.Children.Add(button);
             }
         }
-        private Button CreateTab(string displayName)
+        private Button CreateTab(string displayName, object value)
         {
             var button = new Button();
 
             button.Style = this.FindResource("NavTab") as Style;
             button.Content = displayName;
+            button.Tag = value;
             button.Click += Tab_Click;
 
             return button;
@@ -192,7 +192,7 @@ namespace AnimeTime.WPF.Views.Controls
 
             if(Command != null && Command.CanExecute(null))
             {
-                Command.Execute(ActiveTab);
+                Command.Execute(tab.Tag);
             }
             AnimateSlider(TabsContainer.Children.IndexOf(tab), 500);
         }
@@ -224,6 +224,11 @@ namespace AnimeTime.WPF.Views.Controls
                 DisableTabs();
             }
         }
+    }
 
+    public class TabItem
+    {
+        public string DisplayName { get; set; }
+        public object Value { get; set; }
     }
 }
