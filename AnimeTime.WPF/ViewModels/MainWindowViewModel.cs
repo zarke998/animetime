@@ -15,7 +15,12 @@ namespace AnimeTime.WPF.ViewModels
 {
     public class MainWindowViewModel : WindowViewModelBase
     {
+        #region Members
         private ObservableCollection<SearchResult> _searchResults;
+        private ObservableCollection<Notification> _notifications;
+        #endregion
+
+        #region Properties
         public ObservableCollection<SearchResult> SearchResults
         {
             get
@@ -28,8 +33,6 @@ namespace AnimeTime.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private ObservableCollection<Notification> _notifications;
         public ObservableCollection<Notification> Notifications
         {
             get
@@ -42,11 +45,12 @@ namespace AnimeTime.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ICommand SearchResultSelectedCommand { get; set; }
-        public ICommand TestCommand { get; set; }
 
         public Dictionary<string, object> NavItems { get; set; }
         public ViewModelBase ActiveTab { get; set; } = new DetailsViewModel();
+
+        public ICommand SearchResultSelectedCommand { get; set; }
+        #endregion
 
 
         public MainWindowViewModel(HomeViewModel homeViewModel)
