@@ -49,10 +49,10 @@ namespace AnimeTime.WPF.ViewModels
         public ViewModelBase ActiveTab { get; set; } = new DetailsViewModel();
 
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(HomeViewModel homeViewModel)
         {
             NavItems = new Dictionary<string, object>();
-            NavItems.Add("Home", new HomeViewModel());
+            NavItems.Add("Home", homeViewModel);
 
             Notifications = new ObservableCollection<Notification>()
             {

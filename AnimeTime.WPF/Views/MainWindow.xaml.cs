@@ -26,7 +26,6 @@ namespace AnimeTime.DesktopClient
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
         }
 
         private void ImageRounded_Loaded(object sender, RoutedEventArgs e)
