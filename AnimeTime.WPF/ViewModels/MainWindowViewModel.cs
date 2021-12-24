@@ -46,8 +46,8 @@ namespace AnimeTime.WPF.ViewModels
             }
         }
 
-        public Dictionary<string, object> NavItems { get; set; }
-        public ViewModelBase ActiveTab { get; set; } = new DetailsViewModel();
+        public Dictionary<string, object> PagesViewModels { get; set; } = new Dictionary<string, object>();
+        public ViewModelBase ActivePage { get; set; } = new DetailsViewModel();
 
         public ICommand SearchResultSelectedCommand { get; set; }
         #endregion
@@ -55,8 +55,7 @@ namespace AnimeTime.WPF.ViewModels
 
         public MainWindowViewModel(HomeViewModel homeViewModel)
         {
-            NavItems = new Dictionary<string, object>();
-            NavItems.Add("Home", homeViewModel);
+            PagesViewModels.Add("Home", homeViewModel);
 
             Notifications = new ObservableCollection<Notification>()
             {

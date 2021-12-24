@@ -48,7 +48,7 @@
                 <controls:ImageRounded Source="/AnimeTime.WPF;component/Assets/Images/anime_logo.jpg"
                                        Radius="35" />
                 <controls:TabsWithSlider Margin="25,0,0,0"
-                                         Items="{Binding NavItems}" />
+                                         Items="{Binding PagesViewModels}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Grid.Column="1"
@@ -62,7 +62,7 @@
                                         NotificationList="{Binding Notifications}" />
             </StackPanel>
         </Grid>
-        <ContentControl Content="{Binding ActiveTab}"
+        <ContentControl Content="{Binding ActivePage}"
                         Grid.Row="1" 
                         Panel.ZIndex="-999"/>
     </Grid>
