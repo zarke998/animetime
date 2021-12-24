@@ -33,6 +33,15 @@ namespace AnimeTime.WPF.Views.Controls
             get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
+        public double TabSize
+        {
+            get { return (double)GetValue(TabSizeProperty); }
+            set { SetValue(TabSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TabSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TabSizeProperty =
+            DependencyProperty.Register("TabSize", typeof(double), typeof(TabsWithSlider), new PropertyMetadata(22.0));
 
         // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CommandProperty =
@@ -174,6 +183,12 @@ namespace AnimeTime.WPF.Views.Controls
             var button = new Button();
 
             button.Style = this.FindResource("NavTab") as Style;
+
+            Binding fontSizeBinding = new Binding();
+            fontSizeBinding.Source = this;
+            fontSizeBinding.Path = new PropertyPath(TabsWithSlider.TabSizeProperty);
+
+            button.SetBinding(Button.FontSizeProperty, fontSizeBinding);
             button.Content = displayName;
             button.Tag = value;
             button.Click += Tab_Click;
