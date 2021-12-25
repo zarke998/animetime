@@ -31,10 +31,6 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="605"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
@@ -42,7 +38,7 @@
         <StackPanel
             x:Name="TabsContainer"
             Orientation="Horizontal"
-            Grid.Row="0" Grid.ColumnSpan="2">
+            Grid.Row="0">
         </StackPanel>
         <Rectangle
             x:Name="Slider"
