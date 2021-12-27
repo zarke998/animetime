@@ -127,6 +127,7 @@ namespace AnimeTime.WPF.Views.Controls
             rows.Add(activeRow);
             foreach (var child in InternalChildren.Cast<UIElement>())
             {
+                child.Measure(new Size(availableWidth, 0));
                 totalWidth += child.DesiredSize.Width;
                 if (totalWidth > availableWidth)
                 {
