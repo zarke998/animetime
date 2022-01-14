@@ -59,6 +59,8 @@ namespace AnimeTime.WPF.Views.Controls
         }
         protected override Size ArrangeOverride(Size finalSize)
         {
+            if (InternalChildren.Count == 0) return new Size();
+
             switch (Justify)
             {
                 case JustifyOptions.SpaceBetween:
