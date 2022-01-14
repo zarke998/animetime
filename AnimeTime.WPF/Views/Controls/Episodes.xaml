@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="AnimeTime.WPF.Views.Controls.Episodes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:AnimeTime.WPF.Views.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:Name="Root">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Brushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="SingleEpisodeButton"
+                   TargetType="{x:Type Button}">
+                <Setter Property="Foreground"
+                        Value="LightGray" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="Border"
+                                    BorderThickness="1"
+                                    BorderBrush="#595959"
+                                    Width="70"
+                                    Height="27">
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="BorderBackground"
+                                                     Color="#1B1B1B" />
+                                </Border.Background>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="14">
+                                    <ContentPresenter />
+                                </TextBlock>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter Property="Cursor"
+                                            Value="Hand" />
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Duration="0:0:0.1"
+                                                                To="#2B2B2B"
+                                                                Storyboard.TargetName="Border"
+                                                                Storyboard.TargetProperty="Background.Color" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Duration="0:0:0.1"
+                                                                To="#1B1B1B"
+                                                                Storyboard.TargetName="Border"
+                                                                Storyboard.TargetProperty="Background.Color" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Text="Episodes"
+                   FontSize="22"
+                   Foreground="White"
+                   Margin="0,0,0,8"/>
+        <local:TabsWithSlider x:Name="Tabs"
+                              TabSize="16"
+                              Margin="0,0,0,5" />
+        <local:FlexboxPanel x:Name="EpisodesContainer"
+                            Justify="SpaceEven"
+                            Width="{Binding ElementName=Root, Path=ActualWidth}"
+                            Spacing="10">
+        </local:FlexboxPanel>
+    </StackPanel>
+</UserControl>

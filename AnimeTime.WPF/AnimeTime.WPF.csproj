@@ -133,6 +133,9 @@
     <Compile Include="Views\Controls\DetailedListView.xaml.cs">
       <DependentUpon>DetailedListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\Episodes.xaml.cs">
+      <DependentUpon>Episodes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\FlexboxPanel.cs" />
     <Compile Include="Views\Controls\ImageRounded.xaml.cs">
       <DependentUpon>ImageRounded.xaml</DependentUpon>
@@ -208,6 +211,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Controls\Episodes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\DetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
