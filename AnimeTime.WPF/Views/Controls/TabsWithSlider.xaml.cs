@@ -100,6 +100,7 @@ namespace AnimeTime.WPF.Views.Controls
         private void TabsWithSlider_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeSliderPosition();
+            FirstTabFire();
         }
 
         #endregion
@@ -205,11 +206,17 @@ namespace AnimeTime.WPF.Views.Controls
             }
             _activeTab = tab;
 
-            if(Command != null && Command.CanExecute(null))
-            {
-                Command.Execute(tab.Tag);
-            }
+            ExecuteCommand(tab.Tag);
+
             AnimateSlider(TabsContainer.Children.IndexOf(tab), 500);
+        }
+        private void FirstTabFire()
+        {
+            var firstTab = TabsContainer.Children.Cast<Button>().FirstOrDefault();
+            if (firstTab == null) return;
+
+            _activeTab = firstTab;
+            ExecuteCommand(firstTab.Tag);
         }
 
         private void DisableTabs()
@@ -228,6 +235,13 @@ namespace AnimeTime.WPF.Views.Controls
         }
         #endregion
 
+        private void ExecuteCommand(object param)
+        {
+            if (Command != null && Command.CanExecute(null))
+            {
+                Command.Execute(param);
+            }
+        }
         private void Command_CanExecuteChanged(object sender, EventArgs e)
         {
             if(Command.CanExecute(null))
