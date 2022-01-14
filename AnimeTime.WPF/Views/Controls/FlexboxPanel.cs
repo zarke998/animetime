@@ -120,6 +120,18 @@ namespace AnimeTime.WPF.Views.Controls
         private double GetChildrenWidth() => InternalChildren.Cast<UIElement>().Sum(c => c.DesiredSize.Width);
         private IEnumerable<IEnumerable<UIElement>> GetChildrenRows(double availableWidth)
         {
+            switch(Justify)
+            {
+                case JustifyOptions.SpaceBetween:
+                    return GetChildrenRows(availableWidth, 0);
+                case JustifyOptions.SpaceEven:
+                    return GetChildrenRows(availableWidth, Spacing);
+                default:
+                    return GetChildrenRows(availableWidth, 0);
+            }
+        }
+        private IEnumerable<IEnumerable<UIElement>> GetChildrenRows(double availableWidth, double spacing)
+        {
             var rows = new List<IEnumerable<UIElement>>();
             var totalWidth = 0.0;
 
@@ -128,8 +140,8 @@ namespace AnimeTime.WPF.Views.Controls
             foreach (var child in InternalChildren.Cast<UIElement>())
             {
                 child.Measure(new Size(availableWidth, 0));
-                totalWidth += child.DesiredSize.Width;
-                if (totalWidth > availableWidth)
+                totalWidth += child.DesiredSize.Width + spacing;
+                if (totalWidth > availableWidth + spacing)
                 {
                     activeRow = new List<UIElement>();
                     activeRow.Add(child);
