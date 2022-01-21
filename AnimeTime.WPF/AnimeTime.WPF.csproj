@@ -137,11 +137,17 @@
       <DependentUpon>Episodes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\FlexboxPanel.cs" />
+    <Compile Include="Views\Controls\Genres.xaml.cs">
+      <DependentUpon>Genres.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ImageRounded.xaml.cs">
       <DependentUpon>ImageRounded.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ListViewExpandable.xaml.cs">
       <DependentUpon>ListViewExpandable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\RoundedTextButton.xaml.cs">
+      <DependentUpon>RoundedTextButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtendedControls\DefaultScrollViewer.cs" />
     <Compile Include="Views\Controls\NotificationButton.xaml.cs">
@@ -214,6 +220,14 @@
     <Page Include="Views\Controls\Episodes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Genres.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\RoundedTextButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Pages\DetailsView.xaml">
       <SubType>Designer</SubType>
