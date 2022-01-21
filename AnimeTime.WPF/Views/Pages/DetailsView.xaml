@@ -159,7 +159,15 @@
                                                            Width="{Binding ElementName=SynopsisContainer, Path=ActualWidth}"
                                                            TextWrapping="Wrap" />
                                             </StackPanel>
-                                            <controls:Episodes NumberOfEpisodes="120" />
+                                            <controls:Episodes NumberOfEpisodes="120" 
+                                                               Margin="0,0,0,10"/>
+                                            <StackPanel x:Name="PrequelContainer">
+                                                <TextBlock Text="Prequel"
+                                                           FontSize="24"
+                                                           Foreground="White"
+                                                           Margin="0,0,0,5"/>
+                                                <controls:AnimeShortInfo />
+                                            </StackPanel>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>

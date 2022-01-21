@@ -91,6 +91,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assets\AssetsURIs.cs" />
     <Compile Include="AttachedProperties\GeneralAttachedProperties.cs" />
     <Compile Include="AttachedProperties\TextBoxAttachedProperties.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
@@ -118,6 +119,9 @@
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\Controls\AnimeShortInfo.xaml.cs">
+      <DependentUpon>AnimeShortInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Carousel.xaml.cs">
       <DependentUpon>Carousel.xaml</DependentUpon>
     </Compile>
@@ -211,6 +215,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Controls\AnimeShortInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\Episodes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -343,6 +351,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\default-background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\default-image.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
