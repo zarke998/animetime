@@ -161,8 +161,16 @@
                                             </StackPanel>
                                             <controls:Episodes NumberOfEpisodes="120" 
                                                                Margin="0,0,0,10"/>
-                                            <StackPanel x:Name="PrequelContainer">
+                                            <StackPanel x:Name="PrequelContainer"
+                                                        Margin="0,0,0,15">
                                                 <TextBlock Text="Prequel"
+                                                           FontSize="24"
+                                                           Foreground="White"
+                                                           Margin="0,0,0,5"/>
+                                                <controls:AnimeShortInfo />
+                                            </StackPanel>
+                                            <StackPanel x:Name="SequelContainer">
+                                                <TextBlock Text="Sequel"
                                                            FontSize="24"
                                                            Foreground="White"
                                                            Margin="0,0,0,5"/>
