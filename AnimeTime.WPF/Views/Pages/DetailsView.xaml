@@ -164,15 +164,13 @@
                                             <StackPanel x:Name="PrequelContainer"
                                                         Margin="0,0,0,15">
                                                 <TextBlock Text="Prequel"
-                                                           FontSize="24"
-                                                           Foreground="White"
+                                                           Style="{StaticResource SectionHeading}"
                                                            Margin="0,0,0,5"/>
                                                 <controls:AnimeShortInfo />
                                             </StackPanel>
                                             <StackPanel x:Name="SequelContainer">
                                                 <TextBlock Text="Sequel"
-                                                           FontSize="24"
-                                                           Foreground="White"
+                                                           Style="{StaticResource SectionHeading}"
                                                            Margin="0,0,0,5"/>
                                                 <controls:AnimeShortInfo />
                                             </StackPanel>
