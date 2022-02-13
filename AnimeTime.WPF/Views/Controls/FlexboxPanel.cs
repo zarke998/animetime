@@ -11,6 +11,9 @@ namespace AnimeTime.WPF.Views.Controls
 {
     public class FlexboxPanel : Panel
     {
+        #region Properties
+        private IEnumerable<IEnumerable<UIElement>> _rows;
+        #endregion
         #region Dependency Properties
 
 
@@ -42,19 +45,14 @@ namespace AnimeTime.WPF.Views.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var totalSize = new Size(0, 0);
-            foreach (var row in GetChildrenRows(availableSize.Width))
+            var totalSize = availableSize;
+            foreach (var child in InternalChildren.Cast<UIElement>())
             {
-                totalSize.Width = 0;
-                foreach (var child in row)
-                {
-                    child.Measure(availableSize);
-                    totalSize.Width += child.DesiredSize.Width;
-                }
-                var firstChild = row.FirstOrDefault();
-                if (firstChild != null)
-                    totalSize.Height += firstChild.DesiredSize.Height;
+                child.Measure(availableSize);
             }
+            _rows = GetChildrenRows(availableSize.Width);
+            totalSize.Height = GetRowsTotalHeight();
+
             return totalSize;
         }
         protected override Size ArrangeOverride(Size finalSize)
@@ -119,7 +117,6 @@ namespace AnimeTime.WPF.Views.Controls
             return finalSize;
         }
 
-        private double GetChildrenWidth() => InternalChildren.Cast<UIElement>().Sum(c => c.DesiredSize.Width);
         private IEnumerable<IEnumerable<UIElement>> GetChildrenRows(double availableWidth)
         {
             switch(Justify)
@@ -141,7 +138,6 @@ namespace AnimeTime.WPF.Views.Controls
             rows.Add(activeRow);
             foreach (var child in InternalChildren.Cast<UIElement>())
             {
-                child.Measure(new Size(availableWidth, 0));
                 totalWidth += child.DesiredSize.Width + spacing;
                 if (totalWidth > availableWidth + spacing)
                 {
@@ -157,6 +153,10 @@ namespace AnimeTime.WPF.Views.Controls
                 }
             }
 
+            if(rows.First().Count() == 0)
+            {
+                rows.Clear();
+            }
             return rows;
         }
         private int GetMaxItemsPerRow(double availableWidth)
@@ -164,6 +164,16 @@ namespace AnimeTime.WPF.Views.Controls
             if (InternalChildren.Count == 0 || availableWidth == 0) return 0;
 
             return Convert.ToInt32((availableWidth + Spacing) / (InternalChildren[0].DesiredSize.Width + Spacing));
+        }
+        private double GetRowsTotalHeight()
+        {
+            var height = 0.0;
+            foreach (var row in _rows)
+            {
+                height += row.First().DesiredSize.Height;
+            }
+
+            return height;
         }
     }
 
