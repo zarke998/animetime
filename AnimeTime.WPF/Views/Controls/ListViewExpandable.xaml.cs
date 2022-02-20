@@ -44,7 +44,7 @@ namespace AnimeTime.WPF.Views.Controls
 
         // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(ListViewExpandable), new PropertyMetadata(String.Empty));
+            DependencyProperty.Register("Title", typeof(string), typeof(ListViewExpandable), new PropertyMetadata("Section"));
 
 
 
@@ -55,7 +55,6 @@ namespace AnimeTime.WPF.Views.Controls
         public ListViewExpandable()
         {
             InitializeComponent();
-            Title = "Test";
             this.Loaded += ListViewExpandable_Loaded;
         }
 
