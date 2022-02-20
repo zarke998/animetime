@@ -54,9 +54,10 @@
                     <Setter.Value>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <Rectangle Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.15}"
-                                           Height="200"
-                                           Fill="Blue" />
+                                <Image Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.15}"
+                                       Height="200"
+                                       Source="{Binding Image}"
+                                       RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <TextBlock Foreground="White"
                                            HorizontalAlignment="Center"
                                            Margin="0,10,0,0"

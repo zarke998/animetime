@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimeTime.WPF.Assets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,21 +62,21 @@ namespace AnimeTime.WPF.Views.Controls
         private void ListViewExpandable_Loaded(object sender, RoutedEventArgs e)
         {
             _container = this.Template.FindName("ItemsContainer", this) as ListView;
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
-            _container.Items.Add(new { Title = "Test" });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
