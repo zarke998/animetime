@@ -161,18 +161,21 @@
                                             </StackPanel>
                                             <controls:Episodes NumberOfEpisodes="120" 
                                                                Margin="0,0,0,10"/>
-                                            <StackPanel x:Name="PrequelContainer"
-                                                        Margin="0,0,0,15">
-                                                <TextBlock Text="Prequel"
-                                                           Style="{StaticResource SectionHeading}"
-                                                           Margin="0,0,0,5"/>
-                                                <controls:AnimeShortInfo />
-                                            </StackPanel>
-                                            <StackPanel x:Name="SequelContainer">
-                                                <TextBlock Text="Sequel"
-                                                           Style="{StaticResource SectionHeading}"
-                                                           Margin="0,0,0,5"/>
-                                                <controls:AnimeShortInfo />
+
+                                            <StackPanel Margin="0,15">
+                                                <StackPanel x:Name="PrequelContainer" 
+                                                            Margin="0,0,0,20">
+                                                    <TextBlock Text="Prequel"
+                                                               Style="{StaticResource SectionHeading}"
+                                                               Margin="0,0,0,10"/>
+                                                    <controls:AnimeShortInfo />
+                                                </StackPanel>
+                                                <StackPanel x:Name="SequelContainer">
+                                                    <TextBlock Text="Sequel"
+                                                               Style="{StaticResource SectionHeading}"
+                                                               Margin="0,0,0,10"/>
+                                                    <controls:AnimeShortInfo />
+                                                </StackPanel>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>

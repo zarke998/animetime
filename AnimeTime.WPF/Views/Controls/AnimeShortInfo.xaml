@@ -19,8 +19,8 @@
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
         <Image Width="150"
-               Height="200" 
-               Source="{Binding ElementName=Root, Path=Image}"/>
+               Height="210"
+               Source="{Binding ElementName=Root, Path=Image}" />
         <StackPanel Margin="15,10,0,0">
             <TextBlock Text="Title"
                        Style="{StaticResource TitleTbl}"/>
