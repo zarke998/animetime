@@ -61,7 +61,15 @@ namespace AnimeTime.WPF.Views.Controls
         private void ListViewExpandable_Loaded(object sender, RoutedEventArgs e)
         {
             _container = this.Template.FindName("ItemsContainer", this) as ListView;
-            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
+
+            if (_container != null)
+            {
+                LoadTestData();
+            }
+        }
+
+        private void LoadTestData()
+        {
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });

@@ -14,15 +14,27 @@ namespace AnimeTime.WPF.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is int)) return null;
-
             int val = (int)value;
 
-            return val == 0 ? Visibility.Hidden : Visibility.Visible;
+            return val == 0 ? GetDefaultVisibility(parameter) : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        private Visibility GetDefaultVisibility(object parameter)
+        {
+            var defaultVisibility = Visibility.Hidden;
+
+            if (parameter == null)
+                return defaultVisibility;
+
+            if (parameter.ToString() == "Collapsed")
+                defaultVisibility = Visibility.Collapsed;
+
+            return defaultVisibility;
         }
     }
 }

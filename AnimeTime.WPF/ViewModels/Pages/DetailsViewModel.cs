@@ -1,4 +1,5 @@
-﻿using AnimeTime.WPF.ViewModels.Base;
+﻿using AnimeTime.Core.Domain;
+using AnimeTime.WPF.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,9 @@ namespace AnimeTime.WPF.ViewModels.Pages
         public ObservableCollection<Genre> Genres { get; set; }
 
         public string Synopsis { get; set; } = "KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj";
+
+        public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
+        public ObservableCollection<Anime> SameFranchise { get; set; } = new ObservableCollection<Anime>();
 
         public DetailsViewModel()
         {

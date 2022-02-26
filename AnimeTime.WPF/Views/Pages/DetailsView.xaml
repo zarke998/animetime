@@ -8,6 +8,7 @@
              xmlns:qc="http://QuickConverter.CodePlex.com/"
              xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls"
              xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
+             xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -17,6 +18,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/ControlStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.Style>
@@ -177,6 +179,14 @@
                                                     <controls:AnimeShortInfo />
                                                 </StackPanel>
                                             </StackPanel>
+
+
+                                            <controls:ListViewExpandable x:Name="CharactersContainer" 
+                                                                         Title="Characters" 
+                                                                         Margin="0,30,0,20" />
+                                            <controls:ListViewExpandable x:Name="SameFranchiseContainer"
+                                                                         Title="Same Franchise" 
+                                                                         Visibility="{Binding SameFranchise.Count, Converter={StaticResource NumberToVisibilityConverter}, ConverterParameter=Collapsed}"/>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
