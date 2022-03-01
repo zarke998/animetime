@@ -1,4 +1,5 @@
 ﻿using AnimeTime.WPF.Commands;
+using AnimeTime.WPF.Services.Interfaces;
 using AnimeTime.WPF.ViewModels.Base;
 using AnimeTime.WPF.ViewModels.Pages;
 using AnimeTime.WPF.Views.Controls;
@@ -47,15 +48,16 @@ namespace AnimeTime.WPF.ViewModels
         }
 
         public Dictionary<string, object> PagesViewModels { get; set; } = new Dictionary<string, object>();
-        public ViewModelBase ActivePage { get; set; } = new DetailsViewModel();
+        public ViewModelBase ActivePage { get; set; }
 
         public ICommand SearchResultSelectedCommand { get; set; }
         #endregion
 
 
-        public MainWindowViewModel(HomeViewModel homeViewModel)
+        public MainWindowViewModel(IWindowService windowService, IViewModelLocator viewModelLocator, HomeViewModel homeViewModel) : base(windowService, viewModelLocator)
         {
             PagesViewModels.Add("Home", homeViewModel);
+            ActivePage = homeViewModel;
 
             Notifications = new ObservableCollection<Notification>()
             {

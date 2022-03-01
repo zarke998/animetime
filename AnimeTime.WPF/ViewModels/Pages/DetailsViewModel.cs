@@ -1,4 +1,5 @@
 ﻿using AnimeTime.Core.Domain;
+using AnimeTime.WPF.Services.Interfaces;
 using AnimeTime.WPF.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AnimeTime.WPF.ViewModels.Pages
 {
-    public class DetailsViewModel : ViewModelBase
+    public class DetailsViewModel : CommonViewModelBase
     {
         public ObservableCollection<Genre> Genres { get; set; }
 
@@ -18,7 +19,7 @@ namespace AnimeTime.WPF.ViewModels.Pages
         public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
         public ObservableCollection<Anime> SameFranchise { get; set; } = new ObservableCollection<Anime>();
 
-        public DetailsViewModel()
+        public DetailsViewModel(IWindowService windowService, IViewModelLocator viewModelLocator) : base(windowService, viewModelLocator)
         {
             Genres = new ObservableCollection<Genre>()
             { 

@@ -1,5 +1,6 @@
 ﻿using AnimeTime.WPF.Commands;
 using AnimeTime.WPF.Common;
+using AnimeTime.WPF.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,13 @@ using System.Windows.Input;
 
 namespace AnimeTime.WPF.ViewModels.Base
 {
-    public abstract class WindowViewModelBase : ViewModelBase
+    public abstract class WindowViewModelBase : CommonViewModelBase
     {
         public DelegateCommand CloseCommand { get; set; }
         public DelegateCommand MaximizeCommand { get; set; }
         public DelegateCommand MinimizeCommand { get; set; }
 
-        public WindowViewModelBase()
+        public WindowViewModelBase(IWindowService windowService, IViewModelLocator viewModelLocator) : base(windowService, viewModelLocator)
         {
             CloseCommand = new DelegateCommand(Close);
             MaximizeCommand = new DelegateCommand(Maximize);

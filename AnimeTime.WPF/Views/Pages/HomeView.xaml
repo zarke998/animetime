@@ -28,7 +28,8 @@
                 <Border Padding="20,0">
                     <StackPanel>
                         <controls:ListViewExpandable Title="Recent Releases"
-                                                     Margin="0,0,0,10"/>
+                                                     Margin="0,0,0,10"
+                                                     ItemSelectedCommand="{Binding LoadAnimeEpisodeCommand}"/>
                         <controls:DetailedListView Title="Recommended"/>
                         <controls:ListViewExpandable Title="Top Anime"
                                                      Margin="0,40" />

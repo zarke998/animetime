@@ -57,7 +57,7 @@
                                 <Image Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.15}"
                                        Height="200"
                                        Source="{Binding Image}"
-                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
                                 <TextBlock Foreground="White"
                                            HorizontalAlignment="Center"
                                            Margin="0,10,0,0"
@@ -79,14 +79,15 @@
                             <TextBlock Text="{TemplateBinding Title}"
                                        Foreground="White"
                                        FontSize="24"
-                                       Margin="5,0,0,10" />
+                                       Margin="5,0,0,10"
+                                       x:Name="ListViewItemContainer" />
                             <ListView x:Name="ItemsContainer"
                                       Style="{StaticResource FlexboxListView}"
                                       Background="Transparent"
                                       Width="{Binding ElementName=Container, Path=ActualWidth}"
                                       Height="230"
-                                      ScrollViewer.VerticalScrollBarVisibility="{Binding ElementName=Root, Path=IsExpanded, Converter={StaticResource BooleanToScrollBarVisibility}}"
-                                      IsEnabled="{TemplateBinding IsExpanded}" />
+                                      ScrollViewer.VerticalScrollBarVisibility="{Binding ElementName=Root, Path=IsExpanded, Converter={StaticResource BooleanToScrollBarVisibility}}" 
+                                      IsEnabled="True"/>
                             <Button x:Name="ArrowButton"
                                     Click="Button_Click"
                                     Height="25"

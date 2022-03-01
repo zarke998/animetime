@@ -29,28 +29,36 @@ namespace AnimeTime.WPF.Views.Controls
             get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for IsExpanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ListViewExpandable), new PropertyMetadata(false));
-
-
 
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(ListViewExpandable), new PropertyMetadata("Section"));
+        #endregion
 
+        #region Commands
 
+        public ICommand ItemSelectedCommand
+        {
+            get { return (ICommand)GetValue(ItemSelectedCommandProperty); }
+            set { SetValue(ItemSelectedCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ItemSelectedCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemSelectedCommandProperty =
+            DependencyProperty.Register("ItemSelectedCommand", typeof(ICommand), typeof(ListViewExpandable), new PropertyMetadata(null));
 
         #endregion
 
+        #region Templated Elements
         private ListView _container;
+        #endregion
+
 
         public ListViewExpandable()
         {
@@ -61,11 +69,27 @@ namespace AnimeTime.WPF.Views.Controls
         private void ListViewExpandable_Loaded(object sender, RoutedEventArgs e)
         {
             _container = this.Template.FindName("ItemsContainer", this) as ListView;
+            _container.SelectionChanged += _container_SelectionChanged;
 
             if (_container != null)
             {
                 LoadTestData();
             }
+        }
+
+        private void _container_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_container.SelectedItem == null) return;
+
+            RaiseItemSelectedCommand(e.AddedItems[0]);
+
+            _container.SelectedItem = null;
+        }
+
+        private void RaiseItemSelectedCommand(object data)
+        {
+            if (ItemSelectedCommand != null && ItemSelectedCommand.CanExecute(null))
+                ItemSelectedCommand.Execute(data);
         }
 
         private void LoadTestData()
@@ -86,14 +110,25 @@ namespace AnimeTime.WPF.Views.Controls
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
         }
 
+        #region Events
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             IsExpanded = !IsExpanded;
         }
 
-        private void DoubleAnimation_Completed(object sender, EventArgs e)
+        private void ListViewItem_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (ItemSelectedCommand != null && ItemSelectedCommand.CanExecute(null))
+                ItemSelectedCommand.Execute(null);
+        }
 
+        #endregion
+
+        private void ItemsContainer_Selected(object sender, RoutedEventArgs e)
+        {
+            if (ItemSelectedCommand != null && ItemSelectedCommand.CanExecute(null))
+                ItemSelectedCommand.Execute(null);
         }
     }
 }

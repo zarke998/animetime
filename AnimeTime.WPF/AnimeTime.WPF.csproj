@@ -108,13 +108,19 @@
     <Compile Include="Converters\MarginToSingleConverter.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\NumberToVisibilityConverter.cs" />
+    <Compile Include="Services\Interfaces\IViewModelLocator.cs" />
+    <Compile Include="Services\Interfaces\IWindowService.cs" />
+    <Compile Include="Services\ViewModelLocator.cs" />
+    <Compile Include="Services\WindowService.cs" />
     <Compile Include="Utility\Win32Structs\MINMAXINFO.cs" />
     <Compile Include="Utility\Win32Structs\MONITORINFO.cs" />
     <Compile Include="Utility\Win32Structs\POINT.cs" />
     <Compile Include="Utility\Win32Structs\RECT.cs" />
     <Compile Include="Utility\SystemInfoUtil.cs" />
+    <Compile Include="ViewModels\Base\CommonViewModelBase.cs" />
     <Compile Include="ViewModels\Pages\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Pages\HomeViewModel.cs" />
+    <Compile Include="ViewModels\PlayerWindowViewModel.cs" />
     <Compile Include="Views\Base\Win32Window.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
@@ -184,6 +190,9 @@
     <Compile Include="Views\Pages\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlayerWindow.xaml.cs">
+      <DependentUpon>PlayerWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ColorLightnessConverter.cs" />
@@ -232,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
