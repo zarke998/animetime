@@ -6,8 +6,7 @@ using AnimeTime.WPF.Views.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace AnimeTime.WPF.Services
 {

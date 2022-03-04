@@ -21,7 +21,7 @@ namespace AnimeTime.DesktopClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : WindowBase
+    public partial class MainWindow : WindowBase, ICanShutdown
     {
         public MainWindow()
         {
@@ -36,6 +36,11 @@ namespace AnimeTime.DesktopClient
         private void NotificationButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("test");
+        }
+
+        public void Shutdown()
+        {
+            Application.Current.Shutdown();
         }
     }
 }

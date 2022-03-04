@@ -95,6 +95,7 @@
     <Compile Include="AttachedProperties\GeneralAttachedProperties.cs" />
     <Compile Include="AttachedProperties\TextBoxAttachedProperties.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Common\ICanShutdown.cs" />
     <Compile Include="Common\ICloseable.cs" />
     <Compile Include="Common\IMaximizable.cs" />
     <Compile Include="Common\IMinimizable.cs" />

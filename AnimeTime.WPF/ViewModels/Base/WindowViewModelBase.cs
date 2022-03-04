@@ -39,7 +39,14 @@ namespace AnimeTime.WPF.ViewModels.Base
         public void Close(object param)
         {
             var closeable = param as ICloseable;
-            closeable?.Close();
+            var shutdownable = param as ICanShutdown;
+
+            if (closeable == null && shutdownable == null) return;
+
+            if (shutdownable != null)
+                shutdownable.Shutdown();
+            else
+                closeable.Close();
         }
     }
 }
