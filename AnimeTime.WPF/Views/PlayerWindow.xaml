@@ -5,10 +5,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnimeTime.WPF.Views"
-        mc:Ignorable="d"
+                  xmlns:wpf="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+                  mc:Ignorable="d"
         Title="PlayerWindow" Height="450" Width="800"
         Style="{StaticResource DefaultWindow}">
-    <Grid>
-        
-    </Grid>
+    <DockPanel LastChildFill="True">
+        <TextBlock FontSize="22"
+                   Foreground="White"
+                   Padding="10,0"
+                   Margin="0,-20,0,10"
+                   DockPanel.Dock="Top">Title</TextBlock>
+        <wpf:VideoView x:Name="VlcVideoView" />
+    </DockPanel>
 </base:WindowBase>
