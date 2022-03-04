@@ -27,9 +27,17 @@ namespace AnimeTime.WPF.Services
             window.DataContext = viewModel;
             window.Closed -= Window_Closed;
             window.Closed += Window_Closed;
-            window.Show();
-        }
 
+            if (window.IsLoaded)
+            {
+                Dispatcher.CurrentDispatcher.InvokeAsync(() => { window.Activate(); });
+            }
+            else
+            {
+                Dispatcher.CurrentDispatcher.InvokeAsync(() => { window.Show(); });
+            }
+            
+        }
         private void Window_Closed(object sender, EventArgs e)
         {
             var windowType = sender.GetType();
