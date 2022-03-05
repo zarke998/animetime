@@ -9,6 +9,9 @@ namespace AnimeTime.Utilities
 {
     public class CrawlDelayer : ICrawlDelayer
     {
+        private const int MIN_CRAWL_DELAY_MS = 1000;
+        private const int MAX_CRAWL_DELAY_MS = 4000;
+
         private Stopwatch _stopwatch = new Stopwatch();
         private Stopwatch _crawlStopwatch = new Stopwatch();
         private bool IsFirstCrawl { get; set; } = true;
@@ -40,8 +43,7 @@ namespace AnimeTime.Utilities
             if (!IsFirstCrawl)
             {
                 var elapsed = ElapsedTimeFromLastCrawl;
-                var timeToWait = CrawlWait + CrawlWaitOffset - (elapsed);
-
+                var timeToWait = (GetRandomCrawlDelayTime() / 1000.0) - elapsed;
                 var lastCrawledFor = LastCrawledFor;
 
                 if (timeToWait > 0)
@@ -73,6 +75,11 @@ namespace AnimeTime.Utilities
             await ExecuteCrawl(crawlFunc);
 
             IsFirstCrawl = false;
+        }
+
+        private double GetRandomCrawlDelayTime()
+        {
+            return new Random().Next(MIN_CRAWL_DELAY_MS, MAX_CRAWL_DELAY_MS);
         }
 
         private void ExecuteCrawl(Action crawlAction)
