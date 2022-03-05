@@ -45,6 +45,7 @@
     <Compile Include="Domain\Anime.cs" />
     <Compile Include="Domain\AnimeAltTitle.cs" />
     <Compile Include="Domain\AnimeImage.cs" />
+    <Compile Include="Domain\AnimePlanetAnimeMetadata.cs" />
     <Compile Include="Domain\AnimeStatus.cs" />
     <Compile Include="Domain\Comparers\EpisodeVideoSourceComparer.cs" />
     <Compile Include="Domain\Enums\AnimeStatusIds.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Exceptions\EntityInsertException.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IAnimePlanetAnimeMetadataRepository.cs" />
     <Compile Include="Repositories\IEpisodeVideoSourceRepository.cs" />
     <Compile Include="Repositories\IEpisodeSourceRepository.cs" />
     <Compile Include="Repositories\IMetadataRepository.cs" />

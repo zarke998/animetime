@@ -59,6 +59,7 @@
     <Compile Include="AnimeTimeDbContext.cs" />
     <Compile Include="AnimeTimeDbContextConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeAltTitleConfiguration.cs" />
+    <Compile Include="EntityConfigurations\AnimePlanetAnimeMetadataConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeStatusConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeMetadataConfiguration.cs" />
     <Compile Include="EntityConfigurations\AnimeConfiguration.cs" />
@@ -315,8 +316,13 @@
     <Compile Include="Migrations\202011270854189_AddAnimeToAnimeStatusesRelationship.designer.cs">
       <DependentUpon>202011270854189_AddAnimeToAnimeStatusesRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203051552162_CreateAnimePlanetAnimeMetadatasTable.cs" />
+    <Compile Include="Migrations\202203051552162_CreateAnimePlanetAnimeMetadatasTable.designer.cs">
+      <DependentUpon>202203051552162_CreateAnimePlanetAnimeMetadatasTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AnimePlanetAnimeMetadataRepository.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
     <Compile Include="Repositories\EpisodeVideoSourceRepository.cs" />
     <Compile Include="Repositories\EpisodeSourceRepository.cs" />
@@ -517,6 +523,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011270854189_AddAnimeToAnimeStatusesRelationship.resx">
       <DependentUpon>202011270854189_AddAnimeToAnimeStatusesRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203051552162_CreateAnimePlanetAnimeMetadatasTable.resx">
+      <DependentUpon>202203051552162_CreateAnimePlanetAnimeMetadatasTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
