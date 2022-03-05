@@ -22,15 +22,17 @@ namespace AnimeTime.WPF.Views
         public PlayerWindow()
         {
             InitializeComponent();
-            InitializeVLC();
             this.Loaded += PlayerWindow_Loaded;
             this.Closed += PlayerWindow_Closed;
         }
 
-        private void InitializeVLC()
+        private async Task InitializeVLC()
         {
-            LibVLCSharp.Shared.Core.Initialize();
-            _libVLC = new LibVLC();
+            await Task.Run(() =>
+            {
+                LibVLCSharp.Shared.Core.Initialize();
+                _libVLC = new LibVLC();
+            });
         }
         private void ShutdownVLC()
         {
@@ -44,8 +46,10 @@ namespace AnimeTime.WPF.Views
             ShutdownVLC();
         }
 
-        private void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            await InitializeVLC();
+
             var mediaPlayer = new MediaPlayer(_libVLC);
             VlcVideoView.MediaPlayer = mediaPlayer;
 
