@@ -122,6 +122,7 @@
     <Compile Include="Services\Interfaces\IWindowService.cs" />
     <Compile Include="Services\ViewModelLocator.cs" />
     <Compile Include="Services\WindowService.cs" />
+    <Compile Include="Utility\GradientExtensions.cs" />
     <Compile Include="Utility\Win32Structs\MINMAXINFO.cs" />
     <Compile Include="Utility\Win32Structs\MONITORINFO.cs" />
     <Compile Include="Utility\Win32Structs\POINT.cs" />
@@ -163,8 +164,11 @@
     <Compile Include="Views\Controls\ListViewExpandable.xaml.cs">
       <DependentUpon>ListViewExpandable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\VideoPlayerControls.xaml.cs">
-      <DependentUpon>VideoPlayerControls.xaml</DependentUpon>
+    <Compile Include="Views\Controls\VideoPlayerControls\VideoPlayerControlBar.xaml.cs">
+      <DependentUpon>VideoPlayerControlBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\VideoPlayerControls\ProgressBar.xaml.cs">
+      <DependentUpon>ProgressBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtendedControls\DefaultScrollViewer.cs" />
     <Compile Include="Views\Controls\NotificationButton.xaml.cs">
@@ -249,7 +253,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\VideoPlayerControls.xaml">
+    <Page Include="Views\Controls\VideoPlayerControls\VideoPlayerControlBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\VideoPlayerControls\ProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,10 +273,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Resources\Brushes.xaml">
+    <Page Include="Resources\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Resource>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
     <Page Include="Resources\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

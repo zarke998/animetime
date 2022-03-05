@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AnimeTime.WPF.Views.Controls
+namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
 {
     /// <summary>
     /// Interaction logic for VideoPlayerControls.xaml
     /// </summary>
-    public partial class VideoPlayerControls : UserControl
+    public partial class VideoPlayerControlBar : UserControl
     {
-        public VideoPlayerControls()
+        public VideoPlayerControlBar()
         {
             InitializeComponent();
         }
