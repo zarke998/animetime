@@ -163,6 +163,9 @@
     <Compile Include="Views\Controls\ListViewExpandable.xaml.cs">
       <DependentUpon>ListViewExpandable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\VideoPlayerControls.xaml.cs">
+      <DependentUpon>VideoPlayerControls.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExtendedControls\DefaultScrollViewer.cs" />
     <Compile Include="Views\Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\Episodes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\VideoPlayerControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
