@@ -22,5 +22,11 @@ namespace AnimeTime.Persistence.Repositories
         {
 
         }
+
+        public AnimePlanetAnimeMetadata GetLastInserted()
+        {
+            return AnimeTimeDbContext.AnimePlanetAnimeMetadatas.OrderByDescending(a => a.OrderOfInsert).FirstOrDefault();
+
+        }
     }
 }

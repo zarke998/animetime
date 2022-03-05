@@ -22,34 +22,38 @@ namespace AnimeTimeDbUpdater
 {
     class MainApplication : IApplication
     {
-        IAnimeInfoRepository _animeRepo;
-        ICharacterInfoRepository _charRepo;
 
-        IImageDownloader _imageDownloader;
-        IThumbnailGenerator _thumbnailGenerator;
+        private IAnimeInfoRepository _animeRepo;
+        private ICharacterInfoRepository _charRepo;
 
-        ICrawlDelayer _crawlDelayer;
-        private readonly IImageStorage _imageStorage;
+        private IImageDownloader _imageDownloader;
+        private IThumbnailGenerator _thumbnailGenerator;
 
-        HashSet<string> _titles;
+        private IImageStorage _imageStorage;
 
-        HashSet<Genre> _genres;
-        HashSet<YearSeason> _yearSeasons;
-        HashSet<Category> _categories;
-        HashSet<Character> _characters;
-        HashSet<ImageLodLevel> _lodLevels;
+        private HashSet<string> _titles;
 
-        public MainApplication(IAnimeInfoRepository animeRepo, ICharacterInfoRepository charRepo, IImageDownloader imageDownloader, IThumbnailGenerator thumbnailGenerator, ICrawlDelayer crawlDelayer, IImageStorage imageStorage)
+        private HashSet<Genre> _genres;
+        private HashSet<YearSeason> _yearSeasons;
+        private HashSet<Category> _categories;
+        private HashSet<Character> _characters;
+        private HashSet<ImageLodLevel> _lodLevels;
+
+        AnimePlanetAnimeMetadata _lastInsertAnime;
+
+        public MainApplication(IAnimeInfoRepository animeRepo,
+                                ICharacterInfoRepository charRepo,
+                                IImageDownloader imageDownloader,
+                                IThumbnailGenerator thumbnailGenerator,
+                                IImageStorage imageStorage)
         {
             _animeRepo = animeRepo;
             _charRepo = charRepo;
             this._imageDownloader = imageDownloader;
             this._thumbnailGenerator = thumbnailGenerator;
-
-            _crawlDelayer = crawlDelayer;
             this._imageStorage = imageStorage;
-            _animeRepo.CrawlDelayer = _crawlDelayer;
-            _imageDownloader.CrawlDelayer = _crawlDelayer;
+
+            _lastInsertAnime = GetLastInsertAnime();
         }
 
         public void Run()
@@ -79,18 +83,30 @@ namespace AnimeTimeDbUpdater
 
         private void UpdateDatabase()
         {
-            IEnumerable<AnimeBasicInfo> newAnimes;
+            IEnumerable<AnimeBasicInfo> newAnimes = null;
             if (_animeRepo.CanFetchByDateAdded)
             {
-                newAnimes = GetNewAnimesFast();
-                newAnimes.Reverse();
+                if (_lastInsertAnime != null)
+                {
+                    var page = _animeRepo.GetAnimeListPageByAnimeOrder(_lastInsertAnime.OrderOfInsert);
+                    newAnimes = _animeRepo.GetByDate(page);
+
+                    newAnimes = newAnimes.TakeWhile(a => a.DetailsUrl != _lastInsertAnime.Url).Reverse();
+
+                    InsertAnimes(newAnimes);
+                }
+
+                do
+                {
+                    newAnimes = _animeRepo.GetByDate();
+                    InsertAnimes(newAnimes.Reverse());
+                } while (newAnimes != null);
             }
             else
             {
                 newAnimes = GetNewAnimes();
             }
 
-            InsertAnimes(newAnimes);
         }
 
         private IEnumerable<AnimeBasicInfo> GetNewAnimes()
@@ -101,36 +117,6 @@ namespace AnimeTimeDbUpdater
             return newAnimes;
 
         }
-        private IEnumerable<AnimeBasicInfo> GetNewAnimesFast()
-        {
-            ICollection<AnimeBasicInfo> newAnimes = new List<AnimeBasicInfo>();
-
-            var endOfFetching = false;
-
-            do
-            {
-                IEnumerable<AnimeBasicInfo> infos = _animeRepo.GetByDate();
-
-                foreach (var info in infos)
-                {
-                    if (_titles.Contains(info.Title))
-                    {
-                        endOfFetching = true;
-                        break;
-                    }
-                    newAnimes.Add(info);
-                }
-
-                _animeRepo.NextPage();
-                if (_animeRepo.LastPageReached)
-                {
-                    endOfFetching = true;
-                }
-
-            } while (!endOfFetching);
-
-            return newAnimes;
-        }
         private void InsertAnimes(IEnumerable<AnimeBasicInfo> infos)
         {
             foreach (var basicInfo in infos)
@@ -138,23 +124,23 @@ namespace AnimeTimeDbUpdater
                 IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork();
                 InitializeUnitOfWork(unitOfWork);
 
-
                 Log.TraceEvent(TraceEventType.Information, 0, $"\nResolving anime: {basicInfo.DetailsUrl}");
                 var detailedInfo = _animeRepo.Resolve(basicInfo);
 
                 var anime = new Anime();
 
-                AddAnimeCover(detailedInfo, anime);
-                AddAnimeCharacters(detailedInfo, anime);
-                AddAnimeRelationships(detailedInfo, anime);
-                AddAnimeData(detailedInfo, anime);
+                PopulateAnimeFromDetailedInfo(detailedInfo, anime);
+                var animePlanetAnimeMetadata = CreateAnimePlanetAnimeMetadata(basicInfo);
 
                 unitOfWork.Animes.Add(anime);
+                unitOfWork.AnimePlanetAnimeMetadatas.Add(animePlanetAnimeMetadata);
 
                 Log.TraceEvent(TraceEventType.Information, 0, "\nInserting anime into database.");
                 try
                 {
                     unitOfWork.Complete();
+
+                    _lastInsertAnime = animePlanetAnimeMetadata;
                 }
                 catch (EntityInsertException insertException)
                 {
@@ -174,6 +160,31 @@ namespace AnimeTimeDbUpdater
             }
         }
 
+        private void UnitOfWorkToCache(IUnitOfWork unitOfWork)
+        {
+            _genres.UnionWith(unitOfWork.Genres.GetAllCached());
+            _yearSeasons.UnionWith(unitOfWork.YearSeasons.GetAllCached());
+            _categories.UnionWith(unitOfWork.Categories.GetAllCached());
+            _characters.UnionWith(unitOfWork.Characters.GetAllCached());
+        }
+        private void InitializeUnitOfWork(IUnitOfWork unitOfWork)
+        {
+            unitOfWork.InsertOptimizationEnabled = false;
+            unitOfWork.Genres.AttachRange(_genres);
+            unitOfWork.YearSeasons.AttachRange(_yearSeasons);
+            unitOfWork.Categories.AttachRange(_categories);
+            unitOfWork.Characters.AttachRange(_characters);
+        }
+
+        private void PopulateAnimeFromDetailedInfo(AnimeDetailedInfo detailedInfo, Anime anime)
+        {
+            AddAnimeCover(detailedInfo, anime);
+            AddAnimeCharacters(detailedInfo, anime);
+            AddAnimeRelationships(detailedInfo, anime);
+            AddAnimeData(detailedInfo, anime);
+        }
+
+        #region Populate Anime methods
         private void AddAnimeData(AnimeDetailedInfo detailedInfo, Anime anime)
         {
             anime.Title = detailedInfo.BasicInfo.Title;
@@ -182,7 +193,7 @@ namespace AnimeTimeDbUpdater
             anime.ReleaseYear = detailedInfo.ReleaseYear;
         }
         private void AddAnimeCover(AnimeDetailedInfo infoDetails, Anime anime)
-        {
+        {		
             if (infoDetails.CoverUrl == null) return;
 
             Log.TraceEvent(TraceEventType.Information, 0, "Downloading cover image...");
@@ -365,25 +376,9 @@ namespace AnimeTimeDbUpdater
             AddAnimeCategoryRelationship(detailedInfo, anime);
         }
 
-        private void UnitOfWorkToCache(IUnitOfWork unitOfWork)
-        {
-            _genres.UnionWith(unitOfWork.Genres.GetAllCached());
-            _yearSeasons.UnionWith(unitOfWork.YearSeasons.GetAllCached());
-            _categories.UnionWith(unitOfWork.Categories.GetAllCached());
-            _characters.UnionWith(unitOfWork.Characters.GetAllCached());
-        }
-        private void InitializeUnitOfWork(IUnitOfWork unitOfWork)
-        {
-            unitOfWork.InsertOptimizationEnabled = false;
-            unitOfWork.Genres.AttachRange(_genres);
-            unitOfWork.YearSeasons.AttachRange(_yearSeasons);
-            unitOfWork.Categories.AttachRange(_categories);
-            unitOfWork.Characters.AttachRange(_characters);
-        }
-
         private void AddAnimeAltTitles(AnimeDetailedInfo detailedInfo, Anime anime)
         {
-            foreach(var altTitle in detailedInfo.AltTitles)
+            foreach (var altTitle in detailedInfo.AltTitles)
             {
                 anime.AltTitles.Add(new AnimeAltTitle() { Title = altTitle });
             }
@@ -430,7 +425,7 @@ namespace AnimeTimeDbUpdater
                 var mapper = ClassFactory.CreateCategoryMapper();
                 var catId = mapper.Map(detailedInfo.Category);
 
-                if(catId != CategoryId.Other)
+                if (catId != CategoryId.Other)
                 {
                     category.Id = (int)catId;
                 }
@@ -439,13 +434,36 @@ namespace AnimeTimeDbUpdater
                     var maxId = _categories.Select(cat => cat.Id).Max();
 
                     var lastEnumValue = Enum.GetValues(typeof(CategoryId)).Length - 1;
-                    
-                    var nextId = maxId < lastEnumValue ? lastEnumValue: maxId;
+
+                    var nextId = maxId < lastEnumValue ? lastEnumValue : maxId;
                     nextId++;
 
                     anime.Category.Id = nextId;
                 }
             }
         }
+        #endregion
+
+        private AnimePlanetAnimeMetadata GetLastInsertAnime()
+        {
+            using (IUnitOfWork unitOfWork = ClassFactory.CreateUnitOfWork())
+            {
+                return unitOfWork.AnimePlanetAnimeMetadatas.GetLastInserted();
+            }
+        }
+        private AnimePlanetAnimeMetadata CreateAnimePlanetAnimeMetadata(AnimeBasicInfo basicInfo)
+        {
+            var metadata = new AnimePlanetAnimeMetadata();
+
+            if (_lastInsertAnime == null)
+                metadata.OrderOfInsert = 1;
+            else
+                metadata.OrderOfInsert = ++_lastInsertAnime.OrderOfInsert;
+
+            metadata.Url = basicInfo.DetailsUrl;
+
+            return metadata;
+        }
+
     }
 }

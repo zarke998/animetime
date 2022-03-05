@@ -12,6 +12,7 @@ using HtmlAgilityPack;
 using System.Web;
 using System.Diagnostics;
 using AnimeTime.Utilities;
+using AnimeTime.Utilities.Web;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
@@ -185,7 +186,10 @@ namespace AnimeTimeDbUpdater.Persistence
                 return null;
             }
 
-            return Constants.WebsiteUrls.AnimePlanet + coverSrc;
+            if (UrlUtil.IsAbsolute(coverSrc))
+                return coverSrc;
+            else
+                return Constants.WebsiteUrls.AnimePlanet + coverSrc;
         }
     }
 }

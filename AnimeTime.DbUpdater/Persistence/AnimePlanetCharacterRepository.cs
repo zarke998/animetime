@@ -1,6 +1,7 @@
 ﻿using AnimeTime.Core.Domain;
 using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Utilities;
+using AnimeTime.Utilities.Web;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
 using HtmlAgilityPack;
@@ -129,7 +130,10 @@ namespace AnimeTimeDbUpdater.Persistence
                 return null;
             }
 
-            return Constants.WebsiteUrls.AnimePlanet + imageUrl;
+            if (UrlUtil.IsAbsolute(imageUrl))
+                return imageUrl;
+            else
+                return Constants.WebsiteUrls.AnimePlanet + imageUrl;
         }
     }
 }

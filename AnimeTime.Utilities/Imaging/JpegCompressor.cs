@@ -41,7 +41,7 @@ namespace AnimeTime.Utilities.Imaging
                 encoder.Quality = GetConvertedQuality(quality);
 
                 await image.SaveAsync(stream, encoder).ConfigureAwait(false);
-                compressedImage = Image.Load(stream.ToArray());
+                compressedImage = Image.Load<Rgba32>(stream.ToArray());
             }
 
             return compressedImage;

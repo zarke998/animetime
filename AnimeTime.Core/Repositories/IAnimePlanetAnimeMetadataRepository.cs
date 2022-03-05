@@ -9,6 +9,6 @@ namespace AnimeTime.Core.Repositories
 {
     public interface IAnimePlanetAnimeMetadataRepository : IRepository<AnimePlanetAnimeMetadata>
     {
-
+        AnimePlanetAnimeMetadata GetLastInserted();
     }
 }

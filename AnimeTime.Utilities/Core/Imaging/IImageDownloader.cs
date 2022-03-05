@@ -11,8 +11,6 @@ namespace AnimeTime.Utilities.Core.Imaging
 {
     public interface IImageDownloader
     {
-        ICrawlDelayer CrawlDelayer { get; set; }
-
         Image<Rgba32> Download(string imageUrl);
     }
 }

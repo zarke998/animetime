@@ -15,5 +15,13 @@ namespace AnimeTime.Utilities.Web
 
             return $"{url}&{param}={value}";
         }
+
+        public static bool IsAbsolute(string url)
+        {
+            if (url == null)
+                throw new ArgumentNullException();
+
+            return url.StartsWith("http") || url.StartsWith("https");
+        }
     }
 }

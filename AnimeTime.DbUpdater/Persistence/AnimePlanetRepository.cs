@@ -6,20 +6,27 @@ using System.Threading.Tasks;
 using AnimeTime.Core.Domain;
 using AnimeTimeDbUpdater.Core;
 using AnimeTimeDbUpdater.Core.Domain;
+using AnimeTimeDbUpdater.Core.Exceptions;
 using HtmlAgilityPack;
-using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 using System.Net;
 using AnimeTimeDbUpdater.Utilities;
 using AnimeTime.Utilities;
+using AnimeTime.Utilities.Web;
 
 namespace AnimeTimeDbUpdater.Persistence
 {
     class AnimePlanetRepository : IAnimeInfoRepository
     {
+        private const int ANIME_PLANET_ITEMS_PER_PAGE = 35;
+
         private IAnimeInfoExtractor _extractor;
         private IAnimeInfoResolver _resolver;
+        private ICrawlDelayer _crawlDelayer;
+        private string _animeListLastPageByDate;
+        private int _lastPageByDateNumber;
+        private int _currentPageByDate;
 
         public string AnimeListUrl { get; private set; } = "https://www.anime-planet.com/anime/all";
         public string AnimeListByDateUrl { get; private set; } = "https://www.anime-planet.com/anime/all?sort=recent&order=desc";
@@ -27,23 +34,27 @@ namespace AnimeTimeDbUpdater.Persistence
         public bool CanFetchByDateAdded { get; private set; }
         public string CurrentPage { get; private set; }
         public bool LastPageReached { get; private set; }
-        public ICrawlDelayer CrawlDelayer { get; set ; }
-
-        public AnimePlanetRepository(IAnimeInfoExtractor extractor, IAnimeInfoResolver resolver)
+        public AnimePlanetRepository(IAnimeInfoExtractor extractor,
+                                     IAnimeInfoResolver resolver,
+                                     ICrawlDelayer crawlDelayer)
         {
             _extractor = extractor;
             _resolver = resolver;
 
-            _extractor.CrawlDelayer = CrawlDelayer;
-            _resolver.CrawlDelayer = CrawlDelayer;
+            _crawlDelayer = crawlDelayer;
+            _extractor.CrawlDelayer = _crawlDelayer;
+            _resolver.CrawlDelayer = _crawlDelayer;
 
             CanFetchByDateAdded = UrlIsAvailable(AnimeListByDateUrl);
             CurrentPage = AnimeListByDateUrl;
+
+            _lastPageByDateNumber = GetAnimeListLastPageByDate();
+            _currentPageByDate = _lastPageByDateNumber;
         }
 
         public AnimeDetailedInfo Resolve(AnimeBasicInfo basicInfo)
         {
-            _resolver.CrawlDelayer = CrawlDelayer;
+            _resolver.CrawlDelayer = _crawlDelayer;
 
             var detailedInfo = _resolver.Resolve(basicInfo);
 
@@ -60,14 +71,9 @@ namespace AnimeTimeDbUpdater.Persistence
             return null;
         }
 
-        public IEnumerable<AnimeBasicInfo> GetByDate()
-        {
-            _extractor.CrawlDelayer = CrawlDelayer;
-            return _extractor.GetFromPage(CurrentPage);
-        }
         public IEnumerable<AnimeBasicInfo> GetAll()
         {
-            _extractor.CrawlDelayer = CrawlDelayer;
+            _extractor.CrawlDelayer = _crawlDelayer;
 
             var basicInfos = new List<AnimeBasicInfo>();
 
@@ -85,21 +91,27 @@ namespace AnimeTimeDbUpdater.Persistence
 
             return basicInfos;
         }
-
-        public string NextPage()
+        public IEnumerable<AnimeBasicInfo> GetByDate(int page = 0)
         {
-            var nextPage = _extractor.NextPage();
+            if (_currentPageByDate <= 0) return null;
 
-            if (nextPage == null)
-                LastPageReached = true;
-            else
-                CurrentPage = nextPage;
+            if (page > 0)
+                _currentPageByDate = page;
 
-            return CurrentPage;
+            var animes = _extractor.GetFromPage(GetAnimeListByDatePage(_currentPageByDate));
+            _currentPageByDate--;
+
+            return animes;
         }
-        public void ResetToFirstPage()
+
+        public int GetAnimeListPageByAnimeOrder(int order)
         {
-            CurrentPage = AnimeListByDateUrl;
+            return (_lastPageByDateNumber + 1) - (int)Math.Ceiling(order / (ANIME_PLANET_ITEMS_PER_PAGE * 1.0));
+        }
+
+        public void ResetFetchByDate()
+        {
+            _currentPageByDate = _lastPageByDateNumber;
         }
 
         private bool UrlIsAvailable(string url)
@@ -114,5 +126,22 @@ namespace AnimeTimeDbUpdater.Persistence
             }
             catch (Exception e) { return false; }
         }
+        private int GetAnimeListLastPageByDate()
+        {
+            HtmlDocument doc = null;
+            _crawlDelayer.ApplyDelay(() => doc = new HtmlWeb().Load(AnimeListByDateUrl));
+
+            var xPath = "//div[contains(@class,'pagination')]/ul/li[last() - 1]";
+            var lastPageNode = doc.DocumentNode.SelectSingleNode(xPath);
+            if (lastPageNode == null)
+                throw new Core.Exceptions.NodeNotFoundException(xPath, _animeListLastPageByDate);
+
+            return Int32.Parse(lastPageNode.InnerText.Trim());
+        }
+        private string GetAnimeListByDatePage(int num)
+        {
+            return UrlUtil.AddQueryParam(AnimeListByDateUrl, "page", num.ToString());
+        }
+
     }
 }
