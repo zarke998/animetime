@@ -44,7 +44,7 @@ namespace AnimeTime.Persistence
         public IMetadataRepository Metadata { get; private set; }
         public IEpisodeSourceRepository EpisodeSources { get; private set; }
         public IEpisodeVideoSourceRepository EpisodeVideoSources { get; private set; }
-        public IAnimePlanetAnimeMetadataRepository AnimePlanetAnimeMetadataRepository { get; private set; }
+        public IAnimePlanetAnimeMetadataRepository AnimePlanetAnimeMetadatas { get; private set; }
 
         public UnitOfWork(AnimeTimeDbContext context)
         {
@@ -64,7 +64,7 @@ namespace AnimeTime.Persistence
             Metadata = new MetadataRepository(_animeTimeDbContext);
             EpisodeSources = new EpisodeSourceRepository(_animeTimeDbContext);
             EpisodeVideoSources = new EpisodeVideoSourceRepository(_animeTimeDbContext);
-            AnimePlanetAnimeMetadataRepository = new AnimePlanetAnimeMetadataRepository(_animeTimeDbContext);
+            AnimePlanetAnimeMetadatas = new AnimePlanetAnimeMetadataRepository(_animeTimeDbContext);
         }
         public void Complete()
         {
