@@ -1,5 +1,6 @@
 ﻿using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Utilities;
+using AnimeTime.WebsiteProcessors.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace AnimeTime.WebsiteProcessors
     {
         ICrawlDelayer CrawlDelayer { get; set; }
 
-        Task<(string animeUrl, string animeDubUrl)> GetAnimeUrlAsync(string animeTitle, int? releaseYear, IEnumerable<string> animeAltTitles);
-        Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);        
+        Task<AnimeSourceSubDub> GetAnimeUrlAsync(AnimeSearchParams searchParams);
+        Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);
 
         Task<IEnumerable<(float epNum, string epUrl)>> GetAnimeEpisodesAsync(string animeUrl);
         Task<IEnumerable<string>> GetVideoSourcesForEpisodeAsync(string episodeUrl);

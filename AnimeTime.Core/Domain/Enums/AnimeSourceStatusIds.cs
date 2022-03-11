@@ -10,6 +10,7 @@ namespace AnimeTime.Core.Domain.Enums
     {
         Resolved,
         Conflict,
-        CouldNotResolve
+        CouldNotResolve,
+        DoesntExist
     }
 }

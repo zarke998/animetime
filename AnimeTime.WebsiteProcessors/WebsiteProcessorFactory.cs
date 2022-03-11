@@ -7,14 +7,14 @@ using System.Web;
 
 namespace AnimeTime.WebsiteProcessors
 {
-    public static class WebsiteProcessorFactory
+    public class WebsiteProcessorFactory : IWebsiteProcessorFactory
     {
-        public static IWebsiteProcessor CreateWebsiteProcessor(string websiteName, string websiteUrl, string querySuffix)
+        public IWebsiteProcessor CreateWebsiteProcessor(string websiteName, string websiteUrl, string querySuffix)
         {
             switch (websiteName.ToLower())
             {
                 case "gogoanime": return new GogoanimeWebsiteProcessor(websiteUrl, querySuffix);
-                default: return null;
+                default: throw new ArgumentException($"Website not found for name {websiteName}.");
             }
         }
     }

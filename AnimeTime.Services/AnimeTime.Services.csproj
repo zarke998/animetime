@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52E9A70A-2466-4B70-86C2-14CD5C022DDD}</ProjectGuid>
+    <ProjectGuid>{848FC195-F8E2-4705-9444-739348686FE4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AnimeTime.WebsiteProcessors</RootNamespace>
-    <AssemblyName>AnimeTime.WebsiteProcessors</AssemblyName>
+    <RootNamespace>AnimeTime.Services</RootNamespace>
+    <AssemblyName>AnimeTime.Services</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.11.18.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.18\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,32 +44,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimeSearchResult.cs" />
-    <Compile Include="Fetchers\AnimeSourceFetcher.cs" />
-    <Compile Include="Fetchers\Interfaces\IAnimeSourceFetcher.cs" />
-    <Compile Include="IWebsiteProcessor.cs" />
-    <Compile Include="IWebsiteProcessorFactory.cs" />
-    <Compile Include="Models\AnimeSearchParams.cs" />
-    <Compile Include="Models\AnimeSource.cs" />
-    <Compile Include="Models\AnimeSourceSubDub.cs" />
-    <Compile Include="WebsiteProcessorFactory.cs" />
-    <Compile Include="GogoanimeWebsiteProcessor.cs" />
+    <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="DTO\AnimeSourceDTO.cs" />
+    <Compile Include="ModelServices\AnimeSourceService.cs" />
+    <Compile Include="ModelServices\Interfaces\IAnimeSourceService.cs" />
+    <Compile Include="Profiles\AnimeSourceProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebsiteProcessor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
       <Project>{f4ca9e32-6e3d-4269-9e5d-eceeb5c6eb25}</Project>
       <Name>AnimeTime.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AnimeTime.Utilities\AnimeTime.Utilities.csproj">
-      <Project>{726f2a06-5f43-4cdf-b3bc-4aec6939f017}</Project>
-      <Name>AnimeTime.Utilities</Name>
+    <ProjectReference Include="..\AnimeTime.Persistence\AnimeTime.Persistence.csproj">
+      <Project>{15172c36-0a91-44aa-b9f5-e390d05479b8}</Project>
+      <Name>AnimeTime.Persistence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AnimeTime.WebsiteProcessors\AnimeTime.WebsiteProcessors.csproj">
+      <Project>{52E9A70A-2466-4B70-86C2-14CD5C022DDD}</Project>
+      <Name>AnimeTime.WebsiteProcessors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

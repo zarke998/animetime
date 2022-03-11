@@ -1,6 +1,7 @@
 ﻿using AnimeTime.Core.Domain;
 using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Utilities;
+using AnimeTime.WebsiteProcessors.Models;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace AnimeTime.WebsiteProcessors
             this._web = new HtmlWeb();
         }
 
-        public abstract Task<(string animeUrl, string animeDubUrl)> GetAnimeUrlAsync(string animeName, int? releaseYear, IEnumerable<string> animeAltTitles);
+        public abstract Task<AnimeSourceSubDub> GetAnimeUrlAsync(AnimeSearchParams searchParams);
         public abstract Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);
         public abstract Task<IEnumerable<(float epNum, string epUrl)>> GetAnimeEpisodesAsync(string animeUrl);
         public abstract Task<IEnumerable<string>> GetVideoSourcesForEpisodeAsync(string episodeUrl);
