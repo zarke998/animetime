@@ -15,6 +15,7 @@ namespace AnimeTime.Services
             var mapperConfiguration = new MapperConfiguration(conf =>
             {
                 conf.AddProfile<AnimeSourceProfile>();
+                conf.AddProfile<AnimeProfile>();
             });
 
             return mapperConfiguration;

@@ -45,5 +45,14 @@ namespace AnimeTime.Persistence.Repositories
         {
             return AnimeTimeDbContext.Animes.Include(a => a.AltTitles).FirstOrDefault(a => a.Id == id);
         }
+
+        public IEnumerable<Anime> Search(string searchString)
+        {
+            return AnimeTimeDbContext.Animes.Include(a => a.AltTitles)
+                                            .Include(a => a.Images.Select(i => i.Image))
+                                            .Where(a => a.Title.ToLower().Contains(searchString.ToLower()) ||
+                                                        a.AltTitles.Any(altTitle => altTitle.Title.ToLower().Contains(searchString.ToLower())))
+                                            .ToList();
+        }
     }
 }

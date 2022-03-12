@@ -14,5 +14,6 @@ namespace AnimeTime.Core.Repositories
         Anime GetWithAltTitles(int id);
         IEnumerable<int> GetIdsWithNoSources();
 
+        IEnumerable<Anime> Search(string searchString);
     }
 }

@@ -43,14 +43,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=6.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.6.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=6.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.6.3.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.WebApi, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.6.1.0\lib\net472\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Contrib.Autofac.DependencyInjection, Version=5.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.Contrib.Autofac.DependencyInjection.5.6.0\lib\netstandard2.0\AutoMapper.Contrib.Autofac.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.18.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.18\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -137,9 +140,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ClassFactory.cs" />
     <Compile Include="ContainerConfiguration.cs" />
-    <Compile Include="Controllers\AnimeSourceController.cs" />
     <Compile Include="Controllers\AnimesController.cs" />
     <Compile Include="Controllers\EpisodeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="DTOs\EpisodeSource\EpisodeSourceDtoNormal.cs" />
     <Compile Include="DTOs\EpisodeVideoSource\EpisodeVideoSourceDtoShort.cs" />
     <Compile Include="DTOs\Website\WebsiteDtoShort.cs" />

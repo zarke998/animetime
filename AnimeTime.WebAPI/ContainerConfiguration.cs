@@ -38,6 +38,7 @@ namespace AnimeTime.WebAPI
             }).As<IMapper>();
 
             builder.RegisterType<AnimeSourceService>().As<IAnimeSourceService>();
+            builder.RegisterType<AnimeService>().As<IAnimeService>();
 
 
             return builder.Build();
