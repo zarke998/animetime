@@ -22,10 +22,12 @@ namespace AnimeTime.WebAPI.Controllers
         private const int _episodeUpdateInterval = 6;
 
         private readonly IAnimeSourceService _animeSourceService;
+        private readonly IEpisodeService _episodeService;
 
-        public AnimesController(IAnimeSourceService animeSourceService)
+        public AnimesController(IAnimeSourceService animeSourceService, IEpisodeService episodeService)
         {
             this._animeSourceService = animeSourceService;
+            this._episodeService = episodeService;
         }
 
         public string GetAll()
@@ -164,6 +166,12 @@ namespace AnimeTime.WebAPI.Controllers
         public IHttpActionResult GetAnimeSources(int id)
         {
             return Ok(_animeSourceService.GetAll(id));
+        }
+
+        [Route("{id}/episodes")]
+        public IHttpActionResult GetEpisodes(int id)
+        {
+            return Ok(_episodeService.GetEpisodes(id));
         }
     }
 }

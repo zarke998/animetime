@@ -10,6 +10,6 @@ namespace AnimeTime.WebsiteProcessors.Models
     {
         public AnimeSource Sub { get; set; } = new AnimeSource();
         public AnimeSource Dub { get; set; } = new AnimeSource();
-        public bool IsResolved => Sub.Status == AnimeSourceStatus.Resolved || Dub.Status == AnimeSourceStatus.Resolved; 
+        public bool IsResolved => Sub.Status_Id == AnimeSourceStatus.Resolved || Dub.Status_Id == AnimeSourceStatus.Resolved; 
     }
 }

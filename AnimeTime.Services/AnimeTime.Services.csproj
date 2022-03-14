@@ -47,12 +47,16 @@
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="DTO\AnimeSearchDTO.cs" />
     <Compile Include="DTO\AnimeSourceDTO.cs" />
+    <Compile Include="DTO\EpisodeDTO.cs" />
     <Compile Include="ModelServices\AnimeService.cs" />
     <Compile Include="ModelServices\AnimeSourceService.cs" />
+    <Compile Include="ModelServices\EpisodeService.cs" />
     <Compile Include="ModelServices\Interfaces\IAnimeService.cs" />
     <Compile Include="ModelServices\Interfaces\IAnimeSourceService.cs" />
+    <Compile Include="ModelServices\Interfaces\IEpisodeService.cs" />
     <Compile Include="Profiles\AnimeProfile.cs" />
     <Compile Include="Profiles\AnimeSourceProfile.cs" />
+    <Compile Include="Profiles\EpisodeProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

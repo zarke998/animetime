@@ -28,7 +28,7 @@ namespace AnimeTime.WebsiteProcessors
 
         }
 
-        public override async Task<AnimeSourceSubDub> GetAnimeUrlAsync(AnimeSearchParams searchParams)
+        public override async Task<AnimeSourceSubDub> TryFindAnime(AnimeSearchParams searchParams)
         {
             var searchStrings = GetSearchStrings(searchParams.Name, searchParams.AltTitles);
             foreach (var searchString in searchStrings)
@@ -134,9 +134,9 @@ namespace AnimeTime.WebsiteProcessors
             return searchStrings;
         }
 
-        public override async Task<IEnumerable<(float epNum, string epUrl)>> GetAnimeEpisodesAsync(string animeUrl)
+        public override async Task<IEnumerable<EpisodeSource>> GetEpisodesAsync(string animeUrl)
         {
-            var episodes = new List<(float epNum, string epUrl)>();
+            var episodes = new List<EpisodeSource>();
 
             var doc = await _web.LoadFromWebAsync(animeUrl).ConfigureAwait(false);
 
@@ -177,7 +177,7 @@ namespace AnimeTime.WebsiteProcessors
                 {
                     // Log url change
 
-                    return new List<(float, string)>();
+                    return new List<EpisodeSource>();
                 }
 
                 var episodeNodes = pageDoc.DocumentNode.SelectNodes(".//ul/li/a/div[contains(@class,'name')]");
@@ -195,13 +195,13 @@ namespace AnimeTime.WebsiteProcessors
                     {
                         epUrl += string.Format("-{0}", epNumDecimal);
                     }
-                    episodes.Add((epNum, epUrl));
+                    episodes.Add(new EpisodeSource() { EpisodeNumber = epNum, Url = epUrl});
                 }
             }
 
-            return episodes.OrderBy(e => e.epNum);
+            return episodes.OrderBy(e => e.EpisodeNumber);
         }
-        public override async Task<IEnumerable<string>> GetVideoSourcesForEpisodeAsync(string episodeUrl)
+        public override async Task<IEnumerable<string>> GetVideoSourcesAsync(string episodeUrl)
         {
             var videoSources = new List<string>();
 
@@ -261,7 +261,7 @@ namespace AnimeTime.WebsiteProcessors
                 var animeDubUrlCheck = exactMatch.Url + _dubUrlExtension;
 
                 animeSubDub.Dub.Name = $"{animeName} {DubAnimeIdentifier}"; // Assume found
-                animeSubDub.Dub.Status = AnimeSourceStatus.Resolved;
+                animeSubDub.Dub.Status_Id = AnimeSourceStatus.Resolved;
                 if (exatchMatchDub != null)
                 {
                     animeSubDub.Dub.Url = exatchMatchDub.Url;
@@ -273,7 +273,7 @@ namespace AnimeTime.WebsiteProcessors
                 }
                 else
                 {
-                    animeSubDub.Dub.Status = AnimeSourceStatus.CouldNotResolve;
+                    animeSubDub.Dub.Status_Id = AnimeSourceStatus.CouldNotResolve;
                 }
             }
 

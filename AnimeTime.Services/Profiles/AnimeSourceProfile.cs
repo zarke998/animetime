@@ -14,8 +14,7 @@ namespace AnimeTime.Services.Profiles
     {
         public AnimeSourceProfile()
         {
-            CreateMap<WebsiteProcessors.Models.AnimeSource, Core.Domain.AnimeSource>()
-                .ForMember(coreSource => coreSource.Status_Id, conf => conf.MapFrom(procSource => procSource.Status));
+            CreateMap<WebsiteProcessors.Models.AnimeSource, Core.Domain.AnimeSource>();
 
             CreateMap<Core.Domain.AnimeSource, AnimeSourceDTO>();
         }

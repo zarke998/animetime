@@ -13,10 +13,10 @@ namespace AnimeTime.WebsiteProcessors
     {
         ICrawlDelayer CrawlDelayer { get; set; }
 
-        Task<AnimeSourceSubDub> GetAnimeUrlAsync(AnimeSearchParams searchParams);
+        Task<AnimeSourceSubDub> TryFindAnime(AnimeSearchParams searchParams);
         Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString);
 
-        Task<IEnumerable<(float epNum, string epUrl)>> GetAnimeEpisodesAsync(string animeUrl);
-        Task<IEnumerable<string>> GetVideoSourcesForEpisodeAsync(string episodeUrl);
+        Task<IEnumerable<EpisodeSource>> GetEpisodesAsync(string animeUrl);
+        Task<IEnumerable<string>> GetVideoSourcesAsync(string episodeUrl);
     }
 }

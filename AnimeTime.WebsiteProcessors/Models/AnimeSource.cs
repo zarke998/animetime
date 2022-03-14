@@ -10,7 +10,7 @@ namespace AnimeTime.WebsiteProcessors.Models
     {
         public string Name { get; set; }
         public string Url { get; set; }
-        public AnimeSourceStatus Status { get; set; }
+        public AnimeSourceStatus Status_Id { get; set; }
 
         public AnimeSource()
         {
@@ -20,7 +20,7 @@ namespace AnimeTime.WebsiteProcessors.Models
         {
             Name = name;
             Url = url;
-            Status = status;
+            Status_Id = status;
         }
     }
 

@@ -35,7 +35,7 @@ namespace AnimeTime.Services.ModelServices
             foreach (var website in websites)
             {
                 var processor = _websiteProcessorFactory.CreateWebsiteProcessor(website.Name, website.Url, website.QuerySuffix);
-                var source = processor.GetAnimeUrlAsync(new AnimeSearchParams(anime.Title, anime.AltTitles.Select(x => x.Title), anime.ReleaseYear)).Result;
+                var source = processor.TryFindAnime(new AnimeSearchParams(anime.Title, anime.AltTitles.Select(x => x.Title), anime.ReleaseYear)).Result;
 
                 var sub = _mapper.Map<Core.Domain.AnimeSource>(source.Sub);
                 var dub = _mapper.Map<Core.Domain.AnimeSource>(source.Dub);
@@ -44,9 +44,9 @@ namespace AnimeTime.Services.ModelServices
                 sub.WebsiteId = website.Id;
                 sub.AnimeVersion_Id = Core.Domain.Enums.AnimeVersionIds.Sub;
 
-                sub.AnimeId = anime.Id;
-                sub.WebsiteId = website.Id;
-                sub.AnimeVersion_Id = Core.Domain.Enums.AnimeVersionIds.Sub;
+                dub.AnimeId = anime.Id;
+                dub.WebsiteId = website.Id;
+                dub.AnimeVersion_Id = Core.Domain.Enums.AnimeVersionIds.Dub;
 
                 result.Add(sub);
                 result.Add(dub);

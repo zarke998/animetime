@@ -52,6 +52,7 @@
     <Compile Include="Models\AnimeSearchParams.cs" />
     <Compile Include="Models\AnimeSource.cs" />
     <Compile Include="Models\AnimeSourceSubDub.cs" />
+    <Compile Include="Models\EpisodeSource.cs" />
     <Compile Include="WebsiteProcessorFactory.cs" />
     <Compile Include="GogoanimeWebsiteProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
