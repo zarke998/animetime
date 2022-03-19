@@ -38,6 +38,7 @@ namespace AnimeTime.Persistence
         public IImageLodLevelRepository ImageLodLevels { get; private set; }
         public IAnimeImageRepository AnimeImages { get; private set; }
         public IEpisodeRepository Episodes { get; private set; }
+        public IEpisodeMetadataRepository EpisodeMetadatas{ get; private set; }
         public IAnimeMetadataRepository AnimeMetadatas { get; private set; }
         public IWebsiteRepository Websites { get; private set; }
         public IAnimeSourceRepository AnimeSources { get; private set; }
@@ -58,6 +59,7 @@ namespace AnimeTime.Persistence
             ImageLodLevels = new ImageLodLevelRepository(_animeTimeDbContext);
             AnimeImages = new AnimeImageRepository(_animeTimeDbContext);
             Episodes = new EpisodeRepository(_animeTimeDbContext);
+            EpisodeMetadatas = new EpisodeMetadataRepository(_animeTimeDbContext);
             AnimeMetadatas = new AnimeMetadataRepository(_animeTimeDbContext);
             Websites = new WebsiteRepository(_animeTimeDbContext);
             AnimeSources = new AnimeSourceRepository(_animeTimeDbContext);

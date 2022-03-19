@@ -9,6 +9,7 @@ using AnimeTime.Core;
 using AnimeTime.Core.Domain;
 using AnimeTime.Core.Domain.Comparers;
 using AnimeTime.Core.Exceptions;
+using AnimeTime.Services.ModelServices.Interfaces;
 using AnimeTime.WebAPI.DTOs.EpisodeSource;
 using AnimeTime.WebsiteProcessors;
 
@@ -17,8 +18,12 @@ namespace AnimeTime.WebAPI.Controllers
     [RoutePrefix("api/episodes")]
     public class EpisodeController : ApiController
     {
-        private const int _videoSourcesUpdateIntervalHours = 8;
+        private readonly IVideoSourceService _videoSourceService;
 
+        public EpisodeController(IVideoSourceService videoSourceService)
+        {
+            this._videoSourceService = videoSourceService;
+        }
         //[Route("{id}/video-sources")]
         //public async Task<IHttpActionResult> GetSourcesWithVideoSources(int id)
         //{
@@ -105,6 +110,10 @@ namespace AnimeTime.WebAPI.Controllers
         //    unitOfWork.EpisodeVideoSources.AddRange(newSources);
         //}
 
-
+        [Route("{id}/video-sources")]
+        public IHttpActionResult GetVideoSources(int id)
+        {
+            return Ok(_videoSourceService.GetVideoSources(id));
+        }
     }
 }

@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # AppSettings
 appSettings.json
+
+#Puppeteer chrome browser
+.local-chromium

@@ -18,122 +18,43 @@ namespace AnimeTime.WebsiteProcessors
     public class GogoanimeWebsiteProcessor : WebsiteProcessor
     {
         private string _episodesPageAjaxUrl = "https://ajax.gogocdn.net/ajax/load-list-episode?ep_start={0}&ep_end={1}&id={2}&default_ep=0";
-        private readonly string _dubUrlExtension = "-dub";
+        
 
         protected override char WhitespaceDelimiter => '-';
-        protected override string DubAnimeIdentifier => "(Dub)";
 
         public GogoanimeWebsiteProcessor(string websiteUrl, string querySuffix) : base(websiteUrl, querySuffix)
         {
 
         }
 
-        public override async Task<AnimeSourceSubDub> TryFindAnime(AnimeSearchParams searchParams)
+        protected override int GetSearchItemReleaseYear(HtmlNode node)
         {
-            var searchStrings = GetSearchStrings(searchParams.Name, searchParams.AltTitles);
-            foreach (var searchString in searchStrings)
+            var releaseYear = node.SelectSingleNode(".//p[contains(@class,'released')]").InnerText.Trim();
+
+            var releaseYearRegex = new Regex(@"(?<year>\d+)");
+            var releaseYearMatch = releaseYearRegex.Match(releaseYear);
+            int releaseYearNum = 0;
+            if (releaseYearMatch.Success)
             {
-                var foundAnimes = await SearchAnimesAsync(searchString).ConfigureAwait(false);
-
-                var exactMatch = await TryExactMatch(foundAnimes, searchString);
-
-                if (foundAnimes.Count() == 0) continue;
-                else if(exactMatch.IsResolved)
-                {
-                    return FormatResult(exactMatch);
-                }
-                else if (foundAnimes.Count() > 2) continue; // Indeterminable
-                else if (foundAnimes.Count() == 1)
-                {
-                    var singleMatch = TryMatchFromSingleResult(foundAnimes, searchParams.ReleaseYear);
-                    if (singleMatch.IsResolved)
-                        return FormatResult(singleMatch);
-
-                }
-                else if (foundAnimes.Count() == 2)
-                {
-                    var doubleMatch = TryMatchFromDoubleResult(foundAnimes);
-                    if (doubleMatch.IsResolved)
-                        return FormatResult(doubleMatch);
-                }
+                releaseYearNum = Convert.ToInt32(releaseYearMatch.Groups["year"].Value);
             }
 
-            return new AnimeSourceSubDub();
+            return releaseYearNum;
         }
-        public override async Task<IEnumerable<AnimeSearchResult>> SearchAnimesAsync(string searchString)
+        protected override string GetSearchItemUrl(HtmlNode searchItem)
         {
-            var animesFound = new List<AnimeSearchResult>();
-
-            HtmlDocument doc = null;
-            if (CrawlDelayer != null)
-            {
-                await CrawlDelayer.ApplyDelayAsync(async () => doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter)).ConfigureAwait(false));
-            }
-            else
-            {
-                doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter)).ConfigureAwait(false);
-            }
-
-            var animeNodes = doc.DocumentNode.SelectNodes(".//div[@class='last_episodes']//ul[@class='items']/li");
-
-            if (animeNodes == null) return animesFound;
-
-            foreach (var node in animeNodes)
-            {
-                var animeUrlAndTitle = node.SelectSingleNode(".//p[@class='name']/a");
-
-                var title = animeUrlAndTitle.GetAttributeValue("title", null);
-                var url = animeUrlAndTitle.GetAttributeValue("href", null);
-
-                var releaseYear = node.SelectSingleNode(".//p[contains(@class,'released')]").InnerText.Trim();
-
-                var releaseYearRegex = new Regex(@"(?<year>\d+)");
-                var releaseYearMatch = releaseYearRegex.Match(releaseYear);
-                int releaseYearNum = 0;
-                if (releaseYearMatch.Success)
-                {
-                    releaseYearNum = Convert.ToInt32(releaseYearMatch.Groups["year"].Value);
-                }
-
-                animesFound.Add(new AnimeSearchResult()
-                {
-                    Title = title,
-                    Url = url,
-                    ReleaseYear = releaseYearNum
-                });
-            }
-            return animesFound;
+            return searchItem.GetAttributeValue("href", null);
         }
-        private IEnumerable<string> GetSearchStrings(string animeTitle, IEnumerable<string> animeAltTitles)
+        protected override string GetSearchItemTitle(HtmlNode searchItem)
         {
-            var searchStrings = new List<string>();
-
-            searchStrings.Add(animeTitle);
-            foreach (var altTitle in animeAltTitles)
-            {
-                searchStrings.Add(altTitle);
-            }
-
-            string formatedTitle = animeTitle
-                .Replace(": ", " ")
-                .Replace('(', ' ')
-                .Replace(')', ' ');
-            searchStrings.Add(formatedTitle);
-
-            foreach (var altTitle in animeAltTitles)
-            {
-                var formatedAltTitle = altTitle
-                    .Replace(": ", " ")
-                    .Replace('(', ' ')
-                    .Replace(')', ' ');
-
-                if (formatedAltTitle != altTitle)
-                    searchStrings.Add(formatedAltTitle);
-            }
-
-            return searchStrings;
+            return searchItem.GetAttributeValue("title", null);
+        }
+        protected override HtmlNodeCollection GetSearchItemNodes(HtmlDocument doc)
+        {
+            return doc.DocumentNode.SelectNodes(".//div[@class='last_episodes']//ul[@class='items']/li");
         }
 
+        
         public override async Task<IEnumerable<EpisodeSource>> GetEpisodesAsync(string animeUrl)
         {
             var episodes = new List<EpisodeSource>();
@@ -195,7 +116,7 @@ namespace AnimeTime.WebsiteProcessors
                     {
                         epUrl += string.Format("-{0}", epNumDecimal);
                     }
-                    episodes.Add(new EpisodeSource() { EpisodeNumber = epNum, Url = epUrl});
+                    episodes.Add(new EpisodeSource() { EpisodeNumber = epNum, Url = epUrl });
                 }
             }
 
@@ -240,96 +161,5 @@ namespace AnimeTime.WebsiteProcessors
 
             return videoSources;
         }
-
-        #region Match attempts
-        private async Task<AnimeSourceSubDub> TryExactMatch(IEnumerable<AnimeSearchResult> foundAnimes, string animeName)
-        {
-            var animeSubDub = new AnimeSourceSubDub();
-
-            var exactMatch = foundAnimes.FirstOrDefault(
-                    t => t.Title
-                    .Replace(": ", " ")
-                    .RemoveExtraWhitespaces()
-                    .Equals(animeName.RemoveExtraWhitespaces(), StringComparison.OrdinalIgnoreCase));
-
-            // Check if there is an exact match
-            if (exactMatch != null)
-            {
-                animeSubDub.Sub = new AnimeSource(animeName, exactMatch.Url, AnimeSourceStatus.Resolved);
-
-                var exatchMatchDub = foundAnimes.FirstOrDefault(t => t.Title.RemoveExtraWhitespaces().Equals(animeName.RemoveExtraWhitespaces() + " " + DubAnimeIdentifier, StringComparison.OrdinalIgnoreCase));
-                var animeDubUrlCheck = exactMatch.Url + _dubUrlExtension;
-
-                animeSubDub.Dub.Name = $"{animeName} {DubAnimeIdentifier}"; // Assume found
-                animeSubDub.Dub.Status_Id = AnimeSourceStatus.Resolved;
-                if (exatchMatchDub != null)
-                {
-                    animeSubDub.Dub.Url = exatchMatchDub.Url;
-                    
-                }
-                else if (await WebUtils.WebpageExistsAsync(WebUtils.CombineUrls(_websiteUrl, animeDubUrlCheck)).ConfigureAwait(false))
-                {
-                    animeSubDub.Dub.Url = animeDubUrlCheck;
-                }
-                else
-                {
-                    animeSubDub.Dub.Status_Id = AnimeSourceStatus.CouldNotResolve;
-                }
-            }
-
-            return animeSubDub;
-        }
-        private AnimeSourceSubDub TryMatchFromSingleResult(IEnumerable<AnimeSearchResult> foundAnimes, int? releaseYear)
-        {
-            var animeSubDub = new AnimeSourceSubDub();
-
-            var match = foundAnimes.ElementAt(0);
-            if (match.ReleaseYear == releaseYear)
-            {
-                if (match.Title.Contains(DubAnimeIdentifier))
-                {
-                    animeSubDub.Dub = new AnimeSource(match.Title, match.Url, AnimeSourceStatus.Resolved);
-                }
-                else
-                {
-                    animeSubDub.Sub = new AnimeSource(match.Title, match.Url, AnimeSourceStatus.Resolved);
-                }
-            }
-            return animeSubDub;
-        }
-        private AnimeSourceSubDub TryMatchFromDoubleResult(IEnumerable<AnimeSearchResult> foundAnimes)
-        {
-            var animeSourceSubDub = new AnimeSourceSubDub();
-
-            var first = foundAnimes.ElementAt(0);
-            var second = foundAnimes.ElementAt(1);
-
-            if (second.Title.Contains(first.Title + " " + DubAnimeIdentifier))
-            {
-                animeSourceSubDub.Sub = new AnimeSource(first.Title, first.Url, AnimeSourceStatus.Resolved);
-                animeSourceSubDub.Dub = new AnimeSource(second.Title, second.Url, AnimeSourceStatus.Resolved);
-            }
-            else if (first.Title.Contains(second.Title + " " + DubAnimeIdentifier))
-            {
-                animeSourceSubDub.Sub = new AnimeSource(second.Title, second.Url, AnimeSourceStatus.Resolved);
-                animeSourceSubDub.Dub = new AnimeSource(first.Title, first.Url, AnimeSourceStatus.Resolved);
-            }
-
-            return animeSourceSubDub;
-        }
-        #endregion
-
-        #region Result
-        private AnimeSourceSubDub FormatResult(AnimeSourceSubDub animeSourceSubDub)
-        {
-            if (animeSourceSubDub.Sub.Url != null)
-                animeSourceSubDub.Sub.Url = WebUtils.CombineUrls(_websiteUrl, animeSourceSubDub.Sub.Url);
-
-            if (animeSourceSubDub.Dub.Url != null)
-                animeSourceSubDub.Dub.Url = WebUtils.CombineUrls(_websiteUrl, animeSourceSubDub.Dub.Url);
-
-            return animeSourceSubDub;
-        }
-        #endregion
     }
 }

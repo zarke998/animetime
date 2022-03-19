@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.Utilities", "Anim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.WebsiteProcessors", "AnimeTime.WebsiteProcessors\AnimeTime.WebsiteProcessors.csproj", "{52E9A70A-2466-4B70-86C2-14CD5C022DDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.AnimeSourceUpdater", "AnimeTime.AnimeSourceUpdater\AnimeTime.AnimeSourceUpdater.csproj", "{B1E0F5E3-C73F-443B-8853-579913DC3453}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.WebAPI", "AnimeTime.WebAPI\AnimeTime.WebAPI.csproj", "{2CD9BA4E-7909-448D-84EF-85A157C57A46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeTime.DbUpdater", "AnimeTime.DbUpdater\AnimeTime.DbUpdater.csproj", "{3685E4FB-9B98-4275-AEB4-8E9CEDD15F05}"
@@ -43,10 +41,6 @@ Global
 		{52E9A70A-2466-4B70-86C2-14CD5C022DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52E9A70A-2466-4B70-86C2-14CD5C022DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52E9A70A-2466-4B70-86C2-14CD5C022DDD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1E0F5E3-C73F-443B-8853-579913DC3453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1E0F5E3-C73F-443B-8853-579913DC3453}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1E0F5E3-C73F-443B-8853-579913DC3453}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1E0F5E3-C73F-443B-8853-579913DC3453}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2CD9BA4E-7909-448D-84EF-85A157C57A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CD9BA4E-7909-448D-84EF-85A157C57A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CD9BA4E-7909-448D-84EF-85A157C57A46}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -12,5 +12,6 @@ namespace AnimeTime.Core.Repositories
         Episode Get(int epId, bool includeMetadata = false);
         EpisodeMetadata GetMetadata(int epId);
         IEnumerable<Episode> GetWithSources(int animeId);
+        Episode GetWithVideoSources(int episodeId);
     }
 }

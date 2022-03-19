@@ -14,6 +14,7 @@ namespace AnimeTime.WebsiteProcessors
             switch (websiteName.ToLower())
             {
                 case "gogoanime": return new GogoanimeWebsiteProcessor(websiteUrl, querySuffix);
+                case "animeowl": return new AnimeOwlWebsiteProcessor(websiteUrl, querySuffix);
                 default: throw new ArgumentException($"Website not found for name {websiteName}.");
             }
         }

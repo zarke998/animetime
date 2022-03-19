@@ -18,6 +18,7 @@ namespace AnimeTime.Core
         IImageLodLevelRepository ImageLodLevels { get; }
         IAnimeImageRepository AnimeImages{ get; }
         IEpisodeRepository Episodes { get; }
+        IEpisodeMetadataRepository EpisodeMetadatas { get; }
         IAnimeMetadataRepository AnimeMetadatas { get; }
         IWebsiteRepository Websites { get; }
         IAnimeSourceRepository AnimeSources { get; }

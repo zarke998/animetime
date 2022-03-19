@@ -17,6 +17,7 @@ namespace AnimeTime.Services
                 conf.AddProfile<AnimeSourceProfile>();
                 conf.AddProfile<AnimeProfile>();
                 conf.AddProfile<EpisodeProfile>();
+                conf.AddProfile<VideoSourceProfiile>();
             });
 
             return mapperConfiguration;

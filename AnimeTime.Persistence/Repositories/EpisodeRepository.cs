@@ -41,5 +41,12 @@ namespace AnimeTime.Persistence.Repositories
         {
             return AnimeTimeDbContext.Episodes.Where(e => e.Id == epId).Select(e => e.Metadata).FirstOrDefault();
         }
+
+        public Episode GetWithVideoSources(int episodeId)
+        {
+            return AnimeTimeDbContext.Episodes
+                .Include(e => e.Sources.Select(source => source.VideoSources))
+                .FirstOrDefault(e => e.Id == episodeId);
+        }
     }
 }
