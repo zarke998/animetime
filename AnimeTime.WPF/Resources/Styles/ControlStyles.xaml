@@ -68,6 +68,7 @@
                     <Border BorderThickness="2.5"
                             x:Name="border"
                             CornerRadius="5"
+                            Background="{TemplateBinding Background}"
                             Height="{TemplateBinding Height}"
                             Width="{TemplateBinding Width}"
                             Style="{StaticResource BorderGradiented}">
@@ -112,6 +113,7 @@
     <Style x:Key="SearchResultsListView"
            TargetType="{x:Type ListView}"
            BasedOn="{StaticResource DefaultListView}">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>

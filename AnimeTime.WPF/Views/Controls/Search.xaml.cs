@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -32,15 +33,18 @@ namespace AnimeTime.WPF.Views.Controls
             DependencyProperty.Register(nameof(KeywordChangedCommand), typeof(ICommand), typeof(Search), new PropertyMetadata(null));
 
 
-        public ObservableCollection<SearchResult> SearchResults
+        public IEnumerable SearchResults
         {
             get { return (ObservableCollection<SearchResult>)GetValue(SearchResultsProperty); }
             set { SetValue(SearchResultsProperty, value); }
         }
         public static readonly DependencyProperty SearchResultsProperty =
-            DependencyProperty.Register(nameof(SearchResults), typeof(ObservableCollection<SearchResult>), typeof(Search), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SearchResults), typeof(IEnumerable), typeof(Search), new PropertyMetadata(new PropertyChangedCallback(SearchResultsChanged)));
 
+        private static void SearchResultsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
 
+        }
 
         public ICommand ItemSelectedCommand
         {

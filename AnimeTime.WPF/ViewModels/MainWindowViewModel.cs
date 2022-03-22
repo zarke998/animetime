@@ -1,4 +1,5 @@
-﻿using AnimeTime.WPF.Commands;
+﻿using AnimeTime.Services.DTO;
+using AnimeTime.WPF.Commands;
 using AnimeTime.WPF.Services.Interfaces;
 using AnimeTime.WPF.ViewModels.Base;
 using AnimeTime.WPF.ViewModels.Pages;
@@ -6,9 +7,11 @@ using AnimeTime.WPF.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,23 +20,17 @@ namespace AnimeTime.WPF.ViewModels
     public class MainWindowViewModel : WindowViewModelBase
     {
         #region Members
-        private ObservableCollection<SearchResult> _searchResults;
         private ObservableCollection<Notification> _notifications;
+        private ObservableCollection<AnimeSearchDTO> searchResults = new ObservableCollection<AnimeSearchDTO>();
+        private bool _isWaitingForSearch;
+        private readonly ISearchService _searchService;
+
+        private Timer _timer;
         #endregion
 
         #region Properties
-        public ObservableCollection<SearchResult> SearchResults
-        {
-            get
-            {
-                return _searchResults;
-            }
-            set
-            {
-                _searchResults = value;
-                OnPropertyChanged();
-            }
-        }
+
+        public ObservableCollection<AnimeSearchDTO> SearchResults { get => searchResults; set { searchResults = value; OnPropertyChanged(); } }
         public ObservableCollection<Notification> Notifications
         {
             get
@@ -50,11 +47,12 @@ namespace AnimeTime.WPF.ViewModels
         public Dictionary<string, object> PagesViewModels { get; set; } = new Dictionary<string, object>();
         public ViewModelBase ActivePage { get; set; }
 
-        public ICommand SearchResultSelectedCommand { get; set; }
+        public ICommand SearchAnimeCommand { get; set; }
+
         #endregion
 
 
-        public MainWindowViewModel(IWindowService windowService, IViewModelLocator viewModelLocator, HomeViewModel homeViewModel) : base(windowService, viewModelLocator)
+        public MainWindowViewModel(IWindowService windowService, IViewModelLocator viewModelLocator, HomeViewModel homeViewModel, ISearchService searchService) : base(windowService, viewModelLocator)
         {
             PagesViewModels.Add("Home", homeViewModel);
             ActivePage = homeViewModel;
@@ -69,6 +67,51 @@ namespace AnimeTime.WPF.ViewModels
                 {
                     Title = "Test"
                 }
+            };
+            _searchService = searchService;
+            SearchAnimeCommand = new DelegateCommand(SearchAnimes);
+
+            _timer = new Timer()
+            {
+                AutoReset = false,
+                Interval = 1000
+            };
+        }
+
+
+        private void SearchAnimes(object obj)
+        {
+            var searchString = obj.ToString();
+            if (String.IsNullOrEmpty(searchString)) SearchResults.Clear();
+            else if (searchString == "Search...") return;
+
+            if (_isWaitingForSearch)
+            {
+                _timer.Stop();
+                _timer = new Timer()
+                {
+                    AutoReset = false,
+                    Interval = 1000
+                };
+            }
+
+            _timer.Start();
+            _isWaitingForSearch = true;
+
+            _timer.Elapsed += async (timerObj, args) =>
+            {
+                var results = _searchService.SearchAsync(searchString).Result;
+
+                await App.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    SearchResults.Clear();
+                    foreach (var result in results)
+                    {
+                        SearchResults.Add(result);
+                    }
+                });
+                
+                _isWaitingForSearch = false;
             };
         }
     }

@@ -56,7 +56,8 @@
                         Height="30">
                 <controls:Search SearchResults="{Binding SearchResults}"
                                  Width="200"
-                                 ItemSelectedCommand="{Binding SearchResultSelectedCommand}" />
+                                 ItemSelectedCommand="{Binding SearchResultSelectedCommand}" 
+                                 KeywordChangedCommand="{Binding SearchAnimeCommand}"/>
                 <controls:Notifications Width="30"
                                         Height="30"
                                         NotificationList="{Binding Notifications}" />

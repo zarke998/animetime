@@ -27,7 +27,7 @@ namespace AnimeTime.WPF
 
             builder.RegisterType<HomeViewModel>().InstancePerLifetimeScope();
 
-
+            builder.RegisterType<SearchService>().As<ISearchService>();
             return builder.Build();
         }
     }

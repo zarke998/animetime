@@ -49,6 +49,9 @@
     <Reference Include="LibVLCSharp.WPF, Version=3.6.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LibVLCSharp.WPF.3.6.5\lib\net461\LibVLCSharp.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="VideoLAN.LibVLC.Windows, Version=3.0.16, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -118,8 +121,10 @@
     <Compile Include="Converters\MarginToSingleConverter.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\NumberToVisibilityConverter.cs" />
+    <Compile Include="Services\Interfaces\ISearchService.cs" />
     <Compile Include="Services\Interfaces\IViewModelLocator.cs" />
     <Compile Include="Services\Interfaces\IWindowService.cs" />
+    <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\ViewModelLocator.cs" />
     <Compile Include="Services\WindowService.cs" />
     <Compile Include="Utility\GradientExtensions.cs" />
@@ -363,6 +368,10 @@
     <ProjectReference Include="..\AnimeTime.Core\AnimeTime.Core.csproj">
       <Project>{F4CA9E32-6E3D-4269-9E5D-ECEEB5C6EB25}</Project>
       <Name>AnimeTime.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AnimeTime.Services\AnimeTime.Services.csproj">
+      <Project>{848FC195-F8E2-4705-9444-739348686FE4}</Project>
+      <Name>AnimeTime.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\AnimeTime.Utilities\AnimeTime.Utilities.csproj">
       <Project>{726F2A06-5F43-4CDF-B3BC-4AEC6939F017}</Project>
