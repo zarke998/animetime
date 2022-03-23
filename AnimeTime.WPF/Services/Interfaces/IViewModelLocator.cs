@@ -1,4 +1,5 @@
 ﻿using AnimeTime.WPF.ViewModels;
+using AnimeTime.WPF.ViewModels.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace AnimeTime.WPF.Services.Interfaces
     public interface IViewModelLocator
     {
         PlayerWindowViewModel PlayerWindowViewModel { get; set; }
+        DetailsViewModel DetailsViewModel { get; set; }
     }
 }

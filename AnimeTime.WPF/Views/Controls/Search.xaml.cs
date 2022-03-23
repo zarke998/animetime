@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimeTime.Services.DTO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -73,9 +74,11 @@ namespace AnimeTime.WPF.Views.Controls
 
         private void SearchResultsLvw_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ItemSelectedCommand == null || !ItemSelectedCommand.CanExecute(null)) return;
+            var selectedItem = SearchResultsLvw.SelectedItem as AnimeSearchDTO;
 
-            ItemSelectedCommand.Execute(SearchResultsLvw.SelectedItem as SearchResult);
+            if (selectedItem == null || ItemSelectedCommand == null || !ItemSelectedCommand.CanExecute(null)) return;
+            
+            ItemSelectedCommand.Execute(selectedItem.Id);
         }
     }
 }

@@ -6,20 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace AnimeTime.WPF.Services
 {
-    public class SearchService : ApiServiceBase, ISearchService
+    public class AnimeService : ApiServiceBase, IAnimeService
     {
-        public async Task<IEnumerable<AnimeSearchDTO>> SearchAsync(string searchString)
+        public async Task<IEnumerable<EpisodeDTO>> GetEpisodesAsync(int animeId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"api/search?animeName={searchString}");            
+            var request = new HttpRequestMessage(HttpMethod.Get, $"api/animes/{animeId}/episodes");
             var result = await _httpClient.SendAsync(request);
 
             var resultJson = await result.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<IEnumerable<AnimeSearchDTO>>(resultJson);
+            return JsonConvert.DeserializeObject<IEnumerable<EpisodeDTO>>(resultJson);
         }
     }
 }

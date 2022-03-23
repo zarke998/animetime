@@ -1,20 +1,21 @@
-﻿<base:WindowBase x:Class="AnimeTime.DesktopClient.MainWindow"
-                 xmlns:base="clr-namespace:AnimeTime.WPF.Views.Base"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:local="clr-namespace:AnimeTime.DesktopClient"
-                 xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
-                 xmlns:vmpages="clr-namespace:AnimeTime.WPF.ViewModels.Pages"
-                 xmlns:pages="clr-namespace:AnimeTime.WPF.Views.Pages"
-                 xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
-                 xmlns:qc="http://QuickConverter.CodePlex.com/"
-                 mc:Ignorable="d"
-                 ResizeMode="NoResize"
-                 Height="800"
-                 Width="940"
-                 Style="{StaticResource DefaultWindow}">
+﻿<base:WindowBase
+    x:Class="AnimeTime.DesktopClient.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:AnimeTime.WPF.Views.Base"
+    xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
+    xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AnimeTime.DesktopClient"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:AnimeTime.WPF.Views.Pages"
+    xmlns:qc="http://QuickConverter.CodePlex.com/"
+    xmlns:vmpages="clr-namespace:AnimeTime.WPF.ViewModels.Pages"
+    Width="940"
+    Height="800"
+    ResizeMode="NoResize"
+    Style="{StaticResource DefaultWindow}"
+    mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -35,36 +36,38 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0"
-              Margin="15,0,15,10"
-              Panel.ZIndex="999"
-              x:Name="NavBar">
+        <Grid
+            x:Name="NavBar"
+            Grid.Row="0"
+            Margin="15,0,15,10"
+            Panel.ZIndex="999">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal"
-                        Grid.Column="0">
-                <controls:ImageRounded Source="/AnimeTime.WPF;component/Assets/Images/anime_logo.jpg"
-                                       Radius="35" />
-                <controls:TabsWithSlider Margin="25,0,0,0"
-                                         Items="{Binding PagesViewModels}" />
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <controls:ImageRounded Radius="35" Source="/AnimeTime.WPF;component/Assets/Images/anime_logo.jpg" />
+                <controls:TabsWithSlider Margin="25,0,0,0" Items="{Binding PagesViewModels}" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        Height="30">
-                <controls:Search SearchResults="{Binding SearchResults}"
-                                 Width="200"
-                                 ItemSelectedCommand="{Binding SearchResultSelectedCommand}" 
-                                 KeywordChangedCommand="{Binding SearchAnimeCommand}"/>
-                <controls:Notifications Width="30"
-                                        Height="30"
-                                        NotificationList="{Binding Notifications}" />
+            <StackPanel
+                Grid.Column="1"
+                Height="30"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <controls:Search
+                    Width="200"
+                    ItemSelectedCommand="{Binding ShowAnimeCommand}"
+                    KeywordChangedCommand="{Binding SearchAnimeCommand}"
+                    SearchResults="{Binding SearchResults}" />
+                <controls:Notifications
+                    Width="30"
+                    Height="30"
+                    NotificationList="{Binding Notifications}" />
             </StackPanel>
         </Grid>
-        <ContentControl Content="{Binding ActivePage}"
-                        Grid.Row="1" 
-                        Panel.ZIndex="-999"/>
+        <ContentControl
+            Grid.Row="1"
+            Panel.ZIndex="-999"
+            Content="{Binding ActivePage}" />
     </Grid>
 </base:WindowBase>

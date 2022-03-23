@@ -1,18 +1,19 @@
-﻿<UserControl x:Class="AnimeTime.WPF.Views.Pages.DetailsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:AnimeTime.WPF.Views.Pages"
-             xmlns:ap="clr-namespace:AnimeTime.WPF.AttachedProperties"
-             xmlns:qc="http://QuickConverter.CodePlex.com/"
-             xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls"
-             xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
-             xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
-             x:Name="Root">
+﻿<UserControl
+    x:Class="AnimeTime.WPF.Views.Pages.DetailsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ap="clr-namespace:AnimeTime.WPF.AttachedProperties"
+    xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
+    xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls"
+    xmlns:local="clr-namespace:AnimeTime.WPF.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:qc="http://QuickConverter.CodePlex.com/"
+    x:Name="Root"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,41 +28,41 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type local:DetailsView}">
                         <Canvas x:Name="Canvas">
-                            <Border x:Name="BackgroundContainer"
-                                    ap:GeneralAttachedProperties.MarginTop="{Binding ElementName=Root, Path=VerticalContentOffset}">
-                                <Image x:Name="Image"
-                                       Height="400"
-                                       Width="{Binding ElementName=Canvas, Path=ActualWidth}"
-                                       Source="/Assets/Images/default-background.jpg"
-                                       Stretch="UniformToFill"
-                                       Opacity="0.6"/>
+                            <Border x:Name="BackgroundContainer" ap:GeneralAttachedProperties.MarginTop="{Binding ElementName=Root, Path=VerticalContentOffset}">
+                                <Image
+                                    x:Name="Image"
+                                    Width="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                    Height="400"
+                                    Opacity="0.6"
+                                    Source="/Assets/Images/default-background.jpg"
+                                    Stretch="UniformToFill" />
                             </Border>
 
-                            <excontrols:DefaultScrollViewer x:Name="DefaultScrollViewer"
-                                                            Height="{Binding ElementName=Canvas, Path=ActualHeight}"
-                                                            Width="{Binding ElementName=Canvas, Path=ActualWidth}"
-                                                            Style="{StaticResource DefaultScrollViewer}">
+                            <excontrols:DefaultScrollViewer
+                                x:Name="DefaultScrollViewer"
+                                Width="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                Height="{Binding ElementName=Canvas, Path=ActualHeight}"
+                                Style="{StaticResource DefaultScrollViewer}">
                                 <StackPanel>
-                                    <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)} }" />
-                                    <Border Padding="25, 0, 25, 15"
-                                            Background="{StaticResource WindowBackgroundBrush}">
+                                    <Border Height="{qc:MultiBinding '$P1 + $P2', P1={Binding ElementName=BackgroundContainer, Path=ActualHeight}, P2={Binding ElementName=BackgroundContainer, Path=(ap:GeneralAttachedProperties.MarginTop)}}" />
+                                    <Border Padding="25,0,25,15" Background="{StaticResource WindowBackgroundBrush}">
                                         <StackPanel x:Name="ContentContainer">
-                                            <Grid Margin="0,-50,0,0"
-                                                  x:Name="AnimeInfoContainer">
+                                            <Grid x:Name="AnimeInfoContainer" Margin="0,-50,0,0">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="2*" />
                                                     <ColumnDefinition Width="8*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Rectangle Grid.Column="0"
-                                                           Height="225"
-                                                           Fill="Red" />
-                                                <Border Padding="20, 0, 0, 0"
-                                                        Grid.Column="1">
-                                                <StackPanel Margin="0,0,0,0">
+                                                <Rectangle
+                                                    Grid.Column="0"
+                                                    Height="225"
+                                                    Fill="Red" />
+                                                <Border Grid.Column="1" Padding="20,0,0,0">
+                                                    <StackPanel Margin="0,0,0,0">
                                                         <DockPanel LastChildFill="True">
-                                                            <StackPanel DockPanel.Dock="Right"
-                                                                        VerticalAlignment="Center"
-                                                                        Orientation="Horizontal">
+                                                            <StackPanel
+                                                                VerticalAlignment="Center"
+                                                                DockPanel.Dock="Right"
+                                                                Orientation="Horizontal">
                                                                 <Button>
                                                                     <Button.Template>
                                                                         <ControlTemplate TargetType="{x:Type Button}">
@@ -69,46 +70,46 @@
                                                                         </ControlTemplate>
                                                                     </Button.Template>
                                                                     <StackPanel>
-                                                                        <Image Source="/Assets/Icons/star.png"
-                                                                               Width="25"/>
-                                                                        <TextBlock Text="8.5/10"
-                                                                                   Margin="0,2,0,0"
-                                                                                   Foreground="White"/>
+                                                                        <Image Width="25" Source="/Assets/Icons/star.png" />
+                                                                        <TextBlock
+                                                                            Margin="0,2,0,0"
+                                                                            Foreground="White"
+                                                                            Text="8.5/10" />
                                                                     </StackPanel>
                                                                 </Button>
                                                             </StackPanel>
-                                                            <TextBlock Text="Naruto: Shippuden"
-                                                                       DockPanel.Dock="Left"
-                                                                       FontSize="28"
-                                                                       Foreground="White" />
+                                                            <TextBlock
+                                                                DockPanel.Dock="Left"
+                                                                FontSize="28"
+                                                                Foreground="White"
+                                                                Text="Naruto: Shippuden" />
                                                         </DockPanel>
-                                                        <TextBlock Margin="0,25,0,0"
-                                                                   Foreground="White"
-                                                                   FontSize="16">
+                                                        <TextBlock
+                                                            Margin="0,25,0,0"
+                                                            FontSize="16"
+                                                            Foreground="White">
                                                             <StackPanel>
                                                                 <TextBlock Text="Type: TV" />
-                                                                <TextBlock Text="Alternative Titles: sakdlas"
-                                                                           Margin="0,10,0,0"/>    
-                                                                <TextBlock Text="Season 2019"
-                                                                           Margin="0,10,0,0" />    
-                                                                <TextBlock Text="Studio: ufotable"
-                                                                           Margin="0,10,0,0" />    
+                                                                <TextBlock Margin="0,10,0,0" Text="Alternative Titles: sakdlas" />
+                                                                <TextBlock Margin="0,10,0,0" Text="Season 2019" />
+                                                                <TextBlock Margin="0,10,0,0" Text="Studio: ufotable" />
                                                             </StackPanel>
                                                         </TextBlock>
                                                     </StackPanel>
                                                 </Border>
                                             </Grid>
-                                            <DockPanel LastChildFill="True"
-                                                       Margin="0,20,0,0">
-                                                <TextBlock Text="Genres"
-                                                           Foreground="White"
-                                                           FontSize="24"
-                                                           DockPanel.Dock="Left" />
-                                                <ListView ItemsSource="{Binding Genres}"
-                                                          BorderBrush="Transparent"
-                                                          Margin="15,3,0,0"
-                                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                          IsEnabled="False">
+                                            <DockPanel Margin="0,20,0,0" LastChildFill="True">
+                                                <TextBlock
+                                                    DockPanel.Dock="Left"
+                                                    FontSize="24"
+                                                    Foreground="White"
+                                                    Text="Genres" />
+                                                <ListView
+                                                    Margin="15,3,0,0"
+                                                    BorderBrush="Transparent"
+                                                    IsEnabled="False"
+                                                    ItemsSource="{Binding Genres}"
+                                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                                     <ListView.Template>
                                                         <ControlTemplate TargetType="{x:Type ListView}">
                                                             <ItemsPresenter />
@@ -116,13 +117,12 @@
                                                     </ListView.Template>
                                                     <ListView.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <WrapPanel Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth}"/>
+                                                            <WrapPanel Width="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth}" />
                                                         </ItemsPanelTemplate>
                                                     </ListView.ItemsPanel>
                                                     <ListView.ItemContainerStyle>
                                                         <Style TargetType="{x:Type ListViewItem}">
-                                                            <Setter Property="Margin"
-                                                                    Value="0,0,10,10" />
+                                                            <Setter Property="Margin" Value="0,0,10,10" />
                                                             <Setter Property="Template">
                                                                 <Setter.Value>
                                                                     <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -134,59 +134,63 @@
                                                     </ListView.ItemContainerStyle>
                                                     <ListView.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Border Style="{StaticResource BorderGradiented}"
-                                                                    BorderThickness="2"
-                                                                    CornerRadius="13">
-                                                                <TextBlock Margin="5,3"
-                                                                           MinWidth="100"
-                                                                           TextAlignment="Center"
-                                                                           Text="{Binding Name}"
-                                                                           Background="Transparent"
-                                                                           Foreground="White">
-                                                                </TextBlock>
+                                                            <Border
+                                                                BorderThickness="2"
+                                                                CornerRadius="13"
+                                                                Style="{StaticResource BorderGradiented}">
+                                                                <TextBlock
+                                                                    MinWidth="100"
+                                                                    Margin="5,3"
+                                                                    Background="Transparent"
+                                                                    Foreground="White"
+                                                                    Text="{Binding Name}"
+                                                                    TextAlignment="Center" />
                                                             </Border>
                                                         </DataTemplate>
                                                     </ListView.ItemTemplate>
                                                 </ListView>
                                             </DockPanel>
-                                            <StackPanel x:Name="SynopsisContainer"
-                                                        Margin="0,0,0,15">
-                                                <TextBlock Text="Synopsis"
-                                                           FontSize="24"
-                                                           Foreground="White"
-                                                           Margin="0,10" />
-                                                <TextBlock Text="{Binding Synopsis}"
-                                                           Foreground="White"
-                                                           FontSize="14"
-                                                           Width="{Binding ElementName=SynopsisContainer, Path=ActualWidth}"
-                                                           TextWrapping="Wrap" />
+                                            <StackPanel x:Name="SynopsisContainer" Margin="0,0,0,15">
+                                                <TextBlock
+                                                    Margin="0,10"
+                                                    FontSize="24"
+                                                    Foreground="White"
+                                                    Text="Synopsis" />
+                                                <TextBlock
+                                                    Width="{Binding ElementName=SynopsisContainer, Path=ActualWidth}"
+                                                    FontSize="14"
+                                                    Foreground="White"
+                                                    Text="{Binding Synopsis}"
+                                                    TextWrapping="Wrap" />
                                             </StackPanel>
-                                            <controls:Episodes NumberOfEpisodes="120" 
-                                                               Margin="0,0,0,10"/>
+                                            <controls:Episodes Margin="0,0,0,10" Items="{Binding Episodes}"/>
 
                                             <StackPanel Margin="0,15">
-                                                <StackPanel x:Name="PrequelContainer" 
-                                                            Margin="0,0,0,20">
-                                                    <TextBlock Text="Prequel"
-                                                               Style="{StaticResource SectionHeading}"
-                                                               Margin="0,0,0,10"/>
+                                                <StackPanel x:Name="PrequelContainer" Margin="0,0,0,20">
+                                                    <TextBlock
+                                                        Margin="0,0,0,10"
+                                                        Style="{StaticResource SectionHeading}"
+                                                        Text="Prequel" />
                                                     <controls:AnimeShortInfo />
                                                 </StackPanel>
                                                 <StackPanel x:Name="SequelContainer">
-                                                    <TextBlock Text="Sequel"
-                                                               Style="{StaticResource SectionHeading}"
-                                                               Margin="0,0,0,10"/>
+                                                    <TextBlock
+                                                        Margin="0,0,0,10"
+                                                        Style="{StaticResource SectionHeading}"
+                                                        Text="Sequel" />
                                                     <controls:AnimeShortInfo />
                                                 </StackPanel>
                                             </StackPanel>
 
 
-                                            <controls:ListViewExpandable x:Name="CharactersContainer" 
-                                                                         Title="Characters" 
-                                                                         Margin="0,30,0,20" />
-                                            <controls:ListViewExpandable x:Name="SameFranchiseContainer"
-                                                                         Title="Same Franchise" 
-                                                                         Visibility="{Binding SameFranchise.Count, Converter={StaticResource NumberToVisibilityConverter}, ConverterParameter=Collapsed}"/>
+                                            <controls:ListViewExpandable
+                                                x:Name="CharactersContainer"
+                                                Title="Characters"
+                                                Margin="0,30,0,20" />
+                                            <controls:ListViewExpandable
+                                                x:Name="SameFranchiseContainer"
+                                                Title="Same Franchise"
+                                                Visibility="{Binding SameFranchise.Count, Converter={StaticResource NumberToVisibilityConverter}, ConverterParameter=Collapsed}" />
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
@@ -194,25 +198,26 @@
                             </excontrols:DefaultScrollViewer>
                         </Canvas>
                         <ControlTemplate.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=WallpaperPassedViewport}"
-                                         Value="True">
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=WallpaperPassedViewport}" Value="True">
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Duration="0:0:0.2"
-                                                             To="0"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             Storyboard.TargetName="Image" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="Image"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0"
+                                                Duration="0:0:0.2" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </DataTrigger.EnterActions>
                                 <DataTrigger.ExitActions>
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Duration="0:0:0.2"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             Storyboard.TargetName="Image" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="Image"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="1"
+                                                Duration="0:0:0.2" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </DataTrigger.ExitActions>

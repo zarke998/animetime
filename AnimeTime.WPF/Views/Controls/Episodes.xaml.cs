@@ -1,5 +1,6 @@
 ﻿using AnimeTime.WPF.Commands;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,26 +25,30 @@ namespace AnimeTime.WPF.Views.Controls
     {
         public const int MAX_EPISODES_PER_TAB = 50;
 
+        #region Properties
         private int TabCount => Convert.ToInt32(Math.Ceiling(NumberOfEpisodes / (MAX_EPISODES_PER_TAB * 1.0)));
 
+        public int NumberOfEpisodes => Items.Cast<object>().Count();
+
+        #endregion
+
         #region Dependency Properties
-        public int NumberOfEpisodes
+
+        public IEnumerable Items
         {
-            get { return (int)GetValue(NumberOfEpisodesProperty); }
-            set { SetValue(NumberOfEpisodesProperty, value); }
+            get { return (IEnumerable)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for NumberOfEpisodes.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty NumberOfEpisodesProperty =
-            DependencyProperty.Register("NumberOfEpisodes", typeof(int), typeof(Episodes), new PropertyMetadata(0, OnEpisodeCountChanged));
+        // Using a DependencyProperty as the backing store for Items.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemsProperty =
+            DependencyProperty.Register("Items", typeof(IEnumerable), typeof(Episodes), new PropertyMetadata(new List<object>() , OnItemsChanged));
 
-        private static void OnEpisodeCountChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var self = d as Episodes;
             self.InvalidateTabs();
         }
-
-
 
         public ICommand EpisodeSelectedCommand
         {

@@ -69,10 +69,9 @@ namespace AnimeTime.WPF.Views.Controls
         private void ListViewExpandable_Loaded(object sender, RoutedEventArgs e)
         {
             _container = this.Template.FindName("ItemsContainer", this) as ListView;
-            _container.SelectionChanged += _container_SelectionChanged;
-
             if (_container != null)
             {
+                _container.SelectionChanged += _container_SelectionChanged;
                 LoadTestData();
             }
         }

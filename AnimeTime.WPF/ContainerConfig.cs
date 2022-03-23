@@ -22,12 +22,17 @@ namespace AnimeTime.WPF
             builder.RegisterType<ViewModelLocator>().As<IViewModelLocator>().SingleInstance()
                                                                             .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
 
+
             builder.RegisterType<MainWindowViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<PlayerWindowViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<DetailsViewModel>().InstancePerLifetimeScope();
 
             builder.RegisterType<HomeViewModel>().InstancePerLifetimeScope();
 
+            // Api services
             builder.RegisterType<SearchService>().As<ISearchService>();
+            builder.RegisterType<AnimeService>().As<IAnimeService>();
+
             return builder.Build();
         }
     }

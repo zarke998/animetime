@@ -78,6 +78,7 @@ namespace AnimeTime.WPF.Views.Controls
         {
             var slider = (TabsWithSlider)obj;
             slider.InvalidateTabs();
+            slider.FirstTabFire();
         }
         #endregion
 

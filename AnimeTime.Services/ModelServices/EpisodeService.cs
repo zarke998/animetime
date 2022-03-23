@@ -36,8 +36,8 @@ namespace AnimeTime.Services.ModelServices
                 return _mapper.Map<IEnumerable<EpisodeDTO>>(_unitOfWork.Episodes.Find(e => e.AnimeId == animeId));
             }
 
-            var episodes = _unitOfWork.Episodes.Find(e => e.AnimeId == animeId);
-            _unitOfWork.Episodes.RemoveRange(episodes);
+            //var episodes = _unitOfWork.Episodes.Find(e => e.AnimeId == animeId);
+            //_unitOfWork.Episodes.RemoveRange(episodes);
 
             var newEpisodes = FetchNewEpisodes(animeId);
 

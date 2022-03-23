@@ -22,7 +22,12 @@ namespace AnimeTime.WPF.ViewModels
         #region Members
         private ObservableCollection<Notification> _notifications;
         private ObservableCollection<AnimeSearchDTO> searchResults = new ObservableCollection<AnimeSearchDTO>();
+        private ViewModelBase activePage;
+
         private bool _isWaitingForSearch;
+
+        // Services
+        private readonly IViewModelLocator _viewModelLocator;
         private readonly ISearchService _searchService;
 
         private Timer _timer;
@@ -45,16 +50,18 @@ namespace AnimeTime.WPF.ViewModels
         }
 
         public Dictionary<string, object> PagesViewModels { get; set; } = new Dictionary<string, object>();
-        public ViewModelBase ActivePage { get; set; }
+        public ViewModelBase ActivePage { get => activePage; set { activePage = value; OnPropertyChanged(); } }
 
+        // Commands
         public ICommand SearchAnimeCommand { get; set; }
-
+        public ICommand ShowAnimeCommand { get; set; }
         #endregion
 
 
         public MainWindowViewModel(IWindowService windowService, IViewModelLocator viewModelLocator, HomeViewModel homeViewModel, ISearchService searchService) : base(windowService, viewModelLocator)
         {
             PagesViewModels.Add("Home", homeViewModel);
+            this._viewModelLocator = viewModelLocator;
             ActivePage = homeViewModel;
 
             Notifications = new ObservableCollection<Notification>()
@@ -70,6 +77,7 @@ namespace AnimeTime.WPF.ViewModels
             };
             _searchService = searchService;
             SearchAnimeCommand = new DelegateCommand(SearchAnimes);
+            ShowAnimeCommand = new DelegateCommand(ShowAnime);
 
             _timer = new Timer()
             {
@@ -78,11 +86,24 @@ namespace AnimeTime.WPF.ViewModels
             };
         }
 
+        private void ShowAnime(object obj)
+        {
+            var animeId = (int)obj;
+
+            var detailsViewModel = _viewModelLocator.DetailsViewModel;
+            ActivePage = detailsViewModel;
+
+            detailsViewModel.Load(animeId);
+        }
 
         private void SearchAnimes(object obj)
         {
             var searchString = obj.ToString();
-            if (String.IsNullOrEmpty(searchString)) SearchResults.Clear();
+            if (String.IsNullOrEmpty(searchString))
+            {
+                SearchResults.Clear();
+                return;
+            }
             else if (searchString == "Search...") return;
 
             if (_isWaitingForSearch)
@@ -110,7 +131,7 @@ namespace AnimeTime.WPF.ViewModels
                         SearchResults.Add(result);
                     }
                 });
-                
+
                 _isWaitingForSearch = false;
             };
         }
