@@ -98,9 +98,11 @@ namespace AnimeTime.WPF.ViewModels
 
         private void SearchAnimes(object obj)
         {
+            
             var searchString = obj.ToString();
             if (String.IsNullOrEmpty(searchString))
             {
+                _timer.Stop();
                 SearchResults.Clear();
                 return;
             }

@@ -106,6 +106,7 @@
     <Compile Include="Assets\AssetsURIs.cs" />
     <Compile Include="AttachedProperties\GeneralAttachedProperties.cs" />
     <Compile Include="AttachedProperties\TextBoxAttachedProperties.cs" />
+    <Compile Include="AttachedProperties\UIElementAttachedProperties.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Common\ICanShutdown.cs" />
     <Compile Include="Common\ICloseable.cs" />

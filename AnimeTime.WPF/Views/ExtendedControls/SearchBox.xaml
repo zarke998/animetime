@@ -7,7 +7,8 @@
              xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="200"
-             Name="Root">
+             Name="Root"
+             Focusable="True">
     <TextBox.Template>
         <ControlTemplate TargetType="{x:Type TextBox}">
             <Border 

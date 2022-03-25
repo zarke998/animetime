@@ -20,6 +20,10 @@ namespace AnimeTime.WPF.Views.ExtendedControls
     /// </summary>
     public partial class SearchBox : TextBox
     {
+        private TextBox _innerTb;
+
+        public bool HasFocus => _innerTb?.IsFocused ?? false;
+        
         public SearchBox()
         {
             InitializeComponent();
@@ -29,8 +33,8 @@ namespace AnimeTime.WPF.Views.ExtendedControls
 
         private void SearchBox_Loaded(object sender, RoutedEventArgs e)
         {
-            var innerTb = this.GetTemplateChild("tb") as TextBox;
-            innerTb.TextChanged += InnerTb_TextChanged;
+            _innerTb = this.GetTemplateChild("tb") as TextBox;
+            _innerTb.TextChanged += InnerTb_TextChanged;
         }
 
         private void InnerTb_TextChanged(object sender, TextChangedEventArgs e)
