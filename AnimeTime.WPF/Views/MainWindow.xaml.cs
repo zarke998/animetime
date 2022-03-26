@@ -28,19 +28,14 @@ namespace AnimeTime.DesktopClient
             InitializeComponent();
         }
 
-        private void ImageRounded_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void NotificationButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("test");
-        }
-
         public void Shutdown()
         {
             Application.Current.Shutdown();
+        }
+
+        private void MainContainer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            (sender as UIElement).Focus();
         }
     }
 }

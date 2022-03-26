@@ -31,7 +31,11 @@
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid 
+        x:Name="MainContainer"   
+        Focusable="True"
+        Background="{StaticResource WindowBackgroundBrush}"
+        MouseDown="MainContainer_MouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
