@@ -112,18 +112,19 @@ namespace AnimeTime.WebsiteProcessors.AjaxProcessors
                 );
 
                 var page = await browser.NewPageAsync();
+                
 
                 await page.GoToAsync(episodeUrl);
-                await page.WaitForXPathAsync(".//div[contains(@class,'choose-no-ads-server')]");
+
+                await page.WaitForXPathAsync(".//div[contains(@class,'choose-no-ads-server')]/div");
                 var videoSources = await page.XPathAsync(".//div[contains(@class,'choose-no-ads-server')]/div");
                 foreach (var videoSource in videoSources)
                 {
-                    var link = await page.EvaluateFunctionAsync<string>("e => e.getAttribute('data-source')", videoSources);
+                    var link = await page.EvaluateFunctionAsync<string>("e => e.getAttribute('data-source')", videoSource);
                     result.Add(link);
                 }
 
-                await page.DisposeAsync();
-                await browser.DisposeAsync();
+                await browser.CloseAsync();
             }
             return result;
         }

@@ -114,16 +114,18 @@ namespace AnimeTime.WPF.Views.Controls
             EpisodesContainer.Opacity = 0;
 
             var episodeRange = param as EpisodeRange;
+            var episodes = GetEpisodesFromItems();
             for (int i = episodeRange.StartEpisode; i <= episodeRange.EndEpisode; i++)
             {
-                var button = CreateEpisodeButton(i);
+                var episode = episodes.First(e => e.EpNum == i);
+                var button = CreateEpisodeButton(episode.EpNum, episode.Value);
                 EpisodesContainer.Children.Add(button);
             }
             EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, FadeInAnimation(new Duration(TimeSpan.FromMilliseconds(400))));
         }
-        private Button CreateEpisodeButton(int epNum)
+        private Button CreateEpisodeButton(int epNum, object value)
         {
-            var button = new Button() { Content = epNum, Tag = epNum };
+            var button = new Button() { Content = epNum, Tag = value };
             button.Style = this.FindResource("SingleEpisodeButton") as Style;
             button.Margin = new Thickness(0, 0, 0, 10);
             button.Click += EpisodeButton_Click;
@@ -147,8 +149,31 @@ namespace AnimeTime.WPF.Views.Controls
             return opacityAnimation;
         }
         #endregion
+
+        private List<Episode> GetEpisodesFromItems()
+        {
+            var result = new List<Episode>();
+
+            var items = (IEnumerable<object>)Items;
+            foreach (var item in items)
+            {
+                var episode = new Episode();
+                var props = item.GetType().GetProperties();
+
+                episode.EpNum = Convert.ToInt32(props.First(p => p.Name == "EpNum").GetValue(item));
+                episode.Value = Convert.ToInt32(props.First(p => p.Name == "Id").GetValue(item));
+                result.Add(episode);
+            }
+
+            return result;
+        }
     }
 
+    class Episode
+    {
+        public int EpNum { get; set; }
+        public object Value { get; set; }
+    }
     class EpisodeRange
     {
         public int StartEpisode { get; set; }

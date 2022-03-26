@@ -32,6 +32,7 @@ namespace AnimeTime.WPF
             // Api services
             builder.RegisterType<SearchService>().As<ISearchService>();
             builder.RegisterType<AnimeService>().As<IAnimeService>();
+            builder.RegisterType<EpisodeService>().As<IEpisodeService>();
 
             return builder.Build();
         }

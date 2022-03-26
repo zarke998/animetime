@@ -18,12 +18,46 @@ namespace AnimeTime.WPF.Views
     /// </summary>
     public partial class PlayerWindow : WindowBase
     {
+
+        #region Dependency Properties
+        public IEnumerable<string> Sources
+        {
+            get { return (IEnumerable<string>)GetValue(SourcesProperty); }
+            set { SetValue(SourcesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Sources.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SourcesProperty =
+            DependencyProperty.Register("Sources", typeof(IEnumerable<string>), typeof(PlayerWindow), new PropertyMetadata(new List<string>(), OnSourcesChanged));
+
+        private static void OnSourcesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var self = d as PlayerWindow;
+            if (e.NewValue != null)
+                self.LoadEpisode();
+        }
+
+        #endregion
+
         private LibVLC _libVLC;
+        private MediaPlayer _mediaPlayer;
+
         public PlayerWindow()
         {
             InitializeComponent();
             this.Loaded += PlayerWindow_Loaded;
             this.Closed += PlayerWindow_Closed;
+
+
+        }
+
+        private void BindSourcesToDataContext()
+        {
+            var binding = new Binding();
+            binding.Source = this.DataContext;
+            binding.Path = new PropertyPath("Sources");
+
+            this.SetBinding(SourcesProperty, binding);
         }
 
         private async Task InitializeVLC()
@@ -49,11 +83,20 @@ namespace AnimeTime.WPF.Views
         private async void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await InitializeVLC();
+            BindSourcesToDataContext();
 
-            var mediaPlayer = new MediaPlayer(_libVLC);
-            VlcVideoView.MediaPlayer = mediaPlayer;
+            _mediaPlayer = new MediaPlayer(_libVLC);
+            VlcVideoView.MediaPlayer = _mediaPlayer;
 
-            mediaPlayer.Play(new Media(_libVLC, new Uri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")));
+            
+        }
+
+        private void LoadEpisode()
+        {
+            var sourceUrl = Sources.LastOrDefault();
+            if (sourceUrl == null) return;
+
+            _mediaPlayer.Play(new Media(_libVLC, new Uri(sourceUrl)));
         }
     }
 }

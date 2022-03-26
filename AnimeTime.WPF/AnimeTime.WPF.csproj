@@ -124,8 +124,10 @@
     <Compile Include="Converters\NumberToVisibilityConverter.cs" />
     <Compile Include="Services\AnimeService.cs" />
     <Compile Include="Services\Base\ApiServiceBase.cs" />
+    <Compile Include="Services\EpisodeService.cs" />
     <Compile Include="Services\Interfaces\IAnimeService.cs" />
     <Compile Include="Services\Interfaces\ISearchService.cs" />
+    <Compile Include="Services\Interfaces\IEpisodeService.cs" />
     <Compile Include="Services\Interfaces\IViewModelLocator.cs" />
     <Compile Include="Services\Interfaces\IWindowService.cs" />
     <Compile Include="Services\SearchService.cs" />
