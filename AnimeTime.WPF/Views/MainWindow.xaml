@@ -43,7 +43,7 @@
         <Grid
             x:Name="NavBar"
             Grid.Row="0"
-            Margin="15,0,15,10"
+            Margin="15,5,15,10"
             Panel.ZIndex="999">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*" />
