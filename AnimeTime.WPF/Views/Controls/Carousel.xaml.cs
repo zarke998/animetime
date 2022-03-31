@@ -40,10 +40,10 @@ namespace AnimeTime.WPF.Views.Controls
         #region Constants
         // Item dimensions
         public double CenterItemWidth => 400;
-        public double CenterItemHeight => Container.Height;
+        public double CenterItemHeight => 175;
 
-        public double ItemWidth => 250;
-        public double ItemHeight => Container.Height - 50;
+        public double ItemWidth => 300;
+        public double ItemHeight => (ItemWidth / CenterItemWidth) * CenterItemHeight;
 
         // Carousel buttons
         public const int CAROUSEL_BUTTON_OFFSET = 5;
@@ -159,7 +159,7 @@ namespace AnimeTime.WPF.Views.Controls
 
         private void SetItemPosition(ref StackPanel item, int position)
         {
-            var offset = 0;
+            var offset = 50;
             var itemSpacing = 50;
             var fullPositionOffset = item.Width + offset + itemSpacing;
             switch (position)
@@ -197,20 +197,9 @@ namespace AnimeTime.WPF.Views.Controls
 
             Binding heightBinding = new Binding(nameof(root.Height));
             heightBinding.Source = root;
-            heightBinding.Converter = new AdditionConverter();
-            heightBinding.ConverterParameter = -25;
-
             carouselItem.SetBinding(CarouselItem.HeightProperty, heightBinding);
 
-            var textBlock = new TextBlock();
-            textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-            textBlock.Text = title;
-            textBlock.Foreground = new SolidColorBrush(Colors.White);
-            textBlock.FontSize = 18;
-            textBlock.Margin = new Thickness(0, 5, 0, 0);
-
             root.Children.Add(carouselItem);
-            root.Children.Add(textBlock);
 
             return root;
         }

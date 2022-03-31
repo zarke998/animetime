@@ -403,9 +403,6 @@
     <Resource Include="Assets\Images\anime_logo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Naruto - cover.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Icons\arrow-white.png" />
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +413,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\default-image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Demon Slayer.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\VideoLAN.LibVLC.Windows.3.0.16\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.16\build\VideoLAN.LibVLC.Windows.targets')" />
