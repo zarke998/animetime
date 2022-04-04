@@ -30,5 +30,10 @@ namespace AnimeTime.WPF.ViewModels
             var sources = await _episodeService.GetVideoSources(episodeId);
             Sources = new ObservableCollection<string>(sources.Select(source => source.Url));
         }
+
+        public void Clear()
+        {
+            Sources = null;
+        }
     }
 }

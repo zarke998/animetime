@@ -94,6 +94,7 @@ namespace AnimeTime.WPF.ViewModels.Pages
         {
             var epId = (int)param;
             var playerVM = _viewModelLocator.PlayerWindowViewModel;
+            playerVM.Clear();
 
             playerVM.Load(epId);
             _windowService.Load(playerVM);
