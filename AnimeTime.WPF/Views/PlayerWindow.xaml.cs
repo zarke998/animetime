@@ -47,10 +47,24 @@ namespace AnimeTime.WPF.Views
             InitializeComponent();
             this.Loaded += PlayerWindow_Loaded;
             this.Closed += PlayerWindow_Closed;
-
-
         }
 
+        #region Events
+        private void PlayerWindow_Closed(object sender, EventArgs e)
+        {
+            ShutdownVLC();
+            BindingOperations.ClearBinding(this, SourcesProperty);
+        }
+        private void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitializeVLC();
+
+            _mediaPlayer = new MediaPlayer(_libVLC);
+            VlcVideoView.MediaPlayer = _mediaPlayer;
+
+            BindSourcesToDataContext();
+        }
+        #endregion
         private void BindSourcesToDataContext()
         {
             var binding = new Binding();
@@ -59,14 +73,10 @@ namespace AnimeTime.WPF.Views
 
             this.SetBinding(SourcesProperty, binding);
         }
-
-        private async Task InitializeVLC()
+        private void InitializeVLC()
         {
-            await Task.Run(() =>
-            {
-                LibVLCSharp.Shared.Core.Initialize();
-                _libVLC = new LibVLC();
-            });
+            LibVLCSharp.Shared.Core.Initialize();
+            _libVLC = new LibVLC();
         }
         private void ShutdownVLC()
         {
@@ -74,26 +84,9 @@ namespace AnimeTime.WPF.Views
             VlcVideoView.MediaPlayer.Dispose();
             _libVLC.Dispose();
         }
-
-        private void PlayerWindow_Closed(object sender, EventArgs e)
-        {
-            ShutdownVLC();
-        }
-
-        private async void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            await InitializeVLC();
-            BindSourcesToDataContext();
-
-            _mediaPlayer = new MediaPlayer(_libVLC);
-            VlcVideoView.MediaPlayer = _mediaPlayer;
-
-            
-        }
-
         private void LoadEpisode()
         {
-            var sourceUrl = Sources.LastOrDefault();
+            var sourceUrl = Sources.ElementAtOrDefault(1);
             if (sourceUrl == null) return;
 
             _mediaPlayer.Play(new Media(_libVLC, new Uri(sourceUrl)));
