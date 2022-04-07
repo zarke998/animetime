@@ -19,12 +19,17 @@ namespace AnimeTime.Services.ModelServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebsiteProcessorFactory _websiteProcessorFactory;
         private readonly IMapper _mapper;
+        private readonly IAnimeSourceService _animeSourceService;
 
-        public EpisodeService(IUnitOfWork unitOfWork, IWebsiteProcessorFactory websiteProcessorFactory, IMapper mapper)
+        public EpisodeService(IUnitOfWork unitOfWork, 
+                              IWebsiteProcessorFactory websiteProcessorFactory, 
+                              IMapper mapper,
+                              IAnimeSourceService animeSourceService)
         {
             this._unitOfWork = unitOfWork;
             this._websiteProcessorFactory = websiteProcessorFactory;
             this._mapper = mapper;
+            this._animeSourceService = animeSourceService;
         }
         public IEnumerable<EpisodeDTO> GetEpisodes(int animeId)
         {
@@ -35,9 +40,6 @@ namespace AnimeTime.Services.ModelServices
             {
                 return _mapper.Map<IEnumerable<EpisodeDTO>>(_unitOfWork.Episodes.Find(e => e.AnimeId == animeId));
             }
-
-            //var episodes = _unitOfWork.Episodes.Find(e => e.AnimeId == animeId);
-            //_unitOfWork.Episodes.RemoveRange(episodes);
 
             var newEpisodes = FetchNewEpisodes(animeId);
 
@@ -61,6 +63,8 @@ namespace AnimeTime.Services.ModelServices
 
         private List<Episode> FetchNewEpisodes(int animeId)
         {
+            _animeSourceService.GetAll(animeId);
+
             var anime = _unitOfWork.Animes.GetWithSources(animeId, true);
             var newEpisodes = new List<Episode>();
             foreach (var animeSource in anime.AnimeSources)
