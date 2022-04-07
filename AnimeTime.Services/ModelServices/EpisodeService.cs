@@ -36,7 +36,7 @@ namespace AnimeTime.Services.ModelServices
             var animeMetadata = _unitOfWork.AnimeMetadatas.Get(animeId);
             if (animeMetadata != null &&
                 animeMetadata.EpisodesLastUpdate.HasValue &&
-                (DateTime.UtcNow - animeMetadata.EpisodesLastUpdate.Value).TotalHours > EPISODE_REFRESH_INTERVAL)
+                (DateTime.UtcNow - animeMetadata.EpisodesLastUpdate.Value).TotalHours < EPISODE_REFRESH_INTERVAL)
             {
                 return _mapper.Map<IEnumerable<EpisodeDTO>>(_unitOfWork.Episodes.Find(e => e.AnimeId == animeId));
             }
@@ -54,11 +54,11 @@ namespace AnimeTime.Services.ModelServices
         {
             if(animeMetadata == null)
             {
-                animeMetadata = new AnimeMetadata();
+                animeMetadata = new AnimeMetadata() { Id = animeId };
+                _unitOfWork.AnimeMetadatas.Add(animeMetadata);
             }
 
             animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
-            animeMetadata.Id = animeId;
         }
 
         private List<Episode> FetchNewEpisodes(int animeId)
