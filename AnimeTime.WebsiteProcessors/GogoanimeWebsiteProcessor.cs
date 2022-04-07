@@ -43,11 +43,13 @@ namespace AnimeTime.WebsiteProcessors
         }
         protected override string GetSearchItemUrl(HtmlNode searchItem)
         {
-            return searchItem.GetAttributeValue("href", null);
+            var urlNode = searchItem.SelectSingleNode(".//a");
+            return urlNode.GetAttributeValue("href", null);
         }
         protected override string GetSearchItemTitle(HtmlNode searchItem)
         {
-            return searchItem.GetAttributeValue("title", null);
+            var titleNode = searchItem.SelectSingleNode(".//a");
+            return titleNode.GetAttributeValue("title", null);
         }
         protected override HtmlNodeCollection GetSearchItemNodes(HtmlDocument doc)
         {

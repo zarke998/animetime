@@ -79,7 +79,7 @@ namespace AnimeTime.WebsiteProcessors
             }
             else
             {
-                doc = await _web.LoadFromWebAsync(_websiteUrl + _querySuffix + searchString.Replace(' ', WhitespaceDelimiter)).ConfigureAwait(false);
+                doc = await _web.LoadFromWebAsync(WebUtils.CombineUrls(_websiteUrl, _querySuffix) + searchString.Replace(' ', WhitespaceDelimiter)).ConfigureAwait(false);
             }
 
             var animeNodes = GetSearchItemNodes(doc);
