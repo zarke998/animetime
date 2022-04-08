@@ -64,9 +64,11 @@ namespace AnimeTime.Services.ModelServices
         private void UpdateVideoSourcesLastUpdate(EpisodeMetadata episodeMetadata, int episodeId)
         {
             if (episodeMetadata == null)
-                episodeMetadata = new EpisodeMetadata();
+            {
+                episodeMetadata = new EpisodeMetadata() { Id = episodeId };
+                _unitOfWork.EpisodeMetadatas.Add(episodeMetadata);
+            }
 
-            episodeMetadata.Id = episodeId;
             episodeMetadata.VideoSourcesLastUpdate = DateTime.UtcNow;
         }
     }
