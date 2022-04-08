@@ -41,13 +41,17 @@ namespace AnimeTime.Services.ModelServices
                 return _mapper.Map<IEnumerable<EpisodeDTO>>(_unitOfWork.Episodes.Find(e => e.AnimeId == animeId));
             }
 
-            var newEpisodes = FetchNewEpisodes(animeId);
+            var episodes = _unitOfWork.Episodes.Find(e => e.AnimeId == animeId);
+            var episodeNums = episodes.Select(ep => ep.EpNum);
+            var scrapedEpisodes = ScrapeAllEpisodes(animeId);
+
+            var newEpisodes = scrapedEpisodes.Where(e => !episodeNums.Contains(e.EpNum));
 
             _unitOfWork.Episodes.AddRange(newEpisodes);
             UpdateEpisodeLastUpdate(animeMetadata, animeId);
             _unitOfWork.Complete();
 
-            return _mapper.Map<IEnumerable<EpisodeDTO>>(newEpisodes);
+            return _mapper.Map<IEnumerable<EpisodeDTO>>(scrapedEpisodes);
         }
 
         private void UpdateEpisodeLastUpdate(AnimeMetadata animeMetadata, int animeId)
@@ -61,7 +65,7 @@ namespace AnimeTime.Services.ModelServices
             animeMetadata.EpisodesLastUpdate = DateTime.UtcNow;
         }
 
-        private List<Episode> FetchNewEpisodes(int animeId)
+        private List<Episode> ScrapeAllEpisodes(int animeId)
         {
             _animeSourceService.GetAll(animeId);
 
