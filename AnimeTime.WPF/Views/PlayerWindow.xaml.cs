@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using LibVLCSharp.Shared;
+using System.Diagnostics;
 
 namespace AnimeTime.WPF.Views
 {
@@ -26,6 +27,8 @@ namespace AnimeTime.WPF.Views
             set { SetValue(SourcesProperty, value); }
         }
 
+        private const string LIBVLC_CANNOT_OPEN_SOURCE_ERROR = "Your input can't be opened";
+
         // Using a DependencyProperty as the backing store for Sources.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourcesProperty =
             DependencyProperty.Register("Sources", typeof(IEnumerable<string>), typeof(PlayerWindow), new PropertyMetadata(new List<string>(), OnSourcesChanged));
@@ -33,14 +36,16 @@ namespace AnimeTime.WPF.Views
         private static void OnSourcesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var self = d as PlayerWindow;
-            if (e.NewValue != null)
-                self.LoadEpisode();
+            var newValue = e.NewValue as IEnumerable<object>;
+            if (newValue != null && newValue.Count() > 0)
+                self.LoadSources();
         }
 
         #endregion
 
         private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
+        private Stack<string> _videoSources;
 
         public PlayerWindow()
         {
@@ -77,19 +82,33 @@ namespace AnimeTime.WPF.Views
         {
             LibVLCSharp.Shared.Core.Initialize();
             _libVLC = new LibVLC();
+            _libVLC.Log += _libVLC_Log;
         }
+
         private void ShutdownVLC()
         {
             VlcVideoView.MediaPlayer.Stop();
             VlcVideoView.MediaPlayer.Dispose();
             _libVLC.Dispose();
         }
-        private void LoadEpisode()
+        private void LoadSources()
         {
-            var sourceUrl = Sources.ElementAtOrDefault(1);
-            if (sourceUrl == null) return;
-
-            _mediaPlayer.Play(new Media(_libVLC, new Uri(sourceUrl)));
+            _videoSources = new Stack<string>(Sources.Reverse());
+            
+            _mediaPlayer.Play(new Media(_libVLC, new Uri(_videoSources.Pop())));
         }
+        #region Events
+        private void _libVLC_Log(object sender, LogEventArgs e)
+        {
+            if(e.FormattedLog.Contains(LIBVLC_CANNOT_OPEN_SOURCE_ERROR))
+            {
+                if(_videoSources.Count > 0)
+                {
+                    var source = _videoSources.Pop();
+                    _mediaPlayer.Play(new Media(_libVLC, new Uri(source)));
+                }
+            }
+        }
+        #endregion
     }
 }
