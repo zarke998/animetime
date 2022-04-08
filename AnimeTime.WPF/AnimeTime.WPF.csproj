@@ -133,6 +133,7 @@
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\ViewModelLocator.cs" />
     <Compile Include="Services\WindowService.cs" />
+    <Compile Include="Utility\CommandUtil.cs" />
     <Compile Include="Utility\GradientExtensions.cs" />
     <Compile Include="Utility\Win32Structs\MINMAXINFO.cs" />
     <Compile Include="Utility\Win32Structs\MONITORINFO.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="ViewModels\Pages\DetailsViewModel.cs" />
     <Compile Include="ViewModels\Pages\HomeViewModel.cs" />
     <Compile Include="ViewModels\PlayerWindowViewModel.cs" />
+    <Compile Include="Views\Base\UserControlBase.cs" />
     <Compile Include="Views\Base\Win32Window.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\Base\WindowViewModelBase.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Views\Controls\CarouselItem.xaml.cs">
       <DependentUpon>CarouselItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ClickDragSlider.cs" />
     <Compile Include="Views\Controls\ClippedBorder.xaml.cs">
       <DependentUpon>ClippedBorder.xaml</DependentUpon>
     </Compile>

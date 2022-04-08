@@ -20,6 +20,21 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
     /// </summary>
     public partial class VideoPlayerControlBar : UserControl
     {
+        public int Position { get { return ProgressBar.CurrentTime.Seconds; } set { ProgressBar.SetPosition(value); } }
+
+        #region Dependency Properties
+        public int Duration
+        {
+            get { return (int)GetValue(DurationProperty); }
+            set { SetValue(DurationProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DurationProperty =
+            DependencyProperty.Register("Duration", typeof(int), typeof(VideoPlayerControlBar), new PropertyMetadata(0));
+
+
+        #endregion
         public VideoPlayerControlBar()
         {
             InitializeComponent();

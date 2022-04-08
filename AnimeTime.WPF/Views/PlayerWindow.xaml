@@ -23,7 +23,8 @@
             Foreground="White">
             Title
         </TextBlock>
-        <videoplayercontrols:VideoPlayerControlBar DockPanel.Dock="Bottom" />
+        <videoplayercontrols:VideoPlayerControlBar x:Name="ControlBar"
+                                                   DockPanel.Dock="Bottom" />
         <wpf:VideoView x:Name="VlcVideoView" />
     </DockPanel>
 </base:WindowBase>

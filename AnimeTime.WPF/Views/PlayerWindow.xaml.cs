@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using LibVLCSharp.Shared;
 using System.Diagnostics;
+using System.Timers;
 
 namespace AnimeTime.WPF.Views
 {
@@ -46,13 +47,19 @@ namespace AnimeTime.WPF.Views
         private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
         private Stack<string> _videoSources;
+        private int _currentTime;
+        private Timer _progressTimer;
 
         public PlayerWindow()
         {
             InitializeComponent();
             this.Loaded += PlayerWindow_Loaded;
             this.Closed += PlayerWindow_Closed;
+
+            _progressTimer = new Timer(1000);
+            _progressTimer.Elapsed += _progressTimer_Elapsed;
         }
+
 
         #region Events
         private void PlayerWindow_Closed(object sender, EventArgs e)
@@ -65,10 +72,18 @@ namespace AnimeTime.WPF.Views
             InitializeVLC();
 
             _mediaPlayer = new MediaPlayer(_libVLC);
+            _mediaPlayer.LengthChanged += _mediaPlayer_LengthChanged;
+            _mediaPlayer.Playing += _mediaPlayer_Playing;
+            _mediaPlayer.Paused += _mediaPlayer_Paused;
+            _mediaPlayer.Stopped += _mediaPlayer_Stopped;
+            _mediaPlayer.Buffering += _mediaPlayer_Buffering;
+            _mediaPlayer.TimeChanged += _mediaPlayer_TimeChanged;
             VlcVideoView.MediaPlayer = _mediaPlayer;
 
             BindSourcesToDataContext();
         }
+
+
         #endregion
         private void BindSourcesToDataContext()
         {
@@ -109,6 +124,41 @@ namespace AnimeTime.WPF.Views
                 }
             }
         }
+        private void _mediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
+        {
+            Dispatcher.InvokeAsync(() => ControlBar.Duration = Convert.ToInt32(e.Length / 1000));
+        }
+
+        #region MediaPlayer States
+        private void _mediaPlayer_Playing(object sender, EventArgs e)
+        {
+            _progressTimer.Start();
+        }
+        private void _mediaPlayer_Stopped(object sender, EventArgs e)
+        {
+            _progressTimer.Stop();
+            _currentTime = 0;
+        }
+        private void _mediaPlayer_Paused(object sender, EventArgs e)
+        {
+            _progressTimer.Stop();
+        }
+        private void _mediaPlayer_Buffering(object sender, MediaPlayerBufferingEventArgs e)
+        {
+            _progressTimer.Stop();
+        }
+        private void _mediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+        {
+            Dispatcher.InvokeAsync(() => ControlBar.Position = (int)(e.Time / 1000));
+        }
+        #endregion
+
+        private void _progressTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            _currentTime++;
+            Dispatcher.InvokeAsync(() => ControlBar.Position = _currentTime);
+        }
+
         #endregion
     }
 }
