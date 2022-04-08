@@ -318,6 +318,10 @@
     <Compile Include="Migrations\202203051552162_CreateAnimePlanetAnimeMetadatasTable.designer.cs">
       <DependentUpon>202203051552162_CreateAnimePlanetAnimeMetadatasTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.cs" />
+    <Compile Include="Migrations\202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.designer.cs">
+      <DependentUpon>202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimePlanetAnimeMetadataRepository.cs" />
@@ -525,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203051552162_CreateAnimePlanetAnimeMetadatasTable.resx">
       <DependentUpon>202203051552162_CreateAnimePlanetAnimeMetadatasTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.resx">
+      <DependentUpon>202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

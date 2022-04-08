@@ -10,6 +10,7 @@ namespace AnimeTime.Core.Domain
     {
         public int Id { get; set; }
         public DateTime? VideoSourcesLastUpdate { get; set; }
+        public bool HasWorkingVideoSources { get; set; }
 
         public Episode Episode { get; set; }
     }
