@@ -30,6 +30,7 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         private Border _trackBackground;
         private TimeSpan _durationTime;
         private TimeSpan _currentTime;
+        private bool _isDraging;
 
         public TimeSpan CurrentTime { get => _currentTime; set { _currentTime = value; OnPropertyChanged(); } }
         public TimeSpan DurationTime { get => _durationTime; set { _durationTime = value; OnPropertyChanged(); } }
@@ -46,15 +47,17 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         public static readonly DependencyProperty DurationProperty =
             DependencyProperty.Register("Duration", typeof(int), typeof(ProgressBar), new PropertyMetadata(0, DurationChanged));
 
-        public ICommand ValueChangedCommand
+
+        public ICommand SeekCommand
         {
-            get { return (ICommand)GetValue(ValueChangedCommandProperty); }
-            set { SetValue(ValueChangedCommandProperty, value); }
+            get { return (ICommand)GetValue(SeekCommandProperty); }
+            set { SetValue(SeekCommandProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ValueChangedCommand.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ValueChangedCommandProperty =
-            DependencyProperty.Register("ValueChangedCommand", typeof(ICommand), typeof(ProgressBar), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for SeekCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SeekCommandProperty =
+            DependencyProperty.Register("SeekCommand", typeof(ICommand), typeof(ProgressBar), new PropertyMetadata(null));
+
 
 
         private static void DurationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -70,11 +73,13 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             InitializeComponent();
             this.Loaded += ProgressBar_Loaded;
             Slider.ValueChanged += Slider_ValueChanged;
+            Slider.GotMouseCapture += Slider_GotMouseCapture;
+            Slider.LostMouseCapture += Slider_LostMouseCapture;
         }
+
         public void SetPosition(int position)
         {
-            CurrentTime = TimeSpan.FromSeconds(position);
-            UpdateText();
+            if (_isDraging) return;
 
             var sliderPosition = ((position * 1.0) / Duration) * 10;
             Slider.Value = sliderPosition;
@@ -92,10 +97,16 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             UpdateText();
             SetThumbColorFromGradientOffset(e.NewValue / 10);
         }
-        private void Slider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void Slider_GotMouseCapture(object sender, MouseEventArgs e)
         {
+            _isDraging = true;
+        }
+        private void Slider_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            _isDraging = false;
+
             var selectedTime = (int)(Duration * (Slider.Value / 10));
-            ValueChangedCommand.TryExecute(selectedTime);
+            SeekCommand.TryExecute(selectedTime);
         }
         #endregion
         private void SetThumbColorFromGradientOffset(double offset)
@@ -112,7 +123,8 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
 
         private void UpdateText()
         {
-            TimeDisplay.Text = String.Format(@"{0:mm':'ss} \\ {1:mm':'ss}", CurrentTime, DurationTime);
+            TimeDisplay.Text = String.Format(@"{0:mm':'ss} \ {1:mm':'ss}", CurrentTime, DurationTime);
         }
+
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Input;
 using LibVLCSharp.Shared;
 using System.Diagnostics;
 using System.Timers;
+using AnimeTime.WPF.Commands;
 
 namespace AnimeTime.WPF.Views
 {
@@ -20,6 +21,7 @@ namespace AnimeTime.WPF.Views
     /// </summary>
     public partial class PlayerWindow : WindowBase
     {
+        private const string LIBVLC_CANNOT_OPEN_SOURCE_ERROR = "Your input can't be opened";
 
         #region Dependency Properties
         public IEnumerable<string> Sources
@@ -27,8 +29,6 @@ namespace AnimeTime.WPF.Views
             get { return (IEnumerable<string>)GetValue(SourcesProperty); }
             set { SetValue(SourcesProperty, value); }
         }
-
-        private const string LIBVLC_CANNOT_OPEN_SOURCE_ERROR = "Your input can't be opened";
 
         // Using a DependencyProperty as the backing store for Sources.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourcesProperty =
@@ -46,10 +46,14 @@ namespace AnimeTime.WPF.Views
 
         private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
+
         private Stack<string> _videoSources;
+
         private int _currentTime;
         private Timer _progressTimer;
+        private ICommand seekCommand;
 
+        public ICommand SeekCommand { get => seekCommand; set { seekCommand = value; OnPropertyChanged(); } }
         public PlayerWindow()
         {
             InitializeComponent();
@@ -58,9 +62,9 @@ namespace AnimeTime.WPF.Views
 
             _progressTimer = new Timer(1000);
             _progressTimer.Elapsed += _progressTimer_Elapsed;
+
+            SeekCommand = new DelegateCommand(Seek);
         }
-
-
         #region Events
         private void PlayerWindow_Closed(object sender, EventArgs e)
         {
@@ -82,42 +86,11 @@ namespace AnimeTime.WPF.Views
 
             BindSourcesToDataContext();
         }
-
-
-        #endregion
-        private void BindSourcesToDataContext()
-        {
-            var binding = new Binding();
-            binding.Source = this.DataContext;
-            binding.Path = new PropertyPath("Sources");
-
-            this.SetBinding(SourcesProperty, binding);
-        }
-        private void InitializeVLC()
-        {
-            LibVLCSharp.Shared.Core.Initialize();
-            _libVLC = new LibVLC();
-            _libVLC.Log += _libVLC_Log;
-        }
-
-        private void ShutdownVLC()
-        {
-            VlcVideoView.MediaPlayer.Stop();
-            VlcVideoView.MediaPlayer.Dispose();
-            _libVLC.Dispose();
-        }
-        private void LoadSources()
-        {
-            _videoSources = new Stack<string>(Sources.Reverse());
-            
-            _mediaPlayer.Play(new Media(_libVLC, new Uri(_videoSources.Pop())));
-        }
-        #region Events
         private void _libVLC_Log(object sender, LogEventArgs e)
         {
-            if(e.FormattedLog.Contains(LIBVLC_CANNOT_OPEN_SOURCE_ERROR))
+            if (e.FormattedLog.Contains(LIBVLC_CANNOT_OPEN_SOURCE_ERROR))
             {
-                if(_videoSources.Count > 0)
+                if (_videoSources.Count > 0)
                 {
                     var source = _videoSources.Pop();
                     _mediaPlayer.Play(new Media(_libVLC, new Uri(source)));
@@ -158,7 +131,40 @@ namespace AnimeTime.WPF.Views
             _currentTime++;
             Dispatcher.InvokeAsync(() => ControlBar.Position = _currentTime);
         }
-
         #endregion
+        private void BindSourcesToDataContext()
+        {
+            var binding = new Binding();
+            binding.Source = this.DataContext;
+            binding.Path = new PropertyPath("Sources");
+
+            this.SetBinding(SourcesProperty, binding);
+        }
+        private void InitializeVLC()
+        {
+            LibVLCSharp.Shared.Core.Initialize();
+            _libVLC = new LibVLC();
+            _libVLC.Log += _libVLC_Log;
+        }
+
+        private void ShutdownVLC()
+        {
+            VlcVideoView.MediaPlayer.Stop();
+            VlcVideoView.MediaPlayer.Dispose();
+            _libVLC.Dispose();
+        }
+        private void LoadSources()
+        {
+            _videoSources = new Stack<string>(Sources.Reverse());
+
+            _mediaPlayer.Play(new Media(_libVLC, new Uri(_videoSources.Pop())));
+        }
+        private void Seek(object obj)
+        {
+            int position = (int)obj;
+
+            _currentTime = position;
+            _mediaPlayer.SeekTo(TimeSpan.FromSeconds(position));
+        }
     }
 }

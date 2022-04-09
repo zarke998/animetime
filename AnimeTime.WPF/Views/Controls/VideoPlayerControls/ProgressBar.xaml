@@ -110,7 +110,6 @@
                    Foreground="White"
                    Text="00:00 \ 00:00"/>
         <controls:ClickDragSlider x:Name="Slider" 
-                                  Style="{StaticResource VideoTrackSlider}" 
-                                  PreviewMouseUp="Slider_PreviewMouseUp"/>
+                                  Style="{StaticResource VideoTrackSlider}"/>
     </StackPanel>
 </base:UserControlBase>

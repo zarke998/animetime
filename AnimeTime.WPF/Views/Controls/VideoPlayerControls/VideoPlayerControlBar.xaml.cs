@@ -34,6 +34,17 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             DependencyProperty.Register("Duration", typeof(int), typeof(VideoPlayerControlBar), new PropertyMetadata(0));
 
 
+        public ICommand SeekCommand
+        {
+            get { return (ICommand)GetValue(SeekCommandProperty); }
+            set { SetValue(SeekCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SeekCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SeekCommandProperty =
+            DependencyProperty.Register("SeekCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
+
+
         #endregion
         public VideoPlayerControlBar()
         {
