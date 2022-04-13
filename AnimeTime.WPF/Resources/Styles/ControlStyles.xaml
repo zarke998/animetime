@@ -3,7 +3,8 @@
                     xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties"
                     xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
                     xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
-                    xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls">
+                    xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls"
+                    xmlns:playerControls="clr-namespace:AnimeTime.WPF.Views.Controls.VideoPlayerControls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Brushes.xaml" />

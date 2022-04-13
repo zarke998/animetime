@@ -26,7 +26,9 @@
         </TextBlock>
         <videoplayercontrols:VideoPlayerControlBar x:Name="ControlBar"
                                                    DockPanel.Dock="Bottom" 
-                                                   SeekCommand="{Binding Path=SeekCommand, ElementName=Root}"/>
+                                                   SeekCommand="{Binding Path=SeekCommand, ElementName=Root}"
+                                                   PlayToggleCommand="{Binding Path=PlayToggleCommand, ElementName=Root}"
+                                                   Padding="0,0,0,8"/>
         <wpf:VideoView x:Name="VlcVideoView" />
     </DockPanel>
 </base:WindowBase>

@@ -51,9 +51,11 @@ namespace AnimeTime.WPF.Views
 
         private int _currentTime;
         private Timer _progressTimer;
-        private ICommand seekCommand;
+        private ICommand _seekCommand;
+        private ICommand _playToggleCommand;
 
-        public ICommand SeekCommand { get => seekCommand; set { seekCommand = value; OnPropertyChanged(); } }
+        public ICommand SeekCommand { get => _seekCommand; set { _seekCommand = value; OnPropertyChanged(); } }
+        public ICommand PlayToggleCommand { get => _playToggleCommand; set { _playToggleCommand = value; OnPropertyChanged(); } }
         public PlayerWindow()
         {
             InitializeComponent();
@@ -64,7 +66,12 @@ namespace AnimeTime.WPF.Views
             _progressTimer.Elapsed += _progressTimer_Elapsed;
 
             SeekCommand = new DelegateCommand(Seek);
+            PlayToggleCommand = new DelegateCommand(PlayToggle);
         }
+
+        
+
+
         #region Events
         private void PlayerWindow_Closed(object sender, EventArgs e)
         {
@@ -106,6 +113,7 @@ namespace AnimeTime.WPF.Views
         private void _mediaPlayer_Playing(object sender, EventArgs e)
         {
             _progressTimer.Start();
+            Dispatcher.InvokeAsync(() => ControlBar.IsPlaying = true);
         }
         private void _mediaPlayer_Stopped(object sender, EventArgs e)
         {
@@ -115,6 +123,7 @@ namespace AnimeTime.WPF.Views
         private void _mediaPlayer_Paused(object sender, EventArgs e)
         {
             _progressTimer.Stop();
+            Dispatcher.InvokeAsync(() => ControlBar.IsPlaying = false);
         }
         private void _mediaPlayer_Buffering(object sender, MediaPlayerBufferingEventArgs e)
         {
@@ -165,6 +174,14 @@ namespace AnimeTime.WPF.Views
 
             _currentTime = position;
             _mediaPlayer.SeekTo(TimeSpan.FromSeconds(position));
+        }
+        private void PlayToggle(object obj)
+        {
+            var isPlaying = (bool)obj;
+            if (isPlaying)
+                _mediaPlayer?.Play();
+            else
+                _mediaPlayer?.Pause();
         }
     }
 }

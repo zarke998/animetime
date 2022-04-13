@@ -45,6 +45,32 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             DependencyProperty.Register("SeekCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
 
 
+
+        public ICommand PlayToggleCommand
+        {
+            get { return (ICommand)GetValue(PlayToggleCommandProperty); }
+            set { SetValue(PlayToggleCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for PlayToggleCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlayToggleCommandProperty =
+            DependencyProperty.Register("PlayToggleCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
+
+
+
+        public bool IsPlaying
+        {
+            get { return (bool)GetValue(IsPlayingProperty); }
+            set { SetValue(IsPlayingProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsPlaying.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsPlayingProperty =
+            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(VideoPlayerControlBar), new PropertyMetadata(false));
+
+
+
+
         #endregion
         public VideoPlayerControlBar()
         {
