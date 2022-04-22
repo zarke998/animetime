@@ -58,7 +58,7 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         {
             base.OnPreviewMouseUp(e);
 
-            IsPlaying = !IsPlaying;
+            this.SetCurrentValue(IsPlayingProperty, !IsPlaying);
 
             PlayToggleCommand.TryExecute(IsPlaying);
         }

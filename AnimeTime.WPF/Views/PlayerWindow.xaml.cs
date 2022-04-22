@@ -54,8 +54,15 @@ namespace AnimeTime.WPF.Views
         private ICommand _seekCommand;
         private ICommand _playToggleCommand;
 
+        private ICommand _fullscreenToggleCommand;
+        private bool _isPlaying;
+
         public ICommand SeekCommand { get => _seekCommand; set { _seekCommand = value; OnPropertyChanged(); } }
         public ICommand PlayToggleCommand { get => _playToggleCommand; set { _playToggleCommand = value; OnPropertyChanged(); } }
+        public ICommand FullscreenToggleCommand { get => _fullscreenToggleCommand; set { _fullscreenToggleCommand = value; OnPropertyChanged(); } }
+        public bool IsPlaying { get => _isPlaying; set { _isPlaying = value; OnPropertyChanged(); } }
+
+
         public PlayerWindow()
         {
             InitializeComponent();
@@ -67,10 +74,8 @@ namespace AnimeTime.WPF.Views
 
             SeekCommand = new DelegateCommand(Seek);
             PlayToggleCommand = new DelegateCommand(PlayToggle);
+            FullscreenToggleCommand = new DelegateCommand(FullscreenToggle);
         }
-
-        
-
 
         #region Events
         private void PlayerWindow_Closed(object sender, EventArgs e)
@@ -113,7 +118,7 @@ namespace AnimeTime.WPF.Views
         private void _mediaPlayer_Playing(object sender, EventArgs e)
         {
             _progressTimer.Start();
-            Dispatcher.InvokeAsync(() => ControlBar.IsPlaying = true);
+            Dispatcher.InvokeAsync(() => IsPlaying = true);
         }
         private void _mediaPlayer_Stopped(object sender, EventArgs e)
         {
@@ -178,10 +183,18 @@ namespace AnimeTime.WPF.Views
         private void PlayToggle(object obj)
         {
             var isPlaying = (bool)obj;
+            IsPlaying = isPlaying;
+
             if (isPlaying)
                 _mediaPlayer?.Play();
             else
                 _mediaPlayer?.Pause();
+        }
+
+        private void FullscreenToggle(object obj)
+        {
+            var isFullscreen = (bool)obj;
+            base.FulllscreenToggle(isFullscreen);
         }
     }
 }

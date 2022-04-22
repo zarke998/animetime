@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AnimeTime.WPF.Views.Base
 {
@@ -17,11 +18,25 @@ namespace AnimeTime.WPF.Views.Base
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private bool _isFullscreen;
+        public bool IsFullscreen { get => _isFullscreen; set { _isFullscreen = value; OnPropertyChanged(); } }
+
+        #region Template
+        protected Border T_WindowBorder { get; set; }
+        #endregion
+
         public WindowBase()
         {
             this.MonitorChanged += WindowBase_MonitorChanged;
             this.Loaded += WindowBase_Loaded;
+            this.StateChanged += WindowBase_StateChanged;
         }
+
+        private void InitializeTemplateVariables()
+        {
+            T_WindowBorder = this.Template.FindName("windowBorder", this) as Border;
+        }
+
         #region Events
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
         {
@@ -32,6 +47,24 @@ namespace AnimeTime.WPF.Views.Base
         {
             SetMaximizeHeight();
         }
+        private void WindowBase_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                IsFullscreen = true;
+            else
+                IsFullscreen = false;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            InitializeTemplateVariables();
+            //T_WindowBorder.SetCurrentValue(MarginProperty, new Thickness(7));
+            T_WindowBorder.Margin = new Thickness(7);
+        }
+
+
         #endregion
 
         #region Interfaces 
@@ -63,7 +96,18 @@ namespace AnimeTime.WPF.Views.Base
 
         private void SetMaximizeHeight()
         {
-            MaxHeight = SystemInfoUtil.GetScreenWorkAreaHeight(this) + IMAGINARY_BORDER * 2;
+            //MaxHeight = SystemInfoUtil.GetScreenWorkAreaHeight(this) + IMAGINARY_BORDER * 2;
         }
+
+        protected virtual void FulllscreenToggle(bool isFullscreen)
+        {
+            if (isFullscreen)
+                this.WindowState = WindowState.Maximized;
+            else
+                this.WindowState = WindowState.Normal;
+
+            IsFullscreen = isFullscreen;
+        }
+        
     }
 }

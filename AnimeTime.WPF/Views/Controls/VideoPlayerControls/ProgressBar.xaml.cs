@@ -87,6 +87,11 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         #region Events
         private void ProgressBar_Loaded(object sender, RoutedEventArgs e)
         {
+
+        }
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
             _thumb = Slider.Template.FindName("Thumb", Slider) as Thumb;
             _trackBackground = Slider.Template.FindName("TrackBackground", Slider) as Border;
             SetThumbColorFromGradientOffset(0);
@@ -111,6 +116,8 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         #endregion
         private void SetThumbColorFromGradientOffset(double offset)
         {
+            if (_trackBackground == null) return;
+
             offset = MathUtil.Clamp(offset, 0, 1);
 
             var gradient = _trackBackground.Background as LinearGradientBrush;

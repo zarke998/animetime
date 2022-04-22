@@ -1,78 +1,73 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties"
-                    xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
-                    xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
-                    xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls"
-                    xmlns:playerControls="clr-namespace:AnimeTime.WPF.Views.Controls.VideoPlayerControls">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:aprop="clr-namespace:AnimeTime.WPF.AttachedProperties"
+    xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
+    xmlns:converters="clr-namespace:AnimeTime.WPF.Converters"
+    xmlns:excontrols="clr-namespace:AnimeTime.WPF.Views.ExtendedControls"
+    xmlns:playerControls="clr-namespace:AnimeTime.WPF.Views.Controls.VideoPlayerControls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Brushes.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="Search"
-           TargetType="{x:Type TextBox}">
+    <Style x:Key="Search" TargetType="{x:Type TextBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border BorderBrush="#202020"
-                            BorderThickness="2"
-                            CornerRadius="12"
-                            Background="#1D1D1D">
-                        <TextBox Name="tb"
-                                 Text="{TemplateBinding Text}"
-                                 Width="{TemplateBinding Width}"
-                                 Height="25"
-                                 BorderBrush="Transparent"
-                                 Padding="10,0,15,0"
-                                 Background="Transparent"
-                                 Foreground="#a6a6a6"
-                                 BorderThickness="0"
-                                 VerticalContentAlignment="Center"
-                                 CaretBrush="White"
-                                 FontSize="11"
-                                 aprop:TextBoxAttachedProperties.Placeholder="Search..." />
+                    <Border
+                        Background="#1D1D1D"
+                        BorderBrush="#202020"
+                        BorderThickness="2"
+                        CornerRadius="12">
+                        <TextBox
+                            Name="tb"
+                            Width="{TemplateBinding Width}"
+                            Height="25"
+                            Padding="10,0,15,0"
+                            VerticalContentAlignment="Center"
+                            aprop:TextBoxAttachedProperties.Placeholder="Search..."
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CaretBrush="White"
+                            FontSize="11"
+                            Foreground="#a6a6a6"
+                            Text="{TemplateBinding Text}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="BorderGradiented"
-           TargetType="{x:Type Border}">
+    <Style x:Key="BorderGradiented" TargetType="{x:Type Border}">
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <LinearGradientBrush StartPoint="0,1"
-                                     EndPoint="1,0">
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
                     <LinearGradientBrush.GradientStops>
-                        <GradientStop Color="{StaticResource SecondaryColor}"
-                                      Offset="0" />
-                        <GradientStop Color="{StaticResource PrimaryColor}"
-                                      Offset="1" />
+                        <GradientStop Offset="0" Color="{StaticResource SecondaryColor}" />
+                        <GradientStop Offset="1" Color="{StaticResource PrimaryColor}" />
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Style x:Key="DefaultListView"
-           TargetType="{x:Type ListView}">
-        <Setter Property="Background"
-                Value="{StaticResource WindowBackgroundBrush}" />
-        <Setter Property="BorderBrush"
-                Value="Transparent" />
-        <Setter Property="Foreground"
-                Value="#EEEEEE" />
+
+    <Style x:Key="DefaultListView" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Foreground" Value="#EEEEEE" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
-                    <Border BorderThickness="2.5"
-                            x:Name="border"
-                            CornerRadius="5"
-                            Background="{TemplateBinding Background}"
-                            Height="{TemplateBinding Height}"
-                            Width="{TemplateBinding Width}"
-                            Style="{StaticResource BorderGradiented}">
+                    <Border
+                        x:Name="border"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="2.5"
+                        CornerRadius="5"
+                        Style="{StaticResource BorderGradiented}">
                         <controls:ClippedBorder CornerRadius="{Binding ElementName=border, Path=CornerRadius}">
                             <controls:DefaultScrollViewer>
                                 <ItemsPresenter />
@@ -85,25 +80,20 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="SnapsToDevicePixels"
-                            Value="True" />
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border Background="{TemplateBinding Background}"
-                                        Padding="10,0">
+                                <Border Padding="10,0" Background="{TemplateBinding Background}">
                                     <ContentPresenter />
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="#181818" />
-                            <Setter Property="Cursor"
-                                    Value="Hand" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#181818" />
+                            <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -111,30 +101,34 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SearchResultsListView"
-           TargetType="{x:Type ListView}"
-           BasedOn="{StaticResource DefaultListView}">
-        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
+    <Style
+        x:Key="SearchResultsListView"
+        BasedOn="{StaticResource DefaultListView}"
+        TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Border BorderThickness="0,0,0,0.5"
-                            BorderBrush="#2E2E2E"
-                            Padding="0,5">
+                    <Border
+                        Padding="0,5"
+                        BorderBrush="#2E2E2E"
+                        BorderThickness="0,0,0,0.5">
                         <DockPanel LastChildFill="False">
-                            <TextBlock Text="{Binding Title}"
-                                       VerticalAlignment="Center"
-                                       DockPanel.Dock="Left" />
-                            <StackPanel DockPanel.Dock="Right"
-                                        Orientation="Horizontal">
-                                <TextBlock Text="Movie"
-                                           FontSize="9"
-                                           Margin="0,-1,4,0"
-                                           VerticalAlignment="Top" />
-                                <Image Width="40"
-                                       Height="60"
-                                       Stretch="UniformToFill"
-                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                DockPanel.Dock="Left"
+                                Text="{Binding Title}" />
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,-1,4,0"
+                                    VerticalAlignment="Top"
+                                    FontSize="9"
+                                    Text="Movie" />
+                                <Image
+                                    Width="40"
+                                    Height="60"
+                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                    Stretch="UniformToFill" />
                             </StackPanel>
 
                         </DockPanel>
@@ -143,14 +137,14 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}"
-                         Value="True">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="True">
                 <DataTrigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="MaxHeight"
-                                             From="0"
-                                             Duration="0:0:0.4">
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="MaxHeight"
+                                From="0"
+                                Duration="0:0:0.4">
                                 <DoubleAnimation.EasingFunction>
                                     <QuadraticEase EasingMode="EaseOut" />
                                 </DoubleAnimation.EasingFunction>
@@ -162,17 +156,19 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="NotificationsListView"
-           TargetType="{x:Type ListView}"
-           BasedOn="{StaticResource DefaultListView}">
+    <Style
+        x:Key="NotificationsListView"
+        BasedOn="{StaticResource DefaultListView}"
+        TargetType="{x:Type ListView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
-                    <Border BorderThickness="2.5"
-                            x:Name="border"
-                            CornerRadius="5"
-                            Height="{TemplateBinding Height}"
-                            Width="{TemplateBinding Width}">
+                    <Border
+                        x:Name="border"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        BorderThickness="2.5"
+                        CornerRadius="5">
                         <controls:ClippedBorder CornerRadius="{Binding ElementName=border, Path=CornerRadius}">
                             <controls:DefaultScrollViewer>
                                 <ItemsPresenter />
@@ -191,23 +187,24 @@
                             <ColumnDefinition Width="6*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0"
-                                   Height="70"
-                                   Width="50"
-                                   Fill="White"/>
-                        <StackPanel Grid.Column="1"
-                                    Margin="8,0,0,0">
-                            <TextBlock Text="{Binding Title}"
-                                       FontSize="16" />
+                        <Rectangle
+                            Grid.Column="0"
+                            Width="50"
+                            Height="70"
+                            Fill="White" />
+                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                            <TextBlock FontSize="16" Text="{Binding Title}" />
                             <TextBlock Text="{Binding NewEpisodes}" />
                         </StackPanel>
-                        <StackPanel Grid.Column="2"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center">
-                            <Image Width="18"
-                                       Height="18"
-                                       Source="/Assets/Icons/shuriken-white.png"
-                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <StackPanel
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                            <Image
+                                Width="18"
+                                Height="18"
+                                RenderOptions.BitmapScalingMode="HighQuality"
+                                Source="/Assets/Icons/shuriken-white.png" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
@@ -216,25 +213,20 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="SnapsToDevicePixels"
-                            Value="True" />
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border Background="{TemplateBinding Background}"
-                                        Padding="10,10">
+                                <Border Padding="10,10" Background="{TemplateBinding Background}">
                                     <ContentPresenter />
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="#181818" />
-                            <Setter Property="Cursor"
-                                    Value="Hand" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#181818" />
+                            <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -243,8 +235,7 @@
     </Style>
 
 
-    <ControlTemplate x:Key="DefaultVerticalScrollBar"
-                     TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="DefaultVerticalScrollBar" TargetType="{x:Type ScrollBar}">
         <Grid HorizontalAlignment="Right">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -259,21 +250,23 @@
                 BorderBrush="White"
                 BorderThickness="0.1"
                 Margin="0,5"/>-->
-            <Track x:Name="PART_Track"
-                   Grid.Row="0"
-                   IsDirectionReversed="true"
-                   Margin="0,2,3,1"
-                   Opacity="0.5">
+            <Track
+                x:Name="PART_Track"
+                Grid.Row="0"
+                Margin="0,2,3,1"
+                IsDirectionReversed="true"
+                Opacity="0.5">
                 <Track.Thumb>
                     <Thumb>
                         <Thumb.Template>
                             <ControlTemplate TargetType="{x:Type Thumb}">
-                                <Border BorderBrush="#494949"
-                                        BorderThickness="1"
-                                        CornerRadius="5"
-                                        Background="#1D1D1D"
-                                        Height="{TemplateBinding Height}"
-                                        Width="{TemplateBinding Width}" />
+                                <Border
+                                    Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
+                                    Background="#1D1D1D"
+                                    BorderBrush="#494949"
+                                    BorderThickness="1"
+                                    CornerRadius="5" />
                             </ControlTemplate>
                         </Thumb.Template>
                     </Thumb>
@@ -281,53 +274,54 @@
             </Track>
         </Grid>
     </ControlTemplate>
-    
-    <Style TargetType="{x:Type excontrols:DefaultScrollViewer}"
-           x:Key="DefaultScrollViewer">
+
+    <Style x:Key="DefaultScrollViewer" TargetType="{x:Type excontrols:DefaultScrollViewer}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate  TargetType="{x:Type excontrols:DefaultScrollViewer}">
+                <ControlTemplate TargetType="{x:Type excontrols:DefaultScrollViewer}">
                     <Grid x:Name="Grid">
-                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                                CanContentScroll="False"
-                                                CanHorizontallyScroll="False"
-                                                CanVerticallyScroll="False"
-                                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                Content="{TemplateBinding Content}"
-                                                Margin="{TemplateBinding Padding}" />
-                        <ScrollBar x:Name="PART_VerticalScrollBar"
-                                   HorizontalAlignment="Right"
-                                   Cursor="Arrow"
-                                   Maximum="{TemplateBinding ScrollableHeight}"
-                                   Minimum="0"
-                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                   ViewportSize="{TemplateBinding ViewportHeight}"
-                                   Template="{StaticResource DefaultVerticalScrollBar}"
-                                   Opacity="0" />
+                        <ScrollContentPresenter
+                            x:Name="PART_ScrollContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            CanContentScroll="False"
+                            CanHorizontallyScroll="False"
+                            CanVerticallyScroll="False"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        <ScrollBar
+                            x:Name="PART_VerticalScrollBar"
+                            HorizontalAlignment="Right"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableHeight}"
+                            Minimum="0"
+                            Opacity="0"
+                            Template="{StaticResource DefaultVerticalScrollBar}"
+                            ViewportSize="{TemplateBinding ViewportHeight}"
+                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsScrolling"
-                                 Value="True">
+                        <Trigger Property="IsScrolling" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="PART_VerticalScrollBar"
-                                                         To="1"
-                                                         Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_VerticalScrollBar"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="PART_VerticalScrollBar"
-                                                         To="0"
-                                                         BeginTime="0:0:3"
-                                                         Duration="0:0:0.2">
-                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            BeginTime="0:0:3"
+                                            Storyboard.TargetName="PART_VerticalScrollBar"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -337,5 +331,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

@@ -71,6 +71,29 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
 
 
 
+        public ICommand FullscreenToggleCommand
+        {
+            get { return (ICommand)GetValue(FullscreenToggleCommandProperty); }
+            set { SetValue(FullscreenToggleCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FullscreenToggleCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FullscreenToggleCommandProperty =
+            DependencyProperty.Register("FullscreenToggleCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
+
+
+
+        public bool IsFullscreen
+        {
+            get { return (bool)GetValue(IsFullscreenProperty); }
+            set { SetValue(IsFullscreenProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsFullscreen.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsFullscreenProperty =
+            DependencyProperty.Register("IsFullscreen", typeof(bool), typeof(VideoPlayerControlBar), new PropertyMetadata(false));
+
+
         #endregion
         public VideoPlayerControlBar()
         {

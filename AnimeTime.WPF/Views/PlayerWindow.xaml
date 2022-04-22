@@ -3,32 +3,66 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:AnimeTime.WPF.Views.Base"
+    xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
     xmlns:controls="clr-namespace:AnimeTime.WPF.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AnimeTime.WPF.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:videoplayercontrols="clr-namespace:AnimeTime.WPF.Views.Controls.VideoPlayerControls"
     xmlns:wpf="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+    x:Name="Root"
     Title="PlayerWindow"
     Width="800"
     Height="450"
     Style="{StaticResource DefaultWindow}"
-    mc:Ignorable="d"
-    x:Name="Root">
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <TextBlock
             Margin="0,-20,0,10"
             Padding="10,0"
             DockPanel.Dock="Top"
             FontSize="22"
-            Foreground="White">
+            Foreground="White"
+            Visibility="{c:Binding ElementName=Root,
+                                   Path=!IsFullscreen,
+                                   FalseToVisibility=Collapsed}">
             Title
         </TextBlock>
-        <videoplayercontrols:VideoPlayerControlBar x:Name="ControlBar"
-                                                   DockPanel.Dock="Bottom" 
-                                                   SeekCommand="{Binding Path=SeekCommand, ElementName=Root}"
-                                                   PlayToggleCommand="{Binding Path=PlayToggleCommand, ElementName=Root}"
-                                                   Padding="0,0,0,8"/>
-        <wpf:VideoView x:Name="VlcVideoView" />
+        <videoplayercontrols:VideoPlayerControlBar
+            x:Name="ControlBar"
+            Padding="0,0,0,8"
+            DockPanel.Dock="Bottom"
+            FullscreenToggleCommand="{Binding Path=FullscreenToggleCommand, ElementName=Root}"
+            IsFullscreen="{Binding Path=IsFullscreen, ElementName=Root}"
+            IsPlaying="{Binding Path=IsPlaying, ElementName=Root}"
+            PlayToggleCommand="{Binding Path=PlayToggleCommand, ElementName=Root}"
+            SeekCommand="{Binding Path=SeekCommand, ElementName=Root}"
+            Visibility="{c:Binding Path=!IsFullscreen,
+                                   ElementName=Root,
+                                   FalseToVisibility=Collapsed}" />
+        <wpf:VideoView
+            x:Name="VlcVideoView"
+            Background="Black"
+            DataContext="{Binding ElementName=Root, Path=.}">
+            <Grid>
+                <videoplayercontrols:VideoPlayerControlBar
+                    x:Name="ControlBarFullscreen"
+                    Padding="0,0,0,8"
+                    VerticalAlignment="Bottom"
+                    FullscreenToggleCommand="{Binding Path=FullscreenToggleCommand}"
+                    IsFullscreen="{Binding Path=IsFullscreen}"
+                    IsPlaying="{Binding Path=IsPlaying}"
+                    PlayToggleCommand="{Binding Path=PlayToggleCommand}"
+                    SeekCommand="{Binding Path=SeekCommand}"
+                    Visibility="{c:Binding Path=IsFullscreen,
+                                           FalseToVisibility=Collapsed}" />
+                <StackPanel Height="20" VerticalAlignment="Bottom" />
+            </Grid>
+        </wpf:VideoView>
     </DockPanel>
 </base:WindowBase>
