@@ -47,7 +47,7 @@
                                    FalseToVisibility=Collapsed}" />
         <wpf:VideoView
             x:Name="VlcVideoView"
-            Background="Black"
+            Background="#020202"
             DataContext="{Binding ElementName=Root, Path=.}">
             <Grid>
                 <videoplayercontrols:VideoPlayerControlBar
