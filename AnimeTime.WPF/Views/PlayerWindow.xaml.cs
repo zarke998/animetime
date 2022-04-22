@@ -119,6 +119,7 @@ namespace AnimeTime.WPF.Views
         {
             _progressTimer.Start();
             Dispatcher.InvokeAsync(() => IsPlaying = true);
+            Debug.WriteLine("Playing");
         }
         private void _mediaPlayer_Stopped(object sender, EventArgs e)
         {
@@ -128,7 +129,7 @@ namespace AnimeTime.WPF.Views
         private void _mediaPlayer_Paused(object sender, EventArgs e)
         {
             _progressTimer.Stop();
-            Dispatcher.InvokeAsync(() => ControlBar.IsPlaying = false);
+            Dispatcher.InvokeAsync(() => IsPlaying = false);
         }
         private void _mediaPlayer_Buffering(object sender, MediaPlayerBufferingEventArgs e)
         {
@@ -136,6 +137,7 @@ namespace AnimeTime.WPF.Views
         }
         private void _mediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
         {
+            Debug.WriteLine(e.Time);
             Dispatcher.InvokeAsync(() => ControlBar.Position = (int)(e.Time / 1000));
         }
         #endregion
