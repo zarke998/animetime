@@ -10,10 +10,11 @@
     mc:Ignorable="d">
     <Button.Template>
         <ControlTemplate>
-            <Border
-                Height="20"
-                Background="{StaticResource WindowBackgroundBrush}"
-                Cursor="Hand">
+            <Grid Cursor="Hand">
+                <Border
+                    Height="20"
+                    Background="Black"
+                    Opacity="0.01" />
                 <Image
                     x:Name="Icon"
                     Width="17"
@@ -21,7 +22,7 @@
                     Margin="4,0,0,0"
                     RenderOptions.BitmapScalingMode="HighQuality"
                     Source="/Assets/Icons/fullscreen-off.png" />
-            </Border>
+            </Grid>
 
             <ControlTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsFullscreen}" Value="True">
