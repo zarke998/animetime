@@ -20,9 +20,19 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
     /// </summary>
     public partial class VideoPlayerControlBar : UserControl
     {
-        public int Position { get { return ProgressBar.CurrentTime.Seconds; } set { ProgressBar.SetPosition(value); } }
-
+        public int Position { get { return ProgressBar.CurrentTimeSpan.Seconds; } set { ProgressBar.UpdateProgress(value); } }
         #region Dependency Properties
+        public int CurrentTime
+        {
+            get { return (int)GetValue(CurrentTimeProperty); }
+            set { SetValue(CurrentTimeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentTimeProperty =
+            DependencyProperty.Register("CurrentTime", typeof(int), typeof(VideoPlayerControlBar), new PropertyMetadata(0));
+
+
         public int Duration
         {
             get { return (int)GetValue(DurationProperty); }

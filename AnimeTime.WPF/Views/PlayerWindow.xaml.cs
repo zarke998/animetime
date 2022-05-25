@@ -49,6 +49,7 @@ namespace AnimeTime.WPF.Views
 
         private Stack<string> _videoSources;
 
+        private int _duration;
         private int _currentTime;
         private Timer _progressTimer;
         private ICommand _seekCommand;
@@ -57,6 +58,9 @@ namespace AnimeTime.WPF.Views
         private ICommand _fullscreenToggleCommand;
         private bool _isPlaying;
 
+
+        public int Duration { get => _duration; set { _duration = value; OnPropertyChanged(); } }
+        public int CurrentTime { get => _currentTime; set { _currentTime = value; OnPropertyChanged(); } }
         public ICommand SeekCommand { get => _seekCommand; set { _seekCommand = value; OnPropertyChanged(); } }
         public ICommand PlayToggleCommand { get => _playToggleCommand; set { _playToggleCommand = value; OnPropertyChanged(); } }
         public ICommand FullscreenToggleCommand { get => _fullscreenToggleCommand; set { _fullscreenToggleCommand = value; OnPropertyChanged(); } }
@@ -111,7 +115,7 @@ namespace AnimeTime.WPF.Views
         }
         private void _mediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
         {
-            Dispatcher.InvokeAsync(() => ControlBar.Duration = Convert.ToInt32(e.Length / 1000));
+            Dispatcher.InvokeAsync(() => Duration = Convert.ToInt32(e.Length / 1000));
         }
 
         #region MediaPlayer States
@@ -119,33 +123,56 @@ namespace AnimeTime.WPF.Views
         {
             _progressTimer.Start();
             Dispatcher.InvokeAsync(() => IsPlaying = true);
+
             Debug.WriteLine("Playing");
         }
         private void _mediaPlayer_Stopped(object sender, EventArgs e)
         {
             _progressTimer.Stop();
-            _currentTime = 0;
+            CurrentTime = 0;
+
+            Debug.WriteLine("Stopped");
         }
         private void _mediaPlayer_Paused(object sender, EventArgs e)
         {
             _progressTimer.Stop();
             Dispatcher.InvokeAsync(() => IsPlaying = false);
+
+            Debug.WriteLine("Paused");
         }
         private void _mediaPlayer_Buffering(object sender, MediaPlayerBufferingEventArgs e)
         {
-            _progressTimer.Stop();
+            Dispatcher.InvokeAsync(() => IsPlaying = false);
+            Debug.WriteLine("Buffering");
         }
         private void _mediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
         {
-            Debug.WriteLine(e.Time);
-            Dispatcher.InvokeAsync(() => ControlBar.Position = (int)(e.Time / 1000));
+            if (!IsPlaying)
+            {
+
+                Dispatcher.InvokeAsync(() => IsPlaying = true);
+                _progressTimer.Interval = 1000 - (e.Time % 1000);
+
+                CurrentTime = (int)e.Time / 1000;
+            }
         }
         #endregion
 
         private void _progressTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            _currentTime++;
-            Dispatcher.InvokeAsync(() => ControlBar.Position = _currentTime);
+            if (_progressTimer.Interval != 1000) // Ako je triggerovan timer posle bufferovanja
+            {
+                _progressTimer.Interval = 1000;
+                _progressTimer.Start();
+            }
+
+            CurrentTime++;
+            Dispatcher.InvokeAsync(() =>
+            {
+                ControlBar.Position = CurrentTime;
+                ControlBarFullscreen.Position = CurrentTime;
+            });
+            //Debug.WriteLine("Timer: " + CurrentTime);
         }
         #endregion
         private void BindSourcesToDataContext()
@@ -179,7 +206,7 @@ namespace AnimeTime.WPF.Views
         {
             int position = (int)obj;
 
-            _currentTime = position;
+            CurrentTime = position;
             _mediaPlayer.SeekTo(TimeSpan.FromSeconds(position));
         }
         private void PlayToggle(object obj)

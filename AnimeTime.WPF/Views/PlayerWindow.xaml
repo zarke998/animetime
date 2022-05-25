@@ -44,7 +44,8 @@
             SeekCommand="{Binding Path=SeekCommand, ElementName=Root}"
             Visibility="{c:Binding Path=!IsFullscreen,
                                    ElementName=Root,
-                                   FalseToVisibility=Collapsed}" />
+                                   FalseToVisibility=Collapsed}"
+            Duration="{Binding Path=Duration, ElementName=Root}" />
         <wpf:VideoView
             x:Name="VlcVideoView"
             Background="#020202"
@@ -60,7 +61,8 @@
                     PlayToggleCommand="{Binding Path=PlayToggleCommand}"
                     SeekCommand="{Binding Path=SeekCommand}"
                     Visibility="{c:Binding Path=IsFullscreen,
-                                           FalseToVisibility=Collapsed}" />
+                                           FalseToVisibility=Collapsed}"
+                    Duration="{Binding Path=Duration}" />
                 <StackPanel Height="20" VerticalAlignment="Bottom" />
             </Grid>
         </wpf:VideoView>

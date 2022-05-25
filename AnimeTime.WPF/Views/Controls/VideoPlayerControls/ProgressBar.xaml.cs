@@ -28,14 +28,24 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
     {
         private Thumb _thumb;
         private Border _trackBackground;
-        private TimeSpan _durationTime;
-        private TimeSpan _currentTime;
+        private TimeSpan _durationTimeSpan;
+        private TimeSpan _currentTimeSpan;
         private bool _isDraging;
 
-        public TimeSpan CurrentTime { get => _currentTime; set { _currentTime = value; OnPropertyChanged(); } }
-        public TimeSpan DurationTime { get => _durationTime; set { _durationTime = value; OnPropertyChanged(); } }
+        public TimeSpan CurrentTimeSpan { get => _currentTimeSpan; set { _currentTimeSpan = value; OnPropertyChanged(); } }
+        public TimeSpan DurationTimeSpan { get => _durationTimeSpan; set { _durationTimeSpan = value; OnPropertyChanged(); } }
 
         #region Depdendency Properties
+
+        public int CurrentTime
+        {
+            get { return (int)GetValue(CurrentTimeProperty); }
+            set { SetValue(CurrentTimeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentTimeProperty =
+            DependencyProperty.Register("CurrentTime", typeof(int), typeof(ProgressBar), new PropertyMetadata(0, CurrentTimeChanged));
 
         public int Duration
         {
@@ -47,7 +57,6 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         public static readonly DependencyProperty DurationProperty =
             DependencyProperty.Register("Duration", typeof(int), typeof(ProgressBar), new PropertyMetadata(0, DurationChanged));
 
-
         public ICommand SeekCommand
         {
             get { return (ICommand)GetValue(SeekCommandProperty); }
@@ -58,13 +67,16 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         public static readonly DependencyProperty SeekCommandProperty =
             DependencyProperty.Register("SeekCommand", typeof(ICommand), typeof(ProgressBar), new PropertyMetadata(null));
 
-
-
+        private static void CurrentTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var self = d as ProgressBar;
+            self.UpdateProgress((int)e.NewValue);
+        }
         private static void DurationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var self = d as ProgressBar;
 
-            self.DurationTime = TimeSpan.FromSeconds((int)e.NewValue);
+            self.DurationTimeSpan = TimeSpan.FromSeconds((int)e.NewValue);
         }
         #endregion
 
@@ -77,12 +89,18 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             Slider.LostMouseCapture += Slider_LostMouseCapture;
         }
 
-        public void SetPosition(int position)
+        public void UpdateProgress(int seconds)
         {
             if (_isDraging) return;
 
-            var sliderPosition = ((position * 1.0) / Duration) * 10;
-            Slider.Value = sliderPosition;
+            CurrentTimeSpan = TimeSpan.FromSeconds(seconds);
+            UpdateText();
+
+            if (Duration > 0)
+            {
+                var sliderPosition = ((seconds * 1.0) / Duration) * 10;
+                Slider.Value = sliderPosition;
+            }
         }
         #region Events
         private void ProgressBar_Loaded(object sender, RoutedEventArgs e)
@@ -98,8 +116,11 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
         }
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            CurrentTime = TimeSpan.FromSeconds((int)(Duration * (e.NewValue / 10)));
-            UpdateText();
+            if (_isDraging)
+            {
+                CurrentTimeSpan = TimeSpan.FromSeconds((int)(Duration * (e.NewValue / 10)));
+                UpdateText();
+            }
             SetThumbColorFromGradientOffset(e.NewValue / 10);
         }
         private void Slider_GotMouseCapture(object sender, MouseEventArgs e)
@@ -130,7 +151,8 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
 
         private void UpdateText()
         {
-            TimeDisplay.Text = String.Format(@"{0:mm':'ss} \ {1:mm':'ss}", CurrentTime, DurationTime);
+            Debug.WriteLine(CurrentTimeSpan);
+            TimeDisplay.Text = String.Format(@"{0:mm':'ss} \ {1:mm':'ss}", CurrentTimeSpan, DurationTimeSpan);
         }
 
     }
