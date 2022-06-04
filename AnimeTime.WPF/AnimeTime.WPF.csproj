@@ -187,9 +187,6 @@
     <Compile Include="Views\Controls\VideoPlayerControls\FullscreenButton.xaml.cs">
       <DependentUpon>FullscreenButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\VideoPlayerControls\FullscreenControlBar.xaml.cs">
-      <DependentUpon>FullscreenControlBar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Controls\VideoPlayerControls\PlayButton.xaml.cs">
       <DependentUpon>PlayButton.xaml</DependentUpon>
     </Compile>
@@ -283,10 +280,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\VideoPlayerControls\FullscreenButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\VideoPlayerControls\FullscreenControlBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
