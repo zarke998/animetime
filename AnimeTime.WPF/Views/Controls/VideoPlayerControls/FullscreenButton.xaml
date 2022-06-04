@@ -12,7 +12,8 @@
         <ControlTemplate>
             <Grid Cursor="Hand">
                 <Border
-                    Height="20"
+                    Width="30"
+                    Height="30"
                     Background="Black"
                     Opacity="0.01" />
                 <Image
