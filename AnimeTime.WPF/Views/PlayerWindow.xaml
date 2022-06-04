@@ -50,21 +50,99 @@
             x:Name="VlcVideoView"
             Background="#020202"
             DataContext="{Binding ElementName=Root, Path=.}">
-            <Grid>
-                <videoplayercontrols:VideoPlayerControlBar
-                    x:Name="ControlBarFullscreen"
-                    Padding="0,0,0,8"
-                    VerticalAlignment="Bottom"
-                    FullscreenToggleCommand="{Binding Path=FullscreenToggleCommand}"
-                    IsFullscreen="{Binding Path=IsFullscreen}"
-                    IsPlaying="{Binding Path=IsPlaying}"
-                    PlayToggleCommand="{Binding Path=PlayToggleCommand}"
-                    SeekCommand="{Binding Path=SeekCommand}"
-                    Visibility="{c:Binding Path=IsFullscreen,
-                                           FalseToVisibility=Collapsed}"
-                    Duration="{Binding Path=Duration}" />
-                <StackPanel Height="20" VerticalAlignment="Bottom" />
-            </Grid>
+            <wpf:VideoView.Resources>
+                <ResourceDictionary>
+                    <LinearGradientBrush x:Key="FadeOutTopTransparent" StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#00FFFFFF" />
+                        <GradientStop Offset="1" Color="#FFFFFFFF" />
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="FadeOutBottomTransparent" StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#FFFFFFFF" />
+                        <GradientStop Offset="1" Color="#00FFFFFF" />
+                    </LinearGradientBrush>
+                    <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
+                    <QuadraticEase x:Key="EaseIn" EasingMode="EaseIn" />
+                    <Storyboard x:Key="HideFullscreenControlBarStoryboard">
+                        <ThicknessAnimation
+                            EasingFunction="{StaticResource EaseIn}"
+                            Storyboard.TargetName="ControlBar"
+                            Storyboard.TargetProperty="Margin"
+                            To="0,0,0,-90" />
+                        <DoubleAnimation
+                            EasingFunction="{StaticResource EaseIn}"
+                            Storyboard.TargetName="FadeTop"
+                            Storyboard.TargetProperty="Opacity"
+                            To="0" />
+                        <DoubleAnimation
+                            EasingFunction="{StaticResource EaseIn}"
+                            Storyboard.TargetName="FadeBottom"
+                            Storyboard.TargetProperty="Opacity"
+                            To="0" />
+                    </Storyboard>
+                    <Storyboard x:Key="ShowFullscreenControlBarStoryboard">
+                        <ThicknessAnimation
+                            EasingFunction="{StaticResource EaseOut}"
+                            Storyboard.TargetName="ControlBar"
+                            Storyboard.TargetProperty="Margin"
+                            To="0,0,0,0"
+                            Duration="00:00:00.500" />
+                        <DoubleAnimation
+                            EasingFunction="{StaticResource EaseOut}"
+                            Storyboard.TargetName="FadeTop"
+                            Storyboard.TargetProperty="Opacity"
+                            To="1"
+                            Duration="00:00:00.500" />
+                        <DoubleAnimation
+                            EasingFunction="{StaticResource EaseOut}"
+                            Storyboard.TargetName="FadeBottom"
+                            Storyboard.TargetProperty="Opacity"
+                            To="1"
+                            Duration="00:00:00.500" />
+                    </Storyboard>
+                    <Style x:Key="FullscreenControlBar" TargetType="{x:Type ContentControl}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ContentControl}">
+                                    <Grid>
+                                        <Border Background="Black" Opacity="0.01" />
+                                        <Border
+                                            x:Name="FadeTop"
+                                            Height="150"
+                                            VerticalAlignment="Top"
+                                            Panel.ZIndex="-999"
+                                            Background="Black"
+                                            OpacityMask="{StaticResource FadeOutBottomTransparent}"
+                                            Visibility="{c:Binding Path=IsFullscreen,
+                                                                   FalseToVisibility=Collapsed}" />
+                                        <videoplayercontrols:VideoPlayerControlBar
+                                            x:Name="ControlBar"
+                                            Padding="0,0,0,8"
+                                            VerticalAlignment="Bottom"
+                                            FullscreenToggleCommand="{Binding Path=FullscreenToggleCommand}"
+                                            IsFullscreen="{Binding Path=IsFullscreen}"
+                                            IsPlaying="{Binding Path=IsPlaying}"
+                                            PlayToggleCommand="{Binding Path=PlayToggleCommand}"
+                                            SeekCommand="{Binding Path=SeekCommand}"
+                                            Visibility="{c:Binding Path=IsFullscreen,
+                                                                   FalseToVisibility=Collapsed}"
+                                            Duration="{Binding Path=Duration}" />
+                                        <Border
+                                            x:Name="FadeBottom"
+                                            Height="150"
+                                            VerticalAlignment="Bottom"
+                                            Panel.ZIndex="-999"
+                                            Background="Black"
+                                            OpacityMask="{StaticResource FadeOutTopTransparent}"
+                                            Visibility="{c:Binding Path=IsFullscreen,
+                                                                   FalseToVisibility=Collapsed}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ResourceDictionary>
+            </wpf:VideoView.Resources>
+            <ContentControl x:Name="ControlBarFullscreen" Style="{StaticResource FullscreenControlBar}" />
         </wpf:VideoView>
     </DockPanel>
 </base:WindowBase>

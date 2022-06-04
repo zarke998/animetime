@@ -13,6 +13,9 @@ using LibVLCSharp.Shared;
 using System.Diagnostics;
 using System.Timers;
 using AnimeTime.WPF.Commands;
+using AnimeTime.WPF.Views.Controls.VideoPlayerControls;
+using System.Windows.Media.Animation;
+using AnimeTime.Utilities.Timers;
 
 namespace AnimeTime.WPF.Views
 {
@@ -52,12 +55,18 @@ namespace AnimeTime.WPF.Views
         private int _duration;
         private int _currentTime;
         private Timer _progressTimer;
+        private Timer _hideFullscreenControlsTimer;
         private ICommand _seekCommand;
         private ICommand _playToggleCommand;
 
         private ICommand _fullscreenToggleCommand;
         private bool _isPlaying;
 
+        private bool _isShowFullscreenControlBarAnimating;
+
+        #region Template variables
+        private VideoPlayerControlBar _controlBarFullscreen;
+        #endregion
 
         public int Duration { get => _duration; set { _duration = value; OnPropertyChanged(); } }
         public int CurrentTime { get => _currentTime; set { _currentTime = value; OnPropertyChanged(); } }
@@ -76,10 +85,15 @@ namespace AnimeTime.WPF.Views
             _progressTimer = new Timer(1000);
             _progressTimer.Elapsed += _progressTimer_Elapsed;
 
+            _hideFullscreenControlsTimer = new Timer(4000);
+            _hideFullscreenControlsTimer.Elapsed += _hideFullscreenControlsTimer_Elapsed;
+            _hideFullscreenControlsTimer.AutoReset = false;
+
             SeekCommand = new DelegateCommand(Seek);
             PlayToggleCommand = new DelegateCommand(PlayToggle);
             FullscreenToggleCommand = new DelegateCommand(FullscreenToggle);
         }
+
 
         #region Events
         private void PlayerWindow_Closed(object sender, EventArgs e)
@@ -90,6 +104,9 @@ namespace AnimeTime.WPF.Views
         private void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeVLC();
+
+            ControlBarFullscreen.Loaded += ControlBarFullscreen_Loaded;
+            ControlBarFullscreen.MouseMove += ControlBarFullscreen_MouseMove;
 
             _mediaPlayer = new MediaPlayer(_libVLC);
             _mediaPlayer.LengthChanged += _mediaPlayer_LengthChanged;
@@ -102,6 +119,25 @@ namespace AnimeTime.WPF.Views
 
             BindSourcesToDataContext();
         }
+
+        private void ControlBarFullscreen_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitializeTemplateVariables();
+        }
+        private void ControlBarFullscreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsFullscreen)
+            {
+                if (!_isShowFullscreenControlBarAnimating)
+                {
+                    _isShowFullscreenControlBarAnimating = true;
+                    ShowFullscreenControlBar();
+                }
+
+                _hideFullscreenControlsTimer.Restart();
+            }
+        }
+
         private void _libVLC_Log(object sender, LogEventArgs e)
         {
             if (e.FormattedLog.Contains(LIBVLC_CANNOT_OPEN_SOURCE_ERROR))
@@ -112,10 +148,6 @@ namespace AnimeTime.WPF.Views
                     _mediaPlayer.Play(new Media(_libVLC, new Uri(source)));
                 }
             }
-        }
-        private void _mediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
-        {
-            Dispatcher.InvokeAsync(() => Duration = Convert.ToInt32(e.Length / 1000));
         }
 
         #region MediaPlayer States
@@ -156,6 +188,10 @@ namespace AnimeTime.WPF.Views
                 CurrentTime = (int)e.Time / 1000;
             }
         }
+        private void _mediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
+        {
+            Dispatcher.InvokeAsync(() => Duration = Convert.ToInt32(e.Length / 1000));
+        }
         #endregion
 
         private void _progressTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -170,11 +206,36 @@ namespace AnimeTime.WPF.Views
             Dispatcher.InvokeAsync(() =>
             {
                 ControlBar.Position = CurrentTime;
-                ControlBarFullscreen.Position = CurrentTime;
+                if (_controlBarFullscreen != null)
+                    _controlBarFullscreen.Position = CurrentTime;
             });
             //Debug.WriteLine("Timer: " + CurrentTime);
         }
+        private void _hideFullscreenControlsTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            HideFullscreenControlBar();
+        }
+
+
         #endregion
+        private void InitializeVLC()
+        {
+            LibVLCSharp.Shared.Core.Initialize();
+            _libVLC = new LibVLC();
+            _libVLC.Log += _libVLC_Log;
+        }
+        private void ShutdownVLC()
+        {
+            VlcVideoView.MediaPlayer.Stop();
+            VlcVideoView.MediaPlayer.Dispose();
+            _libVLC.Dispose();
+        }
+
+        private void InitializeTemplateVariables()
+        {
+            _controlBarFullscreen = this.ControlBarFullscreen.Template.FindName("ControlBar", this.ControlBarFullscreen) as VideoPlayerControlBar;
+        }
+
         private void BindSourcesToDataContext()
         {
             var binding = new Binding();
@@ -183,25 +244,37 @@ namespace AnimeTime.WPF.Views
 
             this.SetBinding(SourcesProperty, binding);
         }
-        private void InitializeVLC()
-        {
-            LibVLCSharp.Shared.Core.Initialize();
-            _libVLC = new LibVLC();
-            _libVLC.Log += _libVLC_Log;
-        }
-
-        private void ShutdownVLC()
-        {
-            VlcVideoView.MediaPlayer.Stop();
-            VlcVideoView.MediaPlayer.Dispose();
-            _libVLC.Dispose();
-        }
         private void LoadSources()
         {
             _videoSources = new Stack<string>(Sources.Reverse());
 
             _mediaPlayer.Play(new Media(_libVLC, new Uri(_videoSources.Pop())));
         }
+
+        private void ShowFullscreenControlBar()
+        {
+            this.Dispatcher.InvokeAsync(() =>
+            {
+                var storyboard = VlcVideoView.FindResource("ShowFullscreenControlBarStoryboard") as Storyboard;
+
+                storyboard.Completed += (sender, args) =>
+                {
+                    _isShowFullscreenControlBarAnimating = false;
+                };
+                storyboard.Begin(ControlBarFullscreen, ControlBarFullscreen.Template);
+
+            });
+        }
+        private void HideFullscreenControlBar()
+        {
+            this.Dispatcher.InvokeAsync(() =>
+            {
+                var storyboard = VlcVideoView.FindResource("HideFullscreenControlBarStoryboard") as Storyboard;
+                storyboard.Begin(ControlBarFullscreen, ControlBarFullscreen.Template);
+            });
+        }
+
+        #region Command delegates
         private void Seek(object obj)
         {
             int position = (int)obj;
@@ -219,11 +292,20 @@ namespace AnimeTime.WPF.Views
             else
                 _mediaPlayer?.Pause();
         }
-
         private void FullscreenToggle(object obj)
         {
             var isFullscreen = (bool)obj;
             base.FulllscreenToggle(isFullscreen);
+
+            if (IsFullscreen)
+            {
+                _hideFullscreenControlsTimer.Start();
+            }
+            else
+            {
+                _hideFullscreenControlsTimer.Stop();
+            }
         }
+        #endregion
     }
 }
