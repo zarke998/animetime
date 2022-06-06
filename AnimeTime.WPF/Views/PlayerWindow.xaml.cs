@@ -54,10 +54,12 @@ namespace AnimeTime.WPF.Views
 
         private int _duration;
         private int _currentTime;
+        private int _volume;
         private Timer _progressTimer;
         private Timer _hideFullscreenControlsTimer;
         private ICommand _seekCommand;
         private ICommand _playToggleCommand;
+        private ICommand _volumeChangedCommand;
 
         private ICommand _fullscreenToggleCommand;
         private bool _isPlaying;
@@ -70,8 +72,10 @@ namespace AnimeTime.WPF.Views
 
         public int Duration { get => _duration; set { _duration = value; OnPropertyChanged(); } }
         public int CurrentTime { get => _currentTime; set { _currentTime = value; OnPropertyChanged(); } }
+        public int Volume { get => _volume; set { _volume = value; OnPropertyChanged(); } }
         public ICommand SeekCommand { get => _seekCommand; set { _seekCommand = value; OnPropertyChanged(); } }
         public ICommand PlayToggleCommand { get => _playToggleCommand; set { _playToggleCommand = value; OnPropertyChanged(); } }
+        public ICommand VolumeChangedCommand { get => _volumeChangedCommand; set { _volumeChangedCommand = value; OnPropertyChanged(); } }
         public ICommand FullscreenToggleCommand { get => _fullscreenToggleCommand; set { _fullscreenToggleCommand = value; OnPropertyChanged(); } }
         public bool IsPlaying { get => _isPlaying; set { _isPlaying = value; OnPropertyChanged(); } }
 
@@ -92,7 +96,9 @@ namespace AnimeTime.WPF.Views
             SeekCommand = new DelegateCommand(Seek);
             PlayToggleCommand = new DelegateCommand(PlayToggle);
             FullscreenToggleCommand = new DelegateCommand(FullscreenToggle);
+            VolumeChangedCommand = new DelegateCommand(VolumeChanged);
         }
+
 
 
         #region Events
@@ -216,7 +222,6 @@ namespace AnimeTime.WPF.Views
             HideFullscreenControlBar();
         }
 
-
         #endregion
         private void InitializeVLC()
         {
@@ -250,7 +255,6 @@ namespace AnimeTime.WPF.Views
 
             _mediaPlayer.Play(new Media(_libVLC, new Uri(_videoSources.Pop())));
         }
-
         private void ShowFullscreenControlBar()
         {
             this.Dispatcher.InvokeAsync(() =>
@@ -305,6 +309,13 @@ namespace AnimeTime.WPF.Views
             {
                 _hideFullscreenControlsTimer.Stop();
             }
+        }
+        private void VolumeChanged(object obj)
+        {
+            var volume = (int)obj;
+            _mediaPlayer.Volume = volume;
+
+            Volume = volume;
         }
         #endregion
     }

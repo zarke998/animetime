@@ -42,6 +42,10 @@
                 Grid.Column="2"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
+                <local:VolumeButton
+                    Margin="0,0,10,0"
+                    Volume="{Binding Path=Volume, ElementName=Root}"
+                    VolumeChangedCommand="{Binding Path=VolumeChangedCommand, ElementName=Root}" />
                 <local:FullscreenButton FullscreenToggleCommand="{Binding Path=FullscreenToggleCommand, ElementName=Root}" IsFullscreen="{Binding Path=IsFullscreen, ElementName=Root}" />
             </StackPanel>
         </Grid>

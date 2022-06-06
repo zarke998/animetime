@@ -45,6 +45,8 @@
             Visibility="{c:Binding Path=!IsFullscreen,
                                    ElementName=Root,
                                    FalseToVisibility=Collapsed}"
+            Volume="{Binding Path=Volume, ElementName=Root}"
+            VolumeChangedCommand="{Binding Path=VolumeChangedCommand, ElementName=Root}"
             Duration="{Binding Path=Duration, ElementName=Root}" />
         <wpf:VideoView
             x:Name="VlcVideoView"
@@ -125,6 +127,8 @@
                                             SeekCommand="{Binding Path=SeekCommand}"
                                             Visibility="{c:Binding Path=IsFullscreen,
                                                                    FalseToVisibility=Collapsed}"
+                                            Volume="{Binding Path=Volume}"
+                                            VolumeChangedCommand="{Binding Path=VolumeChangedCommand}"
                                             Duration="{Binding Path=Duration}" />
                                         <Border
                                             x:Name="FadeBottom"

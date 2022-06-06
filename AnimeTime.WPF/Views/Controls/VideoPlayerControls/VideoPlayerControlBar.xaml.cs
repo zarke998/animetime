@@ -104,6 +104,30 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             DependencyProperty.Register("IsFullscreen", typeof(bool), typeof(VideoPlayerControlBar), new PropertyMetadata(false));
 
 
+
+        public double Volume
+        {
+            get { return (double)GetValue(VolumeProperty); }
+            set { SetValue(VolumeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Volume.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VolumeProperty =
+            DependencyProperty.Register("Volume", typeof(double), typeof(VideoPlayerControlBar), new PropertyMetadata(0.0));
+
+
+
+        public ICommand VolumeChangedCommand
+        {
+            get { return (ICommand)GetValue(VolumeChangedCommandProperty); }
+            set { SetValue(VolumeChangedCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for VolumeChangedCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VolumeChangedCommandProperty =
+            DependencyProperty.Register("VolumeChangedCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
+
+
         #endregion
         public VideoPlayerControlBar()
         {

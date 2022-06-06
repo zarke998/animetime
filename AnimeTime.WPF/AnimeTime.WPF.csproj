@@ -196,6 +196,9 @@
     <Compile Include="Views\Controls\VideoPlayerControls\ProgressBar.xaml.cs">
       <DependentUpon>ProgressBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\VideoPlayerControls\VolumeButton.xaml.cs">
+      <DependentUpon>VolumeButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExtendedControls\DefaultScrollViewer.cs" />
     <Compile Include="Views\Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
@@ -292,6 +295,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\VideoPlayerControls\ProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\VideoPlayerControls\VolumeButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -449,6 +456,9 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\fullscreen-off.png" />
     <Resource Include="Assets\Icons\fullscreen-on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\volume.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\VideoLAN.LibVLC.Windows.3.0.16\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.16\build\VideoLAN.LibVLC.Windows.targets')" />
