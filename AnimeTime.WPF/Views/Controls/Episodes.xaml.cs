@@ -108,20 +108,28 @@ namespace AnimeTime.WPF.Views.Controls
         #region EpisodesContainer
         private void LoadEpisodes(object param)
         {
-            EpisodesContainer.Children.Clear();
-
-            EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, null);
-            EpisodesContainer.Opacity = 0;
+            ClearEpisodes();
 
             var episodeRange = param as EpisodeRange;
             var episodes = GetEpisodesFromItems();
-            for (int i = episodeRange.StartEpisode; i <= episodeRange.EndEpisode; i++)
+
+            var from = episodeRange.StartEpisode;
+            var to = episodeRange.EndEpisode > episodes.Count ? episodes.Count : episodeRange.EndEpisode;
+
+            for (int i = from; i <= to; i++)
             {
                 var episode = episodes.First(e => e.EpNum == i);
                 var button = CreateEpisodeButton(episode.EpNum, episode.Value);
                 EpisodesContainer.Children.Add(button);
             }
             EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, FadeInAnimation(new Duration(TimeSpan.FromMilliseconds(400))));
+        }
+        private void ClearEpisodes()
+        {
+            EpisodesContainer.Children.Clear();
+
+            EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, null);
+            EpisodesContainer.Opacity = 0;
         }
         private Button CreateEpisodeButton(int epNum, object value)
         {
@@ -131,25 +139,6 @@ namespace AnimeTime.WPF.Views.Controls
             button.Click += EpisodeButton_Click;
             return button;
         }
-
-        private void EpisodeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (EpisodeSelectedCommand != null && EpisodeSelectedCommand.CanExecute(null))
-                EpisodeSelectedCommand.Execute((sender as Button).Tag);
-        }
-        #endregion
-
-        #region Animations
-        private DoubleAnimation FadeInAnimation(Duration duration)
-        {
-            var opacityAnimation = new DoubleAnimation();
-            opacityAnimation.To = 1.0;
-            opacityAnimation.Duration = duration;
-
-            return opacityAnimation;
-        }
-        #endregion
-
         private List<Episode> GetEpisodesFromItems()
         {
             var result = new List<Episode>();
@@ -167,6 +156,26 @@ namespace AnimeTime.WPF.Views.Controls
 
             return result;
         }
+
+        #region Events
+        private void EpisodeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (EpisodeSelectedCommand != null && EpisodeSelectedCommand.CanExecute(null))
+                EpisodeSelectedCommand.Execute((sender as Button).Tag);
+        }
+        #endregion
+        #endregion
+
+        #region Animations
+        private DoubleAnimation FadeInAnimation(Duration duration)
+        {
+            var opacityAnimation = new DoubleAnimation();
+            opacityAnimation.To = 1.0;
+            opacityAnimation.Duration = duration;
+
+            return opacityAnimation;
+        }
+        #endregion
     }
 
     class Episode
