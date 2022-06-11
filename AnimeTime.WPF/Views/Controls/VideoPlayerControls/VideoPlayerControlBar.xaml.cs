@@ -128,6 +128,17 @@ namespace AnimeTime.WPF.Views.Controls.VideoPlayerControls
             DependencyProperty.Register("VolumeChangedCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
 
 
+        public ICommand SkipIntroCommand
+        {
+            get { return (ICommand)GetValue(SkipIntroCommandProperty); }
+            set { SetValue(SkipIntroCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SkipIntroCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SkipIntroCommandProperty =
+            DependencyProperty.Register("SkipIntroCommand", typeof(ICommand), typeof(VideoPlayerControlBar), new PropertyMetadata(null));
+
+
         #endregion
         public VideoPlayerControlBar()
         {

@@ -25,6 +25,7 @@ namespace AnimeTime.WPF.Views
     public partial class PlayerWindow : WindowBase
     {
         private const string LIBVLC_CANNOT_OPEN_SOURCE_ERROR = "Your input can't be opened";
+        private const int ANIME_INTRO_LENGTH_SEC = 90;
 
         #region Dependency Properties
         public IEnumerable<string> Sources
@@ -62,6 +63,7 @@ namespace AnimeTime.WPF.Views
         private ICommand _volumeChangedCommand;
 
         private ICommand _fullscreenToggleCommand;
+        private ICommand _skipIntroCommand;
         private bool _isPlaying;
 
         private bool _isShowFullscreenControlBarAnimating;
@@ -77,6 +79,7 @@ namespace AnimeTime.WPF.Views
         public ICommand PlayToggleCommand { get => _playToggleCommand; set { _playToggleCommand = value; OnPropertyChanged(); } }
         public ICommand VolumeChangedCommand { get => _volumeChangedCommand; set { _volumeChangedCommand = value; OnPropertyChanged(); } }
         public ICommand FullscreenToggleCommand { get => _fullscreenToggleCommand; set { _fullscreenToggleCommand = value; OnPropertyChanged(); } }
+        public ICommand SkipIntroCommand { get => _skipIntroCommand; set { _skipIntroCommand = value; OnPropertyChanged(); } }
         public bool IsPlaying { get => _isPlaying; set { _isPlaying = value; OnPropertyChanged(); } }
 
 
@@ -97,8 +100,8 @@ namespace AnimeTime.WPF.Views
             PlayToggleCommand = new DelegateCommand(PlayToggle);
             FullscreenToggleCommand = new DelegateCommand(FullscreenToggle);
             VolumeChangedCommand = new DelegateCommand(VolumeChanged);
+            SkipIntroCommand = new DelegateCommand(SkipIntro);
         }
-
 
 
         #region Events
@@ -316,6 +319,11 @@ namespace AnimeTime.WPF.Views
             _mediaPlayer.Volume = volume;
 
             Volume = volume;
+        }
+        private void SkipIntro(object obj)
+        {
+            CurrentTime = CurrentTime + ANIME_INTRO_LENGTH_SEC;
+            _mediaPlayer.SeekTo(TimeSpan.FromSeconds(CurrentTime));
         }
         #endregion
     }

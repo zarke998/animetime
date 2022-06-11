@@ -42,6 +42,7 @@
             IsPlaying="{Binding Path=IsPlaying, ElementName=Root}"
             PlayToggleCommand="{Binding Path=PlayToggleCommand, ElementName=Root}"
             SeekCommand="{Binding Path=SeekCommand, ElementName=Root}"
+            SkipIntroCommand="{Binding Path=SkipIntroCommand, ElementName=Root}"
             Visibility="{c:Binding Path=!IsFullscreen,
                                    ElementName=Root,
                                    FalseToVisibility=Collapsed}"
@@ -125,6 +126,7 @@
                                             IsPlaying="{Binding Path=IsPlaying}"
                                             PlayToggleCommand="{Binding Path=PlayToggleCommand}"
                                             SeekCommand="{Binding Path=SeekCommand}"
+                                            SkipIntroCommand="{Binding Path=SkipIntroCommand}"
                                             Visibility="{c:Binding Path=IsFullscreen,
                                                                    FalseToVisibility=Collapsed}"
                                             Volume="{Binding Path=Volume}"

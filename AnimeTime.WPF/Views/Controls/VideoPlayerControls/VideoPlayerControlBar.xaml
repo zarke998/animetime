@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:AnimeTime.WPF.Views.Controls.VideoPlayerControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="Root"
-    d:DesignHeight="100"
+    d:DesignHeight="115"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -14,6 +14,18 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/ControlStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="SkipIntroButton" TargetType="{x:Type Button}">
+                <Grid Cursor="Hand">
+                    <Border Background="Black" Opacity="0.01" />
+                    <StackPanel VerticalAlignment="Center">
+                        <Image
+                            Width="25"
+                            Height="18"
+                            Source="/Assets/Icons/forward.png" />
+                        <TextBlock Foreground="White">Skip Intro</TextBlock>
+                    </StackPanel>
+                </Grid>
+            </ControlTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel Margin="{Binding ElementName=Root, Path=Margin}">
@@ -29,6 +41,9 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Command="{Binding Path=SkipIntroCommand, ElementName=Root}" Template="{StaticResource SkipIntroButton}" />
+            </StackPanel>
             <StackPanel
                 Grid.Column="1"
                 HorizontalAlignment="Center"
