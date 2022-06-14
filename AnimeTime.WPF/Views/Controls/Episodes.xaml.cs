@@ -108,21 +108,26 @@ namespace AnimeTime.WPF.Views.Controls
         #region EpisodesContainer
         private void LoadEpisodes(object param)
         {
-            ClearEpisodes();
-
-            var episodeRange = param as EpisodeRange;
-            var episodes = GetEpisodesFromItems();
-
-            var from = episodeRange.StartEpisode;
-            var to = episodeRange.EndEpisode > episodes.Count ? episodes.Count : episodeRange.EndEpisode;
-
-            for (int i = from; i <= to; i++)
+            var fadeOutAnimation = FadeOutAnimation(new Duration(TimeSpan.FromMilliseconds(25)));
+            fadeOutAnimation.Completed += (s, args) =>
             {
-                var episode = episodes.First(e => e.EpNum == i);
-                var button = CreateEpisodeButton(episode.EpNum, episode.Value);
-                EpisodesContainer.Children.Add(button);
-            }
-            EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, FadeInAnimation(new Duration(TimeSpan.FromMilliseconds(400))));
+                ClearEpisodes();
+
+                var episodeRange = param as EpisodeRange;
+                var episodes = GetEpisodesFromItems();
+
+                var from = episodeRange.StartEpisode;
+                var to = episodeRange.EndEpisode > episodes.Count ? episodes.Count : episodeRange.EndEpisode;
+
+                for (int i = from; i <= to; i++)
+                {
+                    var episode = episodes.First(e => e.EpNum == i);
+                    var button = CreateEpisodeButton(episode.EpNum, episode.Value);
+                    EpisodesContainer.Children.Add(button);
+                }
+                EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, FadeInAnimation(new Duration(TimeSpan.FromMilliseconds(400))));
+            };
+            EpisodesContainer.BeginAnimation(FlexboxPanel.OpacityProperty, fadeOutAnimation);
         }
         private void ClearEpisodes()
         {
@@ -172,6 +177,18 @@ namespace AnimeTime.WPF.Views.Controls
             var opacityAnimation = new DoubleAnimation();
             opacityAnimation.To = 1.0;
             opacityAnimation.Duration = duration;
+
+            return opacityAnimation;
+        }
+        private DoubleAnimation FadeOutAnimation(Duration duration)
+        {
+            var opacityAnimation = new DoubleAnimation();
+            opacityAnimation.To = 0.0;
+            opacityAnimation.Duration = duration;
+            opacityAnimation.EasingFunction = new QuadraticEase()
+            {
+                EasingMode = EasingMode.EaseOut
+            };
 
             return opacityAnimation;
         }
