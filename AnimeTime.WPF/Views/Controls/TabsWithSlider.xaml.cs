@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Linq;
 using System.Windows.Media.Animation;
+using AnimeTime.WPF.Converters;
 
 namespace AnimeTime.WPF.Views.Controls
 {
@@ -77,12 +78,21 @@ namespace AnimeTime.WPF.Views.Controls
         private static void OnItemsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var slider = (TabsWithSlider)obj;
-            slider.InvalidateTabs();
-            slider.FirstTabFire();
+            var oldValue = args.OldValue as Dictionary<string,object>;
+            var newValue = args.NewValue as Dictionary<string, object>;
+
+            if (newValue != null && newValue.Count() > 0)
+            {
+                slider.InvalidateTabs();
+
+                if(oldValue == null || oldValue.Count() == 0)
+                    slider.FirstTabFire();
+            }
         }
         #endregion
 
         private Button _activeTab;
+
         public string ActiveTab
         {
             get
@@ -111,7 +121,14 @@ namespace AnimeTime.WPF.Views.Controls
         {
             if (TabsContainer.Children.Count == 0) return;
 
-            Slider.Width = SliderWidthFromTab(TabsContainer.Children[0] as Button);
+            var firstTab = TabsContainer.Children[0] as Button;
+            var binding = new Binding("ActualWidth")
+            {
+                Source = firstTab,
+                Converter = new AdditionConverter(),
+                ConverterParameter = firstTab.Margin.Right / 2
+            };
+            Slider.SetBinding(Rectangle.WidthProperty, binding);
         }
         private void AnimateSlider(int targetTabIndex, int duration)
         {
@@ -217,6 +234,8 @@ namespace AnimeTime.WPF.Views.Controls
             if (firstTab == null) return;
 
             _activeTab = firstTab;
+
+            InitializeSliderPosition();
             ExecuteCommand(firstTab.Tag);
         }
 
