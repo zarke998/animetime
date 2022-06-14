@@ -27,14 +27,14 @@
                 <pages:HomeView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vmpages:DetailsViewModel}">
-                <pages:DetailsView VerticalContentOffset="{qc:MultiBinding '-($P1 + $P2 + $P3)', P1={Binding ElementName=NavBar, Path=ActualHeight}, P2={Binding ElementName=NavBar, Path=Margin, Converter={StaticResource MarginToSingleConverter}, ConverterParameter=Bottom}, P3={Binding Source={StaticResource WindowCaptionHeight}}}" />
+                <pages:DetailsView VerticalContentOffset="{qc:MultiBinding '-($P1 + $P2 + $P3 + $P4)', P1={Binding ElementName=NavBar, Path=ActualHeight}, P2={Binding ElementName=NavBar, Path=Margin, Converter={StaticResource MarginToSingleConverter}, ConverterParameter=Bottom}, P3={Binding ElementName=NavBar, Path=Margin, Converter={StaticResource MarginToSingleConverter}, ConverterParameter=Top}, P4={Binding Source={StaticResource WindowCaptionHeight}}}" />
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid 
-        x:Name="MainContainer"   
-        Focusable="True"
+    <Grid
+        x:Name="MainContainer"
         Background="{StaticResource WindowBackgroundBrush}"
+        Focusable="True"
         MouseDown="MainContainer_MouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
