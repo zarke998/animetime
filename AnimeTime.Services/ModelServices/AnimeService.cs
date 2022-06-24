@@ -1,4 +1,5 @@
 ﻿using AnimeTime.Core;
+using AnimeTime.Core.Exceptions;
 using AnimeTime.Services.DTO;
 using AnimeTime.Services.ModelServices.Interfaces;
 using AutoMapper;
@@ -19,6 +20,15 @@ namespace AnimeTime.Services.ModelServices
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
+        }
+
+        public AnimeDTO GetAnimeShort(int id)
+        {
+            var anime = _unitOfWork.Animes.Get(id);
+            if (anime == null)
+                throw new EntityNotFoundException($"Anime with id {id} not found.");
+
+            return _mapper.Map<AnimeDTO>(anime);
         }
 
         public IEnumerable<AnimeSearchDTO> Search(string searchString)

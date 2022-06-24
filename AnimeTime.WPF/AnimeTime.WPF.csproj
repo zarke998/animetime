@@ -129,9 +129,11 @@
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\NumberToVisibilityConverter.cs" />
     <Compile Include="Services\AnimeService.cs" />
+    <Compile Include="Services\Api.cs" />
     <Compile Include="Services\Base\ApiServiceBase.cs" />
     <Compile Include="Services\EpisodeService.cs" />
     <Compile Include="Services\Interfaces\IAnimeService.cs" />
+    <Compile Include="Services\Interfaces\IApi.cs" />
     <Compile Include="Services\Interfaces\ISearchService.cs" />
     <Compile Include="Services\Interfaces\IEpisodeService.cs" />
     <Compile Include="Services\Interfaces\IViewModelLocator.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Views\Controls\ListViewExpandable.xaml.cs">
       <DependentUpon>ListViewExpandable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tab.cs" />
     <Compile Include="Views\Controls\VideoPlayerControls\FullscreenButton.xaml.cs">
       <DependentUpon>FullscreenButton.xaml</DependentUpon>
     </Compile>

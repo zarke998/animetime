@@ -163,8 +163,10 @@
                                                     Text="{Binding Synopsis}"
                                                     TextWrapping="Wrap" />
                                             </StackPanel>
-                                            <controls:Episodes Margin="0,0,0,10" Items="{Binding Episodes}"
-                                                               EpisodeSelectedCommand="{Binding LoadEpisodeCommand}"/>
+                                            <controls:Episodes
+                                                Margin="0,0,0,10"
+                                                EpisodeSelectedCommand="{Binding LoadEpisodeCommand}"
+                                                Items="{Binding Episodes}" />
 
                                             <StackPanel Margin="0,15">
                                                 <StackPanel x:Name="PrequelContainer" Margin="0,0,0,20">

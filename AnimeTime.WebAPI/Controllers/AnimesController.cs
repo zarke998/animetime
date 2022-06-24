@@ -21,11 +21,13 @@ namespace AnimeTime.WebAPI.Controllers
     {
         private const int _episodeUpdateInterval = 6;
 
+        private readonly IAnimeService _animeService;
         private readonly IAnimeSourceService _animeSourceService;
         private readonly IEpisodeService _episodeService;
 
-        public AnimesController(IAnimeSourceService animeSourceService, IEpisodeService episodeService)
+        public AnimesController(IAnimeService animeService, IAnimeSourceService animeSourceService, IEpisodeService episodeService)
         {
+            this._animeService = animeService;
             this._animeSourceService = animeSourceService;
             this._episodeService = episodeService;
         }
@@ -161,6 +163,12 @@ namespace AnimeTime.WebAPI.Controllers
         //        return differentEpisodes;
         //    }
         //}
+
+        [Route("{id}/short-info")]
+        public IHttpActionResult GetShortInfo(int id)
+        {
+            return Ok(_animeService.GetAnimeShort(id));
+        }
 
         [Route("{id}/anime-sources")]
         public IHttpActionResult GetAnimeSources(int id)

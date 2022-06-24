@@ -30,6 +30,7 @@ namespace AnimeTime.WPF
             builder.RegisterType<HomeViewModel>().InstancePerLifetimeScope();
 
             // Api services
+            builder.RegisterType<Api>().As<IApi>();
             builder.RegisterType<SearchService>().As<ISearchService>();
             builder.RegisterType<AnimeService>().As<IAnimeService>();
             builder.RegisterType<EpisodeService>().As<IEpisodeService>();

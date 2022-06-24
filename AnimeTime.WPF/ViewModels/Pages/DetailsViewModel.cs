@@ -100,7 +100,7 @@ namespace AnimeTime.WPF.ViewModels.Pages
             _windowService.Load(playerVM);
         }
 
-        public async void Load(int animeId)
+        public async Task Load(int animeId)
         {
             var episodes = await _animeService.GetEpisodesAsync(animeId);
             Episodes = new ObservableCollection<EpisodeDTO>(episodes);

@@ -15,6 +15,11 @@ using System.Windows.Shapes;
 using System.Linq;
 using System.Windows.Media.Animation;
 using AnimeTime.WPF.Converters;
+using System.Collections;
+using AnimeTime.Utilities.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Threading;
 
 namespace AnimeTime.WPF.Views.Controls
 {
@@ -24,34 +29,59 @@ namespace AnimeTime.WPF.Views.Controls
     public partial class TabsWithSlider : UserControl
     {
         #region Dependency Properties
-        public Dictionary<string, object> Items
-        {
-            get { return (Dictionary<string, object>)GetValue(ItemsProperty); }
-            set { SetValue(ItemsProperty, value); }
-        }
-        public ICommand Command
-        {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
-        }
         public double TabSize
         {
             get { return (double)GetValue(TabSizeProperty); }
             set { SetValue(TabSizeProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for TabSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TabSizeProperty =
             DependencyProperty.Register("TabSize", typeof(double), typeof(TabsWithSlider), new PropertyMetadata(22.0));
 
-        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register("Command", typeof(ICommand), typeof(TabsWithSlider), new PropertyMetadata(OnCommandChanged));
 
-        // Using a DependencyProperty as the backing store for Items.  This enables animation, styling, binding, etc...
+        public IEnumerable Items
+        {
+            get { return (IEnumerable)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
+        }
         public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register("Items", typeof(Dictionary<string, object>), typeof(TabsWithSlider), new PropertyMetadata(new Dictionary<string, object>(), OnItemsChanged));
+            DependencyProperty.Register("Items", typeof(IEnumerable), typeof(TabsWithSlider), new PropertyMetadata(null, OnItemsChanged));
 
+        public string ActiveTab
+        {
+            get { return (string)GetValue(ActiveTabProperty); }
+            set { SetValue(ActiveTabProperty, value); }
+        }
+        public static readonly DependencyProperty ActiveTabProperty =
+            DependencyProperty.Register("ActiveTab", typeof(string), typeof(TabsWithSlider), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnActiveTabChanged));
+
+        #region DP events
+        private static void OnItemsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var slider = (TabsWithSlider)obj;
+
+            var oldArg = args.OldValue as INotifyCollectionChanged;
+            var newArg = args.NewValue as INotifyCollectionChanged;
+
+            if (oldArg != null)
+                oldArg.CollectionChanged -= slider.OnItemsCollectionChanged;
+
+            if (newArg != null)
+            {
+                slider._items = (newArg as IEnumerable).MapToList<TabItem>();
+                newArg.CollectionChanged += slider.OnItemsCollectionChanged;
+
+                slider.InvalidateTabs();
+                slider.FirstTabFire();
+            }
+
+        }
         private static void OnCommandChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var slider = (TabsWithSlider)obj;
@@ -74,32 +104,34 @@ namespace AnimeTime.WPF.Views.Controls
                 newCmd.CanExecuteChanged += slider.Command_CanExecuteChanged;
             }
         }
-
-        private static void OnItemsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void OnActiveTabChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var slider = (TabsWithSlider)obj;
-            var oldValue = args.OldValue as Dictionary<string,object>;
-            var newValue = args.NewValue as Dictionary<string, object>;
+            var slider = d as TabsWithSlider;
 
-            if (newValue != null && newValue.Count() > 0)
+            if (e.NewValue.ToString() == String.Empty)
             {
-                slider.InvalidateTabs();
-
-                if(oldValue == null || oldValue.Count() == 0)
-                    slider.FirstTabFire();
+                slider.ResetSlider();
+            }
+            else
+            {
+                Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    slider.SetSliderPosition(e.NewValue.ToString());
+                }, System.Windows.Threading.DispatcherPriority.ContextIdle);
             }
         }
         #endregion
 
-        private Button _activeTab;
+        #endregion
 
-        public string ActiveTab
-        {
-            get
-            {
-                return _activeTab.Content.ToString();
-            }
-        }
+        #region Members
+        private List<TabItem> _items = new List<TabItem>();
+        private Button _activeTabButton;
+        #endregion
+
+        #region Properties
+        public List<Button> Tabs => TabsContainer.Children.Cast<Button>().ToList();
+        #endregion
 
         public TabsWithSlider()
         {
@@ -113,7 +145,11 @@ namespace AnimeTime.WPF.Views.Controls
             InitializeSliderPosition();
             FirstTabFire();
         }
-
+        private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            _items = (sender as IEnumerable).MapToList<TabItem>();
+            InvalidateTabs();
+        }
         #endregion
 
         #region Slider
@@ -130,6 +166,12 @@ namespace AnimeTime.WPF.Views.Controls
             };
             Slider.SetBinding(Rectangle.WidthProperty, binding);
         }
+        private void SetSliderPosition(string tabName)
+        {
+            var targetTab = TabsContainer.Children.Cast<Button>().FirstOrDefault(x => x.Content.ToString() == tabName);
+            if (targetTab != null)
+                targetTab.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
         private void AnimateSlider(int targetTabIndex, int duration)
         {
             var targetTab = TabsContainer.Children[targetTabIndex] as Button;
@@ -142,6 +184,16 @@ namespace AnimeTime.WPF.Views.Controls
             storyboard.Children.Add(sliderWidthAnimation);
 
             storyboard.Begin(Slider);
+        }
+        private void ResetSlider()
+        {
+            Slider.BeginAnimation(Rectangle.WidthProperty, null);
+            Slider.Width = 0;
+
+            var margin = Slider.Margin;
+            margin.Left = 0;
+
+            Slider.Margin = margin;
         }
 
         private DoubleAnimation SliderWidthAnimation(Button targetTab)
@@ -166,74 +218,22 @@ namespace AnimeTime.WPF.Views.Controls
             return sliderMarginAnimation;
         }
         #endregion
-
         #region Tabs
-        private double SliderWidthFromTab(Button tab)
-        {
-            return tab.ActualWidth + tab.Margin.Right / 2;
-        }
-        private double TabPositionX(int tabIndex)
-        {
-            if (tabIndex > TabsContainer.Children.Count - 1)
-            {
-                throw new ArgumentOutOfRangeException("Index is out of range");
-            }
-
-            double x = 0;
-            for (int i = 0; i < tabIndex; i++)
-            {
-                var button = TabsContainer.Children[i] as Button;
-                x += button.ActualWidth + button.Margin.Right;
-            }
-
-            return x;
-        }
-
         private void InvalidateTabs()
         {
-            foreach (var item in Items)
+            TabsContainer.Children.Clear();
+            foreach (var item in _items)
             {
-                var button = CreateTab(item.Key, item.Value);
+                var button = CreateTab(item.Title, item.Value);
                 TabsContainer.Children.Add(button);
             }
-        }
-        private Button CreateTab(string displayName, object value)
-        {
-            var button = new Button();
-
-            button.Style = this.FindResource("NavTab") as Style;
-
-            Binding fontSizeBinding = new Binding();
-            fontSizeBinding.Source = this;
-            fontSizeBinding.Path = new PropertyPath(TabsWithSlider.TabSizeProperty);
-
-            button.SetBinding(Button.FontSizeProperty, fontSizeBinding);
-            button.Content = displayName;
-            button.Tag = value;
-            button.Click += Tab_Click;
-
-            return button;
-        }
-
-        private void Tab_Click(object sender, RoutedEventArgs e)
-        {
-            var tab = (Button)sender;
-            if (_activeTab == tab)
-            {
-                return;
-            }
-            _activeTab = tab;
-
-            ExecuteCommand(tab.Tag);
-
-            AnimateSlider(TabsContainer.Children.IndexOf(tab), 500);
         }
         private void FirstTabFire()
         {
             var firstTab = TabsContainer.Children.Cast<Button>().FirstOrDefault();
             if (firstTab == null) return;
 
-            _activeTab = firstTab;
+            _activeTabButton = firstTab;
 
             InitializeSliderPosition();
             ExecuteCommand(firstTab.Tag);
@@ -253,6 +253,60 @@ namespace AnimeTime.WPF.Views.Controls
                 tab.IsEnabled = true;
             }
         }
+
+        #region Tab item
+        private Button CreateTab(string displayName, object value)
+        {
+            var button = new Button();
+
+            button.Style = this.FindResource("NavTab") as Style;
+
+            Binding fontSizeBinding = new Binding();
+            fontSizeBinding.Source = this;
+            fontSizeBinding.Path = new PropertyPath(TabsWithSlider.TabSizeProperty);
+
+            button.SetBinding(Button.FontSizeProperty, fontSizeBinding);
+            button.Content = displayName;
+            button.Tag = value;
+            button.Click += Tab_Click;
+
+            return button;
+        }
+        private double SliderWidthFromTab(Button tab)
+        {
+            if (tab == null) return 0;
+            return tab.ActualWidth + tab.Margin.Right / 2;
+        }
+        private double TabPositionX(int tabIndex)
+        {
+            if (tabIndex > TabsContainer.Children.Count - 1)
+            {
+                throw new ArgumentOutOfRangeException("Index is out of range");
+            }
+
+            double x = 0;
+            for (int i = 0; i < tabIndex; i++)
+            {
+                var button = TabsContainer.Children[i] as Button;
+                x += button.ActualWidth + button.Margin.Right;
+            }
+
+            return x;
+        }
+        private void Tab_Click(object sender, RoutedEventArgs e)
+        {
+            var tab = (Button)sender;
+            if (_activeTabButton == tab)
+            {
+                return;
+            }
+            _activeTabButton = tab;
+
+            ExecuteCommand(tab.Tag);
+
+            AnimateSlider(TabsContainer.Children.IndexOf(tab), 500);
+        }
+        #endregion
         #endregion
 
         private void ExecuteCommand(object param)
@@ -264,7 +318,7 @@ namespace AnimeTime.WPF.Views.Controls
         }
         private void Command_CanExecuteChanged(object sender, EventArgs e)
         {
-            if(Command.CanExecute(null))
+            if (Command.CanExecute(null))
             {
                 EnableTabs();
             }
@@ -277,7 +331,7 @@ namespace AnimeTime.WPF.Views.Controls
 
     public class TabItem
     {
-        public string DisplayName { get; set; }
+        public string Title { get; set; }
         public object Value { get; set; }
     }
 }

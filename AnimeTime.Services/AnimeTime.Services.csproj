@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="DTO\AnimeDTO.cs" />
     <Compile Include="DTO\AnimeSearchDTO.cs" />
     <Compile Include="DTO\AnimeSourceDTO.cs" />
     <Compile Include="DTO\EpisodeDTO.cs" />

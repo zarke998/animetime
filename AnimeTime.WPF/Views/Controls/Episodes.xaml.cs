@@ -1,7 +1,9 @@
 ﻿using AnimeTime.WPF.Commands;
+using AnimeTime.WPF.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,9 +74,9 @@ namespace AnimeTime.WPF.Views.Controls
             Tabs.Items = CreateTabs();
             Tabs.Command = new DelegateCommand(LoadEpisodes);
         }
-        private Dictionary<string, object> CreateTabs()
+        private ObservableCollection<Tab> CreateTabs()
         {
-            var tabs = new Dictionary<string, object>();
+            var tabs = new ObservableCollection<Tab>();
 
             if (TabCount == 1)
             {
@@ -85,7 +87,7 @@ namespace AnimeTime.WPF.Views.Controls
                 };
                 var displayName = $"{episodeRange.StartEpisode} - {episodeRange.EndEpisode}";
 
-                tabs.Add(displayName, episodeRange);
+                tabs.Add(new Tab() { Title = displayName, Value = episodeRange });
 
                 return tabs;
             }
@@ -98,7 +100,7 @@ namespace AnimeTime.WPF.Views.Controls
                 };
                 var displayName = $"{episodeRange.StartEpisode} - {episodeRange.EndEpisode}";
 
-                tabs.Add(displayName, episodeRange);
+                tabs.Add(new Tab() { Title = displayName, Value = episodeRange });
             }
 
             return tabs;

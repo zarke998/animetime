@@ -51,7 +51,11 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <controls:ImageRounded Radius="35" Source="/AnimeTime.WPF;component/Assets/Images/anime_logo.jpg" />
-                <controls:TabsWithSlider Margin="25,0,0,0" Items="{Binding PagesViewModels}" />
+                <controls:TabsWithSlider
+                    Margin="25,0,0,0"
+                    ActiveTab="{Binding ActiveTab}"
+                    Command="{Binding LoadPageCommand}"
+                    Items="{Binding PagesViewModels}" />
             </StackPanel>
             <StackPanel
                 Grid.Column="1"

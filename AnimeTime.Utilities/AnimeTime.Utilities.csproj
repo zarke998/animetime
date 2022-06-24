@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\IEnumerableExtensions.cs" />
     <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Colors\ColorExtensions.cs" />
     <Compile Include="Colors\HslaColor.cs" />

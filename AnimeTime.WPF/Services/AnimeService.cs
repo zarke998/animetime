@@ -13,6 +13,12 @@ namespace AnimeTime.WPF.Services
 {
     public class AnimeService : ApiServiceBase, IAnimeService
     {
+        private readonly IApi _api;
+
+        public AnimeService(IApi api)
+        {
+            this._api = api;
+        }
         public async Task<IEnumerable<EpisodeDTO>> GetEpisodesAsync(int animeId)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"api/animes/{animeId}/episodes");
@@ -20,6 +26,13 @@ namespace AnimeTime.WPF.Services
 
             var resultJson = await result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<IEnumerable<EpisodeDTO>>(resultJson);
+        }
+
+        public async Task<AnimeDTO> GetAnimeShort(int id)
+        {
+            var animeJson = await _api.GetAsync($"api/animes/{id}/short-info");
+
+            return JsonConvert.DeserializeObject<AnimeDTO>(animeJson);
         }
     }
 }

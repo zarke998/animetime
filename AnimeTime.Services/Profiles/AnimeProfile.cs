@@ -22,6 +22,7 @@ namespace AnimeTime.Services.Profiles
                         return coverImage?.Image?.Url;
                     });
                 });
+            CreateMap<Anime, AnimeDTO>();
         }
     }
 }
