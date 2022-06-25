@@ -73,6 +73,7 @@
     <Compile Include="Domain\ImageType.cs" />
     <Compile Include="Domain\Enums\ImageTypeId.cs" />
     <Compile Include="Domain\Enums\LodLevel.cs" />
+    <Compile Include="Domain\ExceptionLog.cs" />
     <Compile Include="Domain\Metadata.cs" />
     <Compile Include="Domain\Notification.cs" />
     <Compile Include="Domain\EpisodeSource.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IAnimePlanetAnimeMetadataRepository.cs" />
     <Compile Include="Repositories\IEpisodeMetadataRepository.cs" />
+    <Compile Include="Repositories\IExceptionLogRepository.cs" />
     <Compile Include="Repositories\IEpisodeVideoSourceRepository.cs" />
     <Compile Include="Repositories\IEpisodeSourceRepository.cs" />
     <Compile Include="Repositories\IMetadataRepository.cs" />

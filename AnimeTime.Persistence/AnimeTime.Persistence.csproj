@@ -322,11 +322,16 @@
     <Compile Include="Migrations\202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.designer.cs">
       <DependentUpon>202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206250010155_AddExceptionLogsTable.cs" />
+    <Compile Include="Migrations\202206250010155_AddExceptionLogsTable.designer.cs">
+      <DependentUpon>202206250010155_AddExceptionLogsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimePlanetAnimeMetadataRepository.cs" />
     <Compile Include="Repositories\AnimeSourceRepository.cs" />
     <Compile Include="Repositories\EpisodeMetadataRepository.cs" />
+    <Compile Include="Repositories\ExceptionLogRepository.cs" />
     <Compile Include="Repositories\EpisodeVideoSourceRepository.cs" />
     <Compile Include="Repositories\EpisodeSourceRepository.cs" />
     <Compile Include="Repositories\MetadataRepository.cs" />
@@ -532,6 +537,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.resx">
       <DependentUpon>202204081325370_AddHasWorkingVideoSorucesToEpisodeMetadata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206250010155_AddExceptionLogsTable.resx">
+      <DependentUpon>202206250010155_AddExceptionLogsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

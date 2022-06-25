@@ -40,7 +40,7 @@ namespace AnimeTime.Persistence
         public DbSet<EpisodeVideoSource> EpisodeVideoSources { get; set; }
         public DbSet<AnimeStatus> AnimeStatuses { get; set; }
         public DbSet<AnimePlanetAnimeMetadata> AnimePlanetAnimeMetadatas { get; set; }
-
+        public DbSet<ExceptionLog> ExceptionLogs { get; set; }
         public AnimeTimeDbContext() : base(StringConstants.AnimeTimeConnectionString)
         {
 

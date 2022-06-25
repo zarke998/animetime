@@ -36,6 +36,7 @@ namespace AnimeTimeDbUpdater
             }).SingleInstance();
 
             builder.RegisterType<MainApplication>().As<IApplication>();
+            builder.RegisterType<AnimeTimeDbContext>();
             builder.RegisterType<AnimePlanetRepository>().As<IAnimeInfoRepository>();
             builder.RegisterType<AnimePlanetCharacterRepository>().As<ICharacterInfoRepository>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();

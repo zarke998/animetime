@@ -46,6 +46,7 @@ namespace AnimeTime.Persistence
         public IEpisodeSourceRepository EpisodeSources { get; private set; }
         public IEpisodeVideoSourceRepository EpisodeVideoSources { get; private set; }
         public IAnimePlanetAnimeMetadataRepository AnimePlanetAnimeMetadatas { get; private set; }
+        public IExceptionLogRepository ExceptionLogRepository { get; private set; }
 
         public UnitOfWork(AnimeTimeDbContext context)
         {
@@ -67,6 +68,7 @@ namespace AnimeTime.Persistence
             EpisodeSources = new EpisodeSourceRepository(_animeTimeDbContext);
             EpisodeVideoSources = new EpisodeVideoSourceRepository(_animeTimeDbContext);
             AnimePlanetAnimeMetadatas = new AnimePlanetAnimeMetadataRepository(_animeTimeDbContext);
+            ExceptionLogRepository = new ExceptionLogRepository(_animeTimeDbContext);
         }
         public void Complete()
         {
