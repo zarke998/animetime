@@ -34,7 +34,7 @@
                                     x:Name="Image"
                                     Width="{Binding ElementName=Canvas, Path=ActualWidth}"
                                     Height="400"
-                                    Opacity="0.6"
+                                    Opacity="0.85"
                                     Source="/Assets/Images/default-background.jpg"
                                     Stretch="UniformToFill" />
                             </Border>
@@ -228,7 +228,7 @@
                                             <DoubleAnimation
                                                 Storyboard.TargetName="Image"
                                                 Storyboard.TargetProperty="Opacity"
-                                                To="1"
+                                                To="0.85"
                                                 Duration="0:0:0.2" />
                                         </Storyboard>
                                     </BeginStoryboard>
