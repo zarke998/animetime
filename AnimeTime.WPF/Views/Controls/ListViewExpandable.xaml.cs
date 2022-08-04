@@ -155,6 +155,7 @@ namespace AnimeTime.WPF.Views.Controls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             IsExpanded = !IsExpanded;
+            _scrollViewer.ScrollToVerticalOffset(0);
         }
 
         private void ListViewItem_MouseUp(object sender, MouseButtonEventArgs e)
