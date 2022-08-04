@@ -71,7 +71,10 @@
                                                                         </ControlTemplate>
                                                                     </Button.Template>
                                                                     <StackPanel>
-                                                                        <Image Width="25" Source="/Assets/Icons/star.png" />
+                                                                        <Image
+                                                                            Width="25"
+                                                                            RenderOptions.BitmapScalingMode="HighQuality"
+                                                                            Source="/Assets/Icons/star.png" />
                                                                         <TextBlock
                                                                             Margin="0,2,0,0"
                                                                             Foreground="White"
