@@ -12,6 +12,7 @@ namespace AnimeTime.Core.Domain
         public Image()
         {
             Thumbnails = new HashSet<Thumbnail>();
+            AnimeImages = new HashSet<AnimeImage>();
         }
 
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace AnimeTime.Core.Domain
         public ImageOrientation Orientation { get; set; }
 
         public ICollection<Thumbnail> Thumbnails { get; set; }
+        public ICollection<AnimeImage> AnimeImages { get; set; }
     }
 }

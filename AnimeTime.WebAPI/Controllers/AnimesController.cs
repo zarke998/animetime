@@ -170,6 +170,12 @@ namespace AnimeTime.WebAPI.Controllers
             return Ok(_animeService.GetAnimeShort(id));
         }
 
+        [Route("{id}/long-info")]
+        public IHttpActionResult GetLongInfo(int id)
+        {
+            return Ok(_animeService.GetAnimeLong(id));
+        }
+
         [Route("{id}/anime-sources")]
         public IHttpActionResult GetAnimeSources(int id)
         {

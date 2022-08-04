@@ -10,7 +10,10 @@ namespace AnimeTime.Core.Domain
     {
         public int Id { get; set; }
 
+        public int Anime_Id { get; set; }
         public Anime Anime { get; set; }
+
+        public int Image_Id { get; set; }
         public Image Image { get; set; }
     }
 }

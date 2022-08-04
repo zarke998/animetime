@@ -1,6 +1,6 @@
-﻿using AnimeTime.Core.Domain;
-using AnimeTime.Services.DTO;
+﻿using AnimeTime.Services.DTO;
 using AnimeTime.WPF.Commands;
+using AnimeTime.WPF.Models;
 using AnimeTime.WPF.Services.Interfaces;
 using AnimeTime.WPF.ViewModels.Base;
 using System;
@@ -15,75 +15,26 @@ namespace AnimeTime.WPF.ViewModels.Pages
 {
     public class DetailsViewModel : CommonViewModelBase
     {
-        
+
         #region Members
+        //Services
         private readonly IAnimeService _animeService;
         private readonly IWindowService _windowService;
         private readonly IViewModelLocator _viewModelLocator;
-        private ObservableCollection<EpisodeDTO> _episodes = new ObservableCollection<EpisodeDTO>();
+
+        //Data
+        private Anime _anime = new Anime();
         #endregion
 
         #region Properties
-        public ObservableCollection<Genre> Genres { get; set; }
-
-        public string Synopsis { get; set; } = "KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj KHSAd akhjdhkj";
-
-        public ObservableCollection<EpisodeDTO> Episodes { get => _episodes; set { _episodes = value; OnPropertyChanged(); } }
-        public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
-        public ObservableCollection<Anime> SameFranchise { get; set; } = new ObservableCollection<Anime>();
-        public ICommand LoadEpisodeCommand { get; set; }
+        public Anime Anime { get => _anime; set { _anime = value; OnPropertyChanged(); } }
         #endregion
 
-
+        public ICommand LoadEpisodeCommand { get; set; }
         public DetailsViewModel(IWindowService windowService,
                                 IViewModelLocator viewModelLocator,
                                 IAnimeService animeService) : base(windowService, viewModelLocator)
         {
-            Genres = new ObservableCollection<Genre>()
-            {
-                new Genre()
-                {
-                    Name = "Action"
-                },
-                new Genre()
-                {
-                    Name = "Adventure"
-                },
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-                ,
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-                ,
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-                ,
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-                ,
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-                ,
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-                ,
-                new Genre()
-                {
-                    Name = "Adventure"
-                }
-            };
             this._windowService = windowService;
             this._viewModelLocator = viewModelLocator;
             this._animeService = animeService;
@@ -99,16 +50,32 @@ namespace AnimeTime.WPF.ViewModels.Pages
             playerVM.Load(epId);
             _windowService.Load(playerVM);
         }
-
         public async Task Load(int animeId)
         {
-            var episodes = await _animeService.GetEpisodesAsync(animeId);
-            Episodes = new ObservableCollection<EpisodeDTO>(episodes);
-        }
-    }
+            var anime = await _animeService.GetAnimeLong(animeId);
 
-    public class Genre
-    {
-        public string Name { get; set; }
+            Anime.Title = anime.Title;
+            Anime.Cover = anime.Images.FirstOrDefault(i => i.ImageType == "Cover")
+                         .Thumbnails.FirstOrDefault(t => t.ImageLodLevel == "Medium")
+                         .Url;
+            Anime.Rating = Math.Round(anime.Rating, 2);
+
+            Anime.Category = anime.Category;
+            if (anime.AltTitles.Count > 0)
+                Anime.AlternativeTitles = String.Join(", ", anime.AltTitles);
+            Anime.YearSeason = $"{anime.YearSeason} {anime.ReleaseYear}".Trim();
+
+            Anime.Genres = new ObservableCollection<Genre>(anime.Genres.Select(g => new Genre() { Name = g.Name }));
+            Anime.Synopsis = anime.Description;
+
+            var episodes = await _animeService.GetEpisodesAsync(animeId);
+            Anime.Episodes = new ObservableCollection<EpisodeDTO>(episodes);
+
+            Anime.Characters = new ObservableCollection<Character>(anime.Characters.Select(c => new Character()
+            {
+                Title = c.Name,
+                Image = c.Image?.Thumbnails.FirstOrDefault(t => t.ImageLodLevel == "Medium")?.Url
+            }));
+        }
     }
 }

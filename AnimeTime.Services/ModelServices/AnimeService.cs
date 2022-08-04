@@ -31,6 +31,15 @@ namespace AnimeTime.Services.ModelServices
             return _mapper.Map<AnimeDTO>(anime);
         }
 
+        public AnimeLongDTO GetAnimeLong(int id)
+        {
+            var anime = _unitOfWork.Animes.GetLongInfo(id);
+            if (anime == null)
+                throw new EntityNotFoundException($"Anime with id {id} not found.");
+
+            return _mapper.Map<AnimeLongDTO>(anime);
+        }
+
         public IEnumerable<AnimeSearchDTO> Search(string searchString)
         {
             return _mapper.Map<IEnumerable<AnimeSearchDTO>>(_unitOfWork.Animes.Search(searchString));

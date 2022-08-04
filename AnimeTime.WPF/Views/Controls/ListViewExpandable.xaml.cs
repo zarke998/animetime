@@ -1,5 +1,7 @@
 ﻿using AnimeTime.WPF.Assets;
+using AnimeTime.WPF.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +41,20 @@ namespace AnimeTime.WPF.Views.Controls
         }
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(ListViewExpandable), new PropertyMetadata("Section"));
+
+
+
+        public IEnumerable Items
+        {
+            get { return (IEnumerable)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Items.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemsProperty =
+            DependencyProperty.Register("Items", typeof(IEnumerable), typeof(ListViewExpandable), new PropertyMetadata(null));
+
+
         #endregion
 
         #region Commands
@@ -57,6 +73,7 @@ namespace AnimeTime.WPF.Views.Controls
 
         #region Templated Elements
         private ListView _container;
+        private ScrollViewer _scrollViewer;
         #endregion
 
 
@@ -72,7 +89,30 @@ namespace AnimeTime.WPF.Views.Controls
             if (_container != null)
             {
                 _container.SelectionChanged += _container_SelectionChanged;
-                LoadTestData();
+                _container.PreviewMouseWheel += Container_PreviewMouseWheel;
+
+                _scrollViewer = _container.GetChildOfType<ScrollViewer>();
+            }
+        }
+
+        private void Container_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var verticalScrollVisibility = ScrollViewer.GetVerticalScrollBarVisibility(_container);
+                if (verticalScrollVisibility == ScrollBarVisibility.Disabled ||
+                    (e.Delta > 0 && _scrollViewer.VerticalOffset == 0) ||
+                     e.Delta < 0 && _scrollViewer.VerticalOffset == _scrollViewer.ScrollableHeight)
+                {
+                    e.Handled = true;
+
+                    var eventArgs = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                    eventArgs.RoutedEvent = UIElement.MouseWheelEvent;
+                    eventArgs.Source = sender;
+
+                    var parent = VisualTreeHelper.GetParent(sender as DependencyObject) as UIElement;
+                    parent.RaiseEvent(eventArgs);
+                }
             }
         }
 
@@ -93,6 +133,7 @@ namespace AnimeTime.WPF.Views.Controls
 
         private void LoadTestData()
         {
+            _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });
             _container.Items.Add(new { Title = "Test", Image = AssetsURIs.DefaultImage });

@@ -13,6 +13,9 @@ namespace AnimeTime.Services.Profiles
     {
         public AnimeProfile()
         {
+            CreateMap<AnimeStatus, string>().ConvertUsing(status => status != null ? status.Name : String.Empty);
+            CreateMap<AnimeAltTitle, string>().ConvertUsing(alt => alt.Title);
+
             CreateMap<Anime, AnimeSearchDTO>()
                 .ForMember(dto => dto.CoverImageUrl, conf =>
                 {
@@ -23,6 +26,9 @@ namespace AnimeTime.Services.Profiles
                     });
                 });
             CreateMap<Anime, AnimeDTO>();
+            CreateMap<Anime, AnimeLongDTO>()
+                .ForMember(dto => dto.Images, conf => conf.MapFrom(a => a.Images.Select(ai => ai.Image)));
+                
         }
     }
 }

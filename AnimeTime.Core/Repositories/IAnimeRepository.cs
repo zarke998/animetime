@@ -9,9 +9,11 @@ namespace AnimeTime.Core.Repositories
 {
     public interface IAnimeRepository : IRepository<Anime>
     {
-        IEnumerable<string> GetAllTitles();
+        Anime GetLongInfo(int id);
         Anime GetWithSources(int id, bool includeWebsites);
         Anime GetWithAltTitles(int id);
+
+        IEnumerable<string> GetAllTitles();
         IEnumerable<int> GetIdsWithNoSources();
 
         IEnumerable<Anime> Search(string searchString);

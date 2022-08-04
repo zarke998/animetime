@@ -46,9 +46,14 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="DTO\AnimeDTO.cs" />
+    <Compile Include="DTO\AnimeLongDTO.cs" />
     <Compile Include="DTO\AnimeSearchDTO.cs" />
     <Compile Include="DTO\AnimeSourceDTO.cs" />
+    <Compile Include="DTO\CharacterDTO.cs" />
     <Compile Include="DTO\EpisodeDTO.cs" />
+    <Compile Include="DTO\GenreDTO.cs" />
+    <Compile Include="DTO\ImageDTO.cs" />
+    <Compile Include="DTO\ThumbnailDTO.cs" />
     <Compile Include="DTO\VideoSourceDTO.cs" />
     <Compile Include="ModelServices\AnimeService.cs" />
     <Compile Include="ModelServices\AnimeSourceService.cs" />
@@ -60,7 +65,13 @@
     <Compile Include="ModelServices\VideoSourceService.cs" />
     <Compile Include="Profiles\AnimeProfile.cs" />
     <Compile Include="Profiles\AnimeSourceProfile.cs" />
+    <Compile Include="Profiles\CategoryProfile.cs" />
+    <Compile Include="Profiles\CharacterProfile.cs" />
+    <Compile Include="Profiles\GenreProfile.cs" />
+    <Compile Include="Profiles\YearSeasonProfile.cs" />
     <Compile Include="Profiles\EpisodeProfile.cs" />
+    <Compile Include="Profiles\ImageProfile.cs" />
+    <Compile Include="Profiles\ThumbnailProfile.cs" />
     <Compile Include="Profiles\VideoSourceProfiile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

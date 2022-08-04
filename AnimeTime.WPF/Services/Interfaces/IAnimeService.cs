@@ -10,6 +10,7 @@ namespace AnimeTime.WPF.Services.Interfaces
     public interface IAnimeService
     {
         Task<AnimeDTO> GetAnimeShort(int id);
+        Task<AnimeLongDTO> GetAnimeLong(int id);
         Task<IEnumerable<EpisodeDTO>> GetEpisodesAsync(int animeId);
     }
 }

@@ -34,5 +34,12 @@ namespace AnimeTime.WPF.Services
 
             return JsonConvert.DeserializeObject<AnimeDTO>(animeJson);
         }
+
+        public async Task<AnimeLongDTO> GetAnimeLong(int id)
+        {
+            var animeJson = await _api.GetAsync($"api/animes/{id}/long-info");
+
+            return JsonConvert.DeserializeObject<AnimeLongDTO>(animeJson);
+        }
     }
 }

@@ -12,8 +12,9 @@ namespace AnimeTime.Persistence.EntityConfigurations
     {
         public AnimeImageConfiguration()
         {
-            HasRequired(ai => ai.Anime);
-            HasRequired(ai => ai.Image).WithOptional().Map(mapConfig => mapConfig.MapKey("Image_Id"));
+
+            HasRequired(ai => ai.Anime).WithMany(a => a.Images).HasForeignKey(ai => ai.Anime_Id);
+            HasRequired(ai => ai.Image).WithMany(i => i.AnimeImages).HasForeignKey(ai => ai.Image_Id).WillCascadeOnDelete(false);
         }
     }
 }
