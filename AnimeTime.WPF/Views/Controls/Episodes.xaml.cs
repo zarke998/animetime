@@ -50,6 +50,10 @@ namespace AnimeTime.WPF.Views.Controls
         {
             var self = d as Episodes;
             self.InvalidateTabs();
+            if(e.NewValue == null || (e.NewValue as IEnumerable).Cast<object>().Count() == 0)
+            {
+                self.ClearEpisodes();
+            }
         }
 
         public ICommand EpisodeSelectedCommand
