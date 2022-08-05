@@ -1,5 +1,6 @@
 ﻿using AnimeTime.Core;
 using AnimeTime.Core.Domain;
+using AnimeTime.Core.Domain.Enums;
 using AnimeTime.Services.DTO;
 using AnimeTime.Services.ModelServices.Interfaces;
 using AnimeTime.WebsiteProcessors;
@@ -71,7 +72,7 @@ namespace AnimeTime.Services.ModelServices
 
             var anime = _unitOfWork.Animes.GetWithSources(animeId, true);
             var newEpisodes = new List<Episode>();
-            foreach (var animeSource in anime.AnimeSources)
+            foreach (var animeSource in anime.AnimeSources.Where(s => s.Status_Id == AnimeSourceStatusIds.Resolved))
             {
                 var processor = _websiteProcessorFactory.CreateWebsiteProcessor(animeSource.Website.Name, animeSource.Website.Url, animeSource.Website.QuerySuffix);
                 var episodeSources = processor.GetEpisodesAsync(animeSource.Url).Result;
