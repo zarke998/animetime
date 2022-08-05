@@ -326,6 +326,14 @@
     <Compile Include="Migrations\202206250010155_AddExceptionLogsTable.designer.cs">
       <DependentUpon>202206250010155_AddExceptionLogsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208042315058_SetAnimeSourceUrlToNonNullable.cs" />
+    <Compile Include="Migrations\202208042315058_SetAnimeSourceUrlToNonNullable.designer.cs">
+      <DependentUpon>202208042315058_SetAnimeSourceUrlToNonNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208042316567_SetAnimeSourceUrlToNullable.cs" />
+    <Compile Include="Migrations\202208042316567_SetAnimeSourceUrlToNullable.designer.cs">
+      <DependentUpon>202208042316567_SetAnimeSourceUrlToNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnimePlanetAnimeMetadataRepository.cs" />
@@ -540,6 +548,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206250010155_AddExceptionLogsTable.resx">
       <DependentUpon>202206250010155_AddExceptionLogsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208042315058_SetAnimeSourceUrlToNonNullable.resx">
+      <DependentUpon>202208042315058_SetAnimeSourceUrlToNonNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208042316567_SetAnimeSourceUrlToNullable.resx">
+      <DependentUpon>202208042316567_SetAnimeSourceUrlToNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
