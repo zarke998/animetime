@@ -101,6 +101,8 @@ namespace AnimeTime.WPF.Views
             FullscreenToggleCommand = new DelegateCommand(FullscreenToggle);
             VolumeChangedCommand = new DelegateCommand(VolumeChanged);
             SkipIntroCommand = new DelegateCommand(SkipIntro);
+
+            Volume = 100;
         }
 
 
