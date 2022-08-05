@@ -80,6 +80,12 @@ namespace AnimeTime.WPF.Views.Controls
                 slider.InvalidateTabs();
                 slider.FirstTabFire();
             }
+            
+            if(newArg == null || (args.NewValue as ICollection).Count == 0)
+            {
+                slider.ClearTabs();
+                slider.ResetSlider();
+            }
 
         }
         private static void OnCommandChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
@@ -221,12 +227,16 @@ namespace AnimeTime.WPF.Views.Controls
         #region Tabs
         private void InvalidateTabs()
         {
-            TabsContainer.Children.Clear();
+            ClearTabs();
             foreach (var item in _items)
             {
                 var button = CreateTab(item.Title, item.Value);
                 TabsContainer.Children.Add(button);
             }
+        }
+        private void ClearTabs()
+        {
+            TabsContainer.Children.Clear();
         }
         private void FirstTabFire()
         {
